@@ -1,12 +1,3 @@
-/**
- * Beatport tür sayfalarından keşif katalogu çıkarımı.
- *
- * Beatport'un açık bir API'si yok; tür Top 100 sayfaları sunucu tarafında
- * render ediliyor. Sayfa yapısı haber vermeden değişiyor, o yüzden burada
- * üç ayrı çıkarım stratejisi sırayla deneniyor ve sonuç ayrıca doğrulanıyor.
- * Bozuk veri iyi veriyi asla ezmemeli — `validateCatalog` bunun için var.
- */
-
 import { toCamelot } from './camelot'
 import type { Track } from './types'
 
@@ -32,14 +23,9 @@ export function genreUrl(genre: BeatportGenre): string {
   return `https://www.beatport.com/genre/${genre.slug}/${genre.id}/top-100`
 }
 
-/** Bir stratejinin sonucuna güvenmek için gereken en az parça sayısı. */
+// A strategy that finds fewer tracks than this is not trusted: the page layout changed.
 export const MIN_TRACKS_PER_STRATEGY = 10
 
-/**
- * `start` konumundaki `{` ile eşleşen `}`'in konumu; yoksa −1.
- * Dize içindeki süslü parantezler ve kaçış karakterleri atlanır — regex ile
- * kesmek iç içe nesnelerde bozuk JSON üretiyor, bu yüzden sayarak yürüyoruz.
- */
 function matchingBrace(text: string, start: number): number {
   let depth = 0
   let inString = false
@@ -66,7 +52,6 @@ function matchingBrace(text: string, start: number): number {
   return -1
 }
 
-/** Bir konumdan geriye doğru en fazla `limit` tane `{` konumu. */
 function braceStartsBefore(text: string, index: number, limit: number): number[] {
   const out: number[] = []
   for (let i = index; i >= 0 && out.length < limit; i -= 1) {
@@ -75,11 +60,6 @@ function braceStartsBefore(text: string, index: number, limit: number): number[]
   return out
 }
 
-/**
- * Metindeki, `needle` geçen en küçük geçerli JSON nesnelerini çıkarır.
- * Gömülü betiklerin içinden veri kazımanın tek güvenli yolu bu: parantez sayan,
- * dize ve kaçış duyarlı bir tarayıcı.
- */
 export function scanJsonObjects(text: string, needle: string): Record<string, unknown>[] {
   const out: Record<string, unknown>[] = []
   const seen = new Set<number>()
@@ -91,7 +71,6 @@ export function scanJsonObjects(text: string, needle: string): Record<string, un
     cursor = hit + needle.length
 
     let parsed: Record<string, unknown> | null = null
-    // En yakın `{`'ten başlayıp dışa doğru genişle: en küçük geçerli nesneyi al.
     for (const start of braceStartsBefore(text, hit, 60)) {
       if (seen.has(start)) break
       const end = matchingBrace(text, start)
@@ -105,7 +84,7 @@ export function scanJsonObjects(text: string, needle: string): Record<string, un
           break
         }
       } catch {
-        // Bu `{` bir nesnenin başı değil ya da nesne yarım; bir dışarıdakini dene.
+        // Not an object start, or truncated: widen to the next outer brace.
       }
     }
 
@@ -115,7 +94,6 @@ export function scanJsonObjects(text: string, needle: string): Record<string, un
   return out
 }
 
-/** <90 yarım tempo, >165 çift tempo sayılır — Beatport ikisini de yazabiliyor. */
 export function normalizeBpm(bpm: number): number {
   if (!Number.isFinite(bpm) || bpm <= 0) return bpm
   if (bpm < 90) return bpm * 2
@@ -143,7 +121,6 @@ function pick(source: Record<string, unknown>, keys: string[]): unknown {
   return undefined
 }
 
-/** İç içe `{ name: … }` ya da düz metin gelebilen alanları tek biçime indirir. */
 function nameOf(value: unknown): string | null {
   if (typeof value === 'string') return asString(value)
   if (value && typeof value === 'object' && !Array.isArray(value)) {
@@ -160,10 +137,6 @@ function artistsOf(value: unknown): string | null {
   return nameOf(value)
 }
 
-/**
- * JSON nesnesini parçaya çevirir. Alan adları sürüme göre değişebildiği için
- * her alan birkaç yazımla aranıyor; tempo ya da key yoksa parça alınmıyor.
- */
 function readTrackObject(source: Record<string, unknown>, fallbackGenre?: string): Track | null {
   const title = nameOf(pick(source, ['name', 'title', 'track_name']))
   const bpm = asNumber(pick(source, ['bpm', 'tempo']))
@@ -187,7 +160,6 @@ function readTrackObject(source: Record<string, unknown>, fallbackGenre?: string
   }
 }
 
-/** İç içe JSON'da parçaya benzeyen her nesneyi toplar. */
 function walkForTracks(value: unknown, fallbackGenre: string | undefined, out: Track[]): void {
   if (Array.isArray(value)) {
     for (const item of value) walkForTracks(item, fallbackGenre, out)
@@ -214,7 +186,6 @@ function dedupe(tracks: Track[]): Track[] {
   return out
 }
 
-/** `__NEXT_DATA__` betiği: sayfanın kendi verdiği veri, en güvenilir kaynak. */
 function fromNextData(html: string, genre?: string): Track[] {
   const match = /<script[^>]+id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/i.exec(html)
   if (!match) return []
@@ -228,7 +199,6 @@ function fromNextData(html: string, genre?: string): Track[] {
   }
 }
 
-/** Gömülü JSON / RSC akışı (`self.__next_f.push`): veri kaçış karakterleriyle gelir. */
 function fromEmbeddedJson(html: string, genre?: string): Track[] {
   const out: Track[] = []
   for (const candidate of scanJsonObjects(html, '"bpm"')) {
@@ -236,7 +206,6 @@ function fromEmbeddedJson(html: string, genre?: string): Track[] {
     if (track) out.push(track)
   }
 
-  // RSC akışında veri bir dize içinde kaçışlı duruyor; kaçışları çözüp tekrar bak.
   if (out.length < MIN_TRACKS_PER_STRATEGY && html.includes('__next_f')) {
     const unescaped = html.replace(/\\"/g, '"').replace(/\\n/g, '\n')
     for (const candidate of scanJsonObjects(unescaped, '"bpm"')) {
@@ -248,10 +217,6 @@ function fromEmbeddedJson(html: string, genre?: string): Track[] {
   return dedupe(out)
 }
 
-/**
- * Düz HTML metni: satırlarda `"125 BPM - G Minor"` gibi bir metin ve
- * `/track/`, `/artist/` bağlantıları var. En kırılgan strateji, en son denenir.
- */
 function fromPlainHtml(html: string, genre?: string): Track[] {
   const out: Track[] = []
   const segments = html.split('/track/')
@@ -283,15 +248,9 @@ function fromPlainHtml(html: string, genre?: string): Track[] {
 
 export interface ExtractResult {
   tracks: Track[]
-  /** Hangi stratejinin tuttuğu — sayfa yapısı değişince buradan anlaşılır. */
   strategy: 'next-data' | 'embedded-json' | 'plain-html' | 'none'
 }
 
-/**
- * Sayfadan parçaları çıkarır: üç strateji sırayla denenir, ilk **güvenilir**
- * sonuç kazanır. 10'dan az parça bulan stratejiye güvenilmez — sayfa değişmiş
- * ve elimizde kırıntı kalmış olabilir.
- */
 export function extractTracks(html: string, genre?: string): ExtractResult {
   if (typeof html !== 'string' || !html.trim()) return { tracks: [], strategy: 'none' }
 
@@ -308,7 +267,6 @@ export function extractTracks(html: string, genre?: string): ExtractResult {
     if (tracks.length > best.tracks.length) best = { tracks, strategy: strategy.name }
   }
 
-  // Hiçbiri eşiği geçemedi: en çok bulanı döndür ama doğrulama bunu zaten eleyecek.
   return best
 }
 
@@ -321,7 +279,6 @@ export interface ValidationStats {
 
 export interface ValidationResult {
   ok: boolean
-  /** Geçmediyse her reddetme sebebi ayrı bir cümle olarak. */
   reasons: string[]
   stats: ValidationStats
 }
@@ -333,11 +290,6 @@ const MIN_GENRES = 3
 const BPM_FLOOR = 90
 const BPM_CEILING = 165
 
-/**
- * Yeni katalogun yayına alınabilir olup olmadığı.
- * Beatport sayfası değiştiğinde çıkarım sessizce yarım veri üretiyor; bu eşikler
- * o yarım veriyi yakalayıp eski katalogun korunmasını sağlıyor.
- */
 export function validateCatalog(next: Track[], prev: Track[] = []): ValidationResult {
   const count = next.length
   const keyRate = count > 0 ? next.filter((track) => track.key !== null).length / count : 0

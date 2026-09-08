@@ -1,15 +1,5 @@
-/**
- * Camelot çemberi: key dönüşümleri ve harmonik ilişkiler.
- *
- * Çemberde bir numara ilerlemek bir beşli, yani 7 yarım ton. Buradan
- * `+7 numara ≡ +1 yarım ton` ve `+5 numara ≡ −1 yarım ton` çıkıyor;
- * `semiUp`/`semiDown` ilişkilerinin numara kaymaları bu yüzden 7 ve 5.
- * A halkası minör, B halkası majör: `8A = Am`, `8B = C`.
- */
-
 import type { RelationId, Tone } from './types'
 
-/** Camelot kodundan nota adı. Elle yazıldı — testler perde sınıfını buradan doğruluyor. */
 export const NOTE_NAME: Record<string, string> = {
   '1A': 'Abm',
   '1B': 'B',
@@ -37,21 +27,15 @@ export const NOTE_NAME: Record<string, string> = {
   '12B': 'E',
 }
 
-/** 24 key, numara sırasıyla (`1A`, `1B`, `2A`, …). */
 export const ALL_KEYS: string[] = Array.from({ length: 12 }, (_, i) => [
   `${i + 1}A`,
   `${i + 1}B`,
 ]).flat()
 
-/**
- * Numarayı 1–12 aralığına sarar: `13 → 1`, `0 → 12`.
- * Çemberin başı ve sonu komşu olduğu için numara aritmetiği hep buradan geçer.
- */
 export function wrap12(n: number): number {
   return ((((n - 1) % 12) + 12) % 12) + 1
 }
 
-/** Numaraya bağlı sabit renk — halka (A/B) rengi değiştirmez, çember zaten ayırıyor. */
 const KEY_COLORS: Record<number, string> = {
   1: '#5cb4e0',
   2: '#5c72e0',
@@ -85,37 +69,23 @@ function fromParts(number: number, letter: 'A' | 'B'): string | null {
   return `${number}${letter}`
 }
 
-/**
- * Perde sınıfından Camelot numarası.
- * Majörde `8B = C` (perde 0), minörde `8A = Am` (perde 9). Bir numara 7 yarım ton
- * olduğu için ters çevirirken 7'nin mod 12 tersi gerekiyor — o da yine 7 (7×7 = 49 ≡ 1).
- */
+// One step on the wheel is a fifth (7 semitones), so 7 is its own inverse mod 12.
 function numberFromPitch(pitch: number, minor: boolean): number {
   const base = minor ? pitch - 9 : pitch
   return wrap12(8 + 7 * base)
 }
 
-/**
- * Serbest yazılmış bir key'i Camelot koduna çevirir.
- * Kabul edilen biçimler: nota (`Am`, `F#m`, `Bb Major`), Camelot (`8A`, `A8`) ve
- * Open Key (`1m`, `1d`). Tanımadığında `null` döner.
- *
- * Büyük/küçük harf duyarsız: Beatport `"G Minor"`, rekordbox `"Gm"` yazıyor.
- */
 export function toCamelot(raw: string | null | undefined): string | null {
   if (typeof raw !== 'string') return null
   const text = raw.trim()
   if (!text) return null
 
-  // Camelot: 8A
   const camelot = /^(\d{1,2})\s*([ab])$/i.exec(text)
   if (camelot) return fromParts(Number(camelot[1]), camelot[2].toUpperCase() as 'A' | 'B')
 
-  // Ters yazılmış Camelot: A8
   const reversed = /^([ab])\s*(\d{1,2})$/i.exec(text)
   if (reversed) return fromParts(Number(reversed[2]), reversed[1].toUpperCase() as 'A' | 'B')
 
-  // Open Key: 1m (moll) / 1d (dur). Open Key 1 ile Camelot 8 aynı key.
   const openKey = /^(\d{1,2})\s*([md])$/i.exec(text)
   if (openKey) {
     const n = Number(openKey[1])
@@ -123,7 +93,6 @@ export function toCamelot(raw: string | null | undefined): string | null {
     return fromParts(wrap12(n + 7), openKey[2].toLowerCase() === 'm' ? 'A' : 'B')
   }
 
-  // Nota: A, Am, F#m, Bb Major, G Minor
   const note = /^([a-g])\s*([#♯b♭]?)\s*(.*)$/i.exec(text)
   if (!note) return null
 
@@ -139,7 +108,6 @@ export function toCamelot(raw: string | null | undefined): string | null {
   return fromParts(numberFromPitch(pitch, minor), minor ? 'A' : 'B')
 }
 
-/** Camelot kodunun numarası; kod geçersizse `null`. */
 export function keyNumber(code: string | null | undefined): number | null {
   if (!code) return null
   const parsed = /^(\d{1,2})([AB])$/.exec(code)
@@ -148,7 +116,6 @@ export function keyNumber(code: string | null | undefined): number | null {
   return n >= 1 && n <= 12 ? n : null
 }
 
-/** Camelot kodunun halkası: `A` minör, `B` majör. */
 export function keyLetter(code: string | null | undefined): 'A' | 'B' | null {
   if (!code) return null
   const parsed = /^\d{1,2}([AB])$/.exec(code)
@@ -157,26 +124,15 @@ export function keyLetter(code: string | null | undefined): 'A' | 'B' | null {
 
 export interface RelationInfo {
   id: RelationId
-  /** Arayüzde görünen kısa etiket. */
   label: string
-  /** Ne zaman işe yaradığını anlatan ipucu. */
   hint: string
-  /** 0–100 arası harmonik yakınlık puanı; öneri sıralamasının çekirdeği. */
   score: number
   tone: Tone
-  /** Süzgeçte baştan açık gelsin mi. */
   defaultOn: boolean
-  /** Hedef numaranın kaynaktan kaç adım ileride olduğu (mod 12). */
   offset: number
-  /** Halka (A/B) değişiyor mu. */
   flip: boolean
 }
 
-/**
- * İlişki tablosu. Hem `relation()` hem `compatibleKeys()` buradan okuyor;
- * bir ilişkinin tanımı tek yerde dursun diye offset/flip de tabloda.
- * Dizi sırası öneri listesindeki grup sırası: en güvenli hamle başta.
- */
 export const RELATIONS: RelationInfo[] = [
   {
     id: 'same',
@@ -262,20 +218,14 @@ export const RELATIONS: RelationInfo[] = [
 
 const RELATION_BY_ID = new Map(RELATIONS.map((item) => [item.id, item]))
 
-/** İlişki kimliğinden tablo satırı. */
 export function relationInfo(id: RelationId): RelationInfo | null {
   return RELATION_BY_ID.get(id) ?? null
 }
 
-/** Varsayılan olarak açık gelen ilişkiler. */
 export const DEFAULT_RELATIONS: RelationId[] = RELATIONS.filter((item) => item.defaultOn).map(
   (item) => item.id,
 )
 
-/**
- * İki Camelot kodu arasındaki ilişki. Tabloda karşılığı yoksa `null` —
- * yani bu geçiş harmonik olarak savunulabilir değil.
- */
 export function relation(
   from: string | null | undefined,
   to: string | null | undefined,
@@ -297,10 +247,6 @@ export interface CompatibleKey {
   relation: RelationId
 }
 
-/**
- * Verilen key'den izin verilen ilişkilerle gidilebilecek key'ler,
- * `RELATIONS` sırasında.
- */
 export function compatibleKeys(
   from: string | null | undefined,
   allowed: RelationId[],
@@ -317,13 +263,11 @@ export function compatibleKeys(
   }))
 }
 
-/** Key'in sabit rengi. Geçersiz kodda nötr gri — arayüz yine de bir şey boyayabilsin. */
 export function keyColor(code: string | null | undefined): string {
   const number = keyNumber(code)
   return number === null ? '#6b7280' : KEY_COLORS[number]
 }
 
-/** `8A` → `8A · Am`. Kod tanınmıyorsa ham metni geri verir. */
 export function keyLabel(code: string | null | undefined): string {
   if (!code) return '—'
   const name = NOTE_NAME[code]

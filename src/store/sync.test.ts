@@ -231,7 +231,6 @@ describe('createSaver', () => {
 
     expect(adopted[0].setlists[0].name).toBe('sunucudaki')
     expect(statuses).toEqual(['saving', 'conflict'])
-    // Sessizce üzerine yazılmadı: yerel kayıt da sunucudakine güncellendi.
     expect(readLocal()?.setlists[0].name).toBe('sunucudaki')
   })
 

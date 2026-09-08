@@ -15,10 +15,6 @@ import {
   wrap12,
 } from './camelot'
 
-/**
- * Nota adından perde sınıfı. Bilerek `camelot.ts`'ten bağımsız yazıldı:
- * ilişki tanımlarını doğrulayan testler, doğruladıkları koda dayanmasın.
- */
 function pitchOf(noteName: string): number {
   const parsed = /^([A-G])([#b]?)(m?)$/.exec(noteName)
   if (!parsed) throw new Error(`nota adı çözülemedi: ${noteName}`)
@@ -42,8 +38,6 @@ describe('wrap12', () => {
 })
 
 describe('ilişkilerin yarım ton karşılığı', () => {
-  // Bir numara = bir beşli = 7 yarım ton. Aşağıdaki tablo bu iddianın sonucu;
-  // her key çifti için perde sınıfı ayrıca hesaplanıp karşılaştırılıyor.
   const expectedGap: Record<string, number> = {
     same: 0,
     up: 7,
@@ -63,7 +57,6 @@ describe('ilişkilerin yarım ton karşılığı', () => {
         checked += 1
       }
     }
-    // 24 key × 6 aynı halka ilişkisi
     expect(checked).toBe(144)
   })
 
@@ -90,7 +83,6 @@ describe('toCamelot', () => {
   })
 
   it('büyük/küçük harf ve boşluk umursamaz', () => {
-    // Beatport "G Minor" yazıyor; regex'te `i` bayrağı olmazsa katalog boş çıkardı.
     expect(toCamelot('G Minor')).toBe('6A')
     expect(toCamelot('g minor')).toBe('6A')
     expect(toCamelot('  Gm  ')).toBe('6A')
@@ -106,7 +98,6 @@ describe('toCamelot', () => {
   })
 
   it('Open Key biçimini kabul eder', () => {
-    // Open Key 1m = Am = Camelot 8A
     expect(toCamelot('1m')).toBe('8A')
     expect(toCamelot('1d')).toBe('8B')
     expect(toCamelot('12m')).toBe('7A')
@@ -221,7 +212,6 @@ describe('yardımcılar', () => {
   it('RELATIONS tablosu tekil ve eksiksiz', () => {
     expect(RELATIONS).toHaveLength(8)
     expect(new Set(RELATIONS.map((item) => item.id)).size).toBe(8)
-    // Aynı offset+flip ikilisi iki ilişkiye düşerse relation() belirsizleşir.
     expect(new Set(RELATIONS.map((item) => `${item.offset}/${item.flip}`)).size).toBe(8)
     expect(relationInfo('same')?.score).toBe(100)
     expect(relationInfo('semiDown')?.defaultOn).toBe(false)

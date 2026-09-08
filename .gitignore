@@ -15,6 +15,6 @@ npm-debug.log*
 !.vscode/extensions.json
 .idea
 
-# Çalışma kuralları ve inşa planı yerel kalsın, repoya girmesin.
+# local working notes
 CLAUDE.md
 BUILD-PLAN.md

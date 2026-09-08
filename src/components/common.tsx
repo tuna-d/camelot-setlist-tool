@@ -1,5 +1,3 @@
-/** Her yerde kullanılan küçük bileşenler. */
-
 import { useEffect, useRef } from 'react'
 import type { ReactNode } from 'react'
 import { NOTE_NAME, keyColor } from '../lib/camelot'
@@ -26,14 +24,9 @@ export interface DialogProps {
   title: string
   onClose: () => void
   children: ReactNode
-  /** Başlık satırının sağında duracak ek düğmeler. */
   actions?: ReactNode
 }
 
-/**
- * `<dialog>` üstünde ince bir sarmalayıcı: odak tuzağı ve Esc'i tarayıcı hallediyor.
- * Effect yalnızca DOM'u açıp kapatıyor — içinde `setState` yok.
- */
 export function Dialog({ open, title, onClose, children, actions }: DialogProps) {
   const ref = useRef<HTMLDialogElement>(null)
 
@@ -63,7 +56,6 @@ function searchTerm(track: Track): string {
   return [track.artist, track.title].filter(Boolean).join(' ')
 }
 
-/** Parçayı dışarıda aramak için kısayollar — kütüphanede yoksa buradan bulunur. */
 export function TrackLinks({ track }: { track: Track }) {
   const term = encodeURIComponent(searchTerm(track))
   return (
@@ -88,7 +80,6 @@ export function TrackLinks({ track }: { track: Track }) {
   )
 }
 
-/** YouTube arama adresi — setin tamamını toplu açan düğme de bunu kullanıyor. */
 export function youtubeSearchUrl(track: Track): string {
   return `https://www.youtube.com/results?search_query=${encodeURIComponent(searchTerm(track))}`
 }

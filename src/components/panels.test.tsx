@@ -7,8 +7,8 @@ import { SetlistPanel } from './SetlistPanel'
 import { SuggestPanel } from './SuggestPanel'
 import type { Catalog, Track } from '../lib/types'
 
-// zustand sunucu render'ında **başlangıç** durumunu veriyor; panelleri mağaza
-// dolduktan sonra görebilmek için gerçek istemci render'ı yapıyoruz.
+// zustand serves the initial state during server rendering, so panels are
+// mounted on a real client root instead.
 ;(globalThis as unknown as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true
 
 async function render(node: ReactElement): Promise<string> {
@@ -76,7 +76,6 @@ describe('SetlistPanel', () => {
   it('uyumlu geçişte ilişki etiketi, uyumsuzda uyarı gösterir', async () => {
     useStore.getState().addTrack(track({ id: '1', key: '8A', bpm: 120 }))
     useStore.getState().addTrack(track({ id: '2', key: '9A', bpm: 122 }))
-    // 9A → 12A çemberde tanımlı bir ilişkiye düşmüyor: köprü kırmızı uyarı vermeli.
     useStore.getState().addTrack(track({ id: '3', key: '12A', bpm: 122 }))
     const html = await render(<SetlistPanel />)
     expect(html).toContain('+1 · enerji ↑')
@@ -127,7 +126,6 @@ describe('SuggestPanel', () => {
     const html = await render(<SuggestPanel />)
     expect(html).toContain('Aynı key · 1')
     expect(html).toContain('+1 · enerji ↑ · 1')
-    // 2A referansla uyumsuz: hiçbir grupta olmamalı.
     expect(html).not.toContain('Parça c3')
   })
 

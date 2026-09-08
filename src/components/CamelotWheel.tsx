@@ -1,11 +1,3 @@
-/**
- * Camelot çemberi — 24 dilimli SVG.
- *
- * Amacı bakışta tek soruya cevap vermek: "buradan nereye gidebilirim?"
- * Aktif key beyaz konturlu, izin verilen ilişkiler kendi ton rengiyle,
- * gerisi sönük. Dış halka B (majör), iç halka A (minör); numaralar dışta.
- */
-
 import { NOTE_NAME, compatibleKeys, keyColor, relationInfo } from '../lib/camelot'
 import { toneColor } from '../lib/ui'
 import type { RelationId } from '../lib/types'
@@ -25,7 +17,6 @@ function polar(cx: number, cy: number, radius: number, degrees: number): [number
   ]
 }
 
-/** Halka dilimi: dış yay ileri, iç yay geri çizilir. */
 function sectorPath(
   cx: number,
   cy: number,
@@ -54,7 +45,6 @@ export function CamelotWheel({ active, allowed, onSelect, size = 220 }: CamelotW
 
   const slices = []
   for (let number = 1; number <= 12; number += 1) {
-    // 1 numara tepede dursun: dilim −90°'de başlar, 30° genişler.
     const from = (number - 1) * 30 - 105
     const to = from + 30
 

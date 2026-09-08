@@ -1,11 +1,3 @@
-/**
- * Öneri paneli: referans parça, süzgeçler ve ilişkiye göre gruplanmış adaylar.
- *
- * Parça verisi hiçbir yerde HTML attribute'una gömülmüyor — düğmeler diziden
- * okunan parçayı kapanışla taşıyor. (`Becca's Booty` gibi bir başlık attribute'u
- * erken kapatıp düğmeyi sessizce kırıyordu.)
- */
-
 import { useMemo } from 'react'
 import { RELATIONS } from '../lib/camelot'
 import {
@@ -27,7 +19,6 @@ import {
 import { CamelotWheel } from './CamelotWheel'
 import { Bpm, KeyChip, TrackLinks } from './common'
 
-/** Listede gösterilecek en fazla aday: daha uzun liste seçimi kolaylaştırmıyor. */
 const SUGGESTION_LIMIT = 60
 
 export function SuggestPanel() {

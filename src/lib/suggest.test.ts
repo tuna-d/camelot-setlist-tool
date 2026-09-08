@@ -40,7 +40,6 @@ describe('bpmDelta', () => {
   })
 
   it('yarım tempoda da işaret doğru', () => {
-    // 63 BPM'lik aday ikiye katlanınca 126: referanstan 2 hızlı.
     expect(bpmDelta(124, 63).signed).toBe(2)
   })
 })
@@ -99,7 +98,6 @@ describe('scoreCandidate', () => {
   })
 
   it('tolerans dışındaki tempoyu eler', () => {
-    // %6 tolerans → 124 ± 7.44
     expect(scoreCandidate(ref, track({ id: 'a', bpm: 131 }), 6, ['same'])).not.toBeNull()
     expect(scoreCandidate(ref, track({ id: 'b', bpm: 132 }), 6, ['same'])).toBeNull()
   })
@@ -131,8 +129,6 @@ describe('suggest', () => {
   ]
 
   it('puana göre sıralı döner', () => {
-    // Tempoyu tam tutturan "+1" (96.0), tempoyu 5 BPM kaçıran "aynı key"i (77.2) geçiyor:
-    // ağırlıklar key'den yana ama tempo farkı da gerçekten tartıyor.
     const list = suggest(ref, pool, { tolerance: 6, relations: [...allRelations] })
     expect(list.map((item) => item.track.id)).toEqual(['1', '2', '3'])
   })

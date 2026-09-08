@@ -89,7 +89,6 @@ describe('setlist düzenleme', () => {
   })
 
   it('kütüphanede olmayan parçayı extras’a yazar', () => {
-    // Elle girilen parça bir yerde yaşamazsa sayfa yenilenince satır çözülemez.
     const manual = track({ id: 'm1', title: 'Elle girilen', source: 'manual' })
     useStore.getState().addTrack(manual)
     expect(useStore.getState().extras).toHaveLength(1)
@@ -173,7 +172,6 @@ describe('playlist süzgeci', () => {
     store.selectPlaylist('p1')
 
     expect(selectLibrary(useStore.getState()).map((item) => item.id)).toEqual(['1', '2'])
-    // Kayıt sırasında süzülmüş liste yazılırsa koleksiyonun gerisi kaybolur.
     expect(useStore.getState().exportState().library).toHaveLength(3)
     expect(useStore.getState().library).toHaveLength(3)
   })

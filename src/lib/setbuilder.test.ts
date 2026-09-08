@@ -7,7 +7,6 @@ import type { RelationId, Track } from './types'
 
 const RELATIONS_ON: RelationId[] = ['same', 'up', 'down', 'relative', 'boost']
 
-/** 24 key × 5 tempo × 7 sanatçı: gerçek bir kütüphane gibi çeşitli ama tahmin edilebilir. */
 function makePool(): Track[] {
   const pool: Track[] = []
   let index = 0
@@ -73,7 +72,6 @@ describe('targetBpm', () => {
     const peak = targetBpm('arc', 120, 10, 7, n)
     expect(peak).toBeCloseTo(130, 5)
     expect(targetBpm('arc', 120, 10, 10, n)).toBeCloseTo(125, 5)
-    // Tepe gerçekten tepe: iki yanındaki değerler daha düşük.
     expect(targetBpm('arc', 120, 10, 6, n)).toBeLessThan(peak)
     expect(targetBpm('arc', 120, 10, 8, n)).toBeLessThan(peak)
   })

@@ -1,24 +1,6 @@
-/**
- * rekordbox koleksiyon XML'ini okur ve m3u8 dışa aktarımı yapar.
- *
- * Beklenen yapı:
- * ```
- * DJ_PLAYLISTS
- *   PRODUCT  Version
- *   COLLECTION
- *     TRACK  TrackID Name Artist Genre TotalTime AverageBpm Tonality Location
- *   PLAYLISTS
- *     NODE Type="0" (klasör) | Type="1" (playlist) → TRACK Key="TrackID"
- * ```
- *
- * Ağaçta `querySelector` yerine `childNodes` üzerinde yürünüyor: hem daha hızlı,
- * hem de XML okuyucusu enjekte edilebildiği için testler tarayıcıdan bağımsız kalıyor.
- */
-
 import { toCamelot } from './camelot'
 import type { Playlist, Track } from './types'
 
-/** Kullanıcıya ne olduğunu **ve** ne yapacağını söyleyen ayrıştırma hatası. */
 export class RekordboxParseError extends Error {
   constructor(message: string) {
     super(message)
@@ -26,25 +8,20 @@ export class RekordboxParseError extends Error {
   }
 }
 
-/** Metinden DOM üreten fonksiyon; testler kendi okuyucusunu verebilsin diye dışarıdan alınır. */
 export type XmlParser = (text: string) => Document
 
 export interface ImportStats {
-  /** Koleksiyondaki TRACK etiketi sayısı (atlananlar dahil). */
   total: number
-  /** `TrackID`'si olmadığı için atlanan parça sayısı. */
   skipped: number
   missingBpm: number
   missingKey: number
   missingLocation: number
-  /** Playlistlerde geçen ama koleksiyonda bulunmayan parça kimliği sayısı. */
   ghostReferences: number
 }
 
 export interface RekordboxLibrary {
   tracks: Track[]
   playlists: Playlist[]
-  /** `PRODUCT` etiketindeki rekordbox sürümü; yoksa `null`. */
   version: string | null
   stats: ImportStats
 }
@@ -60,7 +37,6 @@ function defaultParseXml(text: string): Document {
   return new DOMParser().parseFromString(text, 'application/xml')
 }
 
-/** Bir düğümün doğrudan çocuğu olan elementler, istenirse etiket adına göre süzülmüş. */
 function childElements(node: Node, name?: string): Element[] {
   const out: Element[] = []
   const children = node.childNodes
@@ -73,12 +49,10 @@ function childElements(node: Node, name?: string): Element[] {
   return out
 }
 
-/** İlk eşleşen doğrudan çocuk. */
 function firstChild(node: Node, name: string): Element | null {
   return childElements(node, name)[0] ?? null
 }
 
-/** Okuyucunun ürettiği hata elementi kökte de olabilir, kökün altında da. */
 function hasParserError(doc: Document): boolean {
   const root = doc.documentElement
   if (!root) return true
@@ -90,7 +64,6 @@ function attr(element: Element, name: string): string {
   return element.getAttribute(name) ?? ''
 }
 
-/** Ondalıklı BPM korunur (rekordbox 128.02 yazabiliyor); 0 ve boş değer `null` sayılır. */
 function parseBpm(raw: string): number | null {
   if (!raw.trim()) return null
   const value = Number.parseFloat(raw)
@@ -102,10 +75,6 @@ function parseDuration(raw: string): number | undefined {
   return Number.isFinite(value) && value > 0 ? value : undefined
 }
 
-/**
- * `file://localhost/C:/Muzik/x.mp3` gibi yüzde kodlu adresi yerel yola çevirir.
- * Windows'ta sürücü harfinden önceki `/` atılır, yoksa yol açılamaz.
- */
 export function decodeLocation(raw: string): string | undefined {
   if (!raw.trim()) return undefined
   let path = raw.trim()
@@ -113,7 +82,7 @@ export function decodeLocation(raw: string): string | undefined {
   try {
     path = decodeURIComponent(path)
   } catch {
-    // Bozuk yüzde kodlaması: yolu ham hâliyle bırak, parça yine de listelensin.
+    // Broken percent-encoding: keep the raw path so the track still shows up.
   }
   if (/^\/[A-Za-z]:/.test(path)) path = path.slice(1)
   return path || undefined
@@ -127,7 +96,6 @@ function fileExtension(path: string | undefined): string | undefined {
 
 function readTrack(element: Element): Track | null {
   const id = attr(element, 'TrackID').trim()
-  // Kimliği olmayan parçaya playlistlerden atıf yapılamaz; sessizce atlanır.
   if (!id) return null
 
   const location = decodeLocation(attr(element, 'Location'))
@@ -147,7 +115,6 @@ function readTrack(element: Element): Track | null {
   }
 }
 
-/** İç içe klasörleri `"Klasör / Alt playlist"` diye düzleştirerek playlistleri toplar. */
 function collectPlaylists(
   node: Element,
   trail: string[],
@@ -158,7 +125,6 @@ function collectPlaylists(
   for (const child of childElements(node, 'NODE')) {
     const name = attr(child, 'Name').trim()
     if (attr(child, 'Type') === '0') {
-      // ROOT düğümü rekordbox'ın kabuğu, kullanıcıya gösterilecek bir isim değil.
       const nextTrail = name && name.toUpperCase() !== 'ROOT' ? [...trail, name] : trail
       collectPlaylists(child, nextTrail, known, out, counters)
       continue
@@ -169,7 +135,6 @@ function collectPlaylists(
       const key = attr(entry, 'Key').trim()
       if (!key) continue
       if (!known.has(key)) {
-        // Koleksiyonda karşılığı olmayan atıf: rekordbox silinen parçaları böyle bırakıyor.
         counters.ghosts += 1
         continue
       }
@@ -184,10 +149,6 @@ function collectPlaylists(
   }
 }
 
-/**
- * rekordbox XML metnini kütüphaneye çevirir.
- * Dosya beklenen yapıda değilse `RekordboxParseError` fırlatır.
- */
 export function parseRekordboxXml(text: string, parseXml: XmlParser = defaultParseXml): RekordboxLibrary {
   if (typeof text !== 'string' || !text.trim()) {
     throw new RekordboxParseError(
@@ -262,15 +223,10 @@ export function parseRekordboxXml(text: string, parseXml: XmlParser = defaultPar
   }
 }
 
-/** Öneri havuzuna girebilmesi için parçanın hem tempo hem key bilgisi olmalı. */
 export function isUsable(track: Track): boolean {
   return track.bpm !== null && track.key !== null
 }
 
-/**
- * Setlisti m3u8 metnine çevirir. Dosya yolu olmayan parçalar atlanır:
- * katalogdan gelen parçanın diskte karşılığı yok, listeye yazmak CDJ'de hataya düşürür.
- */
 export function toM3u8(tracks: Track[], name: string): string {
   const lines = ['#EXTM3U', `#PLAYLIST:${name}`]
   for (const track of tracks) {

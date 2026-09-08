@@ -1,20 +1,7 @@
-/**
- * İki katmanlı kalıcılık.
- *
- * 1. `localStorage` — her zaman ve anında; sunucu olmasa da çalışsın.
- * 2. `/api/state` — varsa cihazlar arası.
- *
- * Açılışta iki kaydın `savedAt` damgası karşılaştırılır, yeni olan kazanır.
- * Yazarken sunucu daha yeni bir kayıt tutuyorsa `409` döner: o kayıt alınır ve
- * kullanıcıya haber verilir. Sessizce üzerine yazmak, telefonda kurulan seti
- * masaüstündeki eski sekmenin silmesi demek olurdu.
- */
-
 import type { AppState } from '../lib/types'
 import type { SyncState } from './store'
 
 export const STORAGE_KEY = 'camelot-setlist:v1'
-/** Yazma gecikmesi: her tuş vuruşunda sunucuya gitmeyelim. */
 export const SAVE_DELAY = 2500
 const STATE_ENDPOINT = '/api/state'
 
@@ -31,7 +18,6 @@ function headers(): Record<string, string> {
     : { 'content-type': 'application/json' }
 }
 
-/** Dışarıdan gelen her veri şüphelidir: en azından iskeletini doğrula. */
 export function isAppState(value: unknown): value is AppState {
   if (!value || typeof value !== 'object') return false
   const record = value as Record<string, unknown>
@@ -42,7 +28,6 @@ export function isAppState(value: unknown): value is AppState {
   )
 }
 
-/** İki kayıttan damgası yeni olanı seçer; eşitlikte yereli tutar. */
 export function pickNewer(local: AppState | null, remote: AppState | null): AppState | null {
   if (!local) return remote
   if (!remote) return local
@@ -51,7 +36,6 @@ export function pickNewer(local: AppState | null, remote: AppState | null): AppS
 
 function storage(): Storage | null {
   try {
-    // Gizli sekmede ve depolama kapalıyken erişimin kendisi hata atabiliyor.
     return typeof localStorage === 'undefined' ? null : localStorage
   } catch {
     return null
@@ -67,7 +51,6 @@ export function readLocal(): AppState | null {
     const parsed: unknown = JSON.parse(raw)
     return isAppState(parsed) ? parsed : null
   } catch {
-    // Bozuk kayıt: yok saymak, açılışta çökmekten iyi.
     return null
   }
 }
@@ -87,17 +70,15 @@ export function clearLocal(): void {
   try {
     storage()?.removeItem(STORAGE_KEY)
   } catch {
-    // Silinemiyorsa yapacak bir şey yok; çağıran taraf zaten yeni kaydı yazacak.
+    // Storage access itself throws when site data is blocked.
   }
 }
 
 export interface RemoteRead {
   state: AppState | null
-  /** Sunucuya ulaşılamadıysa ne olduğunu anlatan metin. */
   error: string | null
 }
 
-/** Sunucudaki kaydı okur. Sunucu yoksa hata değil, `state: null` döner. */
 export async function readRemote(fetchImpl: FetchLike): Promise<RemoteRead> {
   try {
     const response = await fetchImpl(STATE_ENDPOINT, { headers: headers() })
@@ -120,13 +101,11 @@ export async function readRemote(fetchImpl: FetchLike): Promise<RemoteRead> {
 
 export interface RemoteWrite {
   ok: boolean
-  /** Sunucu daha yeni bir kayıt tutuyorsa `true` ve `remote` dolu gelir. */
   conflict: boolean
   remote: AppState | null
   message: string | null
 }
 
-/** Sunucuya yazar. `409` gelirse sunucudaki kayıt geri döner, üzerine yazılmaz. */
 export async function writeRemote(state: AppState, fetchImpl: FetchLike): Promise<RemoteWrite> {
   try {
     const response = await fetchImpl(STATE_ENDPOINT, {
@@ -135,6 +114,7 @@ export async function writeRemote(state: AppState, fetchImpl: FetchLike): Promis
       body: JSON.stringify(state),
     })
 
+    // 409 means the server holds a newer record: adopt it, never overwrite.
     if (response.status === 409) {
       const body: unknown = await response.json()
       return {
@@ -171,11 +151,6 @@ export interface BootstrapResult {
   sync: SyncState
 }
 
-/**
- * Açılışta yerel ve uzak kayıtları karşılaştırıp yenisini seçer.
- * Uzak kayıt daha yeniyse kullanıcıya söylenir — sessizce değişen bir ekran,
- * kullanıcının kendi setini kaybettiğini sanmasına yol açıyor.
- */
 export async function bootstrap(fetchImpl: FetchLike): Promise<BootstrapResult> {
   const local = readLocal()
   const remote = await readRemote(fetchImpl)
@@ -198,16 +173,13 @@ export async function bootstrap(fetchImpl: FetchLike): Promise<BootstrapResult> 
 
 export interface SaverOptions {
   fetchImpl: FetchLike
-  /** Sunucudaki kayıt daha yeniyse çağrılır; mağaza bu kayda geçmeli. */
   onConflict: (state: AppState) => void
   onSync: (sync: Partial<SyncState>) => void
   delay?: number
 }
 
 export interface Saver {
-  /** Yerele hemen yazar, sunucuya yazmayı geciktirir. */
   save: (state: AppState) => void
-  /** Bekleyen yazmayı hemen yapar. */
   flush: () => Promise<void>
   cancel: () => void
 }

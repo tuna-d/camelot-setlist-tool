@@ -1,8 +1,3 @@
-/**
- * Setlist boyunca tempo çizgisi. Noktalar key rengiyle boyanır:
- * enerjinin nereye gittiği ve keylerin nerede tekrar ettiği aynı bakışta görünsün.
- */
-
 import { keyColor } from '../lib/camelot'
 import { formatBpm } from '../lib/ui'
 
@@ -29,7 +24,6 @@ export function TempoCurve({ points, height = 64 }: TempoCurveProps) {
 
   const min = Math.min(...values)
   const max = Math.max(...values)
-  // Düz sette bile çizgi ortada dursun: aralık sıfırsa yapay bir bant açıyoruz.
   const span = max - min || 4
   const usable = height - PADDING * 2
 

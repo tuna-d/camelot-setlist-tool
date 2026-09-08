@@ -22,26 +22,22 @@ function fakeTrackObjects(count: number) {
   }))
 }
 
-/** 1. strateji: sayfanın kendi verdiği `__NEXT_DATA__` bloğu. */
 function nextDataHtml(count: number): string {
   const payload = JSON.stringify({ props: { pageProps: { tracks: fakeTrackObjects(count) } } })
   return `<html><body><div>liste</div><script id="__NEXT_DATA__" type="application/json">${payload}</script></body></html>`
 }
 
-/** 2. strateji: gömülü JSON — betiğin içinde, kaçışsız. */
 function embeddedJsonHtml(count: number): string {
   const payload = JSON.stringify(fakeTrackObjects(count))
   return `<html><script>window.__DATA__ = {"results": ${payload}};</script></html>`
 }
 
-/** 2. strateji: RSC akışı — veri bir dizenin içinde kaçışlı duruyor. */
 function rscHtml(count: number): string {
   const payload = JSON.stringify(fakeTrackObjects(count))
   const escaped = payload.replace(/"/g, '\\"')
   return `<html><script>self.__next_f.push([1,"3:[\\"$\\",\\"div\\",null,{\\"tracks\\":${escaped}}]\\n"])</script></html>`
 }
 
-/** 3. strateji: düz HTML metni. */
 function plainHtml(count: number): string {
   const rows = Array.from({ length: count }, (_, i) => {
     const key = KEYS[i % KEYS.length]
@@ -57,7 +53,6 @@ describe('scanJsonObjects', () => {
   })
 
   it('dize içindeki süslü parantezi saymaz', () => {
-    // Regex ile kesen bir çıkarıcı burada bozuk JSON üretirdi.
     const text = '{"name":"Set {live} mix","bpm":124}'
     expect(scanJsonObjects(text, '"bpm"')).toEqual([{ name: 'Set {live} mix', bpm: 124 }])
   })
@@ -138,7 +133,6 @@ describe('extractTracks — üç strateji', () => {
   })
 
   it('10’dan az parça bulan stratejiye güvenmez', () => {
-    // __NEXT_DATA__ yalnızca 3 parça veriyor; düz HTML 15 veriyor, o kazanmalı.
     const html = nextDataHtml(3).replace('</body>', `${plainHtml(15)}</body>`)
     const result = extractTracks(html)
     expect(result.strategy).toBe('plain-html')
@@ -245,7 +239,6 @@ describe('validateCatalog', () => {
   })
 
   it('"sayfa yapısı değişti" senaryosunda ok:false döner', () => {
-    // Çıkarım kırıldığında elde birkaç kırıntı kalıyor; bu asla yayına çıkmamalı.
     const broken = extractTracks('<html><body><a href="/track/x/1">X</a></body></html>')
     const result = validateCatalog(broken.tracks, catalogTracks(300))
     expect(result.ok).toBe(false)

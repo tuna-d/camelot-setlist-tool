@@ -1,17 +1,8 @@
-/**
- * Otomatik set kurucu: bir başlangıç parçasından yola çıkıp havuzdan set diziyor.
- *
- * Neden açgözlü değil de ışın araması (beam search): her adımda tek tek en iyi parçayı
- * seçmek, bir sonraki adımda hiç uyumlu aday kalmayan çıkmazlara sokuyor. Aynı anda
- * birkaç kısmi seti canlı tutunca bu sorun kayboluyor.
- */
-
 import { relation, relationInfo } from './camelot'
 import { bpmDelta, trackKey } from './suggest'
 import type { BpmDelta } from './suggest'
 import type { RelationId, Track } from './types'
 
-/** Set boyunca tempo eğrisinin şekli. */
 export type EnergyShape = 'rise' | 'arc' | 'flat' | 'descend'
 
 export interface ShapeInfo {
@@ -27,33 +18,25 @@ export const SHAPES: ShapeInfo[] = [
   { id: 'descend', label: 'İnen', hint: 'Doğrusal yavaşlama — kapanış ve after setleri.' },
 ]
 
-/** Süresi bilinmeyen parça için varsayım: kulüpte bir parça aşağı yukarı 6 dakika. */
 export const ASSUMED_SECONDS = 360
 
-/** Ardışık aynı sanatçıya düşen ceza. */
 const ARTIST_PENALTY = 40
-/** Üst üste üçüncü kez aynı key'e düşen ceza. */
 const KEY_REPEAT_PENALTY = 25
 
 const RELATION_WEIGHT = 0.55
 const CURVE_WEIGHT = 0.45
 
-/** Çok uzun süre isteyen girdilerde döngü sonsuza gitmesin. */
 const MAX_STEPS = 200
 
 export interface BuildOptions {
   seed: Track
   pool: Track[]
-  /** Parça sayısı hedefi. `minutes` ile birlikte verilirse bu kazanır. */
   count?: number
-  /** Dakika hedefi. */
   minutes?: number
   tolerance: number
   relations: RelationId[]
   shape: EnergyShape
-  /** Set boyunca hedeflenen toplam BPM değişimi. */
   bpmSpan: number
-  /** Aynı sanatçının tekrar edebilmesi için gereken en az parça aralığı. */
   artistGap?: number
   beamWidth?: number
   exclude?: Set<string>
@@ -61,27 +44,18 @@ export interface BuildOptions {
 
 export interface BuildStep {
   track: Track
-  /** Bir önceki parçadan bu parçaya geçişin ilişkisi; başlangıç parçasında `null`. */
   relation: RelationId | null
   delta: BpmDelta | null
-  /** Eğrinin bu sırada beklediği tempo. */
   targetBpm: number
 }
 
 export interface BuildResult {
   steps: BuildStep[]
-  /** Havuz yetmediyse ne yapılacağını söyleyen metin, yettiyse `null`. */
   shortfall: string | null
-  /** Hedeflenen parça sayısı. */
   requested: number
   totalSeconds: number
 }
 
-/**
- * Eğrinin `i`. sıradaki hedef temposu.
- * `arc` şeklinde tepe %70'te: gecenin tepesi sonda değil, sondan biraz önce olur;
- * kalan %30'da sadece yarım span geri iner, set tamamen sönmez.
- */
 export function targetBpm(
   shape: EnergyShape,
   start: number,
@@ -126,10 +100,6 @@ interface Candidate {
   score: number
 }
 
-/**
- * Adayın bu adımdaki puanı: ilişki × 0.55 + eğriye uyum × 0.45, eksi cezalar.
- * Eğriye uyum, hedef tempodan sapmanın tolerans penceresine oranı.
- */
 function stepScore(
   state: BeamState,
   cand: Track,
@@ -149,7 +119,6 @@ function stepScore(
   const recent = state.steps.slice(-artistGap)
   if (recent.some((step) => artistOf(step.track) === artistOf(cand))) score -= ARTIST_PENALTY
 
-  // Üst üste üçüncü kez aynı key: harmonik olarak kusursuz ama set tekdüzeleşiyor.
   const lastTwo = state.steps.slice(-2)
   if (lastTwo.length === 2 && lastTwo.every((step) => step.track.key === cand.key)) {
     score -= KEY_REPEAT_PENALTY
@@ -164,10 +133,6 @@ function compareCandidates(a: Candidate, b: Candidate): number {
   return a.track.id.localeCompare(b.track.id)
 }
 
-/**
- * Başlangıç parçasından başlayarak set kurar.
- * Aynı girdi her zaman aynı seti verir: sıralamalarda beraberlik parça kimliğiyle bozulur.
- */
 export function buildSet(opts: BuildOptions): BuildResult {
   const artistGap = opts.artistGap ?? 3
   const beamWidth = Math.max(1, opts.beamWidth ?? 8)
@@ -187,7 +152,6 @@ export function buildSet(opts: BuildOptions): BuildResult {
   const start = opts.seed.bpm ?? 0
   const targetSeconds = opts.minutes ? opts.minutes * 60 : 0
 
-  // Eğrinin uzunluğu baştan bilinmeli; dakika hedefinde ortalama parça süresinden tahmin edilir.
   const averageSeconds =
     usable.length > 0
       ? usable.reduce((total, track) => total + seconds(track), 0) / usable.length
@@ -231,7 +195,6 @@ export function buildSet(opts: BuildOptions): BuildResult {
 
   for (let depth = 1; depth < MAX_STEPS; depth += 1) {
     if (beam.length === 0) break
-    // Hepsi hedefe ulaştıysa ışını olduğu gibi bırak; aşağıdaki son toplama alacak.
     if (beam.every(isComplete)) break
 
     const next: BeamState[] = []
@@ -270,7 +233,6 @@ export function buildSet(opts: BuildOptions): BuildResult {
         continue
       }
 
-      // Ardışık aynı sanatçı yasak; ama başka aday kalmadıysa sete devam etmek daha iyi.
       const withoutRepeat = candidates.filter((item) => artistOf(item.track) !== artistOf(last))
       const usableCandidates = withoutRepeat.length > 0 ? withoutRepeat : candidates
 
@@ -304,7 +266,6 @@ export function buildSet(opts: BuildOptions): BuildResult {
 
   finished.push(...beam)
 
-  // En uzun set kazanır; eşitlikte toplam puan, sonra son parçanın kimliği (kararlılık için).
   finished.sort((a, b) => {
     if (b.steps.length !== a.steps.length) return b.steps.length - a.steps.length
     if (b.score !== a.score) return b.score - a.score

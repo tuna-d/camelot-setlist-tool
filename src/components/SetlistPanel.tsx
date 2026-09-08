@@ -1,11 +1,3 @@
-/**
- * Setlist paneli: sekmeler, sıralama, geçiş kalitesi ve dışa aktarım.
- *
- * Mağazadan seçici kullanmadan tüm durumu alıyoruz (`useStore()`): bu uygulama
- * tek kullanıcılık ve küçük; her seçici için ayrı abonelik kurmak, türetilmiş
- * dizilerin her render'da yeniden üretilmesi yüzünden gereksiz karmaşa çıkarıyor.
- */
-
 import { useMemo, useState } from 'react'
 import { relation, relationInfo } from '../lib/camelot'
 import { toM3u8 } from '../lib/rekordbox'
@@ -20,7 +12,6 @@ import { Bpm, KeyChip, TrackLinks, youtubeSearchUrl } from './common'
 import { TempoCurve } from './TempoCurve'
 import type { Track } from '../lib/types'
 
-/** Aynı anda açılacak sekme sayısı: tarayıcılar fazlasını engelliyor. */
 const MAX_YOUTUBE_TABS = 8
 
 function setlistText(tracks: Track[]): string {
@@ -32,7 +23,6 @@ function setlistText(tracks: Track[]): string {
     .join('\n')
 }
 
-/** İki parça arasındaki geçişin okunabilir özeti; uyumsuzsa kırmızı. */
 function TransitionBridge({ from, to, tolerance }: { from: Track; to: Track; tolerance: number }) {
   const id = relation(from.key, to.key)
   const info = id ? relationInfo(id) : null
@@ -67,6 +57,7 @@ export interface SetlistPanelProps {
 }
 
 export function SetlistPanel({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProps) {
+  // Whole-state subscription on purpose: derived lists would break per-selector caching.
   const state = useStore()
   const [dragIndex, setDragIndex] = useState<number | null>(null)
   const [notice, setNotice] = useState<string | null>(null)

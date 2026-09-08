@@ -62,7 +62,6 @@ describe('localSearch', () => {
   })
 
   it('çok kelimeli sorguda her kelime geçmeli', () => {
-    // "deniz" sanatçıda, "kum" başlıkta: ikisi de geçtiği için yalnız 6 kalır.
     expect(localSearch('deniz kum', pool).map((item) => item.id)).toEqual(['6'])
     expect(localSearch('deniz olmayan', pool)).toEqual([])
   })
@@ -73,7 +72,6 @@ describe('localSearch', () => {
 
   it('kelime başı eşleşmesi içinde geçmesini yener', () => {
     const list = localSearch('rapture', pool).map((item) => item.id)
-    // İkisi de kelime başı; kısa başlık önce gelir, ama ikisi de listede.
     expect(list).toContain('3')
     expect(list).toContain('4')
     expect(list[0]).toBe('4')

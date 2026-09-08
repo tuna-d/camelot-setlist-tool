@@ -1,9 +1,3 @@
-/**
- * Arayüzün saf yardımcıları — React'e ve DOM'a dokunmaz.
- * İlişki renklerinin tek kaynağı burası; CSS'te ikinci bir kopya tutulmuyor,
- * bileşenler rengi satır içi stil olarak veriyor.
- */
-
 import type { Tone } from './types'
 
 const TONE_COLORS: Record<Tone, string> = {
@@ -15,12 +9,10 @@ const TONE_COLORS: Record<Tone, string> = {
   risk: '#f2545b',
 }
 
-/** İlişki tonunun rengi. Bilinmeyen tonda nötr gri döner. */
 export function toneColor(tone: Tone | null | undefined): string {
   return tone ? (TONE_COLORS[tone] ?? TONE_COLORS.neutral) : TONE_COLORS.neutral
 }
 
-/** Saniyeyi `4:12` biçimine çevirir; bilinmiyorsa tire. */
 export function formatDuration(seconds: number | null | undefined): string {
   if (typeof seconds !== 'number' || !Number.isFinite(seconds) || seconds <= 0) return '—'
   const total = Math.round(seconds)
@@ -28,7 +20,6 @@ export function formatDuration(seconds: number | null | undefined): string {
   return `${minutes}:${String(total % 60).padStart(2, '0')}`
 }
 
-/** Toplam süreyi `1 sa 24 dk` biçiminde yazar. */
 export function formatTotal(seconds: number): string {
   if (!Number.isFinite(seconds) || seconds <= 0) return '0 dk'
   const minutes = Math.round(seconds / 60)
@@ -36,7 +27,6 @@ export function formatTotal(seconds: number): string {
   return hours > 0 ? `${hours} sa ${minutes % 60} dk` : `${minutes} dk`
 }
 
-/** BPM'i sütunda hizalanacak biçimde yazar: tam sayı ise ondalık gösterme. */
 export function formatBpm(bpm: number | null | undefined): string {
   if (typeof bpm !== 'number' || !Number.isFinite(bpm)) return '—'
   return Number.isInteger(bpm) ? String(bpm) : bpm.toFixed(1)

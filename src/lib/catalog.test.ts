@@ -5,7 +5,6 @@ import type { Catalog, Track } from './types'
 
 const KEYS = ['G Minor', 'A Minor', 'C Major', 'F# Minor']
 
-/** Her tür sayfası kendi başlıklarını üretsin: imza tekilleştirmesi türleri birbirine karıştırmasın. */
 function pageFor(url: string, count = 15): string {
   const slug = url.split('/')[4]
   const tracks = Array.from({ length: count }, (_, i) => ({
@@ -82,7 +81,6 @@ describe('refreshCatalog', () => {
     expect(result.ok).toBe(false)
     expect(result.catalog).toBe(previous)
     expect(result.validation.reasons.length).toBeGreaterThan(0)
-    // Aday yine de incelenebilsin diye duruyor.
     expect(result.candidate.tracks).toEqual([])
   })
 

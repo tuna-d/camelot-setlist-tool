@@ -1,11 +1,3 @@
-/**
- * Uygulama mağazası (zustand).
- *
- * Seçiciler bilerek saf fonksiyon: React dışında da çağrılabiliyorlar, testleri ucuz.
- * Playlist süzgeci yalnızca görünümü daraltır — `library` alanında **tam koleksiyon**
- * durmaya devam eder, yoksa sayfa yenilenince koleksiyonun geri kalanı kaybolurdu.
- */
-
 import { create } from 'zustand'
 import { DEFAULT_RELATIONS } from '../lib/camelot'
 import { DEFAULT_TOLERANCE } from '../lib/suggest'
@@ -24,13 +16,11 @@ export type SyncStatus = 'idle' | 'saving' | 'saved' | 'offline' | 'conflict' | 
 
 export interface SyncState {
   status: SyncStatus
-  /** Kullanıcıya gösterilecek metin; sorun varsa ne yapılacağını da söyler. */
   message: string | null
   savedAt: number | null
 }
 
 export interface StoreState extends AppState {
-  /** Katalog kalıcı duruma yazılmaz: büyük ve her açılışta tazeleniyor. */
   catalog: Catalog | null
   sync: SyncState
 
@@ -75,7 +65,6 @@ export function emptySetlist(name: string): Setlist {
   return { id: newId('set'), name, entries: [], createdAt: Date.now() }
 }
 
-/** Kalıcı kılınacak alanların başlangıç değerleri. */
 export function initialAppState(): AppState {
   const set = emptySetlist('Set 1')
   return {
@@ -94,7 +83,6 @@ export function initialAppState(): AppState {
   }
 }
 
-/** Aktif setlisti değiştiren eylemler için ortak sarmalayıcı. */
 function updateActive(state: StoreState, change: (setlist: Setlist) => Setlist): Partial<StoreState> {
   const setlists = state.setlists.map((setlist) =>
     setlist.id === state.activeId ? change(setlist) : setlist,
@@ -150,7 +138,6 @@ export const useStore = create<StoreState>((set, get) => ({
   removeSetlist: (id) =>
     set((state) => {
       const rest = state.setlists.filter((setlist) => setlist.id !== id)
-      // Son setlist de silinirse boş bir tane bırak: uygulamanın setlistsiz hâli yok.
       const setlists = rest.length > 0 ? rest : [emptySetlist('Set 1')]
       const activeId = setlists.some((setlist) => setlist.id === state.activeId)
         ? state.activeId
@@ -167,8 +154,8 @@ export const useStore = create<StoreState>((set, get) => ({
         (state.catalog?.tracks.some((item) => item.id === track.id) ?? false) ||
         state.extras.some((item) => item.id === track.id)
       return {
-        // Kütüphanede ve katalogda olmayan parça `extras`ta yaşamalı, yoksa
-        // sayfa yenilenince setlistteki satır çözülemez hâle gelir.
+        // Tracks outside library and catalog must live here or the entry
+        // cannot be resolved after a reload.
         extras: known ? state.extras : [...state.extras, track],
         ...updateActive(state, (setlist) => ({
           ...setlist,
@@ -230,8 +217,8 @@ export const useStore = create<StoreState>((set, get) => ({
 
   exportState: () => {
     const state = get()
+    // Always persist the full collection, never the playlist-filtered view.
     return {
-      // Playlist seçiliyken bile tam koleksiyon yazılır.
       library: state.library,
       extras: state.extras,
       playlists: state.playlists,
@@ -251,7 +238,6 @@ export const useStore = create<StoreState>((set, get) => ({
     set((state) => {
       const setlists =
         incoming.setlists && incoming.setlists.length > 0 ? incoming.setlists : state.setlists
-      // Bozuk ya da eski bir aktif kimlikle gelen kayıt ilk sete düşsün, boş ekrana değil.
       const activeId = setlists.some((setlist) => setlist.id === incoming.activeId)
         ? incoming.activeId!
         : setlists[0].id
@@ -274,13 +260,10 @@ export const useStore = create<StoreState>((set, get) => ({
   setSync: (sync) => set((state) => ({ sync: { ...state.sync, ...sync } })),
 }))
 
-// ——— Seçiciler ———
-
 export function selectActive(state: StoreState): Setlist {
   return state.setlists.find((setlist) => setlist.id === state.activeId) ?? state.setlists[0]
 }
 
-/** Kimliğinden parça: kütüphane, katalog ve elle eklenenler sırasıyla aranır. */
 export function selectTrack(state: StoreState, id: string): Track | null {
   return (
     state.library.find((track) => track.id === id) ??
@@ -290,7 +273,6 @@ export function selectTrack(state: StoreState, id: string): Track | null {
   )
 }
 
-/** Aktif setlistin parçaları, sıralı; çözülemeyen kimlikler atlanır. */
 export function selectEntries(state: StoreState): Track[] {
   const active = selectActive(state)
   const out: Track[] = []
@@ -301,7 +283,6 @@ export function selectEntries(state: StoreState): Track[] {
   return out
 }
 
-/** Önerilerin dayandığı parça: imleçteki, yoksa setin sonundaki. */
 export function selectReference(state: StoreState): Track | null {
   const entries = selectEntries(state)
   if (entries.length === 0) return null
@@ -309,7 +290,6 @@ export function selectReference(state: StoreState): Track | null {
   return entries[index]
 }
 
-/** Playlist seçiliyse yalnızca onun parçaları; tam koleksiyon `state.library`de kalır. */
 export function selectLibrary(state: StoreState): Track[] {
   if (!state.playlistId) return state.library
   const playlist = state.playlists.find((item) => item.id === state.playlistId)
@@ -318,12 +298,10 @@ export function selectLibrary(state: StoreState): Track[] {
   return state.library.filter((track) => wanted.has(track.id))
 }
 
-/** Önerilerin çekileceği havuz. */
 export function selectPool(state: StoreState): Track[] {
   return state.poolSource === 'library' ? selectLibrary(state) : (state.catalog?.tracks ?? [])
 }
 
-/** Sette zaten olan parçalar bir daha önerilmesin: hem kimlik hem imza elenir. */
 export function selectExclude(state: StoreState): Set<string> {
   const out = new Set<string>()
   for (const track of selectEntries(state)) {
@@ -333,7 +311,6 @@ export function selectExclude(state: StoreState): Set<string> {
   return out
 }
 
-/** Havuzdaki türler, alfabetik — tür çipleri bunu gösterir. */
 export function selectGenres(state: StoreState): string[] {
   const found = new Set<string>()
   for (const track of selectPool(state)) {

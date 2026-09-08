@@ -41,7 +41,6 @@ describe('Bpm', () => {
 describe('TrackLinks', () => {
   it('Beatport ve YouTube aramalarını kurar', () => {
     const html = renderToStaticMarkup(<TrackLinks track={track} />)
-    // Kesme işareti React tarafından kaçırılıyor: attribute erken kapanmıyor.
     expect(html).toContain('beatport.com/search?q=Kaya%20Becca&#x27;s%20Booty')
     expect(html).toContain('youtube.com/results?search_query=')
   })
@@ -66,10 +65,9 @@ describe('CamelotWheel', () => {
   })
 
   it('izin verilen ilişkiler kendi ton rengiyle boyanır', () => {
-    expect(html).toContain(toneColor('energy')) // +1
-    expect(html).toContain(toneColor('calm')) // −1
-    expect(html).toContain(toneColor('color')) // relatif
-    // Kapalı ilişki sönük kalır.
+    expect(html).toContain(toneColor('energy'))
+    expect(html).toContain(toneColor('calm'))
+    expect(html).toContain(toneColor('color'))
     expect(html).toContain('bu ilişki kapalı')
   })
 

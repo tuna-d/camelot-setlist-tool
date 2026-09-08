@@ -9,7 +9,6 @@ import {
 } from './rekordbox'
 import type { Track } from './types'
 
-/** Testlerdeki okuyucu da enjekte ediliyor: üretimdeki varsayılandan bağımsız kalsın. */
 const parseXml = (text: string): Document => new DOMParser().parseFromString(text, 'application/xml')
 
 function parse(text: string) {
@@ -26,12 +25,11 @@ describe('parseRekordboxXml — örnek koleksiyon', () => {
   })
 
   it('üç Tonality biçimini de çözer', () => {
-    // Nota, Camelot ve Open Key aynı dosyada karışık gelebiliyor.
-    expect(library.tracks[0].key).toBe('8A') // "Am"
-    expect(library.tracks[1].key).toBe('8B') // "8B"
-    expect(library.tracks[2].key).toBe('9A') // "2m"
-    expect(library.tracks[3].key).toBe('11A') // "F#m"
-    expect(library.tracks[4].key).toBeNull() // boş
+    expect(library.tracks[0].key).toBe('8A')
+    expect(library.tracks[1].key).toBe('8B')
+    expect(library.tracks[2].key).toBe('9A')
+    expect(library.tracks[3].key).toBe('11A')
+    expect(library.tracks[4].key).toBeNull()
   })
 
   it('ondalıklı BPM korunur, sıfır BPM boş sayılır', () => {
@@ -61,7 +59,6 @@ describe('parseRekordboxXml — örnek koleksiyon', () => {
       'Kulüp / Açılış',
       'Favoriler',
     ])
-    // 99 numaralı parça koleksiyonda yok, listeye girmemeli.
     expect(library.playlists[0].trackIds).toEqual(['1', '2'])
     expect(library.playlists[1].trackIds).toEqual(['3', '4', '5'])
     expect(library.stats.ghostReferences).toBe(1)
