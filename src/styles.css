@@ -1,0 +1,309 @@
+/*
+ * Tasarım sistemi — bilinçli olarak tek tema.
+ * rekordbox ve Traktor koyu; bu araç da kabin işi, karanlık bir odada açılıyor.
+ * Açık tema eklemek yerine her rengi burada açıkça boyuyoruz: hiçbir renk
+ * yalnızca bir media query içinde tanımlı değil.
+ *
+ * İlişki (tone) renkleri burada yok — tek kaynakları `src/lib/ui.ts`.
+ * Bileşenler o rengi satır içi stil olarak veriyor ki iki yerde tutulmasın.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+
+:root {
+  color-scheme: dark;
+
+  --bg: #0b0d10;
+  --panel: #12151a;
+  --panel-raised: #171b22;
+  --line: #242a33;
+  --line-strong: #333b47;
+
+  --text: #e8ecf1;
+  --text-muted: #98a2b3;
+  --text-faint: #6b7686;
+
+  --accent: #e0ca5c;
+  --accent-ink: #1a1602;
+  --danger: #f2545b;
+  --ok: #5ce088;
+
+  --radius: 10px;
+  --radius-sm: 6px;
+  --gap: 12px;
+
+  --font-title: 'Archivo', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-title);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+h1 {
+  font-size: 18px;
+}
+
+h2 {
+  font-size: 15px;
+}
+
+h3 {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+/* Sayı sütunları hizalansın: BPM listesi zıplamamalı. */
+.mono,
+.bpm {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+.faint {
+  color: var(--text-faint);
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: var(--gap);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.row-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.btn {
+  background: var(--panel-raised);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  cursor: pointer;
+  padding: 6px 10px;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+
+.btn:hover {
+  border-color: var(--accent);
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 600;
+}
+
+.btn-danger:hover {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.btn-ghost {
+  background: transparent;
+  border-color: transparent;
+  color: var(--text-muted);
+}
+
+.btn-ghost:hover {
+  color: var(--text);
+}
+
+.chip {
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 12px;
+  padding: 3px 10px;
+  white-space: nowrap;
+}
+
+.chip[aria-pressed='true'] {
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.input,
+.select,
+.textarea {
+  background: var(--bg);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  padding: 6px 8px;
+  width: 100%;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+.textarea {
+  min-height: 60px;
+  resize: vertical;
+}
+
+.key-chip {
+  align-items: center;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  display: inline-flex;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  gap: 6px;
+  padding: 2px 8px;
+  white-space: nowrap;
+}
+
+.key-dot {
+  border-radius: 50%;
+  display: inline-block;
+  height: 8px;
+  width: 8px;
+}
+
+.track-links {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.track-links a {
+  color: var(--text-faint);
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.track-links a:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+dialog {
+  background: var(--panel);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  color: var(--text);
+  max-height: 86vh;
+  max-width: min(720px, 94vw);
+  padding: 0;
+  width: 100%;
+}
+
+dialog::backdrop {
+  background: rgb(0 0 0 / 62%);
+}
+
+.dialog-head {
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  gap: 8px;
+  padding: 12px 14px;
+}
+
+.dialog-body {
+  max-height: 70vh;
+  overflow: auto;
+  padding: 14px;
+}
+
+.wheel-label {
+  fill: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  pointer-events: none;
+}
+
+.wheel-slice {
+  cursor: pointer;
+  stroke: var(--bg);
+  stroke-width: 1;
+  transition: opacity 120ms ease;
+}
+
+.tempo-curve {
+  display: block;
+  width: 100%;
+}
+
+.tempo-line {
+  fill: none;
+  stroke: var(--line-strong);
+  stroke-width: 1.5;
+}
+
+@media (max-width: 720px) {
+  body {
+    font-size: 15px;
+  }
+}
