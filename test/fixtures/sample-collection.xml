@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DJ_PLAYLISTS Version="1.0.0">
+  <PRODUCT Name="rekordbox" Version="6.7.7" Company="AlphaTheta"/>
+  <COLLECTION Entries="6">
+    <TRACK TrackID="1" Name="Gece Yürüyüşü" Artist="Ayla" Genre="Melodic House &amp; Techno"
+           TotalTime="372" AverageBpm="124.00" Tonality="Am"
+           Location="file://localhost/C:/M%c3%bczik/Ayla%20-%20Gece%20Y%c3%bcr%c3%bcy%c3%bc%c5%9f%c3%bc.mp3"/>
+    <TRACK TrackID="2" Name="Kum Saati" Artist="Deniz K." Genre="Techno (Peak Time / Driving)"
+           TotalTime="401" AverageBpm="128.02" Tonality="8B"
+           Location="file://localhost/C:/M%c3%bczik/Deniz%20K.%20-%20Kum%20Saati.aiff"/>
+    <TRACK TrackID="3" Name="Sabah Ezanı" Artist="Mor Ötesi" Genre="Progressive House"
+           TotalTime="518" AverageBpm="122.5" Tonality="2m"
+           Location="file://localhost/C:/M%c3%bczik/Mor%20%c3%96tesi%20-%20Sabah%20Ezan%c4%b1.mp3"/>
+    <TRACK TrackID="4" Name="Becca&apos;s Booty" Artist="Kaya" Genre="Tech House"
+           TotalTime="330" AverageBpm="126" Tonality="F#m"
+           Location="file://localhost/C:/M%c3%bczik/Kaya%20-%20Becca%27s%20Booty.mp3"/>
+    <TRACK TrackID="5" Name="Keysiz Kayıt" Artist="Bilinmeyen" Genre="Minimal / Deep Tech"
+           TotalTime="240" AverageBpm="0" Tonality=""
+           Location=""/>
+    <TRACK Name="Kimliksiz Parça" Artist="Hayalet" TotalTime="200" AverageBpm="130" Tonality="Cm"
+           Location="file://localhost/C:/M%c3%bczik/hayalet.mp3"/>
+  </COLLECTION>
+  <PLAYLISTS>
+    <NODE Type="0" Name="ROOT" Count="2">
+      <NODE Type="0" Name="Kulüp" Count="1">
+        <NODE Type="1" Name="Açılış" Entries="3" KeyType="0">
+          <TRACK Key="1"/>
+          <TRACK Key="2"/>
+          <TRACK Key="99"/>
+        </NODE>
+      </NODE>
+      <NODE Type="1" Name="Favoriler" Entries="3" KeyType="0">
+        <TRACK Key="3"/>
+        <TRACK Key="4"/>
+        <TRACK Key="5"/>
+      </NODE>
+    </NODE>
+  </PLAYLISTS>
+</DJ_PLAYLISTS>
