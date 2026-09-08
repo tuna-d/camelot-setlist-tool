@@ -1,0 +1,20 @@
+node_modules
+dist
+dist-ssr
+.vercel
+*.local
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+.DS_Store
+logs
+*.log
+npm-debug.log*
+.vscode/*
+!.vscode/extensions.json
+.idea
+
+# Çalışma kuralları ve inşa planı yerel kalsın, repoya girmesin.
+CLAUDE.md
+BUILD-PLAN.md
