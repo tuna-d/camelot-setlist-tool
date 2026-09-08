@@ -267,3 +267,13 @@ describe('createSaver', () => {
     expect(requests).toBe(0)
   })
 })
+
+describe('readRemote — sunucu tarafı yokken', () => {
+  it('JSON olmayan yanıtı sunucu yok sayar', async () => {
+    const result = await readRemote(() =>
+      Promise.resolve(new Response('<!doctype html>', { status: 200, headers: { 'content-type': 'text/html' } })),
+    )
+    expect(result.state).toBeNull()
+    expect(result.error).toMatch(/Sunucu tarafı bu ortamda yok/)
+  })
+})

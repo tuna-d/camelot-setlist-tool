@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { BEATPORT_GENRES, genreUrl } from './beatport'
-import { formatReports, refreshCatalog } from './catalog'
+import { formatReports, isCatalog, refreshCatalog } from './catalog'
 import type { Catalog, Track } from './types'
 
 const KEYS = ['G Minor', 'A Minor', 'C Major', 'F# Minor']
@@ -116,5 +116,21 @@ describe('formatReports', () => {
     const text = formatReports(result)
     expect(text).toContain('doğrulama geçmedi:')
     expect(text).toMatch(/en az 100/)
+  })
+})
+
+describe('isCatalog', () => {
+  it('geçerli katalogu tanır', () => {
+    expect(isCatalog(previousCatalog(2))).toBe(true)
+    expect(isCatalog({ updatedAt: '', source: '', strategy: '', tracks: [] })).toBe(true)
+  })
+
+  it('beklenmedik gövdeyi reddeder', () => {
+    expect(isCatalog(null)).toBe(false)
+    expect(isCatalog('metin')).toBe(false)
+    expect(isCatalog({})).toBe(false)
+    expect(isCatalog({ tracks: 'değil' })).toBe(false)
+    expect(isCatalog({ tracks: [{ id: 1 }] })).toBe(false)
+    expect(isCatalog({ tracks: [{ id: 'a' }] })).toBe(false)
   })
 })

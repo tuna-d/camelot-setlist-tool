@@ -99,3 +99,14 @@ export function formatReports(result: RefreshResult): string {
   }
   return lines.join('\n')
 }
+
+export function isCatalog(value: unknown): value is Catalog {
+  if (!value || typeof value !== 'object') return false
+  const record = value as Record<string, unknown>
+  if (!Array.isArray(record.tracks)) return false
+  return record.tracks.every((item) => {
+    if (!item || typeof item !== 'object') return false
+    const track = item as Record<string, unknown>
+    return typeof track.id === 'string' && typeof track.title === 'string'
+  })
+}

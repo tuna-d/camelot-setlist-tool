@@ -89,6 +89,14 @@ export async function readRemote(fetchImpl: FetchLike): Promise<RemoteRead> {
         error: `Sunucudaki kayıt okunamadı (HTTP ${response.status}). Şimdilik yalnızca bu cihazda kayıtlısın; Vercel ortam değişkenlerini kontrol et.`,
       }
     }
+    // Geliştirme sunucusu bilinmeyen adreslere index.html döndürüyor: JSON olmayan
+    // yanıt, sunucu tarafının bu ortamda hiç olmadığı anlamına geliyor.
+    if (!response.headers.get('content-type')?.includes('json')) {
+      return {
+        state: null,
+        error: 'Sunucu tarafı bu ortamda yok. Kayıt yalnızca bu cihazda tutuluyor.',
+      }
+    }
     const body: unknown = await response.json()
     return { state: isAppState(body) ? body : null, error: null }
   } catch {
