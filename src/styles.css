@@ -307,3 +307,73 @@ dialog::backdrop {
     font-size: 15px;
   }
 }
+
+/* ——— Setlist ve öneri satırları ——— */
+
+.entries {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.entry {
+  align-items: center;
+  background: var(--panel-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  gap: 8px;
+  padding: 6px 8px;
+}
+
+.entry[aria-current='true'] {
+  border-color: var(--accent);
+}
+
+.entry-index {
+  min-width: 24px;
+  text-align: right;
+}
+
+.entry-title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.entry-note {
+  background: transparent;
+  border: none;
+  border-bottom: 1px dashed var(--line);
+  border-radius: 0;
+  color: var(--text-muted);
+  font-size: 12px;
+  margin: 2px 0 8px 32px;
+  padding: 2px 0;
+  width: calc(100% - 32px);
+}
+
+.bridge {
+  align-items: center;
+  border-left: 2px solid var(--line-strong);
+  display: flex;
+  font-size: 12px;
+  gap: 8px;
+  margin-left: 32px;
+  padding: 4px 0 4px 8px;
+}
+
+.bridge-line {
+  border-radius: 2px;
+  display: inline-block;
+  height: 2px;
+  width: 14px;
+}
+
+.reference {
+  align-items: flex-start;
+  gap: var(--gap);
+}
