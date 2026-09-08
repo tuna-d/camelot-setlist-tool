@@ -1,13 +1,3 @@
-/*
- * Tasarım sistemi — bilinçli olarak tek tema.
- * rekordbox ve Traktor koyu; bu araç da kabin işi, karanlık bir odada açılıyor.
- * Açık tema eklemek yerine her rengi burada açıkça boyuyoruz: hiçbir renk
- * yalnızca bir media query içinde tanımlı değil.
- *
- * İlişki (tone) renkleri burada yok — tek kaynakları `src/lib/ui.ts`.
- * Bileşenler o rengi satır içi stil olarak veriyor ki iki yerde tutulmasın.
- */
-
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
 
 :root {
@@ -88,7 +78,6 @@ textarea {
   color: inherit;
 }
 
-/* Sayı sütunları hizalansın: BPM listesi zıplamamalı. */
 .mono,
 .bpm {
   font-family: var(--font-mono);
@@ -308,8 +297,6 @@ dialog::backdrop {
   }
 }
 
-/* ——— Setlist ve öneri satırları ——— */
-
 .entries {
   list-style: none;
   margin: 0;
@@ -376,4 +363,24 @@ dialog::backdrop {
 .reference {
   align-items: flex-start;
   gap: var(--gap);
+}
+
+.dropzone {
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius);
+  padding: 18px;
+  text-align: center;
+}
+
+.dropzone-active {
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  border-color: var(--accent);
+}
+
+.dropzone p {
+  margin: 4px 0;
+}
+
+.error {
+  color: var(--danger);
 }
