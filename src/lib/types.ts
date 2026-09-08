@@ -72,6 +72,11 @@ export interface Catalog {
 /** Kalıcı kılınan uygulama durumu. `sync` katmanı bunu olduğu gibi yazıp okur. */
 export interface AppState {
   library: Track[]
+  /**
+   * Kütüphanede ve katalogda olmayan parçalar: elle girilenler ve internetten bulunanlar.
+   * Setlist girdileri kimlikle tutulduğu için bu parçaların bir yerde yaşaması gerekiyor.
+   */
+  extras: Track[]
   playlists: Playlist[]
   /** Seçili playlist; `null` ise tüm koleksiyon havuz sayılır. */
   playlistId: string | null
