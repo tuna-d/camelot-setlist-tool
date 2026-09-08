@@ -1,3 +1,4 @@
+import { isAppState } from '../lib/state'
 import type { AppState } from '../lib/types'
 import type { SyncState } from './store'
 
@@ -18,15 +19,7 @@ function headers(): Record<string, string> {
     : { 'content-type': 'application/json' }
 }
 
-export function isAppState(value: unknown): value is AppState {
-  if (!value || typeof value !== 'object') return false
-  const record = value as Record<string, unknown>
-  return (
-    Array.isArray(record.setlists) &&
-    Array.isArray(record.library) &&
-    typeof record.savedAt === 'number'
-  )
-}
+export { isAppState }
 
 export function pickNewer(local: AppState | null, remote: AppState | null): AppState | null {
   if (!local) return remote
