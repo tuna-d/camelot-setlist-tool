@@ -1,23 +1,10 @@
 import { isAppState } from '../lib/state'
 import type { AppState } from '../lib/types'
+import type { RemoteStore } from './remote'
 import type { SyncState } from './store'
 
 export const STORAGE_KEY = 'camelot-setlist:v1'
 export const SAVE_DELAY = 2500
-const STATE_ENDPOINT = '/api/state'
-
-type FetchLike = (input: string, init?: RequestInit) => Promise<Response>
-
-function appSecret(): string {
-  return import.meta.env.VITE_APP_SECRET ?? ''
-}
-
-function headers(): Record<string, string> {
-  const secret = appSecret()
-  return secret
-    ? { 'content-type': 'application/json', 'x-app-secret': secret }
-    : { 'content-type': 'application/json' }
-}
 
 export { isAppState }
 
@@ -67,113 +54,76 @@ export function clearLocal(): void {
   }
 }
 
-export interface RemoteRead {
-  state: AppState | null
-  error: string | null
-}
-
-export async function readRemote(fetchImpl: FetchLike): Promise<RemoteRead> {
-  try {
-    const response = await fetchImpl(STATE_ENDPOINT, { headers: headers() })
-    if (response.status === 404 || response.status === 204) return { state: null, error: null }
-    if (!response.ok) {
-      return {
-        state: null,
-        error: `Sunucudaki kayıt okunamadı (HTTP ${response.status}). Şimdilik yalnızca bu cihazda kayıtlısın; Vercel ortam değişkenlerini kontrol et.`,
-      }
-    }
-    // Geliştirme sunucusu bilinmeyen adreslere index.html döndürüyor: JSON olmayan
-    // yanıt, sunucu tarafının bu ortamda hiç olmadığı anlamına geliyor.
-    if (!response.headers.get('content-type')?.includes('json')) {
-      return {
-        state: null,
-        error: 'Sunucu tarafı bu ortamda yok. Kayıt yalnızca bu cihazda tutuluyor.',
-      }
-    }
-    const body: unknown = await response.json()
-    return { state: isAppState(body) ? body : null, error: null }
-  } catch {
-    return {
-      state: null,
-      error: 'Sunucuya ulaşılamadı. Çalışmaya devam edebilirsin, kayıt bu cihazda tutuluyor.',
-    }
-  }
-}
-
-export interface RemoteWrite {
-  ok: boolean
-  conflict: boolean
-  remote: AppState | null
-  message: string | null
-}
-
-export async function writeRemote(state: AppState, fetchImpl: FetchLike): Promise<RemoteWrite> {
-  try {
-    const response = await fetchImpl(STATE_ENDPOINT, {
-      method: 'PUT',
-      headers: headers(),
-      body: JSON.stringify(state),
-    })
-
-    // 409 means the server holds a newer record: adopt it, never overwrite.
-    if (response.status === 409) {
-      const body: unknown = await response.json()
-      return {
-        ok: false,
-        conflict: true,
-        remote: isAppState(body) ? body : null,
-        message:
-          'Başka bir cihazda daha yeni bir kayıt var; o kayıt yüklendi. Buradaki değişikliği tekrar yap ve kaydet.',
-      }
-    }
-
-    if (!response.ok) {
-      return {
-        ok: false,
-        conflict: false,
-        remote: null,
-        message: `Sunucuya yazılamadı (HTTP ${response.status}). Değişikliklerin bu cihazda duruyor; bağlantı düzelince tekrar dene.`,
-      }
-    }
-
-    return { ok: true, conflict: false, remote: null, message: null }
-  } catch {
-    return {
-      ok: false,
-      conflict: false,
-      remote: null,
-      message: 'Sunucuya ulaşılamadı. Değişikliklerin bu cihazda duruyor.',
-    }
-  }
+/** Misafir çalışmasının hesaba taşınmaya değer bir içeriği var mı. */
+export function hasContent(state: AppState | null): boolean {
+  if (!state) return false
+  return state.setlists.some((setlist) => setlist.entries.length > 0) || state.library.length > 0
 }
 
 export interface BootstrapResult {
   state: AppState | null
   sync: SyncState
+  /** Girişten sonra hesaba taşınmayı bekleyen misafir çalışması. */
+  pendingGuest: AppState | null
 }
 
-export async function bootstrap(fetchImpl: FetchLike): Promise<BootstrapResult> {
+export function bootstrapGuest(): BootstrapResult {
   const local = readLocal()
-  const remote = await readRemote(fetchImpl)
-  const winner = pickNewer(local, remote.state)
+  return {
+    state: local,
+    sync: {
+      status: 'local',
+      message: null,
+      savedAt: local?.savedAt ?? null,
+    },
+    pendingGuest: null,
+  }
+}
+
+/**
+ * Girişli açılış. Hesaptaki kayıt her zaman kazanır; misafirken yapılan
+ * çalışma sessizce hesabın üzerine yazılmaz, taşınmak üzere ayrı tutulur.
+ */
+export async function bootstrapUser(store: RemoteStore, userId: string): Promise<BootstrapResult> {
+  const local = readLocal()
+  const remote = await store.load(userId)
 
   if (remote.error) {
-    return { state: winner, sync: { status: 'offline', message: remote.error, savedAt: winner?.savedAt ?? null } }
+    return {
+      state: local,
+      sync: { status: 'offline', message: remote.error, savedAt: local?.savedAt ?? null },
+      pendingGuest: null,
+    }
   }
 
-  const fromRemote = Boolean(remote.state && winner === remote.state && local)
+  if (!remote.state) {
+    return {
+      state: local,
+      sync: {
+        status: 'idle',
+        message: local ? 'Bu cihazdaki çalışman hesabına kaydedilecek.' : null,
+        savedAt: local?.savedAt ?? null,
+      },
+      pendingGuest: null,
+    }
+  }
+
+  const guest = hasContent(local) && local !== null ? local : null
   return {
-    state: winner,
+    state: remote.state,
     sync: {
       status: 'idle',
-      message: fromRemote ? 'Başka bir cihazdaki daha yeni kayıt yüklendi.' : null,
-      savedAt: winner?.savedAt ?? null,
+      message: guest ? 'Hesabındaki kayıt yüklendi. Misafirken kurduğun seti taşıyabilirsin.' : null,
+      savedAt: remote.state.savedAt,
     },
+    pendingGuest: guest,
   }
 }
 
 export interface SaverOptions {
-  fetchImpl: FetchLike
+  /** Giriş yoksa `null`: kayıt yalnızca tarayıcıda kalır. */
+  store: RemoteStore | null
+  userId: string | null
   onConflict: (state: AppState) => void
   onSync: (sync: Partial<SyncState>) => void
   delay?: number
@@ -195,8 +145,14 @@ export function createSaver(options: SaverOptions): Saver {
     pending = null
     if (!state) return
 
+    const { store, userId } = options
+    if (!store || !userId) {
+      options.onSync({ status: 'local', message: null, savedAt: state.savedAt })
+      return
+    }
+
     options.onSync({ status: 'saving', message: null })
-    const result = await writeRemote(state, options.fetchImpl)
+    const result = await store.save(userId, state)
 
     if (result.conflict && result.remote) {
       writeLocal(result.remote)

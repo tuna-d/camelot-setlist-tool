@@ -211,15 +211,21 @@ async function main() {
     await page.locator('.entry-note').first().fill('ışıklar kısılsın')
     ok('set ve parça notu yazıldı')
 
-    // 9 — sunucuya kayıt (2.5 sn geciktirmeli)
-    await page.waitForFunction(() => true)
+    // 9 — misafir kipi: sunucuya yazılmıyor, tarayıcıda duruyor
     await page.waitForTimeout(3500)
-    if (server_state.puts === 0) fail('sunucuya kayıt', 'PUT /api/state hiç gelmedi')
-    if (!server_state.saved?.setlists?.length) fail('sunucuya kayıt', 'kayıtta setlist yok')
-    if (server_state.saved.library.length !== 5) {
-      fail('sunucuya kayıt', `tam koleksiyon yazılmadı (${server_state.saved.library.length} parça)`)
+    if (server_state.puts > 0) fail('misafir kipi', 'giriş yokken sunucuya kayıt gitti')
+    const stored = await page.evaluate(() => localStorage.getItem('camelot-setlist:v1'))
+    if (!stored) fail('misafir kipi', 'tarayıcıya kayıt yazılmadı')
+    const parsed = JSON.parse(stored)
+    if (parsed.library.length !== 5) {
+      fail("misafir kipi", `tam koleksiyon yazılmadı (${parsed.library.length} parça)`)
     }
-    ok(`sunucuya kaydedildi (${server_state.puts} istek, ${server_state.saved.library.length} parçalık koleksiyon)`)
+    ok(`misafir çalışması yalnızca tarayıcıda (${parsed.library.length} parçalık koleksiyon)`)
+
+    if (!(await page.getByText('yalnızca bu tarayıcıda').first().isVisible())) {
+      fail('misafir uyarısı', 'banner görünmedi')
+    }
+    ok('kayıt uyarısı görünüyor')
 
     // 10 — yenileme sonrası kalıcılık
     await page.reload()

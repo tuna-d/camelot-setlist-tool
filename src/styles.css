@@ -443,3 +443,20 @@ dialog::backdrop {
   margin: 4px 0;
   text-align: center;
 }
+
+.banner {
+  align-items: center;
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 8px 10px;
+}
+
+.sync-local {
+  border-color: var(--line-strong);
+  color: var(--text-muted);
+}

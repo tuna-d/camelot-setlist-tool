@@ -12,7 +12,7 @@ import type {
   Track,
 } from '../lib/types'
 
-export type SyncStatus = 'idle' | 'saving' | 'saved' | 'offline' | 'conflict' | 'error'
+export type SyncStatus = 'idle' | 'local' | 'saving' | 'saved' | 'offline' | 'conflict' | 'error'
 
 export interface SyncState {
   status: SyncStatus

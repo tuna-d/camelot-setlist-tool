@@ -4,7 +4,9 @@ import type { AppState, Catalog } from './lib/types'
 import { selectLibrary, useStore } from './store/store'
 import type { StoreState, SyncStatus } from './store/store'
 import { useAuth } from './store/auth'
-import { bootstrap, createSaver } from './store/sync'
+import { createSupabaseStore } from './store/remote'
+import { getSupabase } from './store/supabase'
+import { bootstrapGuest, bootstrapUser, createSaver } from './store/sync'
 import { AuthDialog } from './components/AuthDialog'
 import { AutoBuildDialog } from './components/AutoBuildDialog'
 import { ImportDialog } from './components/ImportDialog'
@@ -16,6 +18,7 @@ type OpenDialog = 'import' | 'search' | 'auto' | 'auth' | null
 
 const SYNC_LABEL: Record<SyncStatus, string> = {
   idle: 'hazır',
+  local: 'yalnızca bu tarayıcı',
   saving: 'kaydediliyor…',
   saved: 'kaydedildi',
   offline: 'yalnızca bu cihaz',
@@ -63,6 +66,7 @@ export function App() {
   const state = useStore()
   const auth = useAuth()
   const [dialog, setDialog] = useState<OpenDialog>(null)
+  const [pendingGuest, setPendingGuest] = useState<AppState | null>(null)
   const ready = useRef(false)
 
   useEffect(() => useAuth.getState().init(), [])
@@ -72,10 +76,16 @@ export function App() {
 
     async function boot() {
       const store = useStore.getState()
-      const result = await bootstrap(fetch)
+      const client = getSupabase()
+      const remote = client && auth.userId ? createSupabaseStore(client) : null
+
+      const result =
+        remote && auth.userId ? await bootstrapUser(remote, auth.userId) : bootstrapGuest()
       if (cancelled) return
+
       if (result.state) store.hydrate(result.state as AppState)
       store.setSync(result.sync)
+      setPendingGuest(result.pendingGuest)
 
       const catalog = await loadCatalog()
       if (cancelled) return
@@ -83,15 +93,20 @@ export function App() {
       ready.current = true
     }
 
+    // Oturum belli olmadan yükleme yapma: misafir kaydını hesabın üstüne yazma riski var.
+    if (auth.status === 'loading') return
+    ready.current = false
     void boot()
     return () => {
       cancelled = true
     }
-  }, [])
+  }, [auth.status, auth.userId])
 
   useEffect(() => {
+    const client = getSupabase()
     const saver = createSaver({
-      fetchImpl: fetch,
+      store: client && auth.userId ? createSupabaseStore(client) : null,
+      userId: auth.userId,
       onConflict: (incoming) => useStore.getState().hydrate(incoming),
       onSync: (sync) => useStore.getState().setSync(sync),
     })
@@ -109,7 +124,14 @@ export function App() {
       unsubscribe()
       saver.cancel()
     }
-  }, [])
+  }, [auth.userId])
+
+  function adoptGuestWork() {
+    if (!pendingGuest) return
+    useStore.getState().hydrate({ ...pendingGuest, savedAt: Date.now() })
+    setPendingGuest(null)
+    useStore.getState().setSync({ status: 'saving', message: null })
+  }
 
   const visible = selectLibrary(state)
   const usable = visible.filter((track) => track.bpm !== null && track.key !== null).length
@@ -166,6 +188,33 @@ export function App() {
           </button>
         )}
       </header>
+
+      {auth.status === 'guest' ? (
+        <p className="banner">
+          Misafir olarak çalışıyorsun: setlerin sunucuya kaydedilmiyor, yalnızca bu tarayıcıda
+          duruyor. Başka bir cihazda açmak için{' '}
+          <button type="button" className="btn btn-ghost" onClick={() => setDialog('auth')}>
+            giriş yap
+          </button>
+          .
+        </p>
+      ) : auth.status === 'disabled' ? (
+        <p className="banner">
+          Giriş bu kurulumda kapalı: setlerin yalnızca bu tarayıcıda duruyor.
+        </p>
+      ) : null}
+
+      {pendingGuest ? (
+        <p className="banner">
+          Misafirken kurduğun çalışma bu tarayıcıda duruyor. Hesabındaki kaydın üzerine yazılmadı.
+          <button type="button" className="btn" onClick={adoptGuestWork}>
+            hesabıma taşı
+          </button>
+          <button type="button" className="btn btn-ghost" onClick={() => setPendingGuest(null)}>
+            yoksay
+          </button>
+        </p>
+      ) : null}
 
       {state.sync.message ? <p className="topbar-message muted">{state.sync.message}</p> : null}
 
