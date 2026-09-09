@@ -813,6 +813,11 @@ dialog::backdrop {
   gap: 14px;
 }
 
+/* Eşit yükseklikte kalan Flow kutusunda artan yeri not alanı doldursun. */
+.summary-panel .textarea {
+  flex: 1;
+}
+
 .curve-card {
   background: var(--panel-sunken);
   border: 1px solid var(--line);
@@ -844,9 +849,13 @@ dialog::backdrop {
     justify-self: start;
   }
 
-  /* Başlık sütununu doldursun, taşmasın: uzun sanatçı listeleri key sütununa girmesin. */
-  .entry-title {
+  /* Başlık sütununu doldursun, taşmasın: uzun sanatçı listeleri key sütununa girmesin.
+     Seçici üstteki `.entry > *` kuralından güçlü olmak zorunda. */
+  .setlist-panel .entry .entry-title,
+  .suggest-panel .entry .entry-title {
     justify-self: stretch;
+    min-width: 0;
+    overflow: hidden;
   }
 
   .setlist-panel .entry {
