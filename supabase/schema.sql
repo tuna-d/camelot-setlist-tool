@@ -72,7 +72,8 @@ create policy setlists_own on public.setlists
 
 create table if not exists public.settings (
   user_id uuid primary key references auth.users (id) on delete cascade,
-  tolerance integer not null default 6,
+  -- Half steps are allowed on the slider, so this is not an integer.
+  tolerance numeric(4, 1) not null default 6,
   relations text[] not null default '{same,up,down,relative,boost}',
   genres text[] not null default '{}',
   pool_source text not null default 'catalog',
@@ -115,3 +116,9 @@ drop policy if exists catalog_readable on public.catalog;
 create policy catalog_readable on public.catalog
   for select
   using (true);
+
+-- ——— upgrades for projects created before this file changed ———
+-- Safe to run again: both statements are no-ops when already applied.
+
+alter table public.settings
+  alter column tolerance type numeric(4, 1);

@@ -88,6 +88,24 @@ describe('setlist düzenleme', () => {
     expect(active.note).toBe('cuma gecesi')
   })
 
+  it('parçaya enerji puanı verir, aynı yıldıza basınca kaldırır', () => {
+    useStore.getState().addTrack(track({ id: '1' }))
+
+    useStore.getState().setEntryEnergy(0, 4)
+    expect(selectActive(useStore.getState()).entries[0].energy).toBe(4)
+
+    useStore.getState().setEntryEnergy(0, 4)
+    expect(selectActive(useStore.getState()).entries[0].energy).toBeUndefined()
+  })
+
+  it('aralık dışındaki enerji puanını yok sayar', () => {
+    useStore.getState().addTrack(track({ id: '1' }))
+    for (const bad of [0, 6, -3, Number.NaN]) {
+      useStore.getState().setEntryEnergy(0, bad)
+      expect(selectActive(useStore.getState()).entries[0].energy).toBeUndefined()
+    }
+  })
+
   it('kütüphanede olmayan parçayı extras’a yazar', () => {
     const manual = track({ id: 'm1', title: 'Elle girilen', source: 'manual' })
     useStore.getState().addTrack(manual)

@@ -109,7 +109,7 @@ export function SuggestPanel() {
                   type="range"
                   min={MIN_TOLERANCE}
                   max={MAX_TOLERANCE}
-                  step={1}
+                  step={0.5}
                   value={state.tolerance}
                   onChange={(event) => state.setTolerance(Number(event.target.value))}
                 />

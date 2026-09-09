@@ -80,8 +80,8 @@ export function SetSummaryPanel() {
         : `${formatBpm(stats.minBpm)}–${formatBpm(stats.maxBpm)}`
 
   return (
-    <aside className="panel col" aria-label="Setin gidişatı">
-      <h3>Gidişat</h3>
+    <aside className="panel col summary-panel" aria-label="Setin akışı">
+      <h3>Flow</h3>
 
       <div className="curve-card">
         {tracks.length > 1 ? (

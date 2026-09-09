@@ -108,6 +108,21 @@ describe('fromRows', () => {
     expect(result.savedAt).toBe(0)
   })
 
+  it('numeric alanlar dize gelirse sayıya çevirir', () => {
+    const result = fromRows({
+      library: null,
+      setlists: [],
+      settings: { tolerance: '7.5' as never, saved_at: '1735000000000' as never },
+    })
+    expect(result.tolerance).toBe(7.5)
+    expect(result.savedAt).toBe(1735000000000)
+  })
+
+  it('yarım adımlı toleransı bozmadan taşır', () => {
+    const rows = toRows('u1', { ...state, tolerance: 6.5 })
+    expect(rows.settings.tolerance).toBe(6.5)
+  })
+
   it('bilinmeyen aktif set kimliğinde ilk sete düşer', () => {
     const rows = toRows('user-1', state)
     const broken = { ...rows, settings: { ...rows.settings, active_setlist_id: 'yok' } }

@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { DEFAULT_RELATIONS } from '../lib/camelot'
 import { toneColor } from '../lib/ui'
-import { Bpm, KeyChip, TrackLinks, youtubeSearchUrl } from './common'
+import { Bpm, EnergyStars, KeyChip, TrackLinks, youtubeSearchUrl } from './common'
 import { CamelotWheel } from './CamelotWheel'
 import { TempoCurve } from './TempoCurve'
 import type { Track } from '../lib/types'
@@ -49,6 +49,23 @@ describe('TrackLinks', () => {
     expect(youtubeSearchUrl(track)).toBe(
       "https://www.youtube.com/results?search_query=Kaya%20Becca's%20Booty",
     )
+  })
+})
+
+describe('EnergyStars', () => {
+  it('verilen puana kadar dolu yıldız çizer', () => {
+    const html = renderToStaticMarkup(<EnergyStars value={3} onChange={() => {}} label="enerji" />)
+    expect(html.match(/★/g)).toHaveLength(3)
+    expect(html.match(/☆/g)).toHaveLength(2)
+    expect(html.match(/aria-pressed="true"/g)).toHaveLength(3)
+  })
+
+  it('puan yokken hepsi boş', () => {
+    const html = renderToStaticMarkup(
+      <EnergyStars value={undefined} onChange={() => {}} label="enerji" />,
+    )
+    expect(html.match(/☆/g)).toHaveLength(5)
+    expect(html).not.toContain('aria-pressed="true"')
   })
 })
 

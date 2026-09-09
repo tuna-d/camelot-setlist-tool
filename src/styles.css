@@ -25,6 +25,9 @@
   --tone-color: #b78cff;
   --tone-jump: #f2c14e;
 
+  --beatport: #23e58c;
+  --youtube: #ff3d46;
+
   --radius: 20px;
   --radius-sm: 14px;
   --radius-pill: 999px;
@@ -258,6 +261,28 @@ textarea {
   color: var(--text);
 }
 
+.link-bp {
+  background: color-mix(in srgb, var(--beatport) 14%, transparent);
+  border-color: color-mix(in srgb, var(--beatport) 40%, transparent);
+  color: var(--beatport);
+}
+
+.link-bp:hover {
+  background: color-mix(in srgb, var(--beatport) 26%, transparent);
+  color: var(--beatport);
+}
+
+.link-yt {
+  background: color-mix(in srgb, var(--youtube) 14%, transparent);
+  border-color: color-mix(in srgb, var(--youtube) 40%, transparent);
+  color: var(--youtube);
+}
+
+.link-yt:hover {
+  background: color-mix(in srgb, var(--youtube) 26%, transparent);
+  color: var(--youtube);
+}
+
 .chip {
   background: transparent;
   border: 1px solid var(--line-strong);
@@ -317,8 +342,49 @@ textarea {
 }
 
 input[type='range'] {
-  accent-color: var(--accent);
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  height: 22px;
+  margin: 0;
   width: 100%;
+}
+
+input[type='range']::-webkit-slider-runnable-track {
+  background: var(--panel-sunken);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  height: 8px;
+}
+
+input[type='range']::-moz-range-track {
+  background: var(--panel-sunken);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  height: 8px;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  appearance: none;
+  background: var(--accent);
+  border: none;
+  border-radius: 50%;
+  height: 18px;
+  margin-top: -6px;
+  width: 18px;
+}
+
+input[type='range']::-moz-range-thumb {
+  background: var(--accent);
+  border: none;
+  border-radius: 50%;
+  height: 18px;
+  width: 18px;
+}
+
+input[type='range']:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
 }
 
 .key-chip {
@@ -356,6 +422,44 @@ input[type='range'] {
 
 .track-links {
   display: inline-flex;
+  gap: 6px;
+}
+
+.stars {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.star {
+  background: transparent;
+  border: none;
+  color: var(--line-strong);
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 1;
+  padding: 2px;
+}
+
+.star[aria-pressed='true'] {
+  color: var(--tone-energy);
+}
+
+.star:hover {
+  color: var(--accent);
+}
+
+.entry-extras {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  margin: 4px 0 10px 40px;
+}
+
+.entry-energy {
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+  font-size: 12px;
   gap: 6px;
 }
 
@@ -481,9 +585,7 @@ dialog::backdrop {
   border-radius: 0;
   color: var(--text-muted);
   font-size: 12px;
-  margin: 4px 0 10px 40px;
   padding: 2px 0;
-  width: calc(100% - 40px);
 }
 
 .entry-note:focus {
@@ -674,10 +776,22 @@ dialog::backdrop {
 /* ——— çalışma alanı ——— */
 
 .layout {
-  align-items: start;
+  align-items: stretch;
   display: grid;
   gap: var(--gap);
   grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+}
+
+/* Set kutusu Flow kutusuyla aynı yükseklikte kalsın; liste uzayınca kendi içinde kayar. */
+.setlist-panel {
+  max-height: 640px;
+}
+
+.entries-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 4px;
 }
 
 .layout > .suggest-panel {
@@ -709,6 +823,36 @@ dialog::backdrop {
 .curve-card p {
   margin: 0;
   text-align: center;
+}
+
+/* Geniş ekranda her satır aynı sütun ölçüleriyle diziliyor: alt alta hizalı dursunlar. */
+@media (min-width: 721px) {
+  .entry {
+    align-items: center;
+    display: grid;
+  }
+
+  .entry-meta {
+    display: contents;
+  }
+
+  .entry > *,
+  .entry-meta > * {
+    justify-self: start;
+  }
+
+  /* Başlık sütununu doldursun, taşmasın: uzun sanatçı listeleri key sütununa girmesin. */
+  .entry-title {
+    justify-self: stretch;
+  }
+
+  .setlist-panel .entry {
+    grid-template-columns: 30px minmax(0, 1fr) 96px 50px 46px 74px 36px;
+  }
+
+  .suggest-panel .entry {
+    grid-template-columns: 44px minmax(0, 1fr) 96px 50px 56px 74px 60px;
+  }
 }
 
 .summary-stats {
@@ -758,6 +902,14 @@ dialog::backdrop {
 @media (max-width: 1080px) {
   .layout {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .setlist-panel {
+    max-height: none;
+  }
+
+  .entries-scroll {
+    overflow-y: visible;
   }
 
   .suggest-head {
@@ -818,9 +970,14 @@ dialog::backdrop {
     grid-row: 2;
   }
 
+  .entry-extras {
+    flex-wrap: wrap;
+    margin-left: 8px;
+  }
+
   .entry-note {
-    margin-left: 0;
-    width: 100%;
+    flex: 1;
+    min-width: 140px;
   }
 
   .bridge {

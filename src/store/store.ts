@@ -44,6 +44,7 @@ export interface StoreState extends AppState {
   removeEntry: (index: number) => void
   moveEntry: (from: number, to: number) => void
   setEntryNote: (index: number, note: string) => void
+  setEntryEnergy: (index: number, energy: number) => void
   replaceEntries: (tracks: Track[]) => void
   clearSetlist: () => void
   setCursor: (index: number) => void
@@ -51,6 +52,12 @@ export interface StoreState extends AppState {
   exportState: () => AppState
   hydrate: (state: Partial<AppState>) => void
   setSync: (sync: Partial<SyncState>) => void
+}
+
+function clampEnergy(energy: number): number | undefined {
+  if (!Number.isFinite(energy)) return undefined
+  const value = Math.round(energy)
+  return value >= 1 && value <= 5 ? value : undefined
 }
 
 function newId(prefix: string): string {
@@ -189,6 +196,19 @@ export const useStore = create<StoreState>((set, get) => ({
       updateActive(state, (setlist) => ({
         ...setlist,
         entries: setlist.entries.map((entry, i) => (i === index ? { ...entry, note } : entry)),
+      })),
+    ),
+
+  setEntryEnergy: (index, energy) =>
+    set((state) =>
+      updateActive(state, (setlist) => ({
+        ...setlist,
+        entries: setlist.entries.map((entry, i) => {
+          if (i !== index) return entry
+          // Aynı yıldıza tekrar basmak puanı kaldırır.
+          const value = entry.energy === energy ? undefined : clampEnergy(energy)
+          return { ...entry, energy: value }
+        }),
       })),
     ),
 

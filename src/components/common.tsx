@@ -19,6 +19,37 @@ export function Bpm({ value }: { value: number | null | undefined }) {
   return <span className="bpm">{formatBpm(value)}</span>
 }
 
+const STARS = [1, 2, 3, 4, 5]
+
+export interface EnergyStarsProps {
+  value: number | undefined
+  onChange: (value: number) => void
+  label: string
+}
+
+export function EnergyStars({ value, onChange, label }: EnergyStarsProps) {
+  return (
+    <span className="stars" role="group" aria-label={label}>
+      {STARS.map((star) => (
+        <button
+          key={star}
+          type="button"
+          className="star"
+          aria-pressed={value !== undefined && star <= value}
+          aria-label={`${star} yıldız`}
+          title={`Enerji ${star}/5 — aynı yıldıza tekrar bas, puanı kaldır`}
+          onClick={(event) => {
+            event.stopPropagation()
+            onChange(star)
+          }}
+        >
+          {value !== undefined && star <= value ? '★' : '☆'}
+        </button>
+      ))}
+    </span>
+  )
+}
+
 export interface DialogProps {
   open: boolean
   title: string
@@ -61,7 +92,7 @@ export function TrackLinks({ track }: { track: Track }) {
   return (
     <span className="track-links">
       <a
-        className="link-btn"
+        className="link-btn link-bp"
         href={`https://www.beatport.com/search?q=${term}`}
         target="_blank"
         rel="noreferrer"
@@ -70,7 +101,7 @@ export function TrackLinks({ track }: { track: Track }) {
         BP
       </a>
       <a
-        className="link-btn"
+        className="link-btn link-yt"
         href={`https://www.youtube.com/results?search_query=${term}`}
         target="_blank"
         rel="noreferrer"

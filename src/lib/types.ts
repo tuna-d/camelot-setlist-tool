@@ -22,6 +22,8 @@ export interface Playlist {
 export interface SetlistEntry {
   trackId: string
   note?: string
+  /** 1–5 arası elle verilen enerji; verilmemişse alan hiç yok. */
+  energy?: number
 }
 
 export interface Setlist {

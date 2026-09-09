@@ -80,8 +80,14 @@ function array<T>(value: unknown): T[] {
   return Array.isArray(value) ? (value as T[]) : []
 }
 
+// Postgres numeric/bigint alanları bazı sürümlerde dize olarak dönüyor.
 function number(value: unknown, fallback: number): number {
-  return typeof value === 'number' && Number.isFinite(value) ? value : fallback
+  if (typeof value === 'number') return Number.isFinite(value) ? value : fallback
+  if (typeof value === 'string' && value.trim()) {
+    const parsed = Number(value)
+    if (Number.isFinite(parsed)) return parsed
+  }
+  return fallback
 }
 
 function text(value: unknown): string | null {

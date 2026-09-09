@@ -4,7 +4,7 @@ import { transition } from '../lib/setstats'
 import { formatDelta } from '../lib/suggest'
 import { formatDuration, formatTotal, toneColor } from '../lib/ui'
 import { selectActive, selectEntries, useStore } from '../store/store'
-import { Bpm, KeyChip, TrackLinks } from './common'
+import { Bpm, EnergyStars, KeyChip, TrackLinks } from './common'
 import type { Track } from '../lib/types'
 
 function TransitionBridge({ from, to, tolerance }: { from: Track; to: Track; tolerance: number }) {
@@ -51,7 +51,7 @@ export function SetlistPanel({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProp
   }
 
   return (
-    <section className="panel col" aria-label="Setlist">
+    <section className="panel col setlist-panel" aria-label="Setlist">
       <div className="row-wrap">
         <h2>{active.name}</h2>
         <span className="chip chip-static">
@@ -64,7 +64,7 @@ export function SetlistPanel({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProp
           </button>
         ) : null}
         {onOpenAutoBuild ? (
-          <button type="button" className="btn btn-primary" onClick={onOpenAutoBuild}>
+          <button type="button" className="btn btn-accent" onClick={onOpenAutoBuild}>
             otomatik kur
           </button>
         ) : null}
@@ -75,7 +75,7 @@ export function SetlistPanel({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProp
           Set boş. "parça ara" ile bir başlangıç parçası ekle, sonra aşağıdaki önerilerden devam et.
         </p>
       ) : (
-        <ol className="entries">
+        <ol className="entries entries-scroll">
           {tracks.map((track, index) => (
             <li key={`${track.id}-${index}`}>
               {index > 0 ? (
@@ -115,12 +115,22 @@ export function SetlistPanel({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProp
                 </span>
               </div>
 
-              <input
-                className="input entry-note"
-                placeholder="parça notu"
-                value={active.entries[index]?.note ?? ''}
-                onChange={(event) => state.setEntryNote(index, event.target.value)}
-              />
+              <div className="entry-extras">
+                <span className="entry-energy">
+                  <span className="faint">enerji</span>
+                  <EnergyStars
+                    value={active.entries[index]?.energy}
+                    onChange={(value) => state.setEntryEnergy(index, value)}
+                    label={`${track.title} enerji puanı`}
+                  />
+                </span>
+                <input
+                  className="input entry-note"
+                  placeholder="parça notu"
+                  value={active.entries[index]?.note ?? ''}
+                  onChange={(event) => state.setEntryNote(index, event.target.value)}
+                />
+              </div>
             </li>
           ))}
         </ol>

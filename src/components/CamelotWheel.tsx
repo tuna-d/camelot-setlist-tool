@@ -36,8 +36,9 @@ const DIM_FILL = '#1b212a'
 
 export function CamelotWheel({ active, allowed, onSelect, size = 220 }: CamelotWheelProps) {
   const center = size / 2
-  const outerRing = { inner: size * 0.355, outer: size * 0.478 }
-  const innerRing = { inner: size * 0.21, outer: size * 0.335 }
+  // Numaralar halkaların dışında duruyor: renkli dilimin üstünde okunmuyorlardı.
+  const outerRing = { inner: size * 0.315, outer: size * 0.425 }
+  const innerRing = { inner: size * 0.185, outer: size * 0.297 }
 
   const targets = new Map(
     compatibleKeys(active, allowed).map((item) => [item.code, item.relation] as const),
@@ -78,7 +79,7 @@ export function CamelotWheel({ active, allowed, onSelect, size = 220 }: CamelotW
       )
     }
 
-    const [labelX, labelY] = polar(center, center, size * 0.417, from + 15)
+    const [labelX, labelY] = polar(center, center, size * 0.472, from + 15)
     slices.push(
       <text
         key={`label-${number}`}
