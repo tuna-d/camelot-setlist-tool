@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { CATALOG_ID, NO_SUPABASE_MESSAGE, applyCors, getServiceClient, sendError, sendJson } from './_lib'
+import { CATALOG_ID, NO_SUPABASE_MESSAGE, applyCors, getServiceClient, sendError, sendJson } from './_lib.js'
 
 /**
  * Read-only on purpose. Vercel compiles the files under api/ on their own and

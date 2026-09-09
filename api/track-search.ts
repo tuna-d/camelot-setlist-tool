@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { applyCors, readUserId, sendJson } from './_lib'
+import { applyCors, readUserId, sendJson } from './_lib.js'
 
 /**
  * Thin authenticated proxy. Vercel compiles the files under api/ on their own and
