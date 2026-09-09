@@ -158,7 +158,7 @@ describe('TrackSearchDialog', () => {
     const buttons = [...view.container.querySelectorAll('button')]
     await click(buttons.find((button) => button.textContent === 'internette ara')!)
 
-    expect(fetchMock).toHaveBeenCalledWith('/api/track-search?q=uzak')
+    expect(fetchMock.mock.calls[0][0]).toBe('/api/track-search?q=uzak')
     expect(view.html()).toContain('Uzak Parça')
     expect(view.html()).toContain('internet')
     expect(view.html()).toContain('6A')

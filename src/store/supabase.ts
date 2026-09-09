@@ -19,3 +19,10 @@ export function isAuthConfigured(): boolean {
 export function setSupabaseForTests(client: SupabaseClient | null): void {
   cached = client
 }
+
+export async function getAccessToken(): Promise<string | null> {
+  const client = getSupabase()
+  if (!client) return null
+  const { data } = await client.auth.getSession()
+  return data.session?.access_token ?? null
+}

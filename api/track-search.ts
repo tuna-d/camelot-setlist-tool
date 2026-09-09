@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { readSearchResults, searchUrl } from '../src/lib/getsongbpm'
-import { applyCors, isAuthorized, sendError, sendJson } from './_lib'
+import { applyCors, readUserId, sendJson } from './_lib'
 
 function queryValue(request: VercelRequest): string {
   const value = request.query.q
@@ -11,18 +11,20 @@ function queryValue(request: VercelRequest): string {
 export default async function handler(request: VercelRequest, response: VercelResponse) {
   if (applyCors(request, response)) return
 
-  if (!isAuthorized(request)) {
-    sendError(response, 401, 'Bu uç nokta APP_SECRET ile korunuyor. VITE_APP_SECRET değerinin aynı olduğundan emin ol.')
+  // Arama kotası paylaşılan bir kaynak: yalnızca giriş yapmış kullanıcılar harcayabilir.
+  const userId = await readUserId(request)
+  if (!userId) {
+    sendJson(response, 200, {
+      results: [],
+      configured: true,
+      message: 'İnternette arama için giriş yapman gerekiyor. Parçayı elle de girebilirsin.',
+    })
     return
   }
 
   const query = queryValue(request).trim()
   if (query.length < 2) {
-    sendJson(response, 200, {
-      results: [],
-      configured: true,
-      message: 'En az iki harf yaz.',
-    })
+    sendJson(response, 200, { results: [], configured: true, message: 'En az iki harf yaz.' })
     return
   }
 
@@ -39,9 +41,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
   }
 
   try {
-    const upstream = await fetch(searchUrl(query, apiKey), {
-      headers: { accept: 'application/json' },
-    })
+    const upstream = await fetch(searchUrl(query, apiKey), { headers: { accept: 'application/json' } })
     if (!upstream.ok) {
       sendJson(response, 200, {
         results: [],

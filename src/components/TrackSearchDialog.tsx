@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { toCamelot } from '../lib/camelot'
 import { dedupeBySignature, localSearch } from '../lib/search'
+import { getAccessToken } from '../store/supabase'
 import { useStore } from '../store/store'
 import { selectLibrary } from '../store/store'
 import { Bpm, KeyChip } from './common'
@@ -77,7 +78,10 @@ export function TrackSearchDialog({ open, onClose }: TrackSearchDialogProps) {
     setSearching(true)
     setWebMessage(null)
     try {
-      const response = await fetch(`/api/track-search?q=${encodeURIComponent(query)}`)
+      const token = await getAccessToken()
+      const response = await fetch(`/api/track-search?q=${encodeURIComponent(query)}`, {
+        headers: token ? { authorization: `Bearer ${token}` } : {},
+      })
       if (!response.ok) {
         setWebTracks([])
         setWebMessage(
