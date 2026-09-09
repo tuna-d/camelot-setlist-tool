@@ -438,3 +438,8 @@ dialog::backdrop {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+.auth-separator {
+  margin: 4px 0;
+  text-align: center;
+}

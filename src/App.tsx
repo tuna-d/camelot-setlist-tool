@@ -3,14 +3,16 @@ import { isCatalog } from './lib/catalog'
 import type { AppState, Catalog } from './lib/types'
 import { selectLibrary, useStore } from './store/store'
 import type { StoreState, SyncStatus } from './store/store'
+import { useAuth } from './store/auth'
 import { bootstrap, createSaver } from './store/sync'
+import { AuthDialog } from './components/AuthDialog'
 import { AutoBuildDialog } from './components/AutoBuildDialog'
 import { ImportDialog } from './components/ImportDialog'
 import { SetlistPanel } from './components/SetlistPanel'
 import { SuggestPanel } from './components/SuggestPanel'
 import { TrackSearchDialog } from './components/TrackSearchDialog'
 
-type OpenDialog = 'import' | 'search' | 'auto' | null
+type OpenDialog = 'import' | 'search' | 'auto' | 'auth' | null
 
 const SYNC_LABEL: Record<SyncStatus, string> = {
   idle: 'hazır',
@@ -59,8 +61,11 @@ function same(a: unknown[], b: unknown[]): boolean {
 
 export function App() {
   const state = useStore()
+  const auth = useAuth()
   const [dialog, setDialog] = useState<OpenDialog>(null)
   const ready = useRef(false)
+
+  useEffect(() => useAuth.getState().init(), [])
 
   useEffect(() => {
     let cancelled = false
@@ -147,6 +152,19 @@ export function App() {
         <button type="button" className="btn" onClick={() => setDialog('import')}>
           rekordbox XML
         </button>
+
+        {auth.status === 'signed-in' ? (
+          <span className="row">
+            <span className="faint">{auth.email}</span>
+            <button type="button" className="btn btn-ghost" onClick={() => void auth.signOut()}>
+              çıkış
+            </button>
+          </span>
+        ) : auth.status === 'disabled' ? null : (
+          <button type="button" className="btn" onClick={() => setDialog('auth')}>
+            giriş yap
+          </button>
+        )}
       </header>
 
       {state.sync.message ? <p className="topbar-message muted">{state.sync.message}</p> : null}
@@ -159,6 +177,7 @@ export function App() {
         <SuggestPanel />
       </main>
 
+      <AuthDialog open={dialog === 'auth'} onClose={() => setDialog(null)} />
       <ImportDialog open={dialog === 'import'} onClose={() => setDialog(null)} />
       <TrackSearchDialog open={dialog === 'search'} onClose={() => setDialog(null)} />
       <AutoBuildDialog open={dialog === 'auto'} onClose={() => setDialog(null)} />
