@@ -306,6 +306,42 @@ textarea {
   color: var(--text);
 }
 
+/* Bölmeli seçici: tek pill'in içinde sabit basamaklar. */
+.segmented {
+  background: var(--panel-sunken);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+}
+
+.segment {
+  background: transparent;
+  /* Saydam kenarlık yer ayırıyor: seçim değişince genişlik oynamasın. */
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  color: var(--text-muted);
+  cursor: pointer;
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 7px 4px;
+  transition: background 140ms ease, color 140ms ease;
+  white-space: nowrap;
+}
+
+.segment:hover {
+  color: var(--text);
+}
+
+.segment[aria-pressed='true'] {
+  /* Rengi ui.ts'teki toleranceColor veriyor: dar yeşil, geniş kırmızı. */
+  border-color: currentcolor;
+  /* IBM Plex Mono 600 yüklü değil; sentetik kalın harfleri birbirine bindiriyor. */
+  font-weight: 500;
+}
+
 .chip-static {
   cursor: default;
 }

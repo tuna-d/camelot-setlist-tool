@@ -45,3 +45,20 @@ export function scoreColor(score: number | null | undefined): string {
   if (typeof score !== 'number' || !Number.isFinite(score)) return TONE_COLORS.neutral
   return SCORE_STEPS.find((step) => score >= step.min)!.color
 }
+
+/**
+ * Tolerans basamağının rengi: dar tolerans yeşil (pitch'i zorlamayan geçiş),
+ * geniş tolerans kırmızı. scoreColor ile aynı merdiven, ters yönde.
+ */
+const TOLERANCE_STEPS_COLORS: { upTo: number; color: string }[] = [
+  { upTo: 3, color: '#5ce088' },
+  { upTo: 6, color: '#9fd85f' },
+  { upTo: 8, color: '#e0ca5c' },
+  { upTo: 10, color: '#ff8a4c' },
+  { upTo: Infinity, color: '#f2545b' },
+]
+
+export function toleranceColor(tolerance: number | null | undefined): string {
+  if (typeof tolerance !== 'number' || !Number.isFinite(tolerance)) return TONE_COLORS.neutral
+  return TOLERANCE_STEPS_COLORS.find((step) => tolerance <= step.upTo)!.color
+}

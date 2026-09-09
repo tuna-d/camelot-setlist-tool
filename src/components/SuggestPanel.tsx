@@ -1,14 +1,13 @@
 import { useMemo } from 'react'
 import { RELATIONS } from '../lib/camelot'
 import {
-  MAX_TOLERANCE,
-  MIN_TOLERANCE,
+  TOLERANCE_STEPS,
   bpmRange,
   formatDelta,
   groupByRelation,
   suggest,
 } from '../lib/suggest'
-import { formatBpm, scoreColor, toneColor } from '../lib/ui'
+import { formatBpm, scoreColor, toleranceColor, toneColor } from '../lib/ui'
 import {
   selectExclude,
   selectGenres,
@@ -100,20 +99,34 @@ export function SuggestPanel() {
             </div>
 
             <div className="col filters">
-              <label className="col">
-                <span className="faint">
-                  tempo toleransı · %{state.tolerance}
-                  {range ? ` (${formatBpm(range.min)} – ${formatBpm(range.max)} BPM)` : ''}
-                </span>
-                <input
-                  type="range"
-                  min={MIN_TOLERANCE}
-                  max={MAX_TOLERANCE}
-                  step={0.5}
-                  value={state.tolerance}
-                  onChange={(event) => state.setTolerance(Number(event.target.value))}
-                />
-              </label>
+              <div className="col">
+                <div className="row-wrap">
+                  <span className="faint">tempo toleransı · %{state.tolerance}</span>
+                  <span className="spacer" />
+                  {range ? (
+                    <span className="faint mono">
+                      {formatBpm(range.min)} – {formatBpm(range.max)} BPM
+                    </span>
+                  ) : null}
+                </div>
+                <div className="segmented" role="group" aria-label="Tempo toleransı">
+                  {TOLERANCE_STEPS.map((step) => (
+                    <button
+                      key={step}
+                      type="button"
+                      className="segment"
+                      aria-pressed={state.tolerance === step}
+                      onClick={() => state.setTolerance(step)}
+                      title={`Pitch'i en fazla %${step} zorlayan parçalar önerilsin`}
+                      style={
+                        state.tolerance === step ? { color: toleranceColor(step) } : undefined
+                      }
+                    >
+                      ±%{step}
+                    </button>
+                  ))}
+                </div>
+              </div>
 
               <div className="col">
                 <h3>ilişkiler</h3>

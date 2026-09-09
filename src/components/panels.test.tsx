@@ -203,6 +203,22 @@ describe('SuggestPanel', () => {
     expect(html).not.toContain('Parça c3')
   })
 
+  it('tolerans basamaklarını gösterir ve seçili olanı işaretler', async () => {
+    useStore.getState().setCatalog(catalog)
+    useStore.getState().addTrack(track({ id: '1', bpm: 124, key: '8A' }))
+    useStore.getState().setTolerance(10)
+
+    const view = await mount(<SuggestPanel />)
+    const segments = [...view.container.querySelectorAll('.segment')]
+    expect(segments.map((item) => item.textContent)).toEqual(['±%3', '±%6', '±%8', '±%10', '±%12'])
+    expect(segments.filter((item) => item.getAttribute('aria-pressed') === 'true')).toHaveLength(1)
+    expect(view.html()).toContain('tempo toleransı · %10')
+
+    await view.click('.segment')
+    expect(useStore.getState().tolerance).toBe(3)
+    await view.unmount()
+  })
+
   it('aday çıkmayınca ne yapılacağını söyler', async () => {
     useStore.getState().setCatalog({ ...catalog, tracks: [] })
     useStore.getState().addTrack(track({ id: '1', bpm: 124, key: '8A' }))

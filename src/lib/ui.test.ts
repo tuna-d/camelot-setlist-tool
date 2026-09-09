@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { RELATIONS } from './camelot'
-import { formatBpm, formatDuration, formatTotal, scoreColor, toneColor } from './ui'
+import { formatBpm, formatDuration, formatTotal, scoreColor, toleranceColor, toneColor } from './ui'
 
 describe('toneColor', () => {
   it('her ton için bir renk var', () => {
@@ -76,5 +76,26 @@ describe('scoreColor', () => {
 
   it('aynı puan aynı rengi verir', () => {
     expect(scoreColor(63)).toBe(scoreColor(63))
+  })
+})
+
+describe('toleranceColor', () => {
+  it('tolerans genişledikçe renk değişir', () => {
+    expect(toleranceColor(3)).not.toBe(toleranceColor(12))
+    expect(toleranceColor(3)).toMatch(/^#[0-9a-f]{6}$/)
+  })
+
+  it('basamak sınırı alttaki renge ait', () => {
+    expect(toleranceColor(6)).toBe(toleranceColor(4))
+    expect(toleranceColor(6.1)).not.toBe(toleranceColor(6))
+  })
+
+  it('bütün hazır basamaklar farklı renk alır', () => {
+    const colors = [3, 6, 8, 10, 12].map(toleranceColor)
+    expect(new Set(colors).size).toBe(5)
+  })
+
+  it('sayı olmayan değerde nötr renk', () => {
+    expect(toleranceColor(null)).toBe(toneColor('neutral'))
   })
 })
