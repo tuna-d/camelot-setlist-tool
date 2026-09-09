@@ -79,6 +79,8 @@ create table if not exists public.settings (
   playlist_id text,
   active_setlist_id text,
   cursor integer not null default 0,
+  -- Client side timestamp, kept so conflict resolution matches the offline copy.
+  saved_at bigint not null default 0,
   updated_at timestamptz not null default now()
 );
 
