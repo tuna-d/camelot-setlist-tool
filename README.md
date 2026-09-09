@@ -1,247 +1,277 @@
 # Camelot Setlist
 
-rekordbox kütüphanenden **BPM** ve **Camelot key** uyumuna göre DJ setlisti kuran web
-uygulaması. Birden çok kullanıcıyı destekler; her kullanıcı yalnızca kendi verisini görür.
+A web app that builds DJ setlists from your rekordbox library by matching **BPM** and
+**Camelot key**. It supports multiple users, and each one only ever sees their own data.
 
-Ne yapar:
+What it does:
 
-- rekordbox koleksiyon XML'ini içe aktarır (parçalar, playlistler, iç içe klasörler).
-- İmleçteki parçaya harmonik ve tempo olarak uyan adayları puanlayıp sıralar.
-- Enerji eğrisi seçtirerek (yükselen / kemer / düz / inen) tüm seti otomatik kurar.
-- Setlisti panoya, `.m3u8` dosyasına ya da YouTube aramalarına aktarır.
-- Kütüphanende olmayan parçalar için Beatport Top 100'lerinden derlenmiş bir keşif
-  katalogu ve GetSongBPM üzerinden tek parça araması sunar.
+- Imports a rekordbox collection XML (tracks, playlists, nested folders).
+- Scores and ranks candidates that fit the track at the cursor harmonically and in tempo.
+- Builds a whole set automatically along an energy curve (rising / arc / flat / descending).
+- Exports the setlist to the clipboard, to an `.m3u8` file, or as YouTube searches.
+- Offers a discovery catalog scraped from Beatport genre Top 100 pages, plus single-track
+  lookup through GetSongBPM, for music that isn't in your library.
 
-Arayüz Türkçe. Değişken ve fonksiyon adları İngilizce.
+**The interface is in Turkish.** Identifiers and comments are in English; every string the
+user sees is Turkish. This README is in English.
 
-## Hızlı başlangıç
+## Quick start
 
 ```bash
 npm install
 npm run dev
 ```
 
-Hiçbir ortam değişkeni olmadan da çalışır: giriş kapalı kalır, uygulama misafir kipine
-düşer ve her şey tarayıcının `localStorage`'ında durur.
+It runs with no environment variables at all: sign-in stays off, the app falls back to
+guest mode, and everything lives in the browser's `localStorage`.
 
 ```bash
-npm test           # vitest (297 test)
+npm test           # vitest (348 tests)
 npm run typecheck  # tsc -b --noEmit
 npm run lint       # eslint
 npm run build      # tsc -b && vite build
 ```
 
-## Hesaplar ve misafir kipi
+## Accounts and guest mode
 
-Üç durum var:
+There are three states:
 
-| durum | ne olur |
+| state | what happens |
 |---|---|
-| **giriş kapalı** (Supabase tanımsız) | Uygulama tam çalışır, kayıt yalnızca tarayıcıda. Üstte uyarı bandı durur. |
-| **misafir** (giriş var ama yapılmamış) | Aynı: set kurulabilir, öneriler gelir, **sunucuya hiçbir şey yazılmaz**. Banttan giriş yapılabilir. |
-| **girişli** | Kütüphane, setlistler ve ayarlar hesaba kaydedilir; başka cihazda aynı yerden devam edilir. |
+| **sign-in disabled** (no Supabase env) | The app works fully, storage is browser-only. A banner says so. |
+| **guest** (sign-in available, not used) | Same: you can build sets and get suggestions, **nothing is written to the server**. The banner offers sign-in. |
+| **signed in** | Library, setlists and settings are saved to the account and follow you to another device. |
 
-Giriş yöntemleri: **Google ile devam et** ve **e-posta + parola**.
+Sign-in methods: **Continue with Google** and **email + password**.
 
-Misafirken kurduğun çalışma giriş yaptığında **hesabındaki kaydın üzerine yazılmaz**.
-Hesaptaki kayıt yüklenir ve "misafirken kurduğun seti hesabına taşı" seçeneği çıkar;
-kararı sen verirsin.
+Work you did as a guest is never written over the account record. The account record
+loads, and you are offered "move the set you built as a guest into my account" — your
+call. Moving **adds** the guest sets next to the account's own sets; nothing is replaced.
+Colliding ids get new ids, colliding names get a suffix, and the library, extras and
+playlists are merged by track id so nothing is duplicated.
 
-## Camelot çemberi ve puanlama
+## The Camelot wheel and scoring
 
-Çemberde bir numara ilerlemek bir beşli, yani **7 yarım ton**. Buradan `+7 numara ≡ +1
-yarım ton` ve `+5 numara ≡ −1 yarım ton` çıkar. A halkası minör, B halkası majör:
-`8A = Am`, `8B = C`.
+One step around the wheel is a fifth, which is **7 semitones**. From that follows
+`+7 numbers ≡ +1 semitone` and `+5 numbers ≡ −1 semitone`. The A ring is minor, the B ring
+is major: `8A = Am`, `8B = C`.
 
-Tanımlı geçişler (`src/lib/camelot.ts` içindeki `RELATIONS` tablosu):
+Defined transitions (the `RELATIONS` table in `src/lib/camelot.ts`):
 
-| id | etiket | 8A'dan | puan | varsayılan |
+| id | label (Turkish UI) | from 8A | score | default |
 |---|---|---|---|---|
-| `same` | Aynı key | 8A | 100 | açık |
-| `up` | +1 · enerji ↑ | 9A | 94 | açık |
-| `down` | −1 · yumuşak | 7A | 92 | açık |
-| `relative` | Relatif | 8B | 88 | açık |
-| `boost` | +2 · sıçrama | 10A | 72 | açık |
-| `diagonal` | Diyagonal | 9B | 64 | kapalı |
-| `semiUp` | +7 · yarım ton ↑ | 3A | 62 | kapalı |
-| `semiDown` | −7 · yarım ton ↓ | 1A | 56 | kapalı |
+| `same` | Aynı key | 8A | 100 | on |
+| `up` | +1 · enerji ↑ | 9A | 94 | on |
+| `down` | −1 · yumuşak | 7A | 92 | on |
+| `relative` | Relatif | 8B | 88 | on |
+| `boost` | +2 · sıçrama | 10A | 72 | on |
+| `diagonal` | Diyagonal | 9B | 64 | off |
+| `semiUp` | +7 · yarım ton ↑ | 3A | 62 | off |
+| `semiDown` | −7 · yarım ton ↓ | 1A | 56 | off |
 
-Bir adayın puanı:
+A candidate's score:
 
 ```
-puan = ilişki puanı × 0.66 + tempo yakınlığı × 0.34
+score = relation score × 0.66 + tempo closeness × 0.34
 ```
 
-Tempo yakınlığı tolerans penceresine göre hesaplanır: tam isabette 100, tolerans
-sınırında 0. Varsayılan tolerans **%6** (Pioneer DDJ-FLX4'ün pitch aralığı), ayar
-aralığı %1–12. Tolerans dışındaki tempo ve kapalı ilişki elenir. Yarım/çift tempo
-geçerli eşleşme sayılır: 128 ↔ 64 ↔ 256.
+Tempo closeness is measured against the tolerance window: 100 at an exact match, 0 at the
+edge of tolerance. The default tolerance is **6%** (the pitch range of a Pioneer
+DDJ-FLX4); the UI offers ±3 / ±6 / ±8 / ±10 / ±12 as preset steps, coloured green through
+red because a wider window means more strain on the pitch fader. Anything outside
+tolerance, or in a relation you turned off, is dropped. Half and double tempo count as
+real matches: 128 ↔ 64 ↔ 256.
 
-Otomatik kurucu ışın araması (beam search) kullanır. Açgözlü seçim, bir sonraki adımda
-hiç uyumlu aday kalmayan çıkmazlara sokuyordu; aynı anda birkaç kısmi seti canlı tutmak
-bunu çözüyor. Adım puanı `ilişki × 0.55 + eğriye uyum × 0.45`; son birkaç parçada aynı
-sanatçı ve üst üste üçüncü aynı key ceza alır, ardışık aynı sanatçı başka aday varken
-hiç seçilmez.
+The automatic builder uses beam search. Greedy selection kept walking into dead ends where
+the next step had no compatible candidate left; keeping several partial sets alive fixes
+that. The step score is `relation × 0.55 + fit to the curve × 0.45`; the same artist within
+the last few tracks and a third consecutive identical key are penalised, and a
+back-to-back repeat of the same artist is never picked while another candidate exists.
 
-## Kurulum
+## The workspace
+
+The screen has three areas:
+
+- **Set** (left) — the ordered track list. Each row shows position, title, key, BPM,
+  length, Beatport/YouTube search buttons, and a remove button. Rows are draggable. Under
+  each row you can rate the track's energy 1–5 (click the same star again to clear it) and
+  write a per-track note. Between rows a bridge shows the transition's relation and tempo
+  difference, and warns when either is out of bounds.
+- **Flow** (right) — the tempo curve, totals (length, track count, tempo range, number of
+  strained transitions) the set note, and the export buttons. It stays the same height as
+  the set panel; the set list scrolls inside itself once it grows.
+- **Suggestions** (full width, below) — the Camelot wheel and the reference track on the
+  left, the filters (tolerance, relations, genres) on the right, and the ranked candidates
+  as a list underneath. Each candidate carries a 0–100 match score, coloured on the same
+  green-to-red ladder.
+
+Saved setlists live in the top bar under **setlerim**: a dropdown lists every set with
+rename and delete buttons, plus "+ yeni set".
+
+## Setup
 
 ### 1. Supabase
 
-1. [supabase.com](https://supabase.com) → **New project** (ücretsiz katman yeterli).
-2. **SQL Editor** → `supabase/schema.sql` dosyasının içeriğini yapıştır ve çalıştır.
-   Tabloları, tetikleyicileri ve Row Level Security politikalarını kurar. Yeniden
-   çalıştırmak güvenlidir.
-3. **Settings → API** sayfasından `Project URL` ve `anon public` anahtarını al →
-   `VITE_SUPABASE_URL` ve `VITE_SUPABASE_ANON_KEY`.
-4. Aynı sayfadaki `service_role` anahtarını al → `SUPABASE_SERVICE_ROLE_KEY`
-   (yalnızca sunucu tarafı, asla `VITE_` öneki verme).
+1. [supabase.com](https://supabase.com) → **New project** (the free tier is enough).
+2. **SQL Editor** → paste the contents of `supabase/schema.sql` and run it. It creates the
+   tables, triggers and Row Level Security policies. Running it again is safe, and the
+   upgrade statements at the bottom bring an older project up to date.
+3. From **Settings → API** take the `Project URL` and the `anon public` key →
+   `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`.
+4. From the same page take the `service_role` key → `SUPABASE_SERVICE_ROLE_KEY` (server
+   side only — never give it a `VITE_` prefix).
 
-Ücretsiz Supabase projeleri 7 gün hareketsiz kalırsa duraklatılır. Haftalık katalog
-tazelemesi veritabanına yazdığı için projeyi uyanık tutar; ek bir iş gerekmez.
+Free Supabase projects are paused after 7 days of inactivity. The weekly catalog refresh
+writes to the database, which keeps the project awake on its own.
 
-### 2. Google ile giriş
+### 2. Sign in with Google
 
-1. [Google Cloud Console](https://console.cloud.google.com) → yeni proje.
-2. **APIs & Services → OAuth consent screen**: External, uygulama adı ve destek
-   e-postası. Test kullanıcısı olarak kendini ve giriş yapacak kişileri ekle.
+1. [Google Cloud Console](https://console.cloud.google.com) → new project.
+2. **APIs & Services → OAuth consent screen**: External, app name and support email. Add
+   yourself and anyone who will sign in as test users.
 3. **Credentials → Create credentials → OAuth client ID → Web application**.
-   - Authorized redirect URI: `https://<proje-ref>.supabase.co/auth/v1/callback`
-     (bu adres Supabase → Authentication → Providers → Google altında yazılı).
-4. Çıkan **Client ID** ve **Client secret** değerlerini Supabase →
-   **Authentication → Providers → Google** altına yapıştır ve sağlayıcıyı aç.
-5. Supabase → **Authentication → URL Configuration** → Site URL alanına dağıtım
-   adresini yaz (yerelde `http://localhost:5173`).
+   - Authorized redirect URI: `https://<project-ref>.supabase.co/auth/v1/callback`
+     (Supabase → Authentication → Providers → Google shows the exact address).
+4. Paste the resulting **Client ID** and **Client secret** into Supabase →
+   **Authentication → Providers → Google** and enable the provider.
+5. Supabase → **Authentication → URL Configuration** → set Site URL to your deployment
+   address (`http://localhost:5173` while developing) and add it to Redirect URLs.
 
-E-posta + parola girişi Supabase'de varsayılan olarak açıktır. Ücretsiz katmanın
-yerleşik e-posta gönderimi saatte birkaç mesajla sınırlıdır; birkaç kişilik kullanımda
-sorun olmaz, istersen **Authentication → Providers → Email** altından e-posta
-doğrulamasını kapatabilirsin.
+Email + password sign-in is on by default in Supabase. The free tier's built-in mailer is
+limited to a few messages an hour, which is fine for a handful of people; you can also turn
+email confirmation off under **Authentication → Providers → Email**.
 
 ### 3. Vercel
 
-1. Vercel → **Add New → Project** → depoyu içe aktar. Framework `vite` olarak gelir
-   (`vercel.json` içinde de yazılı).
-2. Ortam değişkenlerini gir (tablo aşağıda).
-3. **Deployment Protection'ı açma.** Uygulamanın kendi girişi var; site geneli koruma
-   açık olursa davet ettiğin kişiler siteye hiç ulaşamaz.
+1. Vercel → **Add New → Project** → import the repository. The framework is detected as
+   `vite` (it is also declared in `vercel.json`).
+2. Enter the environment variables (table below).
+3. **Do not turn on Deployment Protection.** The app has its own sign-in; site-wide
+   protection would put `/api/*` behind a password too, so the app could not reach its own
+   endpoints and the people you invite could not reach the site at all.
 
-| değişken | ne işe yarar | nereden | yoksa ne olur |
+| variable | what it does | where from | without it |
 |---|---|---|---|
-| `VITE_SUPABASE_URL` | Tarayıcının Supabase adresi | Supabase → Settings → API | Giriş kapalı, uygulama misafir kipinde |
-| `VITE_SUPABASE_ANON_KEY` | Tarayıcının genel anahtarı | aynı sayfa | Aynı |
-| `SUPABASE_URL` | Sunucu tarafı adres | yukarıdakiyle aynı değer | Katalog yazılamaz, internet araması giriş doğrulayamaz |
-| `SUPABASE_SERVICE_ROLE_KEY` | Katalog yazma ve oturum doğrulama | Supabase → Settings → API | Aynı |
-| `GETSONGBPM_API_KEY` | Tek parça araması | [getsongbpm.com/api](https://getsongbpm.com/api) | "internette ara" açıklama verir, elle giriş çalışır |
-| `CRON_SECRET` | Haftalık tazelemeyi korur | `openssl rand -hex 32` | Tazeleme çalışmaz, okuma etkilenmez |
+| `VITE_SUPABASE_URL` | Supabase address for the browser | Supabase → Settings → API | Sign-in off, app runs in guest mode |
+| `VITE_SUPABASE_ANON_KEY` | Public key for the browser | same page | Same |
+| `SUPABASE_URL` | Server-side address | same value as above | Catalog cannot be written, track search cannot verify sessions |
+| `SUPABASE_SERVICE_ROLE_KEY` | Catalog writes and session verification | Supabase → Settings → API | Same |
+| `GETSONGBPM_API_KEY` | Single-track lookup | [getsongbpm.com/api](https://getsongbpm.com/api) | "search the web" explains it is missing; manual entry still works |
+| `CRON_SECRET` | Guards the weekly refresh | `openssl rand -hex 32` | Refresh never runs; reads are unaffected |
 
-`.env.example` aynı bilgiyi yerel geliştirme için tutar.
+`.env.example` carries the same information for local development.
 
-Katalog haftada bir pazartesi 06:00 UTC'de `/api/catalog?refresh=1` ile tazelenir
+The catalog is refreshed weekly, Mondays at 06:00 UTC, through `/api/catalog?refresh=1`
 (`vercel.json` → `crons`).
 
-### Katalogu tabloya tohumlama
+### Seeding the catalog table
 
-Uygulama sunucudaki katalog boşken `public/catalog.json` dosyasına düşer, yani ilk cron'u
-beklemek zorunda değilsin. Elindeki dosyayı hemen tabloya yazmak için:
+When the server-side catalog is empty the app falls back to `public/catalog.json`, so you
+do not have to wait for the first cron run. To write the file you already have straight
+into the table:
 
 ```bash
 npm run seed:catalog
 ```
 
-`.env` dosyasındaki `SUPABASE_URL` ve `SUPABASE_SERVICE_ROLE_KEY` ile `catalog` tablosuna
-yazar, Beatport'a hiç gitmez. Yeniden tarayıp hem dosyayı hem tabloyu güncellemek için
+It uses `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` from `.env` and never touches
+Beatport. To scrape again and update both the file and the table:
 `npm run refresh:catalog -- --supabase`.
 
-## Mimari
+## Architecture
 
 ```
-src/lib/          Saf mantık — React'e, DOM'a ve window'a dokunmaz, her modülün testi var
-  camelot.ts        key ayrıştırma (nota / Camelot / Open Key), ilişki tablosu, renkler
-  rekordbox.ts      koleksiyon XML ayrıştırıcı, m3u8 dışa aktarım
-  suggest.ts        aday puanlama, tempo farkı, imza tekilleştirme
-  setbuilder.ts     ışın aramalı otomatik set kurucu, enerji eğrileri
-  search.ts         Türkçe karakter duyarsız yerel arama
-  beatport.ts       katalog çıkarımı (üç strateji) ve doğrulama
-  catalog.ts        tür sayfalarını tazeleme, tür başına rapor
-  getsongbpm.ts     tek parça arama sorgusu ve yanıt okuma
-  state-rows.ts     uygulama durumu ↔ veritabanı satırları eşlemesi
-  auth-message.ts   Supabase hatalarını Türkçe ve yol gösteren metne çevirir
+src/lib/          Pure logic — never touches React, the DOM or window; every module is tested
+  camelot.ts        key parsing (note / Camelot / Open Key), relation table, colours
+  rekordbox.ts      collection XML parser, m3u8 export
+  suggest.ts        candidate scoring, tempo delta, signature de-duplication
+  setbuilder.ts     beam-search set builder, energy curves
+  setstats.ts       transition verdict and set totals, shared by the list and the summary
+  search.ts         local search that ignores Turkish diacritics
+  beatport.ts       catalog extraction (three strategies) and validation
+  catalog.ts        genre-page refresh, per-genre report
+  getsongbpm.ts     single-track query and response reading
+  state-rows.ts     app state ↔ database rows mapping
+  merge.ts          merges guest work into an account without replacing anything
+  auth-message.ts   turns Supabase errors into actionable Turkish text
+  env-file.ts       .env reader for the command-line scripts
   state.ts, types.ts, ui.ts
 
-src/store/        Durum, oturum ve kalıcılık
-  store.ts          zustand mağazası + saf seçiciler
-  auth.ts           oturum durumu, Google ve e-posta girişi
-  supabase.ts       istemci kurulumu (env yoksa null → misafir kipi)
-  remote.ts         kullanıcı başına okuma/yazma, çakışma çözümü
-  sync.ts           localStorage + uzak depo, misafir/girişli açılış
+src/store/        State, session and persistence
+  store.ts          zustand store + pure selectors
+  auth.ts           session state, Google and email sign-in
+  supabase.ts       client setup (null when env is missing → guest mode)
+  remote.ts         per-user reads and writes, conflict resolution
+  sync.ts           localStorage + remote store, guest/signed-in bootstrap
 
-src/components/   Arayüz (Türkçe metin)
-  SetlistPanel, SuggestPanel, CamelotWheel, TempoCurve, AuthDialog,
-  ImportDialog, TrackSearchDialog, AutoBuildDialog, common
+src/components/   UI (Turkish copy)
+  SetlistPanel, SetSummaryPanel, SetlistMenu, SuggestPanel, CamelotWheel, TempoCurve,
+  AuthDialog, ImportDialog, TrackSearchDialog, AutoBuildDialog, common
 
-api/              Vercel fonksiyonları
-  _lib.ts           CORS, cron sırrı, service-role istemcisi, oturum doğrulama
-  track-search.ts   GetSongBPM istemcisi (giriş ister)
-  catalog.ts        katalog okuma ve cron ile tazeleme
+api/              Vercel functions
+  _lib.ts           CORS, cron secret, service-role client, session verification
+  track-search.ts   GetSongBPM client (requires a signed-in user)
+  catalog.ts        catalog reads and cron-driven refresh
 
 scripts/
-  refresh-catalog.ts  katalogu elle tazeler (--dry yazmaz, --supabase tabloya da yazar)
-  smoke.mjs           gerçek tarayıcıda uçtan uca duman testi
+  refresh-catalog.ts  refreshes the catalog by hand (--dry writes nothing, --supabase also
+                      writes the table, --from-file uploads without scraping)
+  smoke.mjs           end-to-end smoke test in a real browser
 
 supabase/
-  schema.sql        tablolar, tetikleyiciler ve Row Level Security politikaları
+  schema.sql        tables, triggers and Row Level Security policies
 ```
 
-## Kalıcılık nasıl çalışır
+## How persistence works
 
-İki katman var:
+There are two layers:
 
-1. **`localStorage`** — her değişiklikte, anında, herkes için (misafir dahil). Sunucu
-   olmasa da uygulama çalışır.
-2. **Supabase** — yalnızca giriş yapmışlar için. Yazma ~2.5 saniye geciktirilir, arka
-   arkaya değişiklikler tek isteğe iner.
+1. **`localStorage`** — on every change, immediately, for everyone including guests. The
+   app works without a server.
+2. **Supabase** — for signed-in users only. Writes are debounced by ~2.5 seconds, so a
+   burst of edits collapses into one request.
 
-Veri üç tabloya bölünür: `libraries` (koleksiyon, kullanıcı başına tek satır),
-`setlists` (set başına bir satır) ve `settings` (süzgeçler, imleç, kayıt damgası).
-Kütüphanenin ayrı durmasının sebebi büyüklüğü: her not değişikliğinde 20 bin parçayı
-tekrar göndermek istemiyoruz.
+Data is split across three tables: `libraries` (the collection, one row per user),
+`setlists` (one row per set) and `settings` (filters, cursor, save stamp). The library is
+kept separate because of its size — we do not want to resend 20,000 tracks on every note
+keystroke.
 
-**Kullanıcılar birbirinin verisini göremez** ve bunu uygulama değil veritabanı zorlar:
-her tabloda `auth.uid() = user_id` koşullu Row Level Security politikası var.
+**Users cannot see each other's data,** and that is enforced by the database rather than by
+the app: every table has a Row Level Security policy conditioned on `auth.uid() = user_id`.
 
-Açılışta hesaptaki kayıt yüklenir. Yazarken sunucudaki `saved_at` damgası gönderilenden
-yeniyse yazma yapılmaz; sunucudaki kayıt geri alınır ve kullanıcıya söylenir —
-**sessizce üzerine yazılmaz.**
+On startup the account record is loaded. On write, if the server's `saved_at` stamp is
+newer than the one being sent, the write is refused; the server's record is fetched and the
+user is told — it is **never silently overwritten**.
 
-Playlist seçiliyken bile kayda **tam koleksiyon** yazılır; süzgeç yalnızca görünümü
-daraltır. (Süzülmüş listeyi yazmak, sayfa yenilenince koleksiyonun geri kalanını
-kaybettiriyordu.)
+Even when a playlist filter is active, the **whole collection** is saved; the filter only
+narrows the view. (Saving the filtered list used to lose the rest of the collection on
+reload.)
 
-## Beatport kazıma hakkında dürüst not
+## An honest note on scraping Beatport
 
-Beatport'un açık bir API'si yok. Keşif katalogu tür Top 100 sayfalarından çıkarılıyor ve
-**bu kırılgan**: sayfa yapısı haber vermeden değişebilir.
+Beatport has no public API. The discovery catalog is extracted from genre Top 100 pages,
+and **that is fragile**: the page structure can change without warning.
 
-Buna karşı üç şey yapılıyor:
+Three things guard against it:
 
-- **Üç ayrı strateji** sırayla denenir — `__NEXT_DATA__` bloğu, gömülü JSON / RSC akışı,
-  düz HTML metni. 10'dan az parça bulan stratejiye güvenilmez ve hangisinin tuttuğu
-  katalogda `strategy` alanında yazar.
-- **Doğrulama**: en az 100 parça, key okunma oranı ≥%95, BPM'lerin ≥%90'ı 90–165 arası,
-  en az 3 tür, yeni katalog eskisinin yarısından büyük.
-- **Doğrulama geçmezse eski katalog korunur.** Bozuk veri iyi veriyi ezmez; tazeleme
-  neden geçmediğini rapor eder.
+- **Three separate strategies** are tried in order — the `__NEXT_DATA__` block, embedded
+  JSON / RSC streams, and plain HTML text. A strategy that finds fewer than 10 tracks is
+  not trusted, and the one that worked is recorded in the catalog's `strategy` field.
+- **Validation**: at least 100 tracks, key parse rate ≥95%, ≥90% of BPMs between 90 and
+  165, at least 3 genres, and the new catalog larger than half of the old one.
+- **If validation fails the old catalog is kept.** Bad data never overwrites good data, and
+  the refresh reports why it failed.
 
-Sayfa yapısı değiştiğinde `npm run refresh:catalog -- --dry` hangi stratejinin kaç parça
-bulduğunu söyler; düzeltme `src/lib/beatport.ts` içindeki çıkarım stratejilerinde yapılır.
+When the page structure changes, `npm run refresh:catalog -- --dry` says how many tracks
+each strategy found; the fix belongs in the extraction strategies in `src/lib/beatport.ts`.
 
-Son çekimde dokuz türden 875 parça alındı, key okunma oranı %100, tutan strateji
-`__NEXT_DATA__`.
+The last scrape pulled 875 tracks from nine genres with a 100% key parse rate; the strategy
+that held was `__NEXT_DATA__`.
 
-## Duman testi
+## Smoke test
 
-Playwright bilerek bağımlılık listesinde değil (kurulumu ~150 MB tarayıcı indirmesi
-ekliyor). Çalıştırmak için:
+Playwright is deliberately not a dependency (installing it pulls a ~150 MB browser). To run
+it:
 
 ```bash
 npm install --no-save playwright
@@ -249,11 +279,11 @@ npx playwright install chromium
 npm run build && node scripts/smoke.mjs
 ```
 
-Test sahte bir API sunucusu kurar, üretim derlemesini gerçek Chromium'da açar ve şu akışı
-yürür: XML içe aktarma → playlist seçme → yerel arama → internet araması → öneri ekleme →
-otomatik set kurma → çoklu setlist → not yazma → misafir çalışmasının sunucuya
-gitmediğini doğrulama → yenileme sonrası kalıcılık → mobilde yatay kaydırma yok →
-konsolda hata yok.
+The test starts a fake API server, opens the production build in a real Chromium, and walks
+the flow: XML import → playlist selection → local search → web search → adding a suggestion
+→ automatic set building → multiple setlists → writing notes → verifying that guest work
+never reaches the server → persistence across a reload → no horizontal scrolling on mobile
+→ no console errors.
 
-Not: `npm install` çalıştırdığında `--no-save` ile kurulan Playwright silinir; duman
-testini tekrar çalıştırmadan önce yukarıdaki kurulum satırını yinelemen gerekir.
+Note: running `npm install` removes a Playwright installed with `--no-save`; repeat the
+install line above before running the smoke test again.
