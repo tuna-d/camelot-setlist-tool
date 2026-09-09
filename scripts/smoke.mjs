@@ -147,7 +147,7 @@ async function main() {
 
     // 1 — rekordbox XML içe aktarma
     await page.getByRole('button', { name: 'rekordbox XML' }).click()
-    await page.locator('dialog input[type="file"]').setInputFiles(FIXTURE)
+    await page.locator('dialog[open] input[type="file"]').setInputFiles(FIXTURE)
     await expectVisible(page, page.getByText('İçe aktarıldı'), 'XML içe aktarıldı')
     await page.getByRole('button', { name: 'tamam' }).click()
 
@@ -166,7 +166,7 @@ async function main() {
 
     // 3 — yerel arama (Türkçe karakter yazmadan)
     await page.getByRole('button', { name: 'parça ara' }).click()
-    await page.locator('dialog input.input').first().fill('gece yuruyusu')
+    await page.locator('dialog[open] input.input').first().fill('gece yuruyusu')
     await expectVisible(page, page.getByText('Gece Yürüyüşü'), 'yerel arama Türkçe karakteri katlıyor')
 
     // 4 — internet araması
@@ -175,7 +175,7 @@ async function main() {
     if (server_state.searches === 0) fail('internet araması', 'sunucuya istek gitmedi')
 
     // Yerel sonucu sete ekle: başlangıç parçası bu olacak.
-    await page.locator('dialog .entry', { hasText: 'Gece Yürüyüşü' }).getByRole('button', { name: 'ekle' }).click()
+    await page.locator('dialog[open] .entry', { hasText: 'Gece Yürüyüşü' }).getByRole('button', { name: 'ekle' }).click()
     await expectVisible(page, page.locator('.entries .entry').first(), 'parça setliste eklendi')
 
     // 5 — öneri ekleme (kütüphane havuzundan)
@@ -197,10 +197,12 @@ async function main() {
     ok(`otomatik kurma ${afterAuto} parçalık set bıraktı`)
 
     // 7 — çoklu setlist
-    await page.getByRole('button', { name: '+ yeni set' }).click()
+    await page.getByRole('button', { name: 'setlerim' }).click()
+    await page.locator('.menu-panel').getByRole('button', { name: '+ yeni set' }).click()
     if ((await page.locator('.entries > li').count()) !== 0) fail('çoklu setlist', 'yeni set boş değil')
     ok('yeni setlist boş açılıyor')
-    await page.getByRole('button', { name: 'Set 1 ·' }).click()
+    await page.getByRole('button', { name: 'setlerim' }).click()
+    await page.locator('.menu-panel').getByRole('button', { name: 'Set 1 ·' }).click()
     if ((await page.locator('.entries > li').count()) !== afterAuto) {
       fail('çoklu setlist', 'ilk setin içeriği değişti')
     }

@@ -10,7 +10,9 @@ import { bootstrapGuest, bootstrapUser, createSaver } from './store/sync'
 import { AuthDialog } from './components/AuthDialog'
 import { AutoBuildDialog } from './components/AutoBuildDialog'
 import { ImportDialog } from './components/ImportDialog'
+import { SetlistMenu } from './components/SetlistMenu'
 import { SetlistPanel } from './components/SetlistPanel'
+import { SetSummaryPanel } from './components/SetSummaryPanel'
 import { SuggestPanel } from './components/SuggestPanel'
 import { TrackSearchDialog } from './components/TrackSearchDialog'
 
@@ -139,9 +141,14 @@ export function App() {
   return (
     <div className="app">
       <header className="topbar">
-        <h1>Camelot Setlist</h1>
+        <span className="brand">
+          <span className="brand-dot" aria-hidden="true" />
+          <h1>Camelot Setlist</h1>
+        </span>
 
-        <span className="faint">
+        <SetlistMenu />
+
+        <span className="chip chip-static lib-stats">
           {state.library.length === 0
             ? 'kütüphane yok — rekordbox XML’ini içe aktar'
             : `${visible.length} parça · ${usable} kullanılabilir · ${state.playlists.length} playlist`}
@@ -223,6 +230,7 @@ export function App() {
           onOpenSearch={() => setDialog('search')}
           onOpenAutoBuild={() => setDialog('auto')}
         />
+        <SetSummaryPanel />
         <SuggestPanel />
       </main>
 

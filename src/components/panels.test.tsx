@@ -3,7 +3,9 @@ import { act } from 'react'
 import type { ReactElement } from 'react'
 import { createRoot } from 'react-dom/client'
 import { initialAppState, useStore } from '../store/store'
+import { SetlistMenu } from './SetlistMenu'
 import { SetlistPanel } from './SetlistPanel'
+import { SetSummaryPanel } from './SetSummaryPanel'
 import { SuggestPanel } from './SuggestPanel'
 import type { Catalog, Track } from '../lib/types'
 
@@ -12,18 +14,43 @@ import type { Catalog, Track } from '../lib/types'
 ;(globalThis as unknown as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true
 
 async function render(node: ReactElement): Promise<string> {
+  const view = await mount(node)
+  const html = view.html()
+  await view.unmount()
+  return html
+}
+
+interface Mounted {
+  container: HTMLElement
+  html: () => string
+  click: (selector: string) => Promise<void>
+  unmount: () => Promise<void>
+}
+
+async function mount(node: ReactElement): Promise<Mounted> {
   const container = document.createElement('div')
   document.body.append(container)
   const root = createRoot(container)
   await act(async () => {
     root.render(node)
   })
-  const html = container.innerHTML
-  await act(async () => {
-    root.unmount()
-  })
-  container.remove()
-  return html
+  return {
+    container,
+    html: () => container.innerHTML,
+    click: async (selector) => {
+      const element = container.querySelector<HTMLElement>(selector)
+      if (!element) throw new Error(`Bulunamadı: ${selector}`)
+      await act(async () => {
+        element.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+      })
+    },
+    unmount: async () => {
+      await act(async () => {
+        root.unmount()
+      })
+      container.remove()
+    },
+  }
 }
 
 function track(partial: Partial<Track> & { id: string }): Track {
@@ -61,7 +88,7 @@ describe('SetlistPanel', () => {
   it('boş sette ne yapılacağını söyler', async () => {
     const html = await render(<SetlistPanel />)
     expect(html).toContain('Set boş')
-    expect(html).toContain('Set 1 · 0')
+    expect(html).toContain('Set 1')
   })
 
   it('parçaları sıra numarası, key ve tempoyla listeler', async () => {
@@ -90,19 +117,66 @@ describe('SetlistPanel', () => {
     expect(html).toContain('toleransın (%6) dışında')
   })
 
-  it('setlist sekmelerini ve dışa aktarım düğmelerini gösterir', async () => {
+  it('parça ekleme düğmelerini gösterir', async () => {
+    const html = await render(<SetlistPanel onOpenSearch={() => {}} onOpenAutoBuild={() => {}} />)
+    expect(html).toContain('parça ara')
+    expect(html).toContain('otomatik kur')
+  })
+})
+
+describe('SetlistMenu', () => {
+  it('kapalıyken yalnızca aktif setin adını gösterir', async () => {
     useStore.getState().newSetlist('İkinci')
-    const html = await render(<SetlistPanel />)
-    expect(html).toContain('Set 1 · 0')
-    expect(html).toContain('İkinci · 0')
-    expect(html).toContain('.m3u8')
-    expect(html).toContain('kopyala')
+    const html = await render(<SetlistMenu />)
+    expect(html).toContain('İkinci')
+    expect(html).not.toContain('menu-panel')
   })
 
+  it('açıldığında bütün setleri ve yeni set düğmesini listeler', async () => {
+    useStore.getState().newSetlist('İkinci')
+    const view = await mount(<SetlistMenu />)
+    await view.click('.menu-button')
+    expect(view.html()).toContain('Set 1 · 0')
+    expect(view.html()).toContain('İkinci · 0')
+    expect(view.html()).toContain('+ yeni set')
+    await view.unmount()
+  })
+
+  it('menüden set seçince aktif set değişir', async () => {
+    useStore.getState().newSetlist('İkinci')
+    const first = useStore.getState().setlists[0].id
+    const view = await mount(<SetlistMenu />)
+    await view.click('.menu-button')
+    await view.click('.menu-name')
+    expect(useStore.getState().activeId).toBe(first)
+    // Seçimden sonra menü kapanır.
+    expect(view.html()).not.toContain('menu-panel')
+    await view.unmount()
+  })
+})
+
+describe('SetSummaryPanel', () => {
   it('iki parçadan sonra tempo eğrisi çizilir', async () => {
     useStore.getState().addTrack(track({ id: '1', bpm: 120 }))
     useStore.getState().addTrack(track({ id: '2', bpm: 124, key: '9A' }))
-    expect(await render(<SetlistPanel />)).toContain('<polyline')
+    expect(await render(<SetSummaryPanel />)).toContain('<polyline')
+  })
+
+  it('dışa aktarım düğmelerini ve set notunu gösterir', async () => {
+    const html = await render(<SetSummaryPanel />)
+    expect(html).toContain('.m3u8')
+    expect(html).toContain('kopyala')
+    expect(html).toContain('set notu')
+  })
+
+  it('süre, tempo aralığı ve zorlayan geçiş sayısını yazar', async () => {
+    useStore.getState().addTrack(track({ id: '1', bpm: 120, key: '8A', duration: 300 }))
+    useStore.getState().addTrack(track({ id: '2', bpm: 124, key: '9A', duration: 300 }))
+    useStore.getState().addTrack(track({ id: '3', bpm: 124, key: '12A', duration: 300 }))
+    const html = await render(<SetSummaryPanel />)
+    expect(html).toContain('15 dk')
+    expect(html).toContain('120–124')
+    expect(html).toContain('zorlayan geçiş')
   })
 })
 

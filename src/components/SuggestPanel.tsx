@@ -8,7 +8,7 @@ import {
   groupByRelation,
   suggest,
 } from '../lib/suggest'
-import { formatBpm, toneColor } from '../lib/ui'
+import { formatBpm, scoreColor, toneColor } from '../lib/ui'
 import {
   selectExclude,
   selectGenres,
@@ -46,9 +46,12 @@ export function SuggestPanel() {
   const total = groups.reduce((count, group) => count + group.items.length, 0)
 
   return (
-    <section className="panel col" aria-label="Öneriler">
+    <section className="panel col suggest-panel" aria-label="Öneriler">
       <div className="row-wrap">
         <h2>Öneriler</h2>
+        {reference ? (
+          <span className="chip chip-static">{total} aday</span>
+        ) : null}
         <span className="spacer" />
         <button
           type="button"
@@ -74,82 +77,102 @@ export function SuggestPanel() {
         </p>
       ) : (
         <>
-          <div className="reference row-wrap">
-            <CamelotWheel active={reference.key} allowed={state.relations} size={190} />
-            <div className="col">
-              <strong>{reference.title}</strong>
-              <span className="muted">{reference.artist}</span>
-              <div className="row">
-                <KeyChip code={reference.key} />
-                <Bpm value={reference.bpm} />
-              </div>
-              {range ? (
-                <span className="faint mono">
-                  hedef {formatBpm(range.min)} – {formatBpm(range.max)} BPM
+          <div className="suggest-head">
+            <div className="reference row-wrap">
+              <CamelotWheel active={reference.key} allowed={state.relations} size={190} />
+              <div className="col">
+                <strong>{reference.title}</strong>
+                <span className="muted">{reference.artist}</span>
+                <div className="row">
+                  <KeyChip code={reference.key} />
+                  <Bpm value={reference.bpm} />
+                </div>
+                {range ? (
+                  <span className="faint mono">
+                    hedef {formatBpm(range.min)} – {formatBpm(range.max)} BPM
+                  </span>
+                ) : null}
+                <span className="faint">
+                  {state.poolSource === 'catalog' ? 'Keşif katalogu' : 'Kütüphanem'} · {pool.length}{' '}
+                  parça
                 </span>
+              </div>
+            </div>
+
+            <div className="col filters">
+              <label className="col">
+                <span className="faint">
+                  tempo toleransı · %{state.tolerance}
+                  {range ? ` (${formatBpm(range.min)} – ${formatBpm(range.max)} BPM)` : ''}
+                </span>
+                <input
+                  type="range"
+                  min={MIN_TOLERANCE}
+                  max={MAX_TOLERANCE}
+                  step={1}
+                  value={state.tolerance}
+                  onChange={(event) => state.setTolerance(Number(event.target.value))}
+                />
+              </label>
+
+              <div className="col">
+                <h3>ilişkiler</h3>
+                <div className="row-wrap">
+                  {RELATIONS.map((info) => (
+                    <button
+                      key={info.id}
+                      type="button"
+                      className="chip"
+                      aria-pressed={state.relations.includes(info.id)}
+                      onClick={() => state.toggleRelation(info.id)}
+                      title={info.hint}
+                      style={
+                        state.relations.includes(info.id)
+                          ? {
+                              background: `color-mix(in srgb, ${toneColor(info.tone)} 16%, transparent)`,
+                              borderColor: toneColor(info.tone),
+                              color: toneColor(info.tone),
+                            }
+                          : undefined
+                      }
+                    >
+                      {info.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {genres.length > 0 ? (
+                <div className="col">
+                  <h3>
+                    türler
+                    {state.genres.length > 0 ? (
+                      <button
+                        type="button"
+                        className="btn btn-ghost btn-sm"
+                        onClick={() => state.setGenres([])}
+                      >
+                        süzgeci kaldır
+                      </button>
+                    ) : null}
+                  </h3>
+                  <div className="row-wrap">
+                    {genres.map((genre) => (
+                      <button
+                        key={genre}
+                        type="button"
+                        className="chip"
+                        aria-pressed={state.genres.includes(genre)}
+                        onClick={() => state.toggleGenre(genre)}
+                      >
+                        {genre}
+                      </button>
+                    ))}
+                  </div>
+                </div>
               ) : null}
-              <span className="faint">
-                {state.poolSource === 'catalog' ? 'Keşif katalogu' : 'Kütüphanem'} · {pool.length}{' '}
-                parça
-              </span>
             </div>
           </div>
-
-          <label className="col">
-            <span className="faint">
-              tempo toleransı · %{state.tolerance}
-              {range ? ` (${formatBpm(range.min)} – ${formatBpm(range.max)} BPM)` : ''}
-            </span>
-            <input
-              type="range"
-              min={MIN_TOLERANCE}
-              max={MAX_TOLERANCE}
-              step={1}
-              value={state.tolerance}
-              onChange={(event) => state.setTolerance(Number(event.target.value))}
-            />
-          </label>
-
-          <div className="row-wrap">
-            {RELATIONS.map((info) => (
-              <button
-                key={info.id}
-                type="button"
-                className="chip"
-                aria-pressed={state.relations.includes(info.id)}
-                onClick={() => state.toggleRelation(info.id)}
-                title={info.hint}
-                style={
-                  state.relations.includes(info.id)
-                    ? { borderColor: toneColor(info.tone), color: toneColor(info.tone) }
-                    : undefined
-                }
-              >
-                {info.label}
-              </button>
-            ))}
-          </div>
-
-          {genres.length > 0 ? (
-            <div className="row-wrap">
-              {genres.map((genre) => (
-                <button
-                  key={genre}
-                  type="button"
-                  className="chip"
-                  aria-pressed={state.genres.includes(genre)}
-                  onClick={() => state.toggleGenre(genre)}
-                >
-                  {genre}
-                </button>
-              ))}
-              {state.genres.length > 0 ? (
-                <button type="button" className="btn btn-ghost" onClick={() => state.setGenres([])}>
-                  tür süzgecini kaldır
-                </button>
-              ) : null}
-            </div>
-          ) : null}
 
           {total === 0 ? (
             <p className="muted">
@@ -162,28 +185,38 @@ export function SuggestPanel() {
                 <h3 style={{ color: toneColor(group.info.tone) }} title={group.info.hint}>
                   {group.info.label} · {group.items.length}
                 </h3>
-                {group.items.map((item) => (
-                  <div className="entry" key={item.track.id}>
-                    <span className="mono faint entry-index">{Math.round(item.score)}</span>
-                    <span className="entry-title">
-                      <strong>{item.track.title}</strong>
-                      <span className="muted"> — {item.track.artist}</span>
-                    </span>
-                    <KeyChip code={item.track.key} />
-                    <Bpm value={item.track.bpm} />
-                    <span className="mono faint" title="referansa göre tempo farkı">
-                      {formatDelta(item.delta)}
-                    </span>
-                    <TrackLinks track={item.track} />
-                    <button
-                      type="button"
-                      className="btn btn-primary"
-                      onClick={() => state.addTrack(item.track)}
-                    >
-                      ekle
-                    </button>
-                  </div>
-                ))}
+                <div className="entries">
+                  {group.items.map((item) => (
+                    <div className="entry" key={item.track.id}>
+                      <span
+                        className="score"
+                        style={{ color: scoreColor(item.score) }}
+                        title="100 üzerinden uyum puanı: ilişki ve tempo yakınlığı"
+                      >
+                        {Math.round(item.score)}
+                      </span>
+                      <span className="entry-title">
+                        <strong>{item.track.title}</strong>
+                        <span className="muted"> — {item.track.artist}</span>
+                      </span>
+                      <span className="entry-meta">
+                        <KeyChip code={item.track.key} />
+                        <Bpm value={item.track.bpm} />
+                        <span className="mono faint" title="referansa göre tempo farkı">
+                          {formatDelta(item.delta)}
+                        </span>
+                        <TrackLinks track={item.track} />
+                        <button
+                          type="button"
+                          className="btn btn-accent btn-sm"
+                          onClick={() => state.addTrack(item.track)}
+                        >
+                          ekle
+                        </button>
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
             ))
           )}
