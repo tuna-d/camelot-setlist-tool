@@ -31,3 +31,17 @@ export function formatBpm(bpm: number | null | undefined): string {
   if (typeof bpm !== 'number' || !Number.isFinite(bpm)) return '—'
   return Number.isInteger(bpm) ? String(bpm) : bpm.toFixed(1)
 }
+
+/** 100'lük uyum puanının rengi: yeşil güçlü geçiş, kırmızı zorlama. */
+const SCORE_STEPS: { min: number; color: string }[] = [
+  { min: 85, color: '#5ce088' },
+  { min: 70, color: '#9fd85f' },
+  { min: 55, color: '#e0ca5c' },
+  { min: 40, color: '#ff8a4c' },
+  { min: -Infinity, color: '#f2545b' },
+]
+
+export function scoreColor(score: number | null | undefined): string {
+  if (typeof score !== 'number' || !Number.isFinite(score)) return TONE_COLORS.neutral
+  return SCORE_STEPS.find((step) => score >= step.min)!.color
+}

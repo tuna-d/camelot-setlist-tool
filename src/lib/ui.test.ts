@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { RELATIONS } from './camelot'
-import { formatBpm, formatDuration, formatTotal, toneColor } from './ui'
+import { formatBpm, formatDuration, formatTotal, scoreColor, toneColor } from './ui'
 
 describe('toneColor', () => {
   it('her ton için bir renk var', () => {
@@ -52,5 +52,29 @@ describe('formatBpm', () => {
   it('bilinmeyen tempoda tire', () => {
     expect(formatBpm(null)).toBe('—')
     expect(formatBpm(undefined)).toBe('—')
+  })
+})
+
+describe('scoreColor', () => {
+  it('puan yükseldikçe renk değişir', () => {
+    const strong = scoreColor(92)
+    const weak = scoreColor(20)
+    expect(strong).not.toBe(weak)
+    expect(strong).toMatch(/^#[0-9a-f]{6}$/)
+  })
+
+  it('eşik değerleri üstteki basamağa girer', () => {
+    expect(scoreColor(85)).toBe(scoreColor(100))
+    expect(scoreColor(84.9)).not.toBe(scoreColor(85))
+    expect(scoreColor(40)).not.toBe(scoreColor(39))
+  })
+
+  it('sayı olmayan puanda nötr renk', () => {
+    expect(scoreColor(null)).toBe(toneColor('neutral'))
+    expect(scoreColor(Number.NaN)).toBe(toneColor('neutral'))
+  })
+
+  it('aynı puan aynı rengi verir', () => {
+    expect(scoreColor(63)).toBe(scoreColor(63))
   })
 })

@@ -61,6 +61,7 @@ export function TrackLinks({ track }: { track: Track }) {
   return (
     <span className="track-links">
       <a
+        className="link-btn"
         href={`https://www.beatport.com/search?q=${term}`}
         target="_blank"
         rel="noreferrer"
@@ -69,6 +70,7 @@ export function TrackLinks({ track }: { track: Track }) {
         BP
       </a>
       <a
+        className="link-btn"
         href={`https://www.youtube.com/results?search_query=${term}`}
         target="_blank"
         rel="noreferrer"
