@@ -50,22 +50,22 @@ export function AutoBuildDialog({ open, onClose }: AutoBuildDialogProps) {
   }
 
   return (
-    <Dialog open={open} title="Otomatik set kur" onClose={onClose}>
+    <Dialog open={open} title="Build the set automatically" onClose={onClose}>
       {!reference ? (
         <p className="muted">
-          Önce setliste bir başlangıç parçası ekle. Kurucu o parçadan devam ediyor.
+          Add a starting track to the setlist first. The builder continues from that track.
         </p>
       ) : (
         <div className="col">
           <div className="row-wrap">
-            <span className="faint">başlangıç:</span>
+            <span className="faint">starting from:</span>
             <strong>{reference.title}</strong>
             <KeyChip code={reference.key} />
             <Bpm value={reference.bpm} />
           </div>
 
           <label className="col">
-            <span className="faint">süre · {minutes} dakika</span>
+            <span className="faint">length · {minutes} minutes</span>
             <input
               type="range"
               min={20}
@@ -77,7 +77,7 @@ export function AutoBuildDialog({ open, onClose }: AutoBuildDialogProps) {
           </label>
 
           <label className="col">
-            <span className="faint">tempo aralığı · {bpmSpan} BPM</span>
+            <span className="faint">tempo span · {bpmSpan} BPM</span>
             <input
               type="range"
               min={0}
@@ -109,14 +109,14 @@ export function AutoBuildDialog({ open, onClose }: AutoBuildDialogProps) {
               checked={replace}
               onChange={(event) => setReplace(event.target.checked)}
             />
-            <span>mevcut setin yerine koy</span>
+            <span>replace the current set</span>
           </label>
 
           {result ? (
             <>
               <div className="row-wrap">
                 <h3>
-                  önizleme · {result.steps.length} parça · {formatTotal(result.totalSeconds)}
+                  preview · {result.steps.length} tracks · {formatTotal(result.totalSeconds)}
                 </h3>
               </div>
 
@@ -134,7 +134,7 @@ export function AutoBuildDialog({ open, onClose }: AutoBuildDialogProps) {
                     {info ? (
                       <span style={{ color: toneColor(info.tone) }}>{info.label}</span>
                     ) : (
-                      <span className="faint">başlangıç</span>
+                      <span className="faint">start</span>
                     )}
                     <KeyChip code={step.track.key} />
                     <Bpm value={step.track.bpm} />
@@ -149,7 +149,7 @@ export function AutoBuildDialog({ open, onClose }: AutoBuildDialogProps) {
                 onClick={apply}
                 disabled={result.steps.length < 2}
               >
-                {replace ? 'seti bununla değiştir' : 'sete ekle'}
+                {replace ? 'replace the set with this' : 'add to the set'}
               </button>
             </>
           ) : null}

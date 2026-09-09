@@ -79,42 +79,42 @@ describe('parseRekordboxXml — örnek koleksiyon', () => {
 describe('parseRekordboxXml — hatalı girdi', () => {
   it('boş dosyada ne yapılacağını söyler', () => {
     expect(() => parse('')).toThrow(RekordboxParseError)
-    expect(() => parse('   ')).toThrow(/Dosya boş görünüyor/)
+    expect(() => parse('   ')).toThrow(/looks empty/)
   })
 
   it('bozuk XML', () => {
     expect(() => parse('<DJ_PLAYLISTS><COLLECTION><TRACK TrackID="1"></COLLECTION>')).toThrow(
-      /XML bozuk ya da yarım/,
+      /damaged or truncated/,
     )
   })
 
   it('yanlış kök etiket', () => {
-    expect(() => parse('<PLAYLIST><TRACK/></PLAYLIST>')).toThrow(/DJ_PLAYLISTS olmalı/)
+    expect(() => parse('<PLAYLIST><TRACK/></PLAYLIST>')).toThrow(/DJ_PLAYLISTS/)
   })
 
   it('COLLECTION bölümü olmayan dosya', () => {
     expect(() => parse('<DJ_PLAYLISTS><PLAYLISTS/></DJ_PLAYLISTS>')).toThrow(
-      /COLLECTION bölümü yok/,
+      /no COLLECTION section/,
     )
   })
 
   it('parça içermeyen koleksiyon', () => {
     expect(() => parse('<DJ_PLAYLISTS><COLLECTION Entries="0"/></DJ_PLAYLISTS>')).toThrow(
-      /hiç parça bulunamadı/,
+      /No tracks found/,
     )
   })
 
   it('kimliksiz parçalardan ibaret koleksiyon da boş sayılır', () => {
     expect(() =>
       parse('<DJ_PLAYLISTS><COLLECTION><TRACK Name="x" AverageBpm="120"/></COLLECTION></DJ_PLAYLISTS>'),
-    ).toThrow(/hiç parça bulunamadı/)
+    ).toThrow(/No tracks found/)
   })
 
   it('okuyucu çökerse anlaşılır hata verir', () => {
     const broken: (text: string) => Document = () => {
       throw new Error('boom')
     }
-    expect(() => parseRekordboxXml('<DJ_PLAYLISTS/>', broken)).toThrow(/XML olarak okunamadı/)
+    expect(() => parseRekordboxXml('<DJ_PLAYLISTS/>', broken)).toThrow(/could not be read as XML/)
   })
 
   it('PLAYLISTS bölümü olmayan dosyada playlist listesi boş kalır', () => {

@@ -11,13 +11,13 @@ function queryValue(request: VercelRequest): string {
 export default async function handler(request: VercelRequest, response: VercelResponse) {
   if (applyCors(request, response)) return
 
-  // Arama kotası paylaşılan bir kaynak: yalnızca giriş yapmış kullanıcılar harcayabilir.
+  // The search quota is a shared resource: only signed-in users may spend it.
   const userId = await readUserId(request)
   if (!userId) {
     sendJson(response, 200, {
       results: [],
       configured: true,
-      message: 'İnternette arama için giriş yapman gerekiyor. Parçayı elle de girebilirsin.',
+      message: 'You need to sign in to search the web. You can also enter the track by hand.',
     })
     return
   }
@@ -29,13 +29,13 @@ export default async function handler(request: VercelRequest, response: VercelRe
   }
 
   const apiKey = process.env.GETSONGBPM_API_KEY ?? ''
-  // Anahtar yokluğu hata değil: arayüz bunu kullanıcıya anlatıp elle girişe yönlendiriyor.
+  // A missing key is not an error: the UI explains it and points at manual entry.
   if (!apiKey) {
     sendJson(response, 200, {
       results: [],
       configured: false,
       message:
-        'İnternet araması kapalı: GETSONGBPM_API_KEY tanımlı değil. getsongbpm.com/api adresinden ücretsiz anahtar alıp Vercel ortam değişkenlerine ekle; o zamana kadar parçayı elle girebilirsin.',
+        'Web search is off: GETSONGBPM_API_KEY is not set. Get a free key at getsongbpm.com/api and add it to the Vercel environment variables; until then you can enter the track by hand.',
     })
     return
   }
@@ -46,7 +46,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
       sendJson(response, 200, {
         results: [],
         configured: true,
-        message: `Arama servisi yanıt vermedi (HTTP ${upstream.status}). Biraz sonra tekrar dene ya da parçayı elle gir.`,
+        message: `The search service did not answer (HTTP ${upstream.status}). Try again shortly, or enter the track by hand.`,
       })
       return
     }
@@ -57,7 +57,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
     sendJson(response, 200, {
       results: [],
       configured: true,
-      message: 'Arama servisine ulaşılamadı. Bağlantıyı kontrol et ya da parçayı elle gir.',
+      message: 'Could not reach the search service. Check the connection, or enter the track by hand.',
     })
   }
 }

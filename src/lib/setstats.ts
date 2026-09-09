@@ -10,7 +10,7 @@ export interface Transition {
   ok: boolean
 }
 
-/** Setlist satırları ile özet aynı kuralı kullansın diye geçiş kararı tek yerde. */
+/** One place for the transition verdict, so the list and the summary agree. */
 export function transition(from: Track, to: Track, tolerance: number): Transition {
   const id = relation(from.key, to.key)
   const delta = from.bpm !== null && to.bpm !== null ? bpmDelta(from.bpm, to.bpm) : null
@@ -24,7 +24,7 @@ export interface SetStats {
   seconds: number
   minBpm: number | null
   maxBpm: number | null
-  /** Key ya da tempo bakımından zorlayan geçiş sayısı. */
+  /** Number of transitions that strain either the key or the tempo. */
   rough: number
   keys: number
 }

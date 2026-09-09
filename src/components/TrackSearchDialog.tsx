@@ -9,10 +9,10 @@ import { Dialog } from './common'
 import type { Track } from '../lib/types'
 
 const SOURCE_LABEL: Record<Track['source'], string> = {
-  library: 'kütüphane',
-  catalog: 'keşif',
-  web: 'internet',
-  manual: 'elle',
+  library: 'library',
+  catalog: 'discovery',
+  web: 'web',
+  manual: 'manual',
 }
 
 interface WebResult {
@@ -24,7 +24,7 @@ interface WebResult {
 
 function readWebResults(body: unknown): { tracks: Track[]; message: string | null } {
   if (!body || typeof body !== 'object') {
-    return { tracks: [], message: 'Sunucudan beklenmedik bir yanıt geldi. Biraz sonra tekrar dene.' }
+    return { tracks: [], message: 'The server returned something unexpected. Try again shortly.' }
   }
   const record = body as { results?: unknown; message?: unknown; configured?: unknown }
   const message = typeof record.message === 'string' ? record.message : null
@@ -85,18 +85,18 @@ export function TrackSearchDialog({ open, onClose }: TrackSearchDialogProps) {
       if (!response.ok) {
         setWebTracks([])
         setWebMessage(
-          `İnternet araması başarısız (HTTP ${response.status}). Vercel ayarlarındaki GETSONGBPM_API_KEY değerini kontrol et.`,
+          `Web search failed (HTTP ${response.status}). Check the GETSONGBPM_API_KEY value in your Vercel settings.`,
         )
         return
       }
       const parsed = readWebResults(await response.json())
       setWebTracks(parsed.tracks)
       setWebMessage(
-        parsed.message ?? (parsed.tracks.length === 0 ? 'İnternette de bulunamadı.' : null),
+        parsed.message ?? (parsed.tracks.length === 0 ? 'Nothing on the web either.' : null),
       )
     } catch {
       setWebTracks([])
-      setWebMessage('İnternete ulaşılamadı. Bağlantını kontrol et ya da parçayı elle gir.')
+      setWebMessage('Could not reach the web. Check your connection, or enter the track by hand.')
     } finally {
       setSearching(false)
     }
@@ -111,7 +111,7 @@ export function TrackSearchDialog({ open, onClose }: TrackSearchDialogProps) {
     const bpm = Number.parseFloat(manual.bpm)
     add({
       id: manualId(),
-      title: manual.title.trim() || 'Adsız parça',
+      title: manual.title.trim() || 'Untitled track',
       artist: manual.artist.trim(),
       bpm: Number.isFinite(bpm) && bpm > 0 ? bpm : null,
       key: toCamelot(manual.key),
@@ -129,12 +129,12 @@ export function TrackSearchDialog({ open, onClose }: TrackSearchDialogProps) {
   }
 
   return (
-    <Dialog open={open} title="Parça ara" onClose={close}>
+    <Dialog open={open} title="Find a track" onClose={close}>
       <div className="row">
         <input
           className="input"
           autoFocus
-          placeholder="parça ya da sanatçı — Türkçe karakter yazmana gerek yok"
+          placeholder="track or artist — accents and diacritics are optional"
           value={query}
           onChange={(event) => {
             setQuery(event.target.value)
@@ -148,14 +148,14 @@ export function TrackSearchDialog({ open, onClose }: TrackSearchDialogProps) {
           onClick={() => void searchWeb()}
           disabled={searching || query.trim().length < 2}
         >
-          {searching ? 'aranıyor…' : 'internette ara'}
+          {searching ? 'searching…' : 'search the web'}
         </button>
       </div>
 
       {query.trim().length === 0 ? (
         <p className="muted">
-          Yazmaya başla: önce kütüphanen ve keşif katalogu süzülür, bulunamazsa internette
-          arayabilirsin.
+          Start typing: your library and the discovery catalog are filtered first, and you can
+          search the web if nothing matches.
         </p>
       ) : null}
 
@@ -169,7 +169,7 @@ export function TrackSearchDialog({ open, onClose }: TrackSearchDialogProps) {
           <KeyChip code={track.key} />
           <Bpm value={track.bpm} />
           <button type="button" className="btn btn-primary" onClick={() => add(track)}>
-            ekle
+            add
           </button>
         </div>
       ))}
@@ -178,13 +178,13 @@ export function TrackSearchDialog({ open, onClose }: TrackSearchDialogProps) {
 
       {query.trim().length > 0 && results.length === 0 ? (
         <p className="muted">
-          Bulunamadı. "internette ara" düğmesini dene, olmazsa aşağıdan elle gir.
+          Nothing found. Try the "search the web" button, or enter it by hand below.
         </p>
       ) : null}
 
       {query.trim().length > 0 ? (
         <button type="button" className="btn btn-ghost" onClick={() => setManualOpen(!manualOpen)}>
-          {manualOpen ? 'elle girişi kapat' : 'elle gir'}
+          {manualOpen ? 'close manual entry' : 'enter by hand'}
         </button>
       ) : null}
 
@@ -192,13 +192,13 @@ export function TrackSearchDialog({ open, onClose }: TrackSearchDialogProps) {
         <div className="col">
           <input
             className="input"
-            placeholder="parça adı"
+            placeholder="track title"
             value={manual.title}
             onChange={(event) => setManual({ ...manual, title: event.target.value })}
           />
           <input
             className="input"
-            placeholder="sanatçı"
+            placeholder="artist"
             value={manual.artist}
             onChange={(event) => setManual({ ...manual, artist: event.target.value })}
           />
@@ -218,7 +218,7 @@ export function TrackSearchDialog({ open, onClose }: TrackSearchDialogProps) {
           </div>
           {manual.key.trim() && !toCamelot(manual.key) ? (
             <p className="error">
-              Bu key okunamadı. Camelot (8A), nota (Am, F#m) ya da Open Key (1m) yazabilirsin.
+              That key could not be read. Use Camelot (8A), a note (Am, F#m) or Open Key (1m).
             </p>
           ) : null}
           <button
@@ -227,7 +227,7 @@ export function TrackSearchDialog({ open, onClose }: TrackSearchDialogProps) {
             onClick={addManual}
             disabled={!manual.title.trim()}
           >
-            sete ekle
+            add to set
           </button>
         </div>
       ) : null}

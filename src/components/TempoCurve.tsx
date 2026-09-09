@@ -19,7 +19,7 @@ export function TempoCurve({ points, height = 64 }: TempoCurveProps) {
   const values = points.map((point) => point.bpm).filter((bpm): bpm is number => bpm !== null)
 
   if (values.length < 2) {
-    return <p className="faint">Tempo eğrisi için sette en az iki tempolu parça gerekiyor.</p>
+    return <p className="faint">The tempo curve needs at least two tracks with a tempo.</p>
   }
 
   const min = Math.min(...values)
@@ -43,7 +43,7 @@ export function TempoCurve({ points, height = 64 }: TempoCurveProps) {
       viewBox={`0 0 ${WIDTH} ${height}`}
       height={height}
       role="img"
-      aria-label={`Tempo eğrisi: ${formatBpm(values[0])} BPM'den ${formatBpm(values[values.length - 1])} BPM'e`}
+      aria-label={`Tempo curve: ${formatBpm(values[0])} BPM to ${formatBpm(values[values.length - 1])} BPM`}
     >
       <polyline className="tempo-line" points={line} />
       {coords.map((item, index) => (
@@ -57,7 +57,7 @@ export function TempoCurve({ points, height = 64 }: TempoCurveProps) {
           strokeWidth={1}
         >
           <title>
-            {`${index + 1}. ${item.point.label ?? 'parça'} — ${formatBpm(item.point.bpm)} BPM${
+            {`${index + 1}. ${item.point.label ?? 'track'} — ${formatBpm(item.point.bpm)} BPM${
               item.point.key ? ` · ${item.point.key}` : ''
             }`}
           </title>

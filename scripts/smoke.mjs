@@ -1,13 +1,13 @@
 /*
- * Uçtan uca duman testi.
+ * End-to-end smoke test.
  *
- * Playwright bilerek bağımlılık listesinde değil: kurulumu ~150 MB tarayıcı
- * indirmesi ekliyor. Çalıştırmadan önce bir kez:
+ * Playwright is deliberately not a dependency: installing it pulls a ~150 MB
+ * browser download. Run this once before the test:
  *
  *   npm install --no-save playwright
  *   npx playwright install chromium
  *
- * Sonra:
+ * Then:
  *
  *   npm run build && node scripts/smoke.mjs
  */
@@ -55,7 +55,7 @@ function startServer() {
         return
       }
       response.writeHead(server_state.saved ? 200 : 404, { 'content-type': 'application/json' })
-      response.end(JSON.stringify(server_state.saved ?? { error: 'kayıt yok' }))
+      response.end(JSON.stringify(server_state.saved ?? { error: 'no record' }))
       return
     }
 
@@ -103,14 +103,14 @@ async function expectVisible(page, locator, label) {
   try {
     await locator.first().waitFor({ state: 'visible', timeout: 8000 })
   } catch {
-    fail(label, 'ekranda görünmedi')
+    fail(label, 'never appeared on screen')
   }
   ok(label)
 }
 
 async function main() {
   if (!existsSync(DIST)) {
-    console.error('dist/ yok. Önce `npm run build` çalıştır.')
+    console.error('No dist/. Run `npm run build` first.')
     process.exit(1)
   }
 
@@ -119,7 +119,7 @@ async function main() {
     ;({ chromium } = await import('playwright'))
   } catch {
     console.error(
-      'Playwright kurulu değil. Bu test bilerek bağımlılık listesinde değil:\n' +
+      'Playwright is not installed. This test deliberately keeps it out of the dependencies:\n' +
         '  npm install --no-save playwright\n' +
         '  npx playwright install chromium',
     )
@@ -131,127 +131,127 @@ async function main() {
   const page = await browser.newPage({ viewport: { width: 1280, height: 900 } })
   const consoleErrors = []
   page.on('console', (message) => {
-    // /api/state ve /api/catalog yokken 404 dönmesi tasarımın parçası: istemci
-    // yerel kayda ve public/catalog.json'a düşüyor. Kaynak yükleme gürültüsü sayılmaz.
+    // A 404 from /api/state and /api/catalog is by design: the client falls back to the
+    // local record and public/catalog.json. Resource load noise does not count.
     if (message.type() === 'error' && !message.text().includes('Failed to load resource')) {
       consoleErrors.push(message.text())
     }
   })
   page.on('pageerror', (error) => consoleErrors.push(error.message))
 
-  console.log('duman testi başlıyor…')
+  console.log('smoke test starting…')
 
   try {
     await page.goto(`http://localhost:${PORT}/`)
-    await expectVisible(page, page.getByRole('heading', { name: 'Camelot Setlist' }), 'uygulama açılıyor')
+    await expectVisible(page, page.getByRole('heading', { name: 'Camelot Setlist' }), 'the app opens')
 
-    // 1 — rekordbox XML içe aktarma
+    // 1 — importing the rekordbox XML
     await page.getByRole('button', { name: 'rekordbox XML' }).click()
     await page.locator('dialog[open] input[type="file"]').setInputFiles(FIXTURE)
-    await expectVisible(page, page.getByText('İçe aktarıldı'), 'XML içe aktarıldı')
-    await page.getByRole('button', { name: 'tamam' }).click()
+    await expectVisible(page, page.getByText('Imported'), 'XML imported')
+    await page.getByRole('button', { name: 'done' }).click()
 
-    if (!(await page.getByText('5 parça').first().isVisible())) {
-      fail('kütüphane özeti', '5 parça görünmedi')
+    if (!(await page.getByText('5 tracks').first().isVisible())) {
+      fail('library summary', '5 tracks never showed')
     }
-    ok('kütüphane üst çubukta görünüyor')
+    ok('library shows in the top bar')
 
-    // 2 — playlist seçimi
+    // 2 — selecting a playlist
     await page.locator('select.topbar-select').selectOption({ label: 'Kulüp / Açılış (2)' })
     await page.waitForTimeout(150)
-    ok('playlist seçildi')
+    ok('playlist selected')
 
     await page.locator('select.topbar-select').selectOption('')
     await page.waitForTimeout(150)
 
-    // 3 — yerel arama (Türkçe karakter yazmadan)
-    await page.getByRole('button', { name: 'parça ara' }).click()
+    // 3 — local search (typed without diacritics)
+    await page.getByRole('button', { name: 'find a track' }).click()
     await page.locator('dialog[open] input.input').first().fill('gece yuruyusu')
-    await expectVisible(page, page.getByText('Gece Yürüyüşü'), 'yerel arama Türkçe karakteri katlıyor')
+    await expectVisible(page, page.getByText('Gece Yürüyüşü'), 'local search folds diacritics')
 
-    // 4 — internet araması
-    await page.getByRole('button', { name: 'internette ara' }).click()
-    await expectVisible(page, page.getByText('Uzak Parça'), 'internet araması sonuç veriyor')
-    if (server_state.searches === 0) fail('internet araması', 'sunucuya istek gitmedi')
+    // 4 — web search
+    await page.getByRole('button', { name: 'search the web' }).click()
+    await expectVisible(page, page.getByText('Uzak Parça'), 'web search returns a result')
+    if (server_state.searches === 0) fail('web search', 'no request reached the server')
 
-    // Yerel sonucu sete ekle: başlangıç parçası bu olacak.
-    await page.locator('dialog[open] .entry', { hasText: 'Gece Yürüyüşü' }).getByRole('button', { name: 'ekle' }).click()
-    await expectVisible(page, page.locator('.entries .entry').first(), 'parça setliste eklendi')
+    // Add the local result to the set: this becomes the starting track.
+    await page.locator('dialog[open] .entry', { hasText: 'Gece Yürüyüşü' }).getByRole('button', { name: 'add' }).click()
+    await expectVisible(page, page.locator('.entries .entry').first(), 'track added to the setlist')
 
-    // 5 — öneri ekleme (kütüphane havuzundan)
-    await page.getByRole('button', { name: 'Kütüphanem' }).click()
-    const suggestion = page.locator('section[aria-label="Öneriler"] .entry').first()
-    await expectVisible(page, suggestion, 'öneriler listeleniyor')
-    await suggestion.getByRole('button', { name: 'ekle' }).click()
-    if ((await page.locator('.entries > li').count()) !== 2) fail('öneri ekleme', 'ikinci parça eklenmedi')
-    ok('öneri setliste eklendi')
+    // 5 — adding a suggestion (from the library pool)
+    await page.getByRole('button', { name: 'My library' }).click()
+    const suggestion = page.locator('section[aria-label="Suggestions"] .entry').first()
+    await expectVisible(page, suggestion, 'suggestions are listed')
+    await suggestion.getByRole('button', { name: 'add' }).click()
+    if ((await page.locator('.entries > li').count()) !== 2) fail('adding a suggestion', 'the second track was not added')
+    ok('suggestion added to the setlist')
 
-    await expectVisible(page, page.locator('.bridge').first(), 'geçiş köprüsü çiziliyor')
+    await expectVisible(page, page.locator('.bridge').first(), 'the transition bridge is drawn')
 
-    // 6 — otomatik set kurma
-    await page.getByRole('button', { name: 'otomatik kur' }).click()
-    await expectVisible(page, page.getByText('önizleme'), 'otomatik kurucu önizleme veriyor')
-    await page.getByRole('button', { name: 'sete ekle' }).click()
+    // 6 — automatic set building
+    await page.getByRole('button', { name: 'build it for me' }).click()
+    await expectVisible(page, page.getByText('preview'), 'the builder shows a preview')
+    await page.getByRole('button', { name: 'add to the set' }).click()
     const afterAuto = await page.locator('.entries > li').count()
-    if (afterAuto <= 2) fail('otomatik kurma', `set büyümedi (${afterAuto} parça)`)
-    ok(`otomatik kurma ${afterAuto} parçalık set bıraktı`)
+    if (afterAuto <= 2) fail('automatic build', `the set did not grow (${afterAuto} tracks)`)
+    ok(`automatic build left a ${afterAuto} track set`)
 
-    // 7 — çoklu setlist
-    await page.getByRole('button', { name: 'setlerim' }).click()
-    await page.locator('.menu-panel').getByRole('button', { name: '+ yeni set' }).click()
-    if ((await page.locator('.entries > li').count()) !== 0) fail('çoklu setlist', 'yeni set boş değil')
-    ok('yeni setlist boş açılıyor')
-    await page.getByRole('button', { name: 'setlerim' }).click()
+    // 7 — multiple setlists
+    await page.getByRole('button', { name: 'my sets' }).click()
+    await page.locator('.menu-panel').getByRole('button', { name: '+ new set' }).click()
+    if ((await page.locator('.entries > li').count()) !== 0) fail('multiple setlists', 'the new set is not empty')
+    ok('a new setlist opens empty')
+    await page.getByRole('button', { name: 'my sets' }).click()
     await page.locator('.menu-panel').getByRole('button', { name: 'Set 1 ·' }).click()
     if ((await page.locator('.entries > li').count()) !== afterAuto) {
-      fail('çoklu setlist', 'ilk setin içeriği değişti')
+      fail('multiple setlists', 'the first set changed')
     }
-    ok('setlistler birbirinden bağımsız')
+    ok('setlists are independent')
 
-    // 8 — not yazma
+    // 8 — writing notes
     await page.locator('textarea.textarea').fill('cuma gecesi kapanış')
     await page.locator('.entry-note').first().fill('ışıklar kısılsın')
-    ok('set ve parça notu yazıldı')
+    ok('set note and track note written')
 
-    // 9 — misafir kipi: sunucuya yazılmıyor, tarayıcıda duruyor
+    // 9 — guest mode: nothing goes to the server, it stays in the browser
     await page.waitForTimeout(3500)
-    if (server_state.puts > 0) fail('misafir kipi', 'giriş yokken sunucuya kayıt gitti')
+    if (server_state.puts > 0) fail('guest mode', 'a record reached the server without sign-in')
     const stored = await page.evaluate(() => localStorage.getItem('camelot-setlist:v1'))
-    if (!stored) fail('misafir kipi', 'tarayıcıya kayıt yazılmadı')
+    if (!stored) fail('guest mode', 'nothing was written to the browser')
     const parsed = JSON.parse(stored)
     if (parsed.library.length !== 5) {
-      fail("misafir kipi", `tam koleksiyon yazılmadı (${parsed.library.length} parça)`)
+      fail("guest mode", `the whole collection was not written (${parsed.library.length} tracks)`)
     }
-    ok(`misafir çalışması yalnızca tarayıcıda (${parsed.library.length} parçalık koleksiyon)`)
+    ok(`guest work stays in the browser (${parsed.library.length} track collection)`)
 
-    if (!(await page.getByText('yalnızca bu tarayıcıda').first().isVisible())) {
-      fail('misafir uyarısı', 'banner görünmedi')
+    if (!(await page.getByText('this browser only').first().isVisible())) {
+      fail('guest banner', 'the banner never showed')
     }
-    ok('kayıt uyarısı görünüyor')
+    ok('the storage banner is visible')
 
-    // 10 — yenileme sonrası kalıcılık
+    // 10 — persistence across a reload
     await page.reload()
-    await expectVisible(page, page.getByText('cuma gecesi kapanış'), 'set notu yenilemeden sonra duruyor')
+    await expectVisible(page, page.getByText('cuma gecesi kapanış'), 'the set note survives a reload')
     if ((await page.locator('.entries > li').count()) !== afterAuto) {
-      fail('kalıcılık', 'yenilemeden sonra setlist değişti')
+      fail('persistence', 'the setlist changed after a reload')
     }
-    ok('setlist yenilemeden sonra aynı')
+    ok('the setlist is unchanged after a reload')
 
-    // 11 — mobilde yatay kaydırma yok
+    // 11 — no horizontal scrolling on mobile
     await page.setViewportSize({ width: 375, height: 812 })
     await page.waitForTimeout(200)
     const overflow = await page.evaluate(
       () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
     )
-    if (overflow > 0) fail('mobil düzen', `yatay taşma ${overflow}px`)
-    ok('mobilde yatay kaydırma yok')
+    if (overflow > 0) fail('mobile layout', `${overflow}px of horizontal overflow`)
+    ok('no horizontal scrolling on mobile')
 
     if (consoleErrors.length > 0) {
-      fail('konsol', `hata var:\n    ${consoleErrors.join('\n    ')}`)
+      fail('console', `errors:\n    ${consoleErrors.join('\n    ')}`)
     }
-    ok('konsolda hata yok')
+    ok('no console errors')
 
-    console.log('\nduman testi geçti.')
+    console.log('\nsmoke test passed.')
   } finally {
     await browser.close()
     server.close()
@@ -259,6 +259,6 @@ async function main() {
 }
 
 main().catch((error) => {
-  console.error(`\nduman testi düştü: ${error.message}`)
+  console.error(`\nsmoke test failed: ${error.message}`)
   process.exit(1)
 })

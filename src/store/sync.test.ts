@@ -136,7 +136,7 @@ describe('bootstrapUser', () => {
 
     expect(result.state?.setlists[0].name).toBe('hesaptaki')
     expect(result.pendingGuest?.setlists[0].name).toBe('misafir seti')
-    expect(result.sync.message).toMatch(/taşıyabilirsin/)
+    expect(result.sync.message).toMatch(/You can move the set/)
   })
 
   it('misafir çalışması boşsa taşıma önerisi çıkmaz', async () => {
@@ -150,7 +150,7 @@ describe('bootstrapUser', () => {
     writeLocal(stateAt(10, 'yerel', [{ trackId: '1' }]))
     const result = await bootstrapUser(fakeRemote({ state: null }), 'u1')
     expect(result.state?.setlists[0].name).toBe('yerel')
-    expect(result.sync.message).toMatch(/hesabına kaydedilecek/)
+    expect(result.sync.message).toMatch(/will be saved to your account/)
   })
 
   it('okuma hatasında yerelle devam eder ve durumu söyler', async () => {

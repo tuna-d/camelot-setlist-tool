@@ -100,7 +100,7 @@ describe('fromRows', () => {
     })
     expect(result.library).toEqual([])
     expect(result.setlists).toHaveLength(1)
-    expect(result.setlists[0].name).toBe('Adsız set')
+    expect(result.setlists[0].name).toBe('Untitled set')
     expect(result.setlists[0].entries).toEqual([])
     expect(result.tolerance).toBe(6)
     expect(result.cursor).toBe(0)

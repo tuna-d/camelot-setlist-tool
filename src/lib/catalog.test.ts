@@ -107,15 +107,15 @@ describe('formatReports', () => {
   it('tür başına satır ve toplam özet yazar', async () => {
     const result = await refreshCatalog(goodFetcher)
     const text = formatReports(result)
-    expect(text).toContain('✓ Tech House: 15 parça (next-data)')
-    expect(text).toContain('toplam 135 parça')
+    expect(text).toContain('✓ Tech House: 15 tracks (next-data)')
+    expect(text).toContain('135 tracks total')
   })
 
   it('doğrulama geçmediğinde sebepleri sıralar', async () => {
     const result = await refreshCatalog(() => Promise.resolve('<html>boş</html>'))
     const text = formatReports(result)
-    expect(text).toContain('doğrulama geçmedi:')
-    expect(text).toMatch(/en az 100/)
+    expect(text).toContain('validation failed:')
+    expect(text).toMatch(/at least 100 expected/)
   })
 })
 

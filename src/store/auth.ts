@@ -8,7 +8,7 @@ export interface AuthState {
   status: AuthStatus
   userId: string | null
   email: string | null
-  /** Kullanıcıya gösterilecek hata ya da bilgi metni. */
+  /** Error or information text shown to the user. */
   message: string | null
   busy: boolean
 
@@ -63,7 +63,7 @@ export const useAuth = create<AuthState>((set) => ({
       provider: 'google',
       options: { redirectTo: window.location.origin },
     })
-    // Başarılıysa tarayıcı Google'a gider; buraya yalnızca hata dönerse ulaşılır.
+    // On success the browser leaves for Google; we only get here on an error.
     if (error) set({ busy: false, message: authMessage(error) })
   },
 
@@ -84,12 +84,12 @@ export const useAuth = create<AuthState>((set) => ({
       set({ busy: false, message: authMessage(error) })
       return
     }
-    // Oturum boşsa e-posta doğrulaması açık demektir; kullanıcı bunu bilmeli.
+    // An empty session means email confirmation is on; the user needs to know.
     set({
       busy: false,
       message: data.session
         ? null
-        : 'Hesap açıldı. Gelen kutuna gönderilen doğrulama bağlantısına tıkla, sonra giriş yap.',
+        : 'Account created. Click the confirmation link in your inbox, then sign in.',
     })
   },
 

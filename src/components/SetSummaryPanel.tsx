@@ -29,9 +29,9 @@ export function SetSummaryPanel() {
   async function copyToClipboard() {
     try {
       await navigator.clipboard.writeText(setlistText(tracks))
-      setNotice('Setlist panoya kopyalandı.')
+      setNotice('Setlist copied to the clipboard.')
     } catch {
-      setNotice('Pano izni yok. Metni seçip elle kopyalaman gerekiyor.')
+      setNotice('No clipboard permission. Select the text and copy it by hand.')
     }
   }
 
@@ -41,8 +41,8 @@ export function SetSummaryPanel() {
     }
     setNotice(
       tracks.length > MAX_YOUTUBE_TABS
-        ? `İlk ${MAX_YOUTUBE_TABS} parça açıldı. Tarayıcı daha fazlasını engelliyor; kalanları listeden tek tek aç. Sekme açılmadıysa açılır pencere iznini ver.`
-        : 'Sekmeler açıldı. Açılmadıysa tarayıcının açılır pencere iznini ver.',
+        ? `Opened the first ${MAX_YOUTUBE_TABS} tracks. The browser blocks more; open the rest one by one from the list. If no tab opened, allow pop-ups.`
+        : 'Tabs opened. If nothing appeared, allow pop-ups in your browser.',
     )
   }
 
@@ -50,7 +50,7 @@ export function SetSummaryPanel() {
     const withPath = tracks.filter((track) => track.location)
     if (withPath.length === 0) {
       setNotice(
-        'Sette dosya yolu olan parça yok. m3u8 yalnızca rekordbox kütüphanenden gelen parçaları yazabilir.',
+        'No track in the set has a file path. m3u8 can only write tracks that came from your rekordbox library.',
       )
       return
     }
@@ -61,12 +61,12 @@ export function SetSummaryPanel() {
     anchor.download = `${active.name}.m3u8`
     anchor.click()
     URL.revokeObjectURL(url)
-    setNotice(`${withPath.length} parça m3u8 olarak indirildi.`)
+    setNotice(`${withPath.length} tracks downloaded as m3u8.`)
   }
 
   function clearAll() {
     if (tracks.length === 0) return
-    if (window.confirm(`"${active.name}" setindeki ${tracks.length} parça silinsin mi?`)) {
+    if (window.confirm(`Delete the ${tracks.length} tracks in "${active.name}"?`)) {
       state.clearSetlist()
       setNotice('Set temizlendi.')
     }
@@ -80,7 +80,7 @@ export function SetSummaryPanel() {
         : `${formatBpm(stats.minBpm)}–${formatBpm(stats.maxBpm)}`
 
   return (
-    <aside className="panel col summary-panel" aria-label="Setin akışı">
+    <aside className="panel col summary-panel" aria-label="Set flow">
       <h3>Flow</h3>
 
       <div className="curve-card">
@@ -94,17 +94,17 @@ export function SetSummaryPanel() {
             height={80}
           />
         ) : (
-          <p className="faint">Tempo eğrisi için sette en az iki tempolu parça gerekiyor.</p>
+          <p className="faint">The tempo curve needs at least two tracks with a tempo.</p>
         )}
       </div>
 
       <div className="summary-stats">
         <div className="stat">
-          <span className="stat-label">süre</span>
+          <span className="stat-label">length</span>
           <span className="stat-value">{formatTotal(stats.seconds)}</span>
         </div>
         <div className="stat">
-          <span className="stat-label">parça</span>
+          <span className="stat-label">tracks</span>
           <span className="stat-value">{stats.count}</span>
         </div>
         <div className="stat">
@@ -112,14 +112,14 @@ export function SetSummaryPanel() {
           <span className="stat-value">{tempoText}</span>
         </div>
         <div className="stat">
-          <span className="stat-label">zorlayan geçiş</span>
+          <span className="stat-label">rough transitions</span>
           <span
             className="stat-value"
             style={{ color: stats.rough > 0 ? 'var(--danger)' : 'var(--ok)' }}
             title={
               stats.rough > 0
-                ? 'Key ya da tempo bakımından zorlayan geçişler var; listede kırmızı işaretli.'
-                : 'Bütün geçişler key ve tempo toleransının içinde.'
+                ? 'Some transitions strain the key or the tempo; they are flagged red in the list.'
+                : 'Every transition is inside the key and tempo tolerance.'
             }
           >
             {stats.rough}
@@ -127,17 +127,17 @@ export function SetSummaryPanel() {
         </div>
       </div>
 
-      <h3>Notlar</h3>
+      <h3>Notes</h3>
       <textarea
         className="textarea"
-        placeholder="set notu — nerede çalınacak, hangi saat, ne hissettirmeli"
+        placeholder="set note — where it plays, what time, how it should feel"
         value={active.note ?? ''}
         onChange={(event) => state.setSetlistNote(event.target.value)}
       />
 
       <div className="row-wrap">
         <button type="button" className="btn btn-sm" onClick={() => void copyToClipboard()}>
-          kopyala
+          copy
         </button>
         <button
           type="button"
@@ -145,7 +145,7 @@ export function SetSummaryPanel() {
           onClick={openOnYoutube}
           disabled={tracks.length === 0}
         >
-          YouTube'da aç
+          open on YouTube
         </button>
         <button
           type="button"
@@ -162,7 +162,7 @@ export function SetSummaryPanel() {
           onClick={clearAll}
           disabled={tracks.length === 0}
         >
-          temizle
+          clear
         </button>
       </div>
 

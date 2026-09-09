@@ -77,7 +77,7 @@ describe('CamelotWheel', () => {
   })
 
   it('aktif key beyaz konturlu', () => {
-    expect(html).toContain('şu anki key')
+    expect(html).toContain('current key')
     expect(html).toContain('stroke="#ffffff"')
   })
 
@@ -85,7 +85,7 @@ describe('CamelotWheel', () => {
     expect(html).toContain(toneColor('energy'))
     expect(html).toContain(toneColor('calm'))
     expect(html).toContain(toneColor('color'))
-    expect(html).toContain('bu ilişki kapalı')
+    expect(html).toContain('this relation is off')
   })
 
   it('numaralar dış halkada yazılı', () => {
@@ -117,7 +117,7 @@ describe('TempoCurve', () => {
 
   it('iki noktadan azında ne gerektiğini söyler', () => {
     const html = renderToStaticMarkup(<TempoCurve points={[{ bpm: 120, key: '8A' }]} />)
-    expect(html).toContain('en az iki tempolu parça')
+    expect(html).toContain('at least two tracks with a tempo')
   })
 
   it('düz sette de çizgi üretir', () => {

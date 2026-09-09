@@ -26,13 +26,13 @@ export function SetlistMenu() {
   }, [open])
 
   function rename(id: string, current: string) {
-    const name = window.prompt('Setlist adı', current)
+    const name = window.prompt('Setlist name', current)
     if (name !== null) state.renameSetlist(id, name)
   }
 
   function remove(id: string, name: string, count: number) {
     const sure =
-      count === 0 || window.confirm(`"${name}" setindeki ${count} parça ile birlikte silinsin mi?`)
+      count === 0 || window.confirm(`Delete "${name}" and the ${count} tracks in it?`)
     if (sure) state.removeSetlist(id)
   }
 
@@ -45,14 +45,14 @@ export function SetlistMenu() {
         aria-haspopup="menu"
         onClick={() => setOpen((value) => !value)}
       >
-        setlerim · {active.name}
+        my sets · {active.name}
         <span className="menu-caret" aria-hidden="true">
           ▼
         </span>
       </button>
 
       {open ? (
-        <div className="menu-panel" aria-label="Kayıtlı setler">
+        <div className="menu-panel" aria-label="Saved setlists">
           {state.setlists.map((setlist) => (
             <div key={setlist.id} className="menu-row" aria-current={setlist.id === state.activeId}>
               <button
@@ -69,8 +69,8 @@ export function SetlistMenu() {
                 type="button"
                 className="btn btn-ghost btn-icon"
                 onClick={() => rename(setlist.id, setlist.name)}
-                aria-label={`${setlist.name} setini yeniden adlandır`}
-                title="Yeniden adlandır"
+                aria-label={`Rename ${setlist.name}`}
+                title="Rename"
               >
                 ✎
               </button>
@@ -78,8 +78,8 @@ export function SetlistMenu() {
                 type="button"
                 className="btn btn-ghost btn-icon btn-danger"
                 onClick={() => remove(setlist.id, setlist.name, setlist.entries.length)}
-                aria-label={`${setlist.name} setini sil`}
-                title="Seti sil"
+                aria-label={`Delete ${setlist.name}`}
+                title="Delete set"
               >
                 ✕
               </button>
@@ -96,7 +96,7 @@ export function SetlistMenu() {
               setOpen(false)
             }}
           >
-            + yeni set
+            + new set
           </button>
         </div>
       ) : null}

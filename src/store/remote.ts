@@ -21,7 +21,7 @@ export interface RemoteStore {
 }
 
 function failure(action: string, detail: string): string {
-  return `Kayıt ${action} sırasında hata: ${detail}. Değişikliklerin bu cihazda duruyor; bağlantı düzelince tekrar denenecek.`
+  return `Save failed while ${action}: ${detail}. Your changes are on this device; it will be retried when the connection is back.`
 }
 
 export function createSupabaseStore(client: SupabaseClient): RemoteStore {
@@ -38,20 +38,20 @@ export function createSupabaseStore(client: SupabaseClient): RemoteStore {
     try {
       const { library, setlists, settings } = await readRows(userId)
       const error = library.error ?? setlists.error ?? settings.error
-      if (error) return { state: null, error: failure('okuma', error.message) }
+      if (error) return { state: null, error: failure('reading', error.message) }
 
       const rows = {
         library: (library.data as LibraryRow | null) ?? null,
         setlists: (setlists.data as SetlistRow[] | null) ?? [],
         settings: (settings.data as SettingsRow | null) ?? null,
       }
-      // Hiç satır yoksa bu hesapta henüz kayıt yok; çağıran yereli kullanmalı.
+      // No rows at all means this account has nothing yet; the caller should use the local copy.
       if (!rows.library && !rows.settings && rows.setlists.length === 0) {
         return { state: null, error: null }
       }
       return { state: fromRows(rows), error: null }
     } catch (problem) {
-      return { state: null, error: failure('okuma', message(problem)) }
+      return { state: null, error: failure('reading', message(problem)) }
     }
   }
 
@@ -64,7 +64,7 @@ export function createSupabaseStore(client: SupabaseClient): RemoteStore {
         .maybeSingle()
 
       const storedAt = (current.data as { saved_at?: number } | null)?.saved_at ?? 0
-      // Sunucudaki kayıt daha yeniyse üzerine yazma; o kaydı geri ver.
+      // The stored record is newer: do not overwrite it, hand it back instead.
       if (storedAt > state.savedAt) {
         const remote = await load(userId)
         return {
@@ -72,7 +72,7 @@ export function createSupabaseStore(client: SupabaseClient): RemoteStore {
           conflict: true,
           remote: remote.state,
           message:
-            'Başka bir cihazda daha yeni bir kayıt var; o kayıt yüklendi. Buradaki değişikliği tekrar yap ve kaydet.',
+            'A newer record exists on another device; that record was loaded. Redo your change here and save again.',
         }
       }
 
@@ -112,7 +112,7 @@ export function createSupabaseStore(client: SupabaseClient): RemoteStore {
 }
 
 function written(detail: string): RemoteSave {
-  return { ok: false, conflict: false, remote: null, message: failure('yazma', detail) }
+  return { ok: false, conflict: false, remote: null, message: failure('writing', detail) }
 }
 
 function message(problem: unknown): string {

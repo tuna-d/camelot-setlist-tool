@@ -302,27 +302,27 @@ export function validateCatalog(next: Track[], prev: Track[] = []): ValidationRe
   const reasons: string[] = []
   if (count < MIN_CATALOG_TRACKS) {
     reasons.push(
-      `Katalogda yalnızca ${count} parça var, en az ${MIN_CATALOG_TRACKS} bekleniyor. Beatport sayfa yapısı değişmiş olabilir; beatport.ts içindeki çıkarım stratejilerini gözden geçir.`,
+      `The catalog holds only ${count} tracks, at least ${MIN_CATALOG_TRACKS} expected. Beatport's page structure may have changed; review the extraction strategies in beatport.ts.`,
     )
   }
   if (keyRate < MIN_KEY_RATE) {
     reasons.push(
-      `Parçaların yalnızca %${Math.round(keyRate * 100)}'inin key'i okunabildi, en az %95 bekleniyor. Key metninin biçimi değişmiş olabilir (toCamelot büyük/küçük harf duyarsız çalışmalı).`,
+      `Only ${Math.round(keyRate * 100)}% of the tracks had a readable key, at least 95% expected. The key text format may have changed (toCamelot must be case insensitive).`,
     )
   }
   if (bpmRate < MIN_BPM_RATE) {
     reasons.push(
-      `Temposu ${BPM_FLOOR}–${BPM_CEILING} arasında olan parça oranı %${Math.round(bpmRate * 100)}, en az %90 bekleniyor. BPM alanı yanlış kolondan okunuyor olabilir.`,
+      `Only ${Math.round(bpmRate * 100)}% of the tempos fall between ${BPM_FLOOR} and ${BPM_CEILING}, at least 90% expected. The BPM field may be read from the wrong column.`,
     )
   }
   if (genreCount < MIN_GENRES) {
     reasons.push(
-      `Katalogda ${genreCount} tür var, en az ${MIN_GENRES} bekleniyor. Tür sayfalarının çoğu hata vermiş olabilir; rapor satırlarına bak.`,
+      `The catalog holds ${genreCount} genres, at least ${MIN_GENRES} expected. Most genre pages probably failed; look at the report lines.`,
     )
   }
   if (prev.length > 0 && count < prev.length / 2) {
     reasons.push(
-      `Yeni katalog (${count}) eskisinin (${prev.length}) yarısından küçük. Eski katalog korunuyor; çıkarımı düzeltmeden tazeleme yapma.`,
+      `The new catalog (${count}) is smaller than half of the old one (${prev.length}). Keeping the old catalog; fix the extraction before refreshing again.`,
     )
   }
 

@@ -205,31 +205,31 @@ describe('validateCatalog', () => {
   it('100 parçanın altını reddeder', () => {
     const result = validateCatalog(catalogTracks(99))
     expect(result.ok).toBe(false)
-    expect(result.reasons[0]).toMatch(/en az 100/)
+    expect(result.reasons[0]).toMatch(/at least 100 expected/)
   })
 
   it('key okunma oranı %95’in altındaysa reddeder', () => {
     const result = validateCatalog(catalogTracks(120, (i) => (i % 10 === 0 ? { key: null } : {})))
     expect(result.ok).toBe(false)
-    expect(result.reasons.join(' ')).toMatch(/key'i okunabildi/)
+    expect(result.reasons.join(' ')).toMatch(/readable key/)
   })
 
   it('BPM aralığı dışındaki parçalar çoğaldıysa reddeder', () => {
     const result = validateCatalog(catalogTracks(120, (i) => (i % 5 === 0 ? { bpm: 40 } : {})))
     expect(result.ok).toBe(false)
-    expect(result.reasons.join(' ')).toMatch(/Temposu 90–165/)
+    expect(result.reasons.join(' ')).toMatch(/between 90 and 165/)
   })
 
   it('üçten az tür varsa reddeder', () => {
     const result = validateCatalog(catalogTracks(120, () => ({ genre: 'Tek Tür' })))
     expect(result.ok).toBe(false)
-    expect(result.reasons.join(' ')).toMatch(/en az 3 bekleniyor/)
+    expect(result.reasons.join(' ')).toMatch(/at least 3 expected/)
   })
 
   it('eski katalogun yarısından küçükse reddeder', () => {
     const result = validateCatalog(catalogTracks(120), catalogTracks(300))
     expect(result.ok).toBe(false)
-    expect(result.reasons.join(' ')).toMatch(/yarısından küçük/)
+    expect(result.reasons.join(' ')).toMatch(/smaller than half/)
   })
 
   it('boş katalogda tüm sebepleri sayar', () => {

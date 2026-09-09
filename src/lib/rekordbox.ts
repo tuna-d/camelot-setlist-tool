@@ -31,7 +31,7 @@ const ELEMENT_NODE = 1
 function defaultParseXml(text: string): Document {
   if (typeof DOMParser === 'undefined') {
     throw new RekordboxParseError(
-      'Bu ortamda XML okuyucu yok. Dosyayı tarayıcıda içe aktar ya da parseRekordboxXml çağrısına kendi okuyucunu ver.',
+      'No XML parser in this environment. Import the file in a browser, or pass your own parser to parseRekordboxXml.',
     )
   }
   return new DOMParser().parseFromString(text, 'application/xml')
@@ -103,7 +103,7 @@ function readTrack(element: Element): Track | null {
 
   return {
     id,
-    title: attr(element, 'Name').trim() || 'Adsız parça',
+    title: attr(element, 'Name').trim() || 'Untitled track',
     artist: attr(element, 'Artist').trim(),
     bpm: parseBpm(attr(element, 'AverageBpm')),
     key: toCamelot(attr(element, 'Tonality')),
@@ -143,7 +143,7 @@ function collectPlaylists(
 
     out.push({
       id: `${out.length + 1}:${[...trail, name].join(' / ')}`,
-      name: [...trail, name].filter(Boolean).join(' / ') || 'Adsız playlist',
+      name: [...trail, name].filter(Boolean).join(' / ') || 'Untitled playlist',
       trackIds,
     })
   }
@@ -152,7 +152,7 @@ function collectPlaylists(
 export function parseRekordboxXml(text: string, parseXml: XmlParser = defaultParseXml): RekordboxLibrary {
   if (typeof text !== 'string' || !text.trim()) {
     throw new RekordboxParseError(
-      'Dosya boş görünüyor. rekordbox\u2019ta Dosya → Koleksiyonu dışa aktar ile yeni bir XML çıkarıp onu seç.',
+      'The file looks empty. In rekordbox use File → Export Collection to produce a fresh XML, then pick that one.',
     )
   }
 
@@ -161,27 +161,27 @@ export function parseRekordboxXml(text: string, parseXml: XmlParser = defaultPar
     doc = parseXml(text)
   } catch {
     throw new RekordboxParseError(
-      'Dosya XML olarak okunamadı. rekordbox\u2019un dışa aktardığı .xml dosyasını seçtiğinden emin ol; .txt ya da .m3u8 çalışmaz.',
+      'The file could not be read as XML. Make sure you picked the .xml rekordbox exported; .txt or .m3u8 will not work.',
     )
   }
 
   if (hasParserError(doc)) {
     throw new RekordboxParseError(
-      'XML bozuk ya da yarım. Dosyayı rekordbox\u2019tan yeniden dışa aktar; aktarım sırasında programı kapatma.',
+      'The XML is damaged or truncated. Export it from rekordbox again, and do not close the app mid-export.',
     )
   }
 
   const root = doc.documentElement
   if (!root || root.nodeName !== 'DJ_PLAYLISTS') {
     throw new RekordboxParseError(
-      `Bu bir rekordbox koleksiyon dosyası değil (kök etiket DJ_PLAYLISTS olmalı, bulunan: ${root?.nodeName ?? 'yok'}). rekordbox → Dosya → Koleksiyonu dışa aktar çıktısını seç.`,
+      `This is not a rekordbox collection file (the root tag should be DJ_PLAYLISTS, found: ${root?.nodeName ?? 'none'}). Pick the output of rekordbox → File → Export Collection.`,
     )
   }
 
   const collection = firstChild(root, 'COLLECTION')
   if (!collection) {
     throw new RekordboxParseError(
-      'Dosyada COLLECTION bölümü yok. rekordbox\u2019ta dışa aktarırken "Koleksiyon" seçeneğinin işaretli olduğundan emin ol.',
+      'The file has no COLLECTION section. Make sure "Collection" is ticked when you export from rekordbox.',
     )
   }
 
@@ -196,7 +196,7 @@ export function parseRekordboxXml(text: string, parseXml: XmlParser = defaultPar
 
   if (tracks.length === 0) {
     throw new RekordboxParseError(
-      'Koleksiyonda hiç parça bulunamadı. rekordbox\u2019ta parçaların koleksiyona eklendiğinden ve dışa aktarıma dahil edildiğinden emin ol.',
+      'No tracks found in the collection. Make sure the tracks are in your rekordbox collection and included in the export.',
     )
   }
 

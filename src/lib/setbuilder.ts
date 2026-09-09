@@ -12,10 +12,10 @@ export interface ShapeInfo {
 }
 
 export const SHAPES: ShapeInfo[] = [
-  { id: 'rise', label: 'Yükselen', hint: 'Baştan sona doğrusal hızlanma — warm-up setleri için.' },
-  { id: 'arc', label: 'Kemer', hint: '%70’te tepe, sonra kısmi iniş — klasik gece seti.' },
-  { id: 'flat', label: 'Düz', hint: 'Sabit tempo — tek bir bandı derinleştirir.' },
-  { id: 'descend', label: 'İnen', hint: 'Doğrusal yavaşlama — kapanış ve after setleri.' },
+  { id: 'rise', label: 'Rising', hint: 'Linear speed-up from start to finish — for warm-up sets.' },
+  { id: 'arc', label: 'Arc', hint: 'Peak at 70%, then a partial descent — the classic night set.' },
+  { id: 'flat', label: 'Flat', hint: 'Steady tempo — digs into a single band.' },
+  { id: 'descend', label: 'Descending', hint: 'Linear slow-down — closing and after sets.' },
 ]
 
 export const ASSUMED_SECONDS = 360
@@ -187,7 +187,7 @@ export function buildSet(opts: BuildOptions): BuildResult {
     return {
       steps: [first],
       shortfall:
-        'Başlangıç parçasının tempo ya da key bilgisi yok. Parçayı rekordbox’ta analiz et ya da başka bir parçayla başla.',
+        'The starting track has no tempo or key. Analyse it in rekordbox, or start from another track.',
       requested,
       totalSeconds: seconds(opts.seed),
     }
@@ -280,7 +280,7 @@ export function buildSet(opts: BuildOptions): BuildResult {
   return {
     steps: best.steps,
     shortfall: short
-      ? `Havuzda yetecek kadar uyumlu parça yok: ${best.steps.length}/${requested} parça kuruldu. Toleransı %${opts.tolerance}’ten yukarı çek, kapalı ilişkileri aç ya da havuzu genişlet (başka bir playlist seç veya keşif katalogunu kullan).`
+      ? `The pool has too few compatible tracks: ${best.steps.length}/${requested} built. Raise the tolerance above ${opts.tolerance}%, turn on the relations you disabled, or widen the pool (pick another playlist or use the discovery catalog).`
       : null,
     requested,
     totalSeconds: best.totalSeconds,

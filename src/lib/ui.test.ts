@@ -36,9 +36,9 @@ describe('formatDuration', () => {
 
 describe('formatTotal', () => {
   it('saat ve dakikayı ayırır', () => {
-    expect(formatTotal(5040)).toBe('1 sa 24 dk')
-    expect(formatTotal(1800)).toBe('30 dk')
-    expect(formatTotal(0)).toBe('0 dk')
+    expect(formatTotal(5040)).toBe('1 h 24 min')
+    expect(formatTotal(1800)).toBe('30 min')
+    expect(formatTotal(0)).toBe('0 min')
   })
 })
 

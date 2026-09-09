@@ -7,10 +7,10 @@ function byId<T extends { id: string }>(mine: T[], theirs: T[]): T[] {
 
 function uniqueName(name: string, taken: Set<string>): string {
   if (!taken.has(name)) return name
-  let candidate = `${name} (taşınan)`
+  let candidate = `${name} (moved)`
   let counter = 2
   while (taken.has(candidate)) {
-    candidate = `${name} (taşınan ${counter})`
+    candidate = `${name} (moved ${counter})`
     counter += 1
   }
   return candidate
@@ -24,8 +24,8 @@ function uniqueId(id: string, taken: Set<string>): string {
 }
 
 /**
- * Misafirken yapılan çalışmayı hesaptaki kaydın **üstüne** ekler.
- * Hesaptaki setler hiçbir koşulda silinmez; taşınan setler sona eklenir.
+ * Adds guest work **on top of** the account record.
+ * Account setlists are never removed; moved sets are appended at the end.
  */
 export function mergeGuestWork(account: AppState, guest: AppState): AppState {
   const ids = new Set(account.setlists.map((setlist) => setlist.id))
@@ -33,7 +33,7 @@ export function mergeGuestWork(account: AppState, guest: AppState): AppState {
 
   const moved: Setlist[] = []
   for (const setlist of guest.setlists) {
-    // Boş set taşımaya değmez; hesabı gereksiz yere kalabalıklaştırır.
+    // An empty set is not worth moving; it would just clutter the account.
     if (setlist.entries.length === 0) continue
 
     const id = uniqueId(setlist.id, ids)
@@ -54,7 +54,7 @@ export function mergeGuestWork(account: AppState, guest: AppState): AppState {
     extras,
     playlists,
     setlists,
-    // Taşınan set öne çıksın: kullanıcı taşımanın olduğunu görsün.
+    // Surface the moved set so the user can see the move happened.
     activeId: moved.length > 0 ? moved[0].id : account.activeId,
     cursor: moved.length > 0 ? 0 : account.cursor,
     savedAt: Date.now(),

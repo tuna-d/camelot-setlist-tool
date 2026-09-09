@@ -3,7 +3,7 @@ import type { SupabaseClient } from '@supabase/supabase-js'
 
 let cached: SupabaseClient | null | undefined
 
-// Env eksikse istemci hiç kurulmaz: uygulama misafir kipinde çalışmaya devam eder.
+// With no env the client is never created: the app keeps working in guest mode.
 export function getSupabase(): SupabaseClient | null {
   if (cached !== undefined) return cached
   const url = import.meta.env.VITE_SUPABASE_URL?.trim()

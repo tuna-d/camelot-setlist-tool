@@ -41,7 +41,7 @@ export function ImportDialog({ open, onClose }: ImportDialogProps) {
       setError(
         problem instanceof RekordboxParseError
           ? problem.message
-          : `Dosya okunamadı: ${problem instanceof Error ? problem.message : String(problem)}. Başka bir dosya dene.`,
+          : `Could not read the file: ${problem instanceof Error ? problem.message : String(problem)}. Try another file.`,
       )
     } finally {
       setBusy(false)
@@ -56,7 +56,7 @@ export function ImportDialog({ open, onClose }: ImportDialogProps) {
   }
 
   return (
-    <Dialog open={open} title="rekordbox koleksiyonu içe aktar" onClose={close}>
+    <Dialog open={open} title="Import rekordbox collection" onClose={close}>
       <div
         className={dragging ? 'dropzone dropzone-active' : 'dropzone'}
         onDragOver={(event) => {
@@ -70,19 +70,19 @@ export function ImportDialog({ open, onClose }: ImportDialogProps) {
           void handleFile(event.dataTransfer.files[0])
         }}
       >
-        <p>XML dosyasını buraya sürükle</p>
-        <p className="faint">ya da</p>
+        <p>Drag the XML file here</p>
+        <p className="faint">or</p>
         <input
           type="file"
           accept=".xml,text/xml,application/xml"
           onChange={(event) => void handleFile(event.target.files?.[0])}
         />
         <p className="faint">
-          rekordbox → Dosya → Koleksiyonu dışa aktar (rekordbox xml) ile çıkan dosyayı seç.
+          Pick the file produced by rekordbox → File → Export Collection (rekordbox xml).
         </p>
       </div>
 
-      {busy ? <p className="muted">Dosya okunuyor…</p> : null}
+      {busy ? <p className="muted">Reading the file…</p> : null}
 
       {error ? (
         <p className="error" role="alert">
@@ -92,28 +92,28 @@ export function ImportDialog({ open, onClose }: ImportDialogProps) {
 
       {summary ? (
         <div className="col" role="status">
-          <h3>İçe aktarıldı</h3>
+          <h3>Imported</h3>
           <p>
-            <strong>{summary.tracks}</strong> parça, <strong>{summary.playlists}</strong> playlist
+            <strong>{summary.tracks}</strong> tracks, <strong>{summary.playlists}</strong> playlists
             {summary.version ? ` · rekordbox ${summary.version}` : ''}
           </p>
           <ul className="muted">
-            <li>{summary.missingBpm} parçanın temposu yok</li>
-            <li>{summary.missingKey} parçanın key’i yok</li>
-            <li>{summary.missingLocation} parçanın dosya yolu yok</li>
-            {summary.skipped > 0 ? <li>{summary.skipped} kayıt kimliksiz olduğu için atlandı</li> : null}
+            <li>{summary.missingBpm} tracks have no tempo</li>
+            <li>{summary.missingKey} tracks have no key</li>
+            <li>{summary.missingLocation} tracks have no file path</li>
+            {summary.skipped > 0 ? <li>{summary.skipped} entries were skipped for having no id</li> : null}
             {summary.ghostReferences > 0 ? (
-              <li>{summary.ghostReferences} playlist atıfı koleksiyonda bulunamadı</li>
+              <li>{summary.ghostReferences} playlist references were not in the collection</li>
             ) : null}
           </ul>
           {summary.missingBpm + summary.missingKey > 0 ? (
             <p className="faint">
-              Tempo ya da key’i olmayan parçalar öneri havuzuna girmiyor. Hepsini kullanmak için
-              rekordbox’ta analiz edip yeniden dışa aktar.
+              Tracks without a tempo or a key never enter the suggestion pool. To use them all,
+              analyse them in rekordbox and export again.
             </p>
           ) : null}
           <button type="button" className="btn btn-primary" onClick={close}>
-            tamam
+            done
           </button>
         </div>
       ) : null}

@@ -156,7 +156,7 @@ describe('createSupabaseStore', () => {
     expect(result.conflict).toBe(true)
     expect(result.ok).toBe(false)
     expect(result.remote?.setlists[0].name).toBe('Sunucudaki')
-    expect(result.message).toMatch(/tekrar yap ve kaydet/)
+    expect(result.message).toMatch(/Redo your change here/)
     expect(tables.setlists[0].name).toBe('Sunucudaki')
   })
 
@@ -174,7 +174,7 @@ describe('createSupabaseStore', () => {
     const result = await store.save('u1', state())
     expect(result.ok).toBe(false)
     expect(result.conflict).toBe(false)
-    expect(result.message).toMatch(/bu cihazda duruyor/)
+    expect(result.message).toMatch(/on this device/)
   })
 
   it('okuma hatasında açıklayıcı metin döner', async () => {
@@ -182,6 +182,6 @@ describe('createSupabaseStore', () => {
     failOn = 'setlists'
     const result = await store.load('u1')
     expect(result.state).toBeNull()
-    expect(result.error).toMatch(/okuma sırasında hata/)
+    expect(result.error).toMatch(/failed while reading/)
   })
 })

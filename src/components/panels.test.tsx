@@ -87,7 +87,7 @@ beforeEach(() => {
 describe('SetlistPanel', () => {
   it('boş sette ne yapılacağını söyler', async () => {
     const html = await render(<SetlistPanel />)
-    expect(html).toContain('Set boş')
+    expect(html).toContain('Empty set')
     expect(html).toContain('Set 1')
   })
 
@@ -97,7 +97,7 @@ describe('SetlistPanel', () => {
     const html = await render(<SetlistPanel />)
     expect(html).toContain('Gece')
     expect(html).toContain('Sabah')
-    expect(html).toContain('2 parça')
+    expect(html).toContain('2 tracks')
   })
 
   it('uyumlu geçişte ilişki etiketi, uyumsuzda uyarı gösterir', async () => {
@@ -105,22 +105,22 @@ describe('SetlistPanel', () => {
     useStore.getState().addTrack(track({ id: '2', key: '9A', bpm: 122 }))
     useStore.getState().addTrack(track({ id: '3', key: '12A', bpm: 122 }))
     const html = await render(<SetlistPanel />)
-    expect(html).toContain('+1 · enerji ↑')
-    expect(html).toContain('Uyumsuz key')
-    expect(html).toContain('araya uyumlu bir parça koy')
+    expect(html).toContain('+1 · energy ↑')
+    expect(html).toContain('no defined transition')
+    expect(html).toContain('put a compatible track between them')
   })
 
   it('tolerans dışındaki tempo farkını uyarır', async () => {
     useStore.getState().addTrack(track({ id: '1', key: '8A', bpm: 120 }))
     useStore.getState().addTrack(track({ id: '2', key: '8A', bpm: 140 }))
     const html = await render(<SetlistPanel />)
-    expect(html).toContain('toleransın (%6) dışında')
+    expect(html).toContain('outside your tolerance (6%)')
   })
 
   it('parça ekleme düğmelerini gösterir', async () => {
     const html = await render(<SetlistPanel onOpenSearch={() => {}} onOpenAutoBuild={() => {}} />)
-    expect(html).toContain('parça ara')
-    expect(html).toContain('otomatik kur')
+    expect(html).toContain('find a track')
+    expect(html).toContain('build it for me')
   })
 })
 
@@ -138,7 +138,7 @@ describe('SetlistMenu', () => {
     await view.click('.menu-button')
     expect(view.html()).toContain('Set 1 · 0')
     expect(view.html()).toContain('İkinci · 0')
-    expect(view.html()).toContain('+ yeni set')
+    expect(view.html()).toContain('+ new set')
     await view.unmount()
   })
 
@@ -165,8 +165,8 @@ describe('SetSummaryPanel', () => {
   it('dışa aktarım düğmelerini ve set notunu gösterir', async () => {
     const html = await render(<SetSummaryPanel />)
     expect(html).toContain('.m3u8')
-    expect(html).toContain('kopyala')
-    expect(html).toContain('set notu')
+    expect(html).toContain('copy')
+    expect(html).toContain('set note')
   })
 
   it('süre, tempo aralığı ve zorlayan geçiş sayısını yazar', async () => {
@@ -174,15 +174,15 @@ describe('SetSummaryPanel', () => {
     useStore.getState().addTrack(track({ id: '2', bpm: 124, key: '9A', duration: 300 }))
     useStore.getState().addTrack(track({ id: '3', bpm: 124, key: '12A', duration: 300 }))
     const html = await render(<SetSummaryPanel />)
-    expect(html).toContain('15 dk')
+    expect(html).toContain('15 min')
     expect(html).toContain('120–124')
-    expect(html).toContain('zorlayan geçiş')
+    expect(html).toContain('rough transitions')
   })
 })
 
 describe('SuggestPanel', () => {
   it('referans yokken ne yapılacağını söyler', async () => {
-    expect(await render(<SuggestPanel />)).toContain('Önce setliste bir parça ekle')
+    expect(await render(<SuggestPanel />)).toContain('Add a track to the setlist first')
   })
 
   it('referans parçayı, hedef aralığı ve çemberi gösterir', async () => {
@@ -190,7 +190,7 @@ describe('SuggestPanel', () => {
     useStore.getState().addTrack(track({ id: '1', title: 'Referans', bpm: 124, key: '8A' }))
     const html = await render(<SuggestPanel />)
     expect(html).toContain('Referans')
-    expect(html).toContain('hedef 116.6 – 131.4 BPM')
+    expect(html).toContain('target 116.6 – 131.4 BPM')
     expect(html).toContain('wheel-slice')
   })
 
@@ -198,8 +198,8 @@ describe('SuggestPanel', () => {
     useStore.getState().setCatalog(catalog)
     useStore.getState().addTrack(track({ id: '1', bpm: 124, key: '8A' }))
     const html = await render(<SuggestPanel />)
-    expect(html).toContain('Aynı key · 1')
-    expect(html).toContain('+1 · enerji ↑ · 1')
+    expect(html).toContain('Same key · 1')
+    expect(html).toContain('+1 · energy ↑ · 1')
     expect(html).not.toContain('Parça c3')
   })
 
@@ -210,9 +210,9 @@ describe('SuggestPanel', () => {
 
     const view = await mount(<SuggestPanel />)
     const segments = [...view.container.querySelectorAll('.segment')]
-    expect(segments.map((item) => item.textContent)).toEqual(['±%3', '±%6', '±%8', '±%10', '±%12'])
+    expect(segments.map((item) => item.textContent)).toEqual(['±3%', '±6%', '±8%', '±10%', '±12%'])
     expect(segments.filter((item) => item.getAttribute('aria-pressed') === 'true')).toHaveLength(1)
-    expect(view.html()).toContain('tempo toleransı · %10')
+    expect(view.html()).toContain('tempo tolerance · 10%')
 
     await view.click('.segment')
     expect(useStore.getState().tolerance).toBe(3)
@@ -222,7 +222,7 @@ describe('SuggestPanel', () => {
   it('aday çıkmayınca ne yapılacağını söyler', async () => {
     useStore.getState().setCatalog({ ...catalog, tracks: [] })
     useStore.getState().addTrack(track({ id: '1', bpm: 124, key: '8A' }))
-    expect(await render(<SuggestPanel />)).toContain('Toleransı yükselt')
+    expect(await render(<SuggestPanel />)).toContain('Raise the tolerance')
   })
 
   it('havuz sekmesi kütüphaneye geçebiliyor', async () => {
@@ -230,7 +230,7 @@ describe('SuggestPanel', () => {
     useStore.getState().setPoolSource('library')
     useStore.getState().addTrack(track({ id: '1', bpm: 124, key: '8A' }))
     const html = await render(<SuggestPanel />)
-    expect(html).toContain('Kütüphanem')
+    expect(html).toContain('My library')
     expect(html).toContain('Parça l1')
   })
 })

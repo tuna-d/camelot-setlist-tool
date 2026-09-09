@@ -20,13 +20,13 @@ import { TrackSearchDialog } from './components/TrackSearchDialog'
 type OpenDialog = 'import' | 'search' | 'auto' | 'auth' | null
 
 const SYNC_LABEL: Record<SyncStatus, string> = {
-  idle: 'hazır',
-  local: 'yalnızca bu tarayıcı',
-  saving: 'kaydediliyor…',
-  saved: 'kaydedildi',
-  offline: 'yalnızca bu cihaz',
-  conflict: 'çakışma',
-  error: 'hata',
+  idle: 'ready',
+  local: 'this browser only',
+  saving: 'saving…',
+  saved: 'saved',
+  offline: 'this device only',
+  conflict: 'conflict',
+  error: 'error',
 }
 
 async function loadCatalog(): Promise<Catalog | null> {
@@ -43,8 +43,8 @@ async function loadCatalog(): Promise<Catalog | null> {
   return null
 }
 
-// Kalıcı alanların referansları: `sync` ve `catalog` değişince kayıt tetiklenmesin,
-// yoksa kaydetme durum güncellemesi kendini tetikleyip döngüye girer.
+// Reference list of the persisted fields: `sync` and `catalog` must not trigger a save,
+// otherwise the save status update would feed itself into a loop.
 function snapshot(state: StoreState): unknown[] {
   return [
     state.library,
@@ -96,7 +96,7 @@ export function App() {
       ready.current = true
     }
 
-    // Oturum belli olmadan yükleme yapma: misafir kaydını hesabın üstüne yazma riski var.
+    // Do not load before the session is known: guest work could overwrite the account.
     if (auth.status === 'loading') return
     ready.current = false
     void boot()
@@ -132,9 +132,9 @@ export function App() {
   function adoptGuestWork() {
     if (!pendingGuest) return
     const store = useStore.getState()
-    // Birleştirme geri alınamıyor: öncesini kurtarma anahtarına yaz.
+    // The merge cannot be undone: write the previous state to the rescue key.
     writeBackup(store.exportState())
-    // Hesaptaki setlerin üstüne yazma: misafir çalışması onların yanına eklenir.
+    // Never write over the account's sets: guest work is added next to them.
     store.hydrate(mergeGuestWork(store.exportState(), pendingGuest))
     setPendingGuest(null)
     store.setSync({ status: 'saving', message: null })
@@ -155,8 +155,8 @@ export function App() {
 
         <span className="chip chip-static lib-stats">
           {state.library.length === 0
-            ? 'kütüphane yok — rekordbox XML’ini içe aktar'
-            : `${visible.length} parça · ${usable} kullanılabilir · ${state.playlists.length} playlist`}
+            ? 'no library — import your rekordbox XML'
+            : `${visible.length} tracks · ${usable} usable · ${state.playlists.length} playlists`}
         </span>
 
         {state.playlists.length > 0 ? (
@@ -165,7 +165,7 @@ export function App() {
             value={state.playlistId ?? ''}
             onChange={(event) => state.selectPlaylist(event.target.value || null)}
           >
-            <option value="">tüm koleksiyon</option>
+            <option value="">whole collection</option>
             {state.playlists.map((playlist) => (
               <option key={playlist.id} value={playlist.id}>
                 {playlist.name} ({playlist.trackIds.length})
@@ -175,10 +175,9 @@ export function App() {
         ) : null}
 
         <span className="spacer" />
-
         <span
           className={`chip sync sync-${state.sync.status}`}
-          title={state.sync.message ?? 'Değişiklikler bu cihazda ve sunucuda saklanıyor.'}
+          title={state.sync.message ?? 'Changes are kept on this device and on the server.'}
         >
           {SYNC_LABEL[state.sync.status]}
         </span>
@@ -191,39 +190,39 @@ export function App() {
           <span className="row">
             <span className="faint">{auth.email}</span>
             <button type="button" className="btn btn-ghost" onClick={() => void auth.signOut()}>
-              çıkış
+              sign out
             </button>
           </span>
         ) : auth.status === 'disabled' ? null : (
           <button type="button" className="btn" onClick={() => setDialog('auth')}>
-            giriş yap
+            sign in
           </button>
         )}
       </header>
 
       {auth.status === 'guest' ? (
         <p className="banner">
-          Misafir olarak çalışıyorsun: setlerin sunucuya kaydedilmiyor, yalnızca bu tarayıcıda
-          duruyor. Başka bir cihazda açmak için{' '}
+          You are working as a guest: your sets are not saved to the server, they stay in this
+          browser only. To open them on another device,{' '}
           <button type="button" className="btn btn-ghost" onClick={() => setDialog('auth')}>
-            giriş yap
+            sign in
           </button>
           .
         </p>
       ) : auth.status === 'disabled' ? (
         <p className="banner">
-          Giriş bu kurulumda kapalı: setlerin yalnızca bu tarayıcıda duruyor.
+          Sign-in is off in this setup: your sets stay in this browser only.
         </p>
       ) : null}
 
       {pendingGuest ? (
         <p className="banner">
-          Misafirken kurduğun çalışma bu tarayıcıda duruyor. Hesabındaki kaydın üzerine yazılmadı.
+          The work you did as a guest is still in this browser. Your account record was not overwritten.
           <button type="button" className="btn" onClick={adoptGuestWork}>
-            hesabıma taşı
+            move into my account
           </button>
           <button type="button" className="btn btn-ghost" onClick={() => setPendingGuest(null)}>
-            yoksay
+            ignore
           </button>
         </p>
       ) : null}

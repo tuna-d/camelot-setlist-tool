@@ -69,7 +69,7 @@ describe('mergeGuestWork', () => {
       state({ setlists: [setlist('a1', 'Set 1', ['1'])] }),
       state({ setlists: [setlist('g1', 'Set 1', ['2'])] }),
     )
-    expect(merged.setlists[1].name).toBe('Set 1 (taşınan)')
+    expect(merged.setlists[1].name).toBe('Set 1 (moved)')
   })
 
   it('aynı parçayı kütüphaneye iki kez yazmaz', () => {

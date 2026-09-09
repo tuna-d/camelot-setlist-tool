@@ -15,9 +15,9 @@ function TransitionBridge({ from, to, tolerance }: { from: Track; to: Track; tol
   const label = info ? info.label : 'Uyumsuz key'
   const tempoText = step.delta === null ? 'tempo bilinmiyor' : `${formatDelta(step.delta)} BPM`
   const warning = !info
-    ? 'Bu iki key arasında tanımlı bir geçiş yok — araya uyumlu bir parça koy.'
+    ? 'These two keys have no defined transition — put a compatible track between them.'
     : !step.tempoOk
-      ? `Tempo farkı toleransın (%${tolerance}) dışında — pitch'i zorlar.`
+      ? `The tempo gap is outside your tolerance (${tolerance}%) — it strains the pitch.`
       : (info.hint ?? '')
 
   return (
@@ -25,7 +25,7 @@ function TransitionBridge({ from, to, tolerance }: { from: Track; to: Track; tol
       <span className="bridge-line" style={{ background: color }} />
       <span style={{ color }}>{label}</span>
       <span className="mono faint">{tempoText}</span>
-      {step.delta?.halved ? <span className="faint">yarım/çift tempo</span> : null}
+      {step.delta?.halved ? <span className="faint">half/double tempo</span> : null}
       {!step.ok ? <span style={{ color: 'var(--danger)' }}>⚠ {warning}</span> : null}
     </div>
   )
@@ -55,24 +55,24 @@ export function SetlistPanel({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProp
       <div className="row-wrap">
         <h2>{active.name}</h2>
         <span className="chip chip-static">
-          {tracks.length} parça · {formatTotal(totalSeconds)}
+          {tracks.length} tracks · {formatTotal(totalSeconds)}
         </span>
         <span className="spacer" />
         {onOpenSearch ? (
           <button type="button" className="btn" onClick={onOpenSearch}>
-            parça ara
+            find a track
           </button>
         ) : null}
         {onOpenAutoBuild ? (
           <button type="button" className="btn btn-accent" onClick={onOpenAutoBuild}>
-            otomatik kur
+            build it for me
           </button>
         ) : null}
       </div>
 
       {tracks.length === 0 ? (
         <p className="muted">
-          Set boş. "parça ara" ile bir başlangıç parçası ekle, sonra aşağıdaki önerilerden devam et.
+          Empty set. Add a starting track with "find a track", then keep going from the suggestions below.
         </p>
       ) : (
         <ol className="entries entries-scroll">
@@ -108,7 +108,7 @@ export function SetlistPanel({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProp
                       event.stopPropagation()
                       state.removeEntry(index)
                     }}
-                    aria-label={`${track.title} parçasını setten çıkar`}
+                    aria-label={`Remove ${track.title} from the set`}
                   >
                     ✕
                   </button>
@@ -121,12 +121,12 @@ export function SetlistPanel({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProp
                   <EnergyStars
                     value={active.entries[index]?.energy}
                     onChange={(value) => state.setEntryEnergy(index, value)}
-                    label={`${track.title} enerji puanı`}
+                    label={`Energy rating for ${track.title}`}
                   />
                 </span>
                 <input
                   className="input entry-note"
-                  placeholder="parça notu"
+                  placeholder="track note"
                   value={active.entries[index]?.note ?? ''}
                   onChange={(event) => state.setEntryNote(index, event.target.value)}
                 />

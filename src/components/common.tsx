@@ -36,8 +36,8 @@ export function EnergyStars({ value, onChange, label }: EnergyStarsProps) {
           type="button"
           className="star"
           aria-pressed={value !== undefined && star <= value}
-          aria-label={`${star} yıldız`}
-          title={`Enerji ${star}/5 — aynı yıldıza tekrar bas, puanı kaldır`}
+          aria-label={`${star} stars`}
+          title={`Energy ${star}/5 — press the same star again to clear it`}
           onClick={(event) => {
             event.stopPropagation()
             onChange(star)
@@ -74,7 +74,7 @@ export function Dialog({ open, title, onClose, children, actions }: DialogProps)
         <h2>{title}</h2>
         <span className="spacer" />
         {actions}
-        <button type="button" className="btn btn-ghost" onClick={onClose} aria-label="Kapat">
+        <button type="button" className="btn btn-ghost" onClick={onClose} aria-label="Close">
           ✕
         </button>
       </div>
@@ -96,7 +96,7 @@ export function TrackLinks({ track }: { track: Track }) {
         href={`https://www.beatport.com/search?q=${term}`}
         target="_blank"
         rel="noreferrer"
-        title="Beatport'ta ara"
+        title="Search on Beatport"
       >
         BP
       </a>
@@ -105,7 +105,7 @@ export function TrackLinks({ track }: { track: Track }) {
         href={`https://www.youtube.com/results?search_query=${term}`}
         target="_blank"
         rel="noreferrer"
-        title="YouTube'da ara"
+        title="Search on YouTube"
       >
         YT
       </a>

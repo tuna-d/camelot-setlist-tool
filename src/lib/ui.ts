@@ -21,10 +21,10 @@ export function formatDuration(seconds: number | null | undefined): string {
 }
 
 export function formatTotal(seconds: number): string {
-  if (!Number.isFinite(seconds) || seconds <= 0) return '0 dk'
+  if (!Number.isFinite(seconds) || seconds <= 0) return '0 min'
   const minutes = Math.round(seconds / 60)
   const hours = Math.floor(minutes / 60)
-  return hours > 0 ? `${hours} sa ${minutes % 60} dk` : `${minutes} dk`
+  return hours > 0 ? `${hours} h ${minutes % 60} min` : `${minutes} min`
 }
 
 export function formatBpm(bpm: number | null | undefined): string {
@@ -32,7 +32,7 @@ export function formatBpm(bpm: number | null | undefined): string {
   return Number.isInteger(bpm) ? String(bpm) : bpm.toFixed(1)
 }
 
-/** 100'lük uyum puanının rengi: yeşil güçlü geçiş, kırmızı zorlama. */
+/** Colour of the 0-100 match score: green is a strong blend, red is a strain. */
 const SCORE_STEPS: { min: number; color: string }[] = [
   { min: 85, color: '#5ce088' },
   { min: 70, color: '#9fd85f' },
@@ -47,8 +47,8 @@ export function scoreColor(score: number | null | undefined): string {
 }
 
 /**
- * Tolerans basamağının rengi: dar tolerans yeşil (pitch'i zorlamayan geçiş),
- * geniş tolerans kırmızı. scoreColor ile aynı merdiven, ters yönde.
+ * Colour of a tolerance step: a narrow window is green (no strain on the pitch),
+ * a wide one is red. Same ladder as scoreColor, walked in the other direction.
  */
 const TOLERANCE_STEPS_COLORS: { upTo: number; color: string }[] = [
   { upTo: 3, color: '#5ce088' },

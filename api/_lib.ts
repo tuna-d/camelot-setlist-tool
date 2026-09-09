@@ -48,7 +48,7 @@ export function getServiceClient(): SupabaseClient | null {
   return service
 }
 
-/** Oturum sahibinin kimliği; başlık yoksa ya da jeton geçersizse `null`. */
+/** Id of the session owner; `null` when the header is missing or the token is invalid. */
 export async function readUserId(request: VercelRequest): Promise<string | null> {
   const client = getServiceClient()
   if (!client) return null
@@ -67,4 +67,4 @@ export function sendError(response: VercelResponse, status: number, message: str
 }
 
 export const NO_SUPABASE_MESSAGE =
-  'Sunucu tarafı Supabase’e bağlı değil. Vercel ortam değişkenlerine SUPABASE_URL ve SUPABASE_SERVICE_ROLE_KEY ekle.'
+  'The server side is not connected to Supabase. Add SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY to the Vercel environment variables.'

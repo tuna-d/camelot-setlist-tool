@@ -96,7 +96,7 @@ describe('useAuth', () => {
   it('yanlış parolada Türkçe ve yol gösteren mesaj', async () => {
     setSupabaseForTests(fakeClient({ signInError: { message: 'Invalid login credentials' } }))
     await useAuth.getState().signInWithPassword('dj@example.com', 'yanlis')
-    expect(useAuth.getState().message).toMatch(/E-posta ya da parola yanlış/)
+    expect(useAuth.getState().message).toMatch(/Wrong email or password/)
     expect(useAuth.getState().busy).toBe(false)
   })
 
@@ -110,7 +110,7 @@ describe('useAuth', () => {
   it('kayıtta oturum açılmadıysa doğrulama e-postasını söyler', async () => {
     setSupabaseForTests(fakeClient())
     await useAuth.getState().signUpWithPassword('yeni@example.com', 'parola123')
-    expect(useAuth.getState().message).toMatch(/doğrulama bağlantısına tıkla/)
+    expect(useAuth.getState().message).toMatch(/confirmation link in your inbox/)
   })
 
   it('kayıtta oturum açıldıysa sessiz kalır', async () => {
@@ -122,7 +122,7 @@ describe('useAuth', () => {
   it('kayıtlı e-postada kayıt yerine giriş yapmayı söyler', async () => {
     setSupabaseForTests(fakeClient({ signUpError: { message: 'User already registered' } }))
     await useAuth.getState().signUpWithPassword('dj@example.com', 'parola123')
-    expect(useAuth.getState().message).toMatch(/Kayıt yerine giriş yap/)
+    expect(useAuth.getState().message).toMatch(/Sign in instead/)
   })
 
   it('çıkışta misafire döner', async () => {
@@ -138,7 +138,7 @@ describe('useAuth', () => {
   it('Google sağlayıcısı kapalıysa nereye bakılacağını söyler', async () => {
     setSupabaseForTests(fakeClient({ signInError: { message: 'Provider is not enabled' } }))
     await useAuth.getState().signInWithGoogle()
-    expect(useAuth.getState().message).toMatch(/Providers altından etkinleştir/)
+    expect(useAuth.getState().message).toMatch(/Authentication → Providers/)
   })
 
   it('giriş kapalıyken eylemler sessizce hiçbir şey yapmaz', async () => {

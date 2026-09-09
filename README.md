@@ -12,8 +12,8 @@ What it does:
 - Offers a discovery catalog scraped from Beatport genre Top 100 pages, plus single-track
   lookup through GetSongBPM, for music that isn't in your library.
 
-**The interface is in Turkish.** Identifiers and comments are in English; every string the
-user sees is Turkish. This README is in English.
+The interface, the code and the documentation are in English. Test names are still
+written in Turkish, left over from the project’s original working language.
 
 ## Quick start
 
@@ -58,16 +58,16 @@ is major: `8A = Am`, `8B = C`.
 
 Defined transitions (the `RELATIONS` table in `src/lib/camelot.ts`):
 
-| id | label (Turkish UI) | from 8A | score | default |
+| id | label | from 8A | score | default |
 |---|---|---|---|---|
-| `same` | Aynı key | 8A | 100 | on |
-| `up` | +1 · enerji ↑ | 9A | 94 | on |
-| `down` | −1 · yumuşak | 7A | 92 | on |
-| `relative` | Relatif | 8B | 88 | on |
-| `boost` | +2 · sıçrama | 10A | 72 | on |
-| `diagonal` | Diyagonal | 9B | 64 | off |
-| `semiUp` | +7 · yarım ton ↑ | 3A | 62 | off |
-| `semiDown` | −7 · yarım ton ↓ | 1A | 56 | off |
+| `same` | Same key | 8A | 100 | on |
+| `up` | +1 · energy ↑ | 9A | 94 | on |
+| `down` | −1 · softer | 7A | 92 | on |
+| `relative` | Relative | 8B | 88 | on |
+| `boost` | +2 · jump | 10A | 72 | on |
+| `diagonal` | Diagonal | 9B | 64 | off |
+| `semiUp` | +7 · semitone ↑ | 3A | 62 | off |
+| `semiDown` | −7 · semitone ↓ | 1A | 56 | off |
 
 A candidate's score:
 
@@ -105,8 +105,8 @@ The screen has three areas:
   as a list underneath. Each candidate carries a 0–100 match score, coloured on the same
   green-to-red ladder.
 
-Saved setlists live in the top bar under **setlerim**: a dropdown lists every set with
-rename and delete buttons, plus "+ yeni set".
+Saved setlists live in the top bar under **my sets**: a dropdown lists every set with
+rename and delete buttons, plus "+ new set".
 
 ## Setup
 
@@ -187,13 +187,13 @@ src/lib/          Pure logic — never touches React, the DOM or window; every m
   suggest.ts        candidate scoring, tempo delta, signature de-duplication
   setbuilder.ts     beam-search set builder, energy curves
   setstats.ts       transition verdict and set totals, shared by the list and the summary
-  search.ts         local search that ignores Turkish diacritics
+  search.ts         local search that folds diacritics (Turkish included)
   beatport.ts       catalog extraction (three strategies) and validation
   catalog.ts        genre-page refresh, per-genre report
   getsongbpm.ts     single-track query and response reading
   state-rows.ts     app state ↔ database rows mapping
   merge.ts          merges guest work into an account without replacing anything
-  auth-message.ts   turns Supabase errors into actionable Turkish text
+  auth-message.ts   turns Supabase errors into actionable text
   env-file.ts       .env reader for the command-line scripts
   state.ts, types.ts, ui.ts
 
@@ -204,7 +204,7 @@ src/store/        State, session and persistence
   remote.ts         per-user reads and writes, conflict resolution
   sync.ts           localStorage + remote store, guest/signed-in bootstrap
 
-src/components/   UI (Turkish copy)
+src/components/   UI
   SetlistPanel, SetSummaryPanel, SetlistMenu, SuggestPanel, CamelotWheel, TempoCurve,
   AuthDialog, ImportDialog, TrackSearchDialog, AutoBuildDialog, common
 

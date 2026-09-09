@@ -205,7 +205,7 @@ export const useStore = create<StoreState>((set, get) => ({
         ...setlist,
         entries: setlist.entries.map((entry, i) => {
           if (i !== index) return entry
-          // Aynı yıldıza tekrar basmak puanı kaldırır.
+          // Pressing the same star again clears the rating.
           const value = entry.energy === energy ? undefined : clampEnergy(energy)
           return { ...entry, energy: value }
         }),

@@ -80,7 +80,7 @@ function array<T>(value: unknown): T[] {
   return Array.isArray(value) ? (value as T[]) : []
 }
 
-// Postgres numeric/bigint alanları bazı sürümlerde dize olarak dönüyor.
+// Postgres numeric/bigint columns come back as strings in some versions.
 function number(value: unknown, fallback: number): number {
   if (typeof value === 'number') return Number.isFinite(value) ? value : fallback
   if (typeof value === 'string' && value.trim()) {
@@ -106,15 +106,15 @@ export interface RowInput {
   settings: Partial<SettingsRow> | null
 }
 
-// Veritabanından gelen her şey dış veri sayılır: eksik ya da bozuk alanlar
-// varsayılana düşer, hiçbir durumda çökmez.
+// Everything from the database counts as foreign data: missing or broken fields
+// fall back to defaults, and nothing ever throws.
 export function fromRows(rows: RowInput): AppState {
   const setlists: Setlist[] = rows.setlists
     .filter((row): row is Partial<SetlistRow> & { id: string } => typeof row.id === 'string')
     .sort((a, b) => number(a.position, 0) - number(b.position, 0))
     .map((row) => ({
       id: row.id,
-      name: text(row.name) ?? 'Adsız set',
+      name: text(row.name) ?? 'Untitled set',
       entries: array<SetlistEntry>(row.entries).filter(
         (entry) => entry && typeof entry.trackId === 'string',
       ),

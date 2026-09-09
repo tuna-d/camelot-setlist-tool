@@ -4,7 +4,7 @@ import type { RemoteStore } from './remote'
 import type { SyncState } from './store'
 
 export const STORAGE_KEY = 'camelot-setlist:v1'
-/** Geri alınamayan bir birleştirmeden önceki son hâl; yalnızca kurtarma için. */
+/** The state before an irreversible merge; kept only for rescue. */
 export const BACKUP_KEY = 'camelot-setlist:backup'
 export const SAVE_DELAY = 2500
 
@@ -80,7 +80,7 @@ export function readBackup(): AppState | null {
   }
 }
 
-/** Misafir çalışmasının hesaba taşınmaya değer bir içeriği var mı. */
+/** Is there guest work worth moving into the account? */
 export function hasContent(state: AppState | null): boolean {
   if (!state) return false
   return state.setlists.some((setlist) => setlist.entries.length > 0) || state.library.length > 0
@@ -89,7 +89,7 @@ export function hasContent(state: AppState | null): boolean {
 export interface BootstrapResult {
   state: AppState | null
   sync: SyncState
-  /** Girişten sonra hesaba taşınmayı bekleyen misafir çalışması. */
+  /** Guest work waiting to be moved into the account after sign-in. */
   pendingGuest: AppState | null
 }
 
@@ -107,8 +107,8 @@ export function bootstrapGuest(): BootstrapResult {
 }
 
 /**
- * Girişli açılış. Hesaptaki kayıt her zaman kazanır; misafirken yapılan
- * çalışma sessizce hesabın üzerine yazılmaz, taşınmak üzere ayrı tutulur.
+ * Signed-in bootstrap. The account record always wins; guest work is never
+ * silently written over it, it is kept aside to be moved.
  */
 export async function bootstrapUser(store: RemoteStore, userId: string): Promise<BootstrapResult> {
   const local = readLocal()
@@ -127,7 +127,7 @@ export async function bootstrapUser(store: RemoteStore, userId: string): Promise
       state: local,
       sync: {
         status: 'idle',
-        message: local ? 'Bu cihazdaki çalışman hesabına kaydedilecek.' : null,
+        message: local ? 'The work on this device will be saved to your account.' : null,
         savedAt: local?.savedAt ?? null,
       },
       pendingGuest: null,
@@ -139,7 +139,7 @@ export async function bootstrapUser(store: RemoteStore, userId: string): Promise
     state: remote.state,
     sync: {
       status: 'idle',
-      message: guest ? 'Hesabındaki kayıt yüklendi. Misafirken kurduğun seti taşıyabilirsin.' : null,
+      message: guest ? 'Your account record was loaded. You can move the set you built as a guest.' : null,
       savedAt: remote.state.savedAt,
     },
     pendingGuest: guest,
@@ -147,7 +147,7 @@ export async function bootstrapUser(store: RemoteStore, userId: string): Promise
 }
 
 export interface SaverOptions {
-  /** Giriş yoksa `null`: kayıt yalnızca tarayıcıda kalır. */
+  /** `null` when signed out: the record stays in the browser only. */
   store: RemoteStore | null
   userId: string | null
   onConflict: (state: AppState) => void

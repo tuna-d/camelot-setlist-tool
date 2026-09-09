@@ -187,8 +187,8 @@ describe('buildSet — sınır durumları', () => {
   it('boş havuzda çökmez, ne yapılacağını söyler', () => {
     const result = buildSet(options({ pool: [], count: 6 }))
     expect(result.steps).toHaveLength(1)
-    expect(result.shortfall).toMatch(/1\/6 parça kuruldu/)
-    expect(result.shortfall).toMatch(/Toleransı/)
+    expect(result.shortfall).toMatch(/1\/6 built/)
+    expect(result.shortfall).toMatch(/Raise the tolerance/)
   })
 
   it('havuz yetmediğinde kurabildiği kadarını verir', () => {
@@ -201,7 +201,7 @@ describe('buildSet — sınır durumları', () => {
   it('başlangıç parçasının keyi yoksa açıklayıcı hata metni döner', () => {
     const result = buildSet(options({ seed: { ...seed, key: null } }))
     expect(result.steps).toHaveLength(1)
-    expect(result.shortfall).toMatch(/analiz et/)
+    expect(result.shortfall).toMatch(/Analyse it in rekordbox/)
   })
 
   it('exclude kümesindeki parçalar sete girmez', () => {

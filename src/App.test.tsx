@@ -95,25 +95,25 @@ describe('App', () => {
   it('giriş kapalıyken uyarı gösterir ve panelleri çizer', async () => {
     const view = await mountApp()
     expect(view.html()).toContain('Camelot Setlist')
-    expect(view.html()).toContain('yalnızca bu tarayıcıda')
+    expect(view.html()).toContain('this browser')
     expect(view.html()).toContain('Setlist')
-    expect(view.html()).toContain('Öneriler')
+    expect(view.html()).toContain('Suggestions')
     await view.unmount()
   })
 
   it('giriş kapalıyken giriş düğmesi çıkmaz', async () => {
     const view = await mountApp()
     const labels = [...view.container.querySelectorAll('button')].map((item) => item.textContent)
-    expect(labels).not.toContain('giriş yap')
+    expect(labels).not.toContain('sign in')
     await view.unmount()
   })
 
   it('misafirken kayıt uyarısı ve giriş düğmesi gösterir', async () => {
     setSupabaseForTests(fakeClient(null))
     const view = await mountApp()
-    expect(view.html()).toContain('Misafir olarak çalışıyorsun')
+    expect(view.html()).toContain('working as a guest')
     const labels = [...view.container.querySelectorAll('button')].map((item) => item.textContent)
-    expect(labels).toContain('giriş yap')
+    expect(labels).toContain('sign in')
     await view.unmount()
   })
 
@@ -131,7 +131,7 @@ describe('App', () => {
     const view = await mountApp()
     expect(view.html()).toContain('dj@example.com')
     const labels = [...view.container.querySelectorAll('button')].map((item) => item.textContent)
-    expect(labels).toContain('çıkış')
+    expect(labels).toContain('sign out')
     await view.unmount()
   })
 })

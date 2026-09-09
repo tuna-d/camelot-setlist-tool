@@ -3,26 +3,26 @@ import { authMessage } from './auth-message'
 
 describe('authMessage', () => {
   it('bilinen hataları Türkçeye ve yapılacak işe çevirir', () => {
-    expect(authMessage({ message: 'Invalid login credentials' })).toMatch(/E-posta ya da parola yanlış/)
-    expect(authMessage({ message: 'Email not confirmed' })).toMatch(/gelen bağlantıya tıkla/)
-    expect(authMessage({ message: 'User already registered' })).toMatch(/Kayıt yerine giriş yap/)
-    expect(authMessage({ message: 'Password should be at least 6 characters' })).toMatch(/en az 6 karakter/i)
-    expect(authMessage({ message: 'Unable to validate email address' })).toMatch(/Yazımını kontrol et/)
-    expect(authMessage({ message: 'Request rate limit reached' })).toMatch(/birkaç dakika bekleyip/i)
-    expect(authMessage({ message: 'Provider is not enabled' })).toMatch(/Providers altından etkinleştir/)
-    expect(authMessage({ message: 'Failed to fetch' })).toMatch(/misafir olarak çalışmaya devam/)
+    expect(authMessage({ message: 'Invalid login credentials' })).toMatch(/Wrong email or password/)
+    expect(authMessage({ message: 'Email not confirmed' })).toMatch(/Click the link in your inbox/)
+    expect(authMessage({ message: 'User already registered' })).toMatch(/Sign in instead/)
+    expect(authMessage({ message: 'Password should be at least 6 characters' })).toMatch(/at least 6 characters/i)
+    expect(authMessage({ message: 'Unable to validate email address' })).toMatch(/Check the spelling/)
+    expect(authMessage({ message: 'Request rate limit reached' })).toMatch(/wait a few minutes/i)
+    expect(authMessage({ message: 'Provider is not enabled' })).toMatch(/Authentication → Providers/)
+    expect(authMessage({ message: 'Failed to fetch' })).toMatch(/keep working as a guest/)
   })
 
   it('tanımadığı hatayı ham metniyle birlikte gösterir', () => {
     expect(authMessage({ message: 'Something odd happened' })).toBe(
-      'Giriş yapılamadı: Something odd happened. Tekrar dene ya da başka bir yöntemle gir.',
+      'Could not sign in: Something odd happened. Try again or use another method.',
     )
   })
 
   it('boş ya da eksik hatada da bir şey söyler', () => {
-    expect(authMessage(null)).toMatch(/bilinmeyen bir sorun/)
-    expect(authMessage(undefined)).toMatch(/bilinmeyen bir sorun/)
-    expect(authMessage({})).toMatch(/bilinmeyen bir sorun/)
-    expect(authMessage({ message: '   ' })).toMatch(/bilinmeyen bir sorun/)
+    expect(authMessage(null)).toMatch(/Something unknown went wrong/)
+    expect(authMessage(undefined)).toMatch(/Something unknown went wrong/)
+    expect(authMessage({})).toMatch(/Something unknown went wrong/)
+    expect(authMessage({ message: '   ' })).toMatch(/Something unknown went wrong/)
   })
 })

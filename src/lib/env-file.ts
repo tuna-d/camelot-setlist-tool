@@ -1,6 +1,6 @@
 /**
- * .env okuyucu. Vite yalnızca tarayıcı tarafını besliyor; komut satırı betikleri
- * SUPABASE_SERVICE_ROLE_KEY gibi sunucu değişkenlerini buradan alıyor.
+ * .env reader. Vite only feeds the browser side; command line scripts read
+ * server variables such as SUPABASE_SERVICE_ROLE_KEY from here.
  */
 export function parseEnvFile(text: string): Record<string, string> {
   const values: Record<string, string> = {}

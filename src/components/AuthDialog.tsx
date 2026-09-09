@@ -30,12 +30,12 @@ export function AuthDialog({ open, onClose }: AuthDialogProps) {
   const ready = email.trim().length > 3 && password.length >= 6
 
   return (
-    <Dialog open={open} title={mode === 'signin' ? 'Giriş yap' : 'Hesap aç'} onClose={close}>
+    <Dialog open={open} title={mode === 'signin' ? 'Sign in' : 'Create account'} onClose={close}>
       {auth.status === 'disabled' ? (
         <p className="muted">
-          Giriş bu kurulumda kapalı: VITE_SUPABASE_URL ve VITE_SUPABASE_ANON_KEY tanımlı değil.
-          Uygulamayı misafir olarak kullanmaya devam edebilirsin; setlerin yalnızca bu tarayıcıda
-          kalır.
+          Sign-in is off in this setup: VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY are not
+          defined. You can keep using the app as a guest; your sets will stay in this browser
+          only.
         </p>
       ) : (
         <div className="col">
@@ -45,16 +45,16 @@ export function AuthDialog({ open, onClose }: AuthDialogProps) {
             onClick={() => void auth.signInWithGoogle()}
             disabled={auth.busy}
           >
-            Google ile devam et
+            Continue with Google
           </button>
 
-          <p className="faint auth-separator">ya da e-posta ile</p>
+          <p className="faint auth-separator">or with an email</p>
 
           <input
             className="input"
             type="email"
             autoComplete="email"
-            placeholder="e-posta"
+            placeholder="email"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
           />
@@ -62,7 +62,7 @@ export function AuthDialog({ open, onClose }: AuthDialogProps) {
             className="input"
             type="password"
             autoComplete={mode === 'signin' ? 'current-password' : 'new-password'}
-            placeholder="parola (en az 6 karakter)"
+            placeholder="password (at least 6 characters)"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
             onKeyDown={(event) => {
@@ -76,7 +76,7 @@ export function AuthDialog({ open, onClose }: AuthDialogProps) {
             onClick={() => void submit()}
             disabled={!ready || auth.busy}
           >
-            {auth.busy ? 'bekle…' : mode === 'signin' ? 'giriş yap' : 'hesap aç'}
+            {auth.busy ? 'working…' : mode === 'signin' ? 'sign in' : 'create account'}
           </button>
 
           <button
@@ -87,7 +87,7 @@ export function AuthDialog({ open, onClose }: AuthDialogProps) {
               auth.setMessage(null)
             }}
           >
-            {mode === 'signin' ? 'hesabın yok mu? hesap aç' : 'zaten hesabın var mı? giriş yap'}
+            {mode === 'signin' ? 'no account yet? create one' : 'already have an account? sign in'}
           </button>
 
           {auth.message ? (
@@ -97,8 +97,8 @@ export function AuthDialog({ open, onClose }: AuthDialogProps) {
           ) : null}
 
           <p className="faint">
-            Giriş yapmadan da set kurabilirsin; o zaman setlerin sunucuya kaydedilmez, yalnızca bu
-            tarayıcıda durur.
+            You can build sets without signing in; then your sets are not saved to the server,
+            they stay in this browser.
           </p>
         </div>
       )}

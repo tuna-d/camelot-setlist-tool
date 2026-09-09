@@ -86,8 +86,8 @@ beforeEach(() => {
 describe('ImportDialog', () => {
   it('sürükle-bırak alanını ve yönergeyi gösterir', async () => {
     const view = await mount(<ImportDialog open onClose={() => {}} />)
-    expect(view.html()).toContain('XML dosyasını buraya sürükle')
-    expect(view.html()).toContain('Koleksiyonu dışa aktar')
+    expect(view.html()).toContain('Drag the XML file here')
+    expect(view.html()).toContain('Export Collection')
     await view.unmount()
   })
 
@@ -102,7 +102,7 @@ describe('ImportDialog', () => {
       input!.dispatchEvent(new Event('change', { bubbles: true }))
     })
 
-    expect(view.html()).toContain('DJ_PLAYLISTS olmalı')
+    expect(view.html()).toContain('DJ_PLAYLISTS')
     await view.unmount()
   })
 })
@@ -110,7 +110,7 @@ describe('ImportDialog', () => {
 describe('TrackSearchDialog', () => {
   it('yazmadan önce üç kaynağı anlatır', async () => {
     const view = await mount(<TrackSearchDialog open onClose={() => {}} />)
-    expect(view.html()).toContain('kütüphanen ve keşif katalogu süzülür')
+    expect(view.html()).toContain('library and the discovery catalog are filtered')
     await view.unmount()
   })
 
@@ -124,8 +124,8 @@ describe('TrackSearchDialog', () => {
 
     expect(view.html()).toContain('Gece Vakti')
     expect(view.html()).toContain('Gece Yürüyüşü')
-    expect(view.html()).toContain('kütüphane')
-    expect(view.html()).toContain('keşif')
+    expect(view.html()).toContain('library')
+    expect(view.html()).toContain('discovery')
     await view.unmount()
   })
 
@@ -140,8 +140,8 @@ describe('TrackSearchDialog', () => {
   it('bulunamayınca internet ve elle giriş önerir', async () => {
     const view = await mount(<TrackSearchDialog open onClose={() => {}} />)
     await type(view.container.querySelector('input.input') as HTMLInputElement, 'olmayanbirsey')
-    expect(view.html()).toContain('internette ara')
-    expect(view.html()).toContain('elle gir')
+    expect(view.html()).toContain('search the web')
+    expect(view.html()).toContain('enter by hand')
     await view.unmount()
   })
 
@@ -156,11 +156,11 @@ describe('TrackSearchDialog', () => {
     const view = await mount(<TrackSearchDialog open onClose={() => {}} />)
     await type(view.container.querySelector('input.input') as HTMLInputElement, 'uzak')
     const buttons = [...view.container.querySelectorAll('button')]
-    await click(buttons.find((button) => button.textContent === 'internette ara')!)
+    await click(buttons.find((button) => button.textContent === 'search the web')!)
 
     expect(fetchMock.mock.calls[0][0]).toBe('/api/track-search?q=uzak')
     expect(view.html()).toContain('Uzak Parça')
-    expect(view.html()).toContain('internet')
+    expect(view.html()).toContain('web')
     expect(view.html()).toContain('6A')
     vi.unstubAllGlobals()
     await view.unmount()
@@ -179,7 +179,7 @@ describe('TrackSearchDialog', () => {
     const view = await mount(<TrackSearchDialog open onClose={() => {}} />)
     await type(view.container.querySelector('input.input') as HTMLInputElement, 'uzak')
     const buttons = [...view.container.querySelectorAll('button')]
-    await click(buttons.find((button) => button.textContent === 'internette ara')!)
+    await click(buttons.find((button) => button.textContent === 'search the web')!)
     expect(view.html()).toContain('GETSONGBPM_API_KEY tanımlı değil.')
     vi.unstubAllGlobals()
     await view.unmount()
@@ -188,14 +188,14 @@ describe('TrackSearchDialog', () => {
   it('elle girilen parça sete eklenir', async () => {
     const view = await mount(<TrackSearchDialog open onClose={() => {}} />)
     await type(view.container.querySelector('input.input') as HTMLInputElement, 'elle')
-    await click([...view.container.querySelectorAll('button')].find((b) => b.textContent === 'elle gir')!)
+    await click([...view.container.querySelectorAll('button')].find((b) => b.textContent === 'enter by hand')!)
 
     const inputs = [...view.container.querySelectorAll('input.input')] as HTMLInputElement[]
     await type(inputs[1], 'Elle Girilen')
     await type(inputs[2], 'Ben')
     await type(inputs[3], '124')
     await type(inputs[4], 'Am')
-    await click([...view.container.querySelectorAll('button')].find((b) => b.textContent === 'sete ekle')!)
+    await click([...view.container.querySelectorAll('button')].find((b) => b.textContent === 'add to set')!)
 
     const entries = selectEntries(useStore.getState())
     expect(entries).toHaveLength(1)
@@ -206,10 +206,10 @@ describe('TrackSearchDialog', () => {
   it('okunamayan key’i uyarır', async () => {
     const view = await mount(<TrackSearchDialog open onClose={() => {}} />)
     await type(view.container.querySelector('input.input') as HTMLInputElement, 'elle')
-    await click([...view.container.querySelectorAll('button')].find((b) => b.textContent === 'elle gir')!)
+    await click([...view.container.querySelectorAll('button')].find((b) => b.textContent === 'enter by hand')!)
     const inputs = [...view.container.querySelectorAll('input.input')] as HTMLInputElement[]
     await type(inputs[4], 'zzz')
-    expect(view.html()).toContain('Bu key okunamadı')
+    expect(view.html()).toContain('key could not be read')
     await view.unmount()
   })
 })
@@ -217,7 +217,7 @@ describe('TrackSearchDialog', () => {
 describe('AutoBuildDialog', () => {
   it('başlangıç parçası yoksa ne yapılacağını söyler', async () => {
     const view = await mount(<AutoBuildDialog open onClose={() => {}} />)
-    expect(view.html()).toContain('Önce setliste bir başlangıç parçası ekle')
+    expect(view.html()).toContain('Add a starting track to the setlist first')
     await view.unmount()
   })
 
@@ -226,9 +226,9 @@ describe('AutoBuildDialog', () => {
     useStore.getState().addTrack(track({ id: 'seed', title: 'Başlangıç', key: '8A', bpm: 124 }))
 
     const view = await mount(<AutoBuildDialog open onClose={() => {}} />)
-    expect(view.html()).toContain('önizleme')
+    expect(view.html()).toContain('preview')
     expect(view.container.querySelectorAll('.entry').length).toBeGreaterThan(1)
-    expect(view.html()).toMatch(/Aynı key|enerji ↑|yumuşak/)
+    expect(view.html()).toMatch(/Same key|energy ↑|softer/)
     await view.unmount()
   })
 
@@ -236,7 +236,7 @@ describe('AutoBuildDialog', () => {
     useStore.getState().setCatalog({ ...catalog, tracks: [] })
     useStore.getState().addTrack(track({ id: 'seed', key: '8A', bpm: 124 }))
     const view = await mount(<AutoBuildDialog open onClose={() => {}} />)
-    expect(view.html()).toContain('Toleransı')
+    expect(view.html()).toContain('Raise the tolerance')
     await view.unmount()
   })
 
@@ -246,7 +246,7 @@ describe('AutoBuildDialog', () => {
 
     const view = await mount(<AutoBuildDialog open onClose={() => {}} />)
     const apply = [...view.container.querySelectorAll('button')].find(
-      (button) => button.textContent === 'sete ekle',
+      (button) => button.textContent === 'add to the set',
     )
     expect(apply).toBeDefined()
     await click(apply!)

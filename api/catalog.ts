@@ -65,7 +65,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
       sendError(
         response,
         404,
-        'Sunucuda katalog yok; uygulama public/catalog.json dosyasına düşecek. Tazelemek için /api/catalog?refresh=1 çalıştır.',
+        'No catalog on the server; the app will fall back to public/catalog.json. Run /api/catalog?refresh=1 to refresh it.',
       )
       return
     }
@@ -73,12 +73,12 @@ export default async function handler(request: VercelRequest, response: VercelRe
     return
   }
 
-  // Tazeleme yalnızca cron sırrıyla: dışarıdan tetiklenip Beatport'a yük bindirilmesin.
+  // Refresh only with the cron secret, so nobody can trigger load on Beatport from outside.
   if (!isCronRequest(request)) {
     sendError(
       response,
       401,
-      'Tazeleme için CRON_SECRET gerekiyor. Vercel cron bunu Authorization başlığında gönderiyor; elle çalıştırmak için aynı başlığı ekle.',
+      'A CRON_SECRET is required to refresh. Vercel cron sends it in the Authorization header; add the same header to run it by hand.',
     )
     return
   }
@@ -86,7 +86,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
   const result = await refreshCatalog(fetchPage, stored)
 
   if (!result.ok || !result.catalog) {
-    // Doğrulama geçmedi: eski katalog olduğu gibi kalıyor.
+    // Validation failed: the old catalog stays exactly as it was.
     sendJson(response, 200, {
       ok: false,
       kept: stored ? stored.tracks.length : 0,
@@ -110,6 +110,6 @@ export default async function handler(request: VercelRequest, response: VercelRe
     tracks: result.catalog.tracks.length,
     strategy: result.catalog.strategy,
     reports: result.reports,
-    error: error ? `Katalog yazılamadı: ${error.message}` : undefined,
+    error: error ? `Could not write the catalog: ${error.message}` : undefined,
   })
 }

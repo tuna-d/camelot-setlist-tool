@@ -58,13 +58,13 @@ describe('readSearchResults', () => {
   it('servis hata nesnesi döndürünce ne yapılacağını söyler', () => {
     const result = readSearchResults({ search: { error: 'no result' } })
     expect(result.results).toEqual([])
-    expect(result.message).toMatch(/elle gir/)
+    expect(result.message).toMatch(/by hand/)
   })
 
   it('beklenmedik gövdede çökmez', () => {
     expect(readSearchResults(null).results).toEqual([])
-    expect(readSearchResults('metin').message).toMatch(/beklenmedik/)
-    expect(readSearchResults({}).message).toMatch(/beklenmedik/)
+    expect(readSearchResults('metin').message).toMatch(/something unexpected/)
+    expect(readSearchResults({}).message).toMatch(/something unexpected/)
   })
 
   it('başlıksız kayıtları atar', () => {
@@ -74,6 +74,6 @@ describe('readSearchResults', () => {
   })
 
   it('boş listede parçayı elle girmeyi önerir', () => {
-    expect(readSearchResults({ search: [] }).message).toMatch(/elle girebilirsin/)
+    expect(readSearchResults({ search: [] }).message).toMatch(/by hand/)
   })
 })

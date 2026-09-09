@@ -3,7 +3,7 @@ import type { BeatportGenre, ExtractResult, ValidationResult } from './beatport'
 import { dedupeBySignature } from './search'
 import type { Catalog, Track } from './types'
 
-/** Katalog tablosunda tek satır tutuluyor; kimliği sabit. */
+/** The catalog table holds a single row; its id is fixed. */
 export const CATALOG_ID = 'current'
 
 export type CatalogFetcher = (url: string) => Promise<string>
@@ -50,7 +50,7 @@ export async function refreshCatalog(
         strategy: result.strategy,
         error:
           result.tracks.length === 0
-            ? 'Sayfadan hiç parça çıkarılamadı. Sayfa yapısı değişmiş olabilir; beatport.ts içindeki stratejileri gözden geçir.'
+            ? 'No tracks could be extracted from the page. The page structure may have changed; review the strategies in beatport.ts.'
             : null,
       })
     } catch (error) {
@@ -89,15 +89,15 @@ export function formatReports(result: RefreshResult): string {
   const lines = result.reports.map((report) =>
     report.error
       ? `  ✗ ${report.genre}: ${report.error}`
-      : `  ✓ ${report.genre}: ${report.count} parça (${report.strategy})`,
+      : `  ✓ ${report.genre}: ${report.count} tracks (${report.strategy})`,
   )
   lines.push(
-    `  toplam ${result.candidate.tracks.length} parça · key okunma %${Math.round(
+    `  ${result.candidate.tracks.length} tracks total · key parse ${Math.round(
       result.validation.stats.keyRate * 100,
-    )} · ${result.validation.stats.genreCount} tür`,
+    )}% · ${result.validation.stats.genreCount} genres`,
   )
   if (!result.ok) {
-    lines.push('  doğrulama geçmedi:')
+    lines.push('  validation failed:')
     for (const reason of result.validation.reasons) lines.push(`   · ${reason}`)
   }
   return lines.join('\n')

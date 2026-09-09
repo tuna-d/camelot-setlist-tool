@@ -46,8 +46,8 @@ async function pushToSupabase(catalog: Catalog): Promise<void> {
 
   if (!url || !key) {
     console.error(
-      '\nSUPABASE_URL ve SUPABASE_SERVICE_ROLE_KEY bulunamadı. İkisini .env dosyasına yaz\n' +
-        '(değerler Supabase → Project Settings → API sayfasında) ya da komuttan önce ortama ver.',
+      '\nSUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY not found. Put both in .env\n' +
+        '(the values live in Supabase → Project Settings → API) or export them before the command.',
     )
     process.exit(1)
   }
@@ -63,13 +63,13 @@ async function pushToSupabase(catalog: Catalog): Promise<void> {
 
   if (error) {
     console.error(
-      `\nKatalog tabloya yazılamadı: ${error.message}\n` +
-        'Anahtarın service_role olduğunu ve supabase/schema.sql dosyasının çalıştırıldığını doğrula.',
+      `\nCould not write the catalog to the table: ${error.message}\n` +
+        'Check that the key is the service_role one and that supabase/schema.sql has been run.',
     )
     process.exit(1)
   }
 
-  console.log(`Supabase catalog tablosu güncellendi (${catalog.tracks.length} parça).`)
+  console.log(`Supabase catalog table updated (${catalog.tracks.length} tracks).`)
 }
 
 async function main(): Promise<void> {
@@ -79,48 +79,48 @@ async function main(): Promise<void> {
 
   if (fromFile) {
     if (!push) {
-      console.error('--from-file yalnızca --supabase ile anlamlı: mevcut dosyayı tabloya yükler.')
+      console.error('--from-file only makes sense with --supabase: it uploads the existing file.')
       process.exit(1)
     }
     const existing = readExisting()
     if (!existing) {
       console.error(
-        'public/catalog.json okunamadı ya da geçerli bir katalog değil.\n' +
-          'Önce --from-file olmadan çalıştırıp dosyayı üret.',
+        'public/catalog.json could not be read, or is not a valid catalog.\n' +
+          'Run without --from-file first to produce the file.',
       )
       process.exit(1)
     }
-    console.log(`public/catalog.json yükleniyor (${existing.tracks.length} parça)…`)
+    console.log(`Uploading public/catalog.json (${existing.tracks.length} tracks)…`)
     await pushToSupabase(existing)
     return
   }
 
   const previous = readExisting()
 
-  console.log(`${BEATPORT_GENRES.length} tür çekiliyor…`)
+  console.log(`Fetching ${BEATPORT_GENRES.length} genres…`)
   const result = await refreshCatalog(fetchPage, previous)
   console.log(formatReports(result))
 
   if (!result.ok || !result.catalog) {
     console.error(
-      '\nDoğrulama geçmedi, public/catalog.json değiştirilmedi. Yukarıdaki sebeplere bak;\n' +
-        'sayfa yapısı değişmişse düzeltme src/lib/beatport.ts içindeki çıkarım stratejilerinde.',
+      '\nValidation failed, public/catalog.json was left alone. Look at the reasons above;\n' +
+        'if the page structure changed, the fix belongs in the strategies in src/lib/beatport.ts.',
     )
     process.exit(1)
   }
 
   if (dry) {
-    console.log('\n--dry verildi: dosya yazılmadı, tabloya da dokunulmadı.')
+    console.log('\n--dry given: no file written, the table was not touched.')
     return
   }
 
   writeFileSync(TARGET, `${JSON.stringify(result.catalog, null, 2)}\n`)
-  console.log(`\npublic/catalog.json güncellendi (${result.catalog.tracks.length} parça).`)
+  console.log(`\npublic/catalog.json updated (${result.catalog.tracks.length} tracks).`)
 
   if (push) await pushToSupabase(result.catalog)
 }
 
 main().catch((error: unknown) => {
-  console.error(`Tazeleme çöktü: ${error instanceof Error ? error.message : String(error)}`)
+  console.error(`Refresh crashed: ${error instanceof Error ? error.message : String(error)}`)
   process.exit(1)
 })

@@ -19,7 +19,7 @@ export interface SongSearchResult {
   message: string | null
 }
 
-// "Sanatçı - Parça" en yaygın yazım; tire yoksa tamamı parça adı sayılır.
+// "Artist - Title" is the common spelling; with no dash the whole string is the title.
 export function splitQuery(query: string): SongQuery {
   const text = query.trim()
   if (!text) return { song: '', artist: '' }
@@ -31,7 +31,7 @@ export function splitQuery(query: string): SongQuery {
 export function searchUrl(query: string, apiKey: string): string {
   const { song, artist } = splitQuery(query)
   const lookup = artist ? `song:${song} artist:${artist}` : `song:${song}`
-  // URLSearchParams boşluğu "+" yapıyor; servis boşluğu %20 olarak bekliyor.
+  // URLSearchParams encodes a space as "+"; the service expects %20.
   return `${GETSONGBPM_ENDPOINT}?api_key=${encodeURIComponent(apiKey)}&type=both&lookup=${encodeURIComponent(lookup)}`
 }
 
@@ -56,7 +56,7 @@ function artistName(value: unknown): string {
 
 export function readSearchResults(body: unknown): SongSearchResult {
   if (!body || typeof body !== 'object') {
-    return { results: [], message: 'Arama servisinden beklenmedik bir yanıt geldi. Sonra tekrar dene.' }
+    return { results: [], message: 'The search service returned something unexpected. Try again later.' }
   }
 
   const search = (body as Record<string, unknown>).search
@@ -65,12 +65,12 @@ export function readSearchResults(body: unknown): SongSearchResult {
     return {
       results: [],
       message: error
-        ? `Arama sonuç vermedi (${error}). Yazımı sadeleştir ya da parçayı elle gir.`
-        : 'Arama sonuç vermedi. Yazımı sadeleştir ya da parçayı elle gir.',
+        ? `The search found nothing (${error}). Simplify the spelling or enter the track by hand.`
+        : 'The search found nothing. Simplify the spelling or enter the track by hand.',
     }
   }
   if (!Array.isArray(search)) {
-    return { results: [], message: 'Arama servisinden beklenmedik bir yanıt geldi. Sonra tekrar dene.' }
+    return { results: [], message: 'The search service returned something unexpected. Try again later.' }
   }
 
   const results: SongHit[] = []
@@ -89,6 +89,6 @@ export function readSearchResults(body: unknown): SongSearchResult {
 
   return {
     results,
-    message: results.length === 0 ? 'Arama sonuç vermedi. Parçayı elle girebilirsin.' : null,
+    message: results.length === 0 ? 'The search found nothing. You can enter the track by hand.' : null,
   }
 }

@@ -89,15 +89,15 @@ beforeEach(() => {
 describe('AuthDialog', () => {
   it('Google ve e-posta seçeneklerini gösterir', async () => {
     const view = await mount(<AuthDialog open onClose={() => {}} />)
-    expect(view.html()).toContain('Google ile devam et')
-    expect(view.html()).toContain('e-posta')
-    expect(view.html()).toContain('setlerin sunucuya kaydedilmez')
+    expect(view.html()).toContain('Continue with Google')
+    expect(view.html()).toContain('email')
+    expect(view.html()).toContain('not saved to the server')
     await view.unmount()
   })
 
   it('Google düğmesi oturum akışını başlatır', async () => {
     const view = await mount(<AuthDialog open onClose={() => {}} />)
-    await click(button(view, 'Google ile devam et'))
+    await click(button(view, 'Continue with Google'))
     expect(calls[0].kind).toBe('google')
     await view.unmount()
   })
@@ -107,9 +107,9 @@ describe('AuthDialog', () => {
     const inputs = [...view.container.querySelectorAll('input')] as HTMLInputElement[]
     await type(inputs[0], 'dj@example.com')
     await type(inputs[1], '123')
-    expect(button(view, 'giriş yap').disabled).toBe(true)
+    expect(button(view, 'sign in').disabled).toBe(true)
     await type(inputs[1], '123456')
-    expect(button(view, 'giriş yap').disabled).toBe(false)
+    expect(button(view, 'sign in').disabled).toBe(false)
     await view.unmount()
   })
 
@@ -118,31 +118,31 @@ describe('AuthDialog', () => {
     const inputs = [...view.container.querySelectorAll('input')] as HTMLInputElement[]
     await type(inputs[0], 'dj@example.com')
     await type(inputs[1], 'parola123')
-    await click(button(view, 'giriş yap'))
+    await click(button(view, 'sign in'))
     expect(calls[0]).toEqual({ kind: 'signin', email: 'dj@example.com', password: 'parola123' })
     await view.unmount()
   })
 
   it('kayıt kipine geçip hesap açar', async () => {
     const view = await mount(<AuthDialog open onClose={() => {}} />)
-    await click(button(view, 'hesabın yok mu? hesap aç'))
+    await click(button(view, 'no account yet? create one'))
     const inputs = [...view.container.querySelectorAll('input')] as HTMLInputElement[]
     await type(inputs[0], 'yeni@example.com')
     await type(inputs[1], 'parola123')
-    await click(button(view, 'hesap aç'))
+    await click(button(view, 'create account'))
     expect(calls[0].kind).toBe('signup')
-    expect(view.html()).toContain('doğrulama bağlantısına tıkla')
+    expect(view.html()).toContain('confirmation link in your inbox')
     await view.unmount()
   })
 
-  it('hatayı Türkçe gösterir', async () => {
+  it('hatayı anlaşılır gösterir', async () => {
     setSupabaseForTests(fakeClient({ message: 'Invalid login credentials' }))
     const view = await mount(<AuthDialog open onClose={() => {}} />)
     const inputs = [...view.container.querySelectorAll('input')] as HTMLInputElement[]
     await type(inputs[0], 'dj@example.com')
     await type(inputs[1], 'yanlisparola')
-    await click(button(view, 'giriş yap'))
-    expect(view.html()).toContain('E-posta ya da parola yanlış')
+    await click(button(view, 'sign in'))
+    expect(view.html()).toContain('Wrong email or password')
     await view.unmount()
   })
 
@@ -151,7 +151,7 @@ describe('AuthDialog', () => {
     useAuth.setState({ status: 'disabled' })
     const view = await mount(<AuthDialog open onClose={() => {}} />)
     expect(view.html()).toContain('VITE_SUPABASE_URL')
-    expect(view.html()).toContain('misafir olarak')
+    expect(view.html()).toContain('as a guest')
     await view.unmount()
   })
 })

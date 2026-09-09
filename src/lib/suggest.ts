@@ -7,8 +7,8 @@ export const MIN_TOLERANCE = 1
 export const MAX_TOLERANCE = 12
 
 /**
- * Arayüzdeki hazır tolerans basamakları. %6 varsayılan çünkü çoğu giriş
- * seviyesi kontrolcüde (Pioneer DDJ-FLX4 dahil) pitch aralığı ±%6.
+ * Preset tolerance steps offered in the UI. 6% is the default because most entry
+ * level controllers (the Pioneer DDJ-FLX4 included) have a ±6% pitch range.
  */
 export const TOLERANCE_STEPS = [3, 6, 8, 10, 12]
 

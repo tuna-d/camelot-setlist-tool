@@ -45,11 +45,11 @@ export function SuggestPanel() {
   const total = groups.reduce((count, group) => count + group.items.length, 0)
 
   return (
-    <section className="panel col suggest-panel" aria-label="Öneriler">
+    <section className="panel col suggest-panel" aria-label="Suggestions">
       <div className="row-wrap">
-        <h2>Öneriler</h2>
+        <h2>Suggestions</h2>
         {reference ? (
-          <span className="chip chip-static">{total} aday</span>
+          <span className="chip chip-static">{total} candidates</span>
         ) : null}
         <span className="spacer" />
         <button
@@ -58,7 +58,7 @@ export function SuggestPanel() {
           aria-pressed={state.poolSource === 'catalog'}
           onClick={() => state.setPoolSource('catalog')}
         >
-          Keşif
+          Discovery
         </button>
         <button
           type="button"
@@ -66,13 +66,13 @@ export function SuggestPanel() {
           aria-pressed={state.poolSource === 'library'}
           onClick={() => state.setPoolSource('library')}
         >
-          Kütüphanem
+          My library
         </button>
       </div>
 
       {!reference ? (
         <p className="muted">
-          Önce setliste bir parça ekle. Öneriler o parçanın key ve temposuna göre kurulur.
+          Add a track to the setlist first. Suggestions are built from its key and tempo.
         </p>
       ) : (
         <>
@@ -88,12 +88,12 @@ export function SuggestPanel() {
                 </div>
                 {range ? (
                   <span className="faint mono">
-                    hedef {formatBpm(range.min)} – {formatBpm(range.max)} BPM
+                    target {formatBpm(range.min)} – {formatBpm(range.max)} BPM
                   </span>
                 ) : null}
                 <span className="faint">
-                  {state.poolSource === 'catalog' ? 'Keşif katalogu' : 'Kütüphanem'} · {pool.length}{' '}
-                  parça
+                  {state.poolSource === 'catalog' ? 'Discovery catalog' : 'My library'} · {pool.length}{' '}
+                  tracks
                 </span>
               </div>
             </div>
@@ -101,7 +101,7 @@ export function SuggestPanel() {
             <div className="col filters">
               <div className="col">
                 <div className="row-wrap">
-                  <span className="faint">tempo toleransı · %{state.tolerance}</span>
+                  <span className="faint">tempo tolerance · {state.tolerance}%</span>
                   <span className="spacer" />
                   {range ? (
                     <span className="faint mono">
@@ -109,7 +109,7 @@ export function SuggestPanel() {
                     </span>
                   ) : null}
                 </div>
-                <div className="segmented" role="group" aria-label="Tempo toleransı">
+                <div className="segmented" role="group" aria-label="Tempo tolerance">
                   {TOLERANCE_STEPS.map((step) => (
                     <button
                       key={step}
@@ -117,19 +117,19 @@ export function SuggestPanel() {
                       className="segment"
                       aria-pressed={state.tolerance === step}
                       onClick={() => state.setTolerance(step)}
-                      title={`Pitch'i en fazla %${step} zorlayan parçalar önerilsin`}
+                      title={`Suggest tracks that strain the pitch by at most ${step}%`}
                       style={
                         state.tolerance === step ? { color: toleranceColor(step) } : undefined
                       }
                     >
-                      ±%{step}
+                      ±{step}%
                     </button>
                   ))}
                 </div>
               </div>
 
               <div className="col">
-                <h3>ilişkiler</h3>
+                <h3>relations</h3>
                 <div className="row-wrap">
                   {RELATIONS.map((info) => (
                     <button
@@ -158,14 +158,14 @@ export function SuggestPanel() {
               {genres.length > 0 ? (
                 <div className="col">
                   <h3>
-                    türler
+                    genres
                     {state.genres.length > 0 ? (
                       <button
                         type="button"
                         className="btn btn-ghost btn-sm"
                         onClick={() => state.setGenres([])}
                       >
-                        süzgeci kaldır
+                        clear filter
                       </button>
                     ) : null}
                   </h3>
@@ -189,8 +189,8 @@ export function SuggestPanel() {
 
           {total === 0 ? (
             <p className="muted">
-              Bu süzgeçlerle aday çıkmadı. Toleransı yükselt, kapalı ilişkileri aç ya da havuzu
-              değiştir (Keşif ↔ Kütüphanem).
+              No candidates with these filters. Raise the tolerance, turn on a relation you disabled, or
+              switch the pool (Discovery ↔ My library).
             </p>
           ) : (
             groups.map((group) => (
@@ -204,7 +204,7 @@ export function SuggestPanel() {
                       <span
                         className="score"
                         style={{ color: scoreColor(item.score) }}
-                        title="100 üzerinden uyum puanı: ilişki ve tempo yakınlığı"
+                        title="Match score out of 100: relation and tempo closeness"
                       >
                         {Math.round(item.score)}
                       </span>
@@ -215,7 +215,7 @@ export function SuggestPanel() {
                       <span className="entry-meta">
                         <KeyChip code={item.track.key} />
                         <Bpm value={item.track.bpm} />
-                        <span className="mono faint" title="referansa göre tempo farkı">
+                        <span className="mono faint" title="tempo gap against the reference">
                           {formatDelta(item.delta)}
                         </span>
                         <TrackLinks track={item.track} />
@@ -224,7 +224,7 @@ export function SuggestPanel() {
                           className="btn btn-accent btn-sm"
                           onClick={() => state.addTrack(item.track)}
                         >
-                          ekle
+                          add
                         </button>
                       </span>
                     </div>

@@ -36,7 +36,7 @@ const DIM_FILL = '#1b212a'
 
 export function CamelotWheel({ active, allowed, onSelect, size = 220 }: CamelotWheelProps) {
   const center = size / 2
-  // Numaralar halkaların dışında duruyor: renkli dilimin üstünde okunmuyorlardı.
+  // Numbers sit outside the rings: on a coloured slice they were unreadable.
   const outerRing = { inner: size * 0.315, outer: size * 0.425 }
   const innerRing = { inner: size * 0.185, outer: size * 0.297 }
 
@@ -58,10 +58,10 @@ export function CamelotWheel({ active, allowed, onSelect, size = 220 }: CamelotW
 
       const fill = isActive ? keyColor(code) : info ? toneColor(info.tone) : DIM_FILL
       const title = isActive
-        ? `${code} · ${NOTE_NAME[code]} — şu anki key`
+        ? `${code} · ${NOTE_NAME[code]} — current key`
         : info
           ? `${code} · ${NOTE_NAME[code]} — ${info.label}`
-          : `${code} · ${NOTE_NAME[code]} — bu ilişki kapalı`
+          : `${code} · ${NOTE_NAME[code]} — this relation is off`
 
       slices.push(
         <path
@@ -100,7 +100,7 @@ export function CamelotWheel({ active, allowed, onSelect, size = 220 }: CamelotW
       width={size}
       height={size}
       role="img"
-      aria-label={active ? `Camelot çemberi, aktif key ${active}` : 'Camelot çemberi'}
+      aria-label={active ? `Camelot wheel, current key ${active}` : 'Camelot wheel'}
     >
       {slices}
       <text

@@ -136,8 +136,8 @@ export interface RelationInfo {
 export const RELATIONS: RelationInfo[] = [
   {
     id: 'same',
-    label: 'Aynı key',
-    hint: 'Aynı key — geçiş duyulmaz, en güvenli hamle.',
+    label: 'Same key',
+    hint: 'Same key — the blend is invisible, the safest move.',
     score: 100,
     tone: 'neutral',
     defaultOn: true,
@@ -146,8 +146,8 @@ export const RELATIONS: RelationInfo[] = [
   },
   {
     id: 'up',
-    label: '+1 · enerji ↑',
-    hint: 'Bir numara ileri: enerjiyi yükseltir, pistin gerilimini artırır.',
+    label: '+1 · energy ↑',
+    hint: 'One step forward: lifts the energy and builds tension on the floor.',
     score: 94,
     tone: 'energy',
     defaultOn: true,
@@ -156,8 +156,8 @@ export const RELATIONS: RelationInfo[] = [
   },
   {
     id: 'down',
-    label: '−1 · yumuşak',
-    hint: 'Bir numara geri: gerilimi düşürür, nefes aldırır.',
+    label: '−1 · softer',
+    hint: 'One step back: releases tension, lets the floor breathe.',
     score: 92,
     tone: 'calm',
     defaultOn: true,
@@ -166,8 +166,8 @@ export const RELATIONS: RelationInfo[] = [
   },
   {
     id: 'relative',
-    label: 'Relatif',
-    hint: 'Aynı numaranın diğer halkası: majör/minör değişir, enerji aynı kalır.',
+    label: 'Relative',
+    hint: 'The other ring of the same number: major/minor flips, energy stays.',
     score: 88,
     tone: 'color',
     defaultOn: true,
@@ -176,8 +176,8 @@ export const RELATIONS: RelationInfo[] = [
   },
   {
     id: 'boost',
-    label: '+2 · sıçrama',
-    hint: 'İki numara ileri: belirgin enerji sıçraması, sette seyrek kullan.',
+    label: '+2 · jump',
+    hint: 'Two steps forward: a clear energy jump, use it sparingly in a set.',
     score: 72,
     tone: 'jump',
     defaultOn: true,
@@ -186,8 +186,8 @@ export const RELATIONS: RelationInfo[] = [
   },
   {
     id: 'diagonal',
-    label: 'Diyagonal',
-    hint: 'Bir numara ileri ve halka değiştir: taze ama riskli, uzun geçişte dene.',
+    label: 'Diagonal',
+    hint: 'One step forward and switch rings: fresh but risky, try it on a long blend.',
     score: 64,
     tone: 'jump',
     defaultOn: false,
@@ -196,8 +196,8 @@ export const RELATIONS: RelationInfo[] = [
   },
   {
     id: 'semiUp',
-    label: '+7 · yarım ton ↑',
-    hint: 'Yarım ton yukarı: dikkat çeker, breakte ya da akapella üstünde yap.',
+    label: '+7 · semitone ↑',
+    hint: 'Up a semitone: attention grabbing, do it over a break or an acapella.',
     score: 62,
     tone: 'risk',
     defaultOn: false,
@@ -206,8 +206,8 @@ export const RELATIONS: RelationInfo[] = [
   },
   {
     id: 'semiDown',
-    label: '−7 · yarım ton ↓',
-    hint: 'Yarım ton aşağı: daha karanlık, enerji düşüşünü göze alıyorsan kullan.',
+    label: '−7 · semitone ↓',
+    hint: 'Down a semitone: darker, use it when you accept the drop in energy.',
     score: 56,
     tone: 'risk',
     defaultOn: false,
