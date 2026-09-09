@@ -229,9 +229,10 @@ src/components/   UI
   AuthDialog, ImportDialog, TrackSearchDialog, AutoBuildDialog, common
 
 api/              Vercel functions
-  _lib.ts           CORS, service-role client, session verification
   track-search.ts   authenticated GetSongBPM proxy (holds the key, parses nothing)
   catalog.ts        reads the catalog table
+                    Both are self-contained: Vercel compiles each route file on its
+                    own, so they import nothing but @supabase/supabase-js.
 
 scripts/
   refresh-catalog.ts  refreshes the catalog by hand (--dry writes nothing, --supabase also
