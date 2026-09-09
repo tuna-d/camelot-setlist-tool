@@ -11,7 +11,8 @@
     "test:watch": "vitest",
     "lint": "eslint .",
     "typecheck": "tsc -b --noEmit",
-    "refresh:catalog": "tsx scripts/refresh-catalog.ts"
+    "refresh:catalog": "tsx scripts/refresh-catalog.ts",
+    "seed:catalog": "tsx scripts/refresh-catalog.ts --supabase --from-file"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.116.0",

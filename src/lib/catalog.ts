@@ -3,6 +3,9 @@ import type { BeatportGenre, ExtractResult, ValidationResult } from './beatport'
 import { dedupeBySignature } from './search'
 import type { Catalog, Track } from './types'
 
+/** Katalog tablosunda tek satır tutuluyor; kimliği sabit. */
+export const CATALOG_ID = 'current'
+
 export type CatalogFetcher = (url: string) => Promise<string>
 
 export interface GenreReport {

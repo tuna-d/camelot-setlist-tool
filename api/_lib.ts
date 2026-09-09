@@ -3,7 +3,7 @@ import { createClient } from '@supabase/supabase-js'
 import type { SupabaseClient } from '@supabase/supabase-js'
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 
-export const CATALOG_ID = 'current'
+export { CATALOG_ID } from '../src/lib/catalog'
 
 export function applyCors(request: VercelRequest, response: VercelResponse): boolean {
   response.setHeader('access-control-allow-origin', request.headers.origin ?? '*')

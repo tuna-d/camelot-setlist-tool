@@ -139,6 +139,19 @@ doğrulamasını kapatabilirsin.
 Katalog haftada bir pazartesi 06:00 UTC'de `/api/catalog?refresh=1` ile tazelenir
 (`vercel.json` → `crons`).
 
+### Katalogu tabloya tohumlama
+
+Uygulama sunucudaki katalog boşken `public/catalog.json` dosyasına düşer, yani ilk cron'u
+beklemek zorunda değilsin. Elindeki dosyayı hemen tabloya yazmak için:
+
+```bash
+npm run seed:catalog
+```
+
+`.env` dosyasındaki `SUPABASE_URL` ve `SUPABASE_SERVICE_ROLE_KEY` ile `catalog` tablosuna
+yazar, Beatport'a hiç gitmez. Yeniden tarayıp hem dosyayı hem tabloyu güncellemek için
+`npm run refresh:catalog -- --supabase`.
+
 ## Mimari
 
 ```
@@ -172,7 +185,7 @@ api/              Vercel fonksiyonları
   catalog.ts        katalog okuma ve cron ile tazeleme
 
 scripts/
-  refresh-catalog.ts  public/catalog.json'u elle tazeler (--dry ile yazmadan)
+  refresh-catalog.ts  katalogu elle tazeler (--dry yazmaz, --supabase tabloya da yazar)
   smoke.mjs           gerçek tarayıcıda uçtan uca duman testi
 
 supabase/

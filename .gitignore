@@ -18,3 +18,4 @@ npm-debug.log*
 # local working notes
 CLAUDE.md
 BUILD-PLAN.md
+.claude/
