@@ -4,6 +4,8 @@ import type { RemoteStore } from './remote'
 import type { SyncState } from './store'
 
 export const STORAGE_KEY = 'camelot-setlist:v1'
+/** Geri alınamayan bir birleştirmeden önceki son hâl; yalnızca kurtarma için. */
+export const BACKUP_KEY = 'camelot-setlist:backup'
 export const SAVE_DELAY = 2500
 
 export { isAppState }
@@ -51,6 +53,30 @@ export function clearLocal(): void {
     storage()?.removeItem(STORAGE_KEY)
   } catch {
     // Storage access itself throws when site data is blocked.
+  }
+}
+
+export function writeBackup(state: AppState): boolean {
+  const store = storage()
+  if (!store) return false
+  try {
+    store.setItem(BACKUP_KEY, JSON.stringify(state))
+    return true
+  } catch {
+    return false
+  }
+}
+
+export function readBackup(): AppState | null {
+  const store = storage()
+  if (!store) return null
+  try {
+    const raw = store.getItem(BACKUP_KEY)
+    if (!raw) return null
+    const parsed: unknown = JSON.parse(raw)
+    return isAppState(parsed) ? parsed : null
+  } catch {
+    return null
   }
 }
 

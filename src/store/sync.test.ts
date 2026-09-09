@@ -5,10 +5,12 @@ import {
   bootstrapUser,
   clearLocal,
   createSaver,
+  readBackup,
   hasContent,
   isAppState,
   pickNewer,
   readLocal,
+  writeBackup,
   writeLocal,
 } from './sync'
 import { initialAppState } from './store'
@@ -96,6 +98,20 @@ describe('yerel kayıt', () => {
     expect(readLocal()?.setlists[0].name).toBe('yerel')
     localStorage.setItem(STORAGE_KEY, '{yarım json')
     expect(readLocal()).toBeNull()
+  })
+})
+
+describe('yedek kayıt', () => {
+  it('yedeği ayrı anahtarda tutar, asıl kaydı bozmaz', () => {
+    writeLocal(stateAt(1, 'güncel'))
+    expect(writeBackup(stateAt(2, 'yedek'))).toBe(true)
+    expect(readBackup()?.setlists[0].name).toBe('yedek')
+    expect(readLocal()?.setlists[0].name).toBe('güncel')
+  })
+
+  it('yedek yokken null döner', () => {
+    localStorage.removeItem('camelot-setlist:backup')
+    expect(readBackup()).toBeNull()
   })
 })
 

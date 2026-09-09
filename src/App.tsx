@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { isCatalog } from './lib/catalog'
+import { mergeGuestWork } from './lib/merge'
 import type { AppState, Catalog } from './lib/types'
 import { selectLibrary, useStore } from './store/store'
 import type { StoreState, SyncStatus } from './store/store'
 import { useAuth } from './store/auth'
 import { createSupabaseStore } from './store/remote'
 import { getSupabase } from './store/supabase'
-import { bootstrapGuest, bootstrapUser, createSaver } from './store/sync'
+import { bootstrapGuest, bootstrapUser, createSaver, writeBackup } from './store/sync'
 import { AuthDialog } from './components/AuthDialog'
 import { AutoBuildDialog } from './components/AutoBuildDialog'
 import { ImportDialog } from './components/ImportDialog'
@@ -130,9 +131,13 @@ export function App() {
 
   function adoptGuestWork() {
     if (!pendingGuest) return
-    useStore.getState().hydrate({ ...pendingGuest, savedAt: Date.now() })
+    const store = useStore.getState()
+    // Birleştirme geri alınamıyor: öncesini kurtarma anahtarına yaz.
+    writeBackup(store.exportState())
+    // Hesaptaki setlerin üstüne yazma: misafir çalışması onların yanına eklenir.
+    store.hydrate(mergeGuestWork(store.exportState(), pendingGuest))
     setPendingGuest(null)
-    useStore.getState().setSync({ status: 'saving', message: null })
+    store.setSync({ status: 'saving', message: null })
   }
 
   const visible = selectLibrary(state)

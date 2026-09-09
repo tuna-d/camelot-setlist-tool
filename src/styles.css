@@ -827,16 +827,19 @@ dialog::backdrop {
 
 /* Geniş ekranda her satır aynı sütun ölçüleriyle diziliyor: alt alta hizalı dursunlar. */
 @media (min-width: 721px) {
-  .entry {
+  .setlist-panel .entry,
+  .suggest-panel .entry {
     align-items: center;
     display: grid;
   }
 
-  .entry-meta {
+  .setlist-panel .entry-meta,
+  .suggest-panel .entry-meta {
     display: contents;
   }
 
-  .entry > *,
+  .setlist-panel .entry > *,
+  .suggest-panel .entry > *,
   .entry-meta > * {
     justify-self: start;
   }
