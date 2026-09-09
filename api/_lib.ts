@@ -1,9 +1,9 @@
-import { timingSafeEqual } from 'node:crypto'
 import { createClient } from '@supabase/supabase-js'
 import type { SupabaseClient } from '@supabase/supabase-js'
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 
-export { CATALOG_ID } from '../src/lib/catalog'
+/** The catalog table holds a single row; its id is fixed (mirrors src/lib/catalog.ts). */
+export const CATALOG_ID = 'current'
 
 export function applyCors(request: VercelRequest, response: VercelResponse): boolean {
   response.setHeader('access-control-allow-origin', request.headers.origin ?? '*')
@@ -21,21 +21,6 @@ function headerValue(request: VercelRequest, name: string): string {
   const value = request.headers[name]
   if (Array.isArray(value)) return value[0] ?? ''
   return value ?? ''
-}
-
-// Constant time compare so a wrong secret leaks nothing through timing.
-function sameSecret(given: string, expected: string): boolean {
-  const left = Buffer.from(given)
-  const right = Buffer.from(expected)
-  if (left.length !== right.length) return false
-  return timingSafeEqual(left, right)
-}
-
-export function isCronRequest(request: VercelRequest): boolean {
-  const expected = process.env.CRON_SECRET ?? ''
-  if (!expected) return false
-  const given = headerValue(request, 'authorization').replace(/^Bearer\s+/i, '')
-  return sameSecret(given, expected)
 }
 
 let service: SupabaseClient | null | undefined

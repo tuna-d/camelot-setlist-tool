@@ -1,7 +1,5 @@
 import { toCamelot } from './camelot'
 
-export const GETSONGBPM_ENDPOINT = 'https://api.getsong.co/search/'
-
 export interface SongQuery {
   song: string
   artist: string
@@ -26,13 +24,6 @@ export function splitQuery(query: string): SongQuery {
   const match = /^(.+?)\s+[-–—]\s+(.+)$/.exec(text)
   if (!match) return { song: text, artist: '' }
   return { artist: match[1].trim(), song: match[2].trim() }
-}
-
-export function searchUrl(query: string, apiKey: string): string {
-  const { song, artist } = splitQuery(query)
-  const lookup = artist ? `song:${song} artist:${artist}` : `song:${song}`
-  // URLSearchParams encodes a space as "+"; the service expects %20.
-  return `${GETSONGBPM_ENDPOINT}?api_key=${encodeURIComponent(apiKey)}&type=both&lookup=${encodeURIComponent(lookup)}`
 }
 
 function text(value: unknown): string {

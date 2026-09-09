@@ -26,7 +26,7 @@ It runs with no environment variables at all: sign-in stays off, the app falls b
 guest mode, and everything lives in the browser's `localStorage`.
 
 ```bash
-npm test           # vitest (348 tests)
+npm test           # vitest (346 tests)
 npm run typecheck  # tsc -b --noEmit
 npm run lint       # eslint
 npm run build      # tsc -b && vite build
@@ -157,12 +157,32 @@ email confirmation off under **Authentication → Providers → Email**.
 | `SUPABASE_URL` | Server-side address | same value as above | Catalog cannot be written, track search cannot verify sessions |
 | `SUPABASE_SERVICE_ROLE_KEY` | Catalog writes and session verification | Supabase → Settings → API | Same |
 | `GETSONGBPM_API_KEY` | Single-track lookup | [getsongbpm.com/api](https://getsongbpm.com/api) | "search the web" explains it is missing; manual entry still works |
-| `CRON_SECRET` | Guards the weekly refresh | `openssl rand -hex 32` | Refresh never runs; reads are unaffected |
+
+`CRON_SECRET` is no longer used: the weekly refresh moved to GitHub Actions (below).
 
 `.env.example` carries the same information for local development.
 
-The catalog is refreshed weekly, Mondays at 06:00 UTC, through `/api/catalog?refresh=1`
-(`vercel.json` → `crons`).
+### The weekly refresh runs in GitHub Actions
+
+`.github/workflows/refresh-catalog.yml` scrapes Beatport every Monday at 06:00 UTC,
+writes the result to the `catalog` table and commits `public/catalog.json` when it
+changed. Add two repository secrets to turn it on (Settings → Secrets and variables →
+Actions):
+
+| secret | value |
+|---|---|
+| `SUPABASE_URL` | the project address |
+| `SUPABASE_SERVICE_ROLE_KEY` | the secret key |
+
+Without the secrets the workflow simply fails and nothing else breaks; you can always
+refresh from your own machine with `npm run refresh:catalog -- --supabase`. The Actions
+tab also has a "Run workflow" button for a manual run.
+
+**Why not a Vercel cron?** Vercel compiles each file under `api/` on its own and does not
+follow imports into `src/lib`, so a function cannot reach the scraper — an import like
+`../src/lib/catalog` throws `ERR_MODULE_NOT_FOUND` at runtime. That is why `api/catalog.ts`
+only reads the table and `api/track-search.ts` only holds the API key, with the query
+splitting and answer parsing left in the browser where the tested code lives.
 
 ### Seeding the catalog table
 
@@ -209,9 +229,9 @@ src/components/   UI
   AuthDialog, ImportDialog, TrackSearchDialog, AutoBuildDialog, common
 
 api/              Vercel functions
-  _lib.ts           CORS, cron secret, service-role client, session verification
-  track-search.ts   GetSongBPM client (requires a signed-in user)
-  catalog.ts        catalog reads and cron-driven refresh
+  _lib.ts           CORS, service-role client, session verification
+  track-search.ts   authenticated GetSongBPM proxy (holds the key, parses nothing)
+  catalog.ts        reads the catalog table
 
 scripts/
   refresh-catalog.ts  refreshes the catalog by hand (--dry writes nothing, --supabase also

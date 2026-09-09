@@ -1,52 +1,17 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { refreshCatalog } from '../src/lib/catalog'
-import type { Catalog } from '../src/lib/types'
-import {
-  CATALOG_ID,
-  NO_SUPABASE_MESSAGE,
-  applyCors,
-  getServiceClient,
-  isCronRequest,
-  sendError,
-  sendJson,
-} from './_lib'
+import { CATALOG_ID, NO_SUPABASE_MESSAGE, applyCors, getServiceClient, sendError, sendJson } from './_lib'
 
-const BROWSER_HEADERS = {
-  'user-agent':
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36',
-  'accept-language': 'en-US,en;q=0.9',
-}
+/**
+ * Read-only on purpose. Vercel compiles the files under api/ on their own and
+ * does not follow imports into src/lib, so the Beatport scraper cannot live here;
+ * the weekly refresh runs in .github/workflows/refresh-catalog.yml instead.
+ */
 
-async function fetchPage(url: string): Promise<string> {
-  const response = await fetch(url, { headers: BROWSER_HEADERS })
-  if (!response.ok) throw new Error(`HTTP ${response.status}`)
-  return response.text()
-}
-
-function wantsRefresh(request: VercelRequest): boolean {
-  if (request.method === 'POST') return true
-  const value = request.query.refresh
-  const flag = Array.isArray(value) ? value[0] : value
-  return flag === '1' || flag === 'true'
-}
-
-async function readStored(): Promise<Catalog | null> {
-  const client = getServiceClient()
-  if (!client) return null
-  const { data, error } = await client
-    .from('catalog')
-    .select('tracks, source, strategy, updated_at')
-    .eq('id', CATALOG_ID)
-    .maybeSingle()
-  if (error || !data) return null
-  const row = data as { tracks: unknown; source: string | null; strategy: string | null; updated_at: string }
-  if (!Array.isArray(row.tracks)) return null
-  return {
-    updatedAt: row.updated_at,
-    source: row.source ?? 'beatport',
-    strategy: row.strategy ?? 'unknown',
-    tracks: row.tracks as Catalog['tracks'],
-  }
+interface CatalogRow {
+  tracks: unknown
+  source: string | null
+  strategy: string | null
+  updated_at: string
 }
 
 export default async function handler(request: VercelRequest, response: VercelResponse) {
@@ -58,58 +23,35 @@ export default async function handler(request: VercelRequest, response: VercelRe
     return
   }
 
-  const stored = await readStored()
+  const { data, error } = await client
+    .from('catalog')
+    .select('tracks, source, strategy, updated_at')
+    .eq('id', CATALOG_ID)
+    .maybeSingle()
 
-  if (!wantsRefresh(request)) {
-    if (!stored) {
-      sendError(
-        response,
-        404,
-        'No catalog on the server; the app will fall back to public/catalog.json. Run /api/catalog?refresh=1 to refresh it.',
-      )
-      return
-    }
-    sendJson(response, 200, stored)
-    return
-  }
-
-  // Refresh only with the cron secret, so nobody can trigger load on Beatport from outside.
-  if (!isCronRequest(request)) {
+  if (error) {
     sendError(
       response,
-      401,
-      'A CRON_SECRET is required to refresh. Vercel cron sends it in the Authorization header; add the same header to run it by hand.',
+      502,
+      `Could not read the catalog: ${error.message}. The app falls back to public/catalog.json.`,
     )
     return
   }
 
-  const result = await refreshCatalog(fetchPage, stored)
-
-  if (!result.ok || !result.catalog) {
-    // Validation failed: the old catalog stays exactly as it was.
-    sendJson(response, 200, {
-      ok: false,
-      kept: stored ? stored.tracks.length : 0,
-      reasons: result.validation.reasons,
-      reports: result.reports,
-    })
+  const row = data as CatalogRow | null
+  if (!row || !Array.isArray(row.tracks)) {
+    sendError(
+      response,
+      404,
+      'No catalog on the server; the app falls back to public/catalog.json. Run `npm run seed:catalog` to fill the table.',
+    )
     return
   }
 
-  const { error } = await client.from('catalog').upsert({
-    id: CATALOG_ID,
-    tracks: result.catalog.tracks,
-    source: result.catalog.source,
-    strategy: result.catalog.strategy,
-    updated_at: result.catalog.updatedAt,
-  })
-
   sendJson(response, 200, {
-    ok: !error,
-    stored: !error,
-    tracks: result.catalog.tracks.length,
-    strategy: result.catalog.strategy,
-    reports: result.reports,
-    error: error ? `Could not write the catalog: ${error.message}` : undefined,
+    updatedAt: row.updated_at,
+    source: row.source ?? 'beatport',
+    strategy: row.strategy ?? 'unknown',
+    tracks: row.tracks,
   })
 }

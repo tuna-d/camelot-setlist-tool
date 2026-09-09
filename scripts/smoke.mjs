@@ -65,7 +65,12 @@ function startServer() {
       response.end(
         JSON.stringify({
           configured: true,
-          results: [{ title: 'Uzak Parça', artist: 'Sahte Servis', bpm: 126, key: 'G Minor' }],
+          message: null,
+          raw: {
+            search: [
+              { song_title: 'Uzak Parça', artist: { name: 'Sahte Servis' }, tempo: '126', key_of: 'G Minor' },
+            ],
+          },
         }),
       )
       return

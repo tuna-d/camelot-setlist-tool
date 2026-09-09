@@ -1,0 +1,44 @@
+name: Refresh the discovery catalog
+
+# The Vercel function cannot host the scraper: Vercel compiles the files under
+# api/ on their own and does not follow imports into src/lib. The refresh runs
+# here instead, writes straight to Supabase, and also keeps the free Supabase
+# project awake.
+
+on:
+  schedule:
+    - cron: '0 6 * * 1' # Mondays, 06:00 UTC
+  workflow_dispatch: # lets you run it by hand from the Actions tab
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Scrape Beatport and write the catalog table
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: npm run refresh:catalog -- --supabase
+
+      # Keeping the file in git means the app still has a catalog when the
+      # database is empty or unreachable.
+      - name: Commit public/catalog.json when it changed
+        run: |
+          if [[ -n "$(git status --porcelain public/catalog.json)" ]]; then
+            git config user.name 'github-actions[bot]'
+            git config user.email 'github-actions[bot]@users.noreply.github.com'
+            git add public/catalog.json
+            git commit -m 'Refresh the discovery catalog'
+            git push
+          else
+            echo 'catalog unchanged'
+          fi

@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { toCamelot } from '../lib/camelot'
+import { readSearchResults, splitQuery } from '../lib/getsongbpm'
 import { dedupeBySignature, localSearch } from '../lib/search'
 import { getAccessToken } from '../store/supabase'
 import { useStore } from '../store/store'
@@ -15,37 +16,27 @@ const SOURCE_LABEL: Record<Track['source'], string> = {
   manual: 'manual',
 }
 
-interface WebResult {
-  title?: unknown
-  artist?: unknown
-  bpm?: unknown
-  key?: unknown
-}
-
+/** The function forwards the upstream answer untouched; parsing happens here. */
 function readWebResults(body: unknown): { tracks: Track[]; message: string | null } {
   if (!body || typeof body !== 'object') {
     return { tracks: [], message: 'The server returned something unexpected. Try again shortly.' }
   }
-  const record = body as { results?: unknown; message?: unknown; configured?: unknown }
-  const message = typeof record.message === 'string' ? record.message : null
-  if (!Array.isArray(record.results)) return { tracks: [], message }
 
-  const tracks: Track[] = []
-  for (const item of record.results as WebResult[]) {
-    const title = typeof item.title === 'string' ? item.title.trim() : ''
-    if (!title) continue
-    const artist = typeof item.artist === 'string' ? item.artist.trim() : ''
-    const bpm = typeof item.bpm === 'number' && Number.isFinite(item.bpm) ? item.bpm : null
-    tracks.push({
-      id: `web:${artist}:${title}`,
-      title,
-      artist,
-      bpm,
-      key: toCamelot(typeof item.key === 'string' ? item.key : null),
-      source: 'web',
-    })
-  }
-  return { tracks, message }
+  const record = body as { raw?: unknown; message?: unknown }
+  const message = typeof record.message === 'string' ? record.message : null
+  if (record.raw === null || record.raw === undefined) return { tracks: [], message }
+
+  const parsed = readSearchResults(record.raw)
+  const tracks: Track[] = parsed.results.map((hit) => ({
+    id: `web:${hit.artist}:${hit.title}`,
+    title: hit.title,
+    artist: hit.artist,
+    bpm: hit.bpm,
+    key: hit.key,
+    source: 'web' as const,
+  }))
+
+  return { tracks, message: message ?? parsed.message }
 }
 
 // Impure call has to stay outside render (react-hooks/purity).
@@ -79,7 +70,10 @@ export function TrackSearchDialog({ open, onClose }: TrackSearchDialogProps) {
     setWebMessage(null)
     try {
       const token = await getAccessToken()
-      const response = await fetch(`/api/track-search?q=${encodeURIComponent(query)}`, {
+      // The key stays on the server; splitting and parsing live here so there is one copy.
+      const { song, artist } = splitQuery(query)
+      const address = `/api/track-search?song=${encodeURIComponent(song)}&artist=${encodeURIComponent(artist)}`
+      const response = await fetch(address, {
         headers: token ? { authorization: `Bearer ${token}` } : {},
       })
       if (!response.ok) {

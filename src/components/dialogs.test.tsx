@@ -147,9 +147,14 @@ describe('TrackSearchDialog', () => {
 
   it('internet aramasının sonuçlarını listeler', async () => {
     const fetchMock = vi.fn().mockResolvedValue(
-      new Response(JSON.stringify({ results: [{ title: 'Uzak Parça', artist: 'X', bpm: 126, key: 'G Minor' }] }), {
-        status: 200,
-      }),
+      new Response(
+        JSON.stringify({
+          raw: { search: [{ song_title: 'Uzak Parça', artist: { name: 'X' }, tempo: '126', key_of: 'G Minor' }] },
+          configured: true,
+          message: null,
+        }),
+        { status: 200 },
+      ),
     )
     vi.stubGlobal('fetch', fetchMock)
 
@@ -158,7 +163,7 @@ describe('TrackSearchDialog', () => {
     const buttons = [...view.container.querySelectorAll('button')]
     await click(buttons.find((button) => button.textContent === 'search the web')!)
 
-    expect(fetchMock.mock.calls[0][0]).toBe('/api/track-search?q=uzak')
+    expect(fetchMock.mock.calls[0][0]).toBe('/api/track-search?song=uzak&artist=')
     expect(view.html()).toContain('Uzak Parça')
     expect(view.html()).toContain('web')
     expect(view.html()).toContain('6A')
@@ -171,7 +176,7 @@ describe('TrackSearchDialog', () => {
       'fetch',
       vi.fn().mockResolvedValue(
         new Response(
-          JSON.stringify({ results: [], configured: false, message: 'GETSONGBPM_API_KEY tanımlı değil.' }),
+          JSON.stringify({ raw: null, configured: false, message: 'GETSONGBPM_API_KEY is not set.' }),
           { status: 200 },
         ),
       ),
@@ -180,7 +185,7 @@ describe('TrackSearchDialog', () => {
     await type(view.container.querySelector('input.input') as HTMLInputElement, 'uzak')
     const buttons = [...view.container.querySelectorAll('button')]
     await click(buttons.find((button) => button.textContent === 'search the web')!)
-    expect(view.html()).toContain('GETSONGBPM_API_KEY tanımlı değil.')
+    expect(view.html()).toContain('GETSONGBPM_API_KEY is not set.')
     vi.unstubAllGlobals()
     await view.unmount()
   })
