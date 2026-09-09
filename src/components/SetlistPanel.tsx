@@ -117,7 +117,7 @@ export function SetlistPanel({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProp
 
               <div className="entry-extras">
                 <span className="entry-energy">
-                  <span className="faint">enerji</span>
+                  <span className="faint">energy</span>
                   <EnergyStars
                     value={active.entries[index]?.energy}
                     onChange={(value) => state.setEntryEnergy(index, value)}

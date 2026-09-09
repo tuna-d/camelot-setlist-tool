@@ -46,14 +46,14 @@ describe('bpmDelta', () => {
 
 describe('formatDelta', () => {
   it('tam, artı ve eksi biçimleri', () => {
-    expect(formatDelta(bpmDelta(124, 124))).toBe('tam')
+    expect(formatDelta(bpmDelta(124, 124))).toBe('exact')
     expect(formatDelta(bpmDelta(124, 126))).toBe('+2.0')
     expect(formatDelta(bpmDelta(124, 122.5))).toBe('−1.5')
   })
 
   it('yuvarlama sonrası sıfır da tam sayılır', () => {
-    expect(formatDelta(0.02)).toBe('tam')
-    expect(formatDelta(-0.02)).toBe('tam')
+    expect(formatDelta(0.02)).toBe('exact')
+    expect(formatDelta(-0.02)).toBe('exact')
   })
 })
 

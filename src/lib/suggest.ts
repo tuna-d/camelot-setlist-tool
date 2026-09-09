@@ -46,7 +46,7 @@ export function bpmDelta(ref: number, cand: number): BpmDelta {
 export function formatDelta(delta: BpmDelta | number): string {
   const signed = typeof delta === 'number' ? delta : delta.signed
   const rounded = Math.round(signed * 10) / 10
-  if (rounded === 0) return 'tam'
+  if (rounded === 0) return 'exact'
   return rounded > 0 ? `+${rounded.toFixed(1)}` : `−${Math.abs(rounded).toFixed(1)}`
 }
 
