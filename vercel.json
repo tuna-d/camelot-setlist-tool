@@ -1,0 +1,15 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "crons": [
+    {
+      "path": "/api/catalog?refresh=1",
+      "schedule": "0 6 * * 1"
+    }
+  ],
+  "functions": {
+    "api/catalog.ts": {
+      "maxDuration": 60
+    }
+  }
+}

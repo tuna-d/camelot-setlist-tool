@@ -1,6 +1,7882 @@
 {
-  "updatedAt": "2026-09-08T00:00:00.000Z",
-  "source": "seed",
-  "strategy": "none",
-  "tracks": []
+  "updatedAt": "2026-09-08T18:51:57.181Z",
+  "source": "beatport",
+  "strategy": "next-data",
+  "tracks": [
+    {
+      "id": "bp:29491329",
+      "title": "Whisper To Me",
+      "artist": "Jimi Jules, Modern Tales",
+      "bpm": 125,
+      "key": "6A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29492006",
+      "title": "Come To Life",
+      "artist": "Cassian, AR/CO",
+      "bpm": 130,
+      "key": "10B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:23140771",
+      "title": "Ghost Dance",
+      "artist": "Brunello",
+      "bpm": 125,
+      "key": "5A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29469670",
+      "title": "Here In My Arms (Enjoy The Silence)",
+      "artist": "Armin van Buuren, Silver Panda",
+      "bpm": 132,
+      "key": "5A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30299867",
+      "title": "Keep Up",
+      "artist": "Adam Beyer, Argy, Alok",
+      "bpm": 132,
+      "key": "7A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30114650",
+      "title": "Love Is The Dance",
+      "artist": "Âme, RY X",
+      "bpm": 126,
+      "key": "7A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30279508",
+      "title": "Waiting for You",
+      "artist": "Volkoder, Korolova",
+      "bpm": 128,
+      "key": "9B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29885541",
+      "title": "Other Dimension",
+      "artist": "Volkoder, Anyma (ofc)",
+      "bpm": 128,
+      "key": "9B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29856138",
+      "title": "The 11th Hour",
+      "artist": "Celia Babini, Brunello",
+      "bpm": 125,
+      "key": "6A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29899436",
+      "title": "Closer (Adriatique x GENESI)",
+      "artist": "Adriatique, Emmit Fenn, GENESI (ITA)",
+      "bpm": 128,
+      "key": "9B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:26834198",
+      "title": "Science Fiction",
+      "artist": "Brunello",
+      "bpm": 127,
+      "key": "7A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30217998",
+      "title": "Possibility",
+      "artist": "Juan Brizuela, Rem Siman",
+      "bpm": 127,
+      "key": "12B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30355954",
+      "title": "Murda",
+      "artist": "Argy, 7 SKIES",
+      "bpm": 128,
+      "key": "4B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28989380",
+      "title": "I See U",
+      "artist": "HotLap",
+      "bpm": 122,
+      "key": "7B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29897439",
+      "title": "Sequences",
+      "artist": "John B, Solee, Iorie, Township Rebellion",
+      "bpm": 124,
+      "key": "1B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:19119572",
+      "title": "Move (feat. Malachiii)",
+      "artist": "Adam Port, Keinemusik, Stryv, Malachiii",
+      "bpm": 120,
+      "key": "1A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30133752",
+      "title": "Short Stop",
+      "artist": "Matt Sassari, HNTR",
+      "bpm": 130,
+      "key": "2A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20327131",
+      "title": "In the Moment",
+      "artist": "RÜFÜS DU SOL",
+      "bpm": 124,
+      "key": "3A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30355966",
+      "title": "No Good",
+      "artist": "Stylo, Anyma (ofc)",
+      "bpm": 130,
+      "key": "5A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:17704236",
+      "title": "The Rapture Pt.III",
+      "artist": "&ME, Black Coffee, Keinemusik",
+      "bpm": 120,
+      "key": "9A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30355953",
+      "title": "Atoma",
+      "artist": "Anyma (ofc)",
+      "bpm": 130,
+      "key": "5B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30355964",
+      "title": "Prophecy",
+      "artist": "Baset, Anyma (ofc), 19:26",
+      "bpm": 130,
+      "key": "7B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29593875",
+      "title": "Dance Baby",
+      "artist": "Liva K, HotLap",
+      "bpm": 123,
+      "key": "5A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29830478",
+      "title": "Barababa",
+      "artist": "Tony Shades, AVÖ (PT), Sauaro, Andrew Aoun",
+      "bpm": 123,
+      "key": "12B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29912503",
+      "title": "Raider on the Storm",
+      "artist": "Solomun, Inez",
+      "bpm": 128,
+      "key": "4B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30208509",
+      "title": "Selekta",
+      "artist": "Tuggawar, Vintage Culture, Kevin Brauer",
+      "bpm": 130,
+      "key": "11B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29841969",
+      "title": "Sing It Back",
+      "artist": "Laherte",
+      "bpm": 128,
+      "key": "2A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:21774346",
+      "title": "Love Parade",
+      "artist": "Da Hool, Cassian, YOTTO",
+      "bpm": 128,
+      "key": "10B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29564734",
+      "title": "Confused",
+      "artist": "Super Flu, Monkey Safari",
+      "bpm": 120,
+      "key": "3A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:19811614",
+      "title": "Yosemite",
+      "artist": "Interplanetary Criminal, Kettama",
+      "bpm": 144,
+      "key": "4B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:18251881",
+      "title": "More Love",
+      "artist": "Moderat, &ME, Rampa, Keinemusik",
+      "bpm": 122,
+      "key": "10A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29593218",
+      "title": "Doin' It All For The Culture",
+      "artist": "LUCH",
+      "bpm": 123,
+      "key": "12B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:9115970",
+      "title": "Pjanoo",
+      "artist": "Eric Prydz",
+      "bpm": 126,
+      "key": "6A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29437027",
+      "title": "Burnin’",
+      "artist": "Mosoo, Samm (BE)",
+      "bpm": 121,
+      "key": "9B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29899437",
+      "title": "Broken Pulse",
+      "artist": "Alex Macondo, Yeke!",
+      "bpm": 123,
+      "key": "7B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29858254",
+      "title": "Buka",
+      "artist": "Cherry (UA)",
+      "bpm": 127,
+      "key": "10B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29829445",
+      "title": "7 Days",
+      "artist": "Kevin de Vries, Meduza",
+      "bpm": 128,
+      "key": "6B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28929262",
+      "title": "Heart Spin",
+      "artist": "JUNO (DE), Samm (BE)",
+      "bpm": 120,
+      "key": "1B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29560346",
+      "title": "333 (Extended)",
+      "artist": "Super Flu, Peace Control, Eric Reyes",
+      "bpm": 124,
+      "key": "8A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30117314",
+      "title": "Moonlight",
+      "artist": "Eric Luttrell",
+      "bpm": 125,
+      "key": "5B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29981125",
+      "title": "Olahni",
+      "artist": "Robag Wruhme",
+      "bpm": 128,
+      "key": "2B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28855432",
+      "title": "SAME MAN",
+      "artist": "Yulia Niko, Prana Flow, True Motion",
+      "bpm": 124,
+      "key": "4A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29022309",
+      "title": "Take You There",
+      "artist": "ARTBAT, SIX40TWO",
+      "bpm": 127,
+      "key": "8B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:18576026",
+      "title": "Sweet Disposition",
+      "artist": "The Temper Trap",
+      "bpm": 126,
+      "key": "10A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29874263",
+      "title": "Ciento",
+      "artist": "TH;EN",
+      "bpm": 126,
+      "key": "2B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29489847",
+      "title": "Darkest Nights",
+      "artist": "Clemente, Yamil",
+      "bpm": 123,
+      "key": "4A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28540966",
+      "title": "No Rules",
+      "artist": "Notre Dame",
+      "bpm": 124,
+      "key": "4B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30174759",
+      "title": "90s",
+      "artist": "Liva K",
+      "bpm": 123,
+      "key": "2B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29645319",
+      "title": "Window Shake",
+      "artist": "Argy, SOLANCE",
+      "bpm": 129,
+      "key": "5B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30299348",
+      "title": "OH MY!",
+      "artist": "Kryder",
+      "bpm": 128,
+      "key": "3A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29298697",
+      "title": "Attract",
+      "artist": "Ajna (BE), Samm (BE)",
+      "bpm": 123,
+      "key": "7A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30132209",
+      "title": "Surrender",
+      "artist": "Wave Wave",
+      "bpm": 129,
+      "key": "4B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29469669",
+      "title": "Coming Home",
+      "artist": "Adriatique, Rhys from the Sticks",
+      "bpm": 126,
+      "key": "4A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29211628",
+      "title": "Not Exactly",
+      "artist": "deadmau5, Rinzen",
+      "bpm": 128,
+      "key": "7B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29645318",
+      "title": "Assunto",
+      "artist": "Argy, SOLANCE",
+      "bpm": 130,
+      "key": "12B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30339786",
+      "title": "Nana",
+      "artist": "Prophecy, TH;EN",
+      "bpm": 126,
+      "key": "11A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30115093",
+      "title": "Physique",
+      "artist": "Glowal, DREYA V",
+      "bpm": 126,
+      "key": "6A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30235027",
+      "title": "Astrovoice",
+      "artist": "Joezi, KYLER (GR)",
+      "bpm": 124,
+      "key": "9A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:27055012",
+      "title": "Feel So Right",
+      "artist": "KIMONOS, Josh Gigante",
+      "bpm": 124,
+      "key": "11A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30205550",
+      "title": "Taka Taka",
+      "artist": "Rivo, Doriann (IL)",
+      "bpm": 128,
+      "key": "8B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29899949",
+      "title": "Baddies Going Out",
+      "artist": "BYOR",
+      "bpm": 132,
+      "key": "12B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:23894452",
+      "title": "UH HUH",
+      "artist": "LUCH",
+      "bpm": 123,
+      "key": "10B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29869948",
+      "title": "DOLLAAR",
+      "artist": "Kiko, Olivier Giacomotto, Abstraal",
+      "bpm": 129,
+      "key": "4B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28782699",
+      "title": "Annihilation",
+      "artist": "KREAM, Korolova",
+      "bpm": 130,
+      "key": "7A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:27808889",
+      "title": "Recall",
+      "artist": "HotLap",
+      "bpm": 122,
+      "key": "12B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:16785220",
+      "title": "Tell Me Why",
+      "artist": "Supermode",
+      "bpm": 126,
+      "key": "1B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30266745",
+      "title": "WANGA",
+      "artist": "Mosoo, Deco (BE)",
+      "bpm": 120,
+      "key": "1A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30186979",
+      "title": "Pressure",
+      "artist": "ZARO, Gabe",
+      "bpm": 126,
+      "key": "9B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30188414",
+      "title": "I'm Not Like You",
+      "artist": "Olive Oil, MAXI MERAKI",
+      "bpm": 125,
+      "key": "8B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29714788",
+      "title": "Anti Promi Energie",
+      "artist": "Kolsch",
+      "bpm": 129,
+      "key": "2B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29981127",
+      "title": "Fumaxohn",
+      "artist": "Robag Wruhme",
+      "bpm": 127,
+      "key": "1A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20661162",
+      "title": "At Night",
+      "artist": "Shakedown, Layton Giordani, Anyma (ofc)",
+      "bpm": 127,
+      "key": "7B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20624382",
+      "title": "Trippy Yeah",
+      "artist": "Black Coffee, Jimi Jules",
+      "bpm": 123,
+      "key": "11B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30049927",
+      "title": "My Only Crime",
+      "artist": "Ali Love, Bedouin, Nandu, Karl Williams",
+      "bpm": 123,
+      "key": "1B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29632114",
+      "title": "Home",
+      "artist": "Marsh",
+      "bpm": 124,
+      "key": "4B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29348883",
+      "title": "Toxic",
+      "artist": "Vintage Culture, DEPARTAMENTO",
+      "bpm": 125,
+      "key": "5A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29704762",
+      "title": "Crossing",
+      "artist": "HotLap",
+      "bpm": 122,
+      "key": "10B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28309632",
+      "title": "1886",
+      "artist": "Kotiēr, Orsay",
+      "bpm": 122,
+      "key": "12B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:21030571",
+      "title": "Every Night",
+      "artist": "Max Styler, Deomid",
+      "bpm": 128,
+      "key": "6A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29451354",
+      "title": "Rock A Lott",
+      "artist": "Frankey & Sandrino",
+      "bpm": 123,
+      "key": "5A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:18136592",
+      "title": "Aria",
+      "artist": "Argy, Omnya (official)",
+      "bpm": 122,
+      "key": "8B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30380052",
+      "title": "The Key",
+      "artist": "Christian Corsi",
+      "bpm": 126,
+      "key": "8B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30076244",
+      "title": "Rude Boy Steppa",
+      "artist": "Colbora, SOLECO, Budai House Clique, Hoffmann(HU)",
+      "bpm": 124,
+      "key": "7A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29983055",
+      "title": "Spirit Bird",
+      "artist": "Joris Voorn, Xavier Rudd",
+      "bpm": 126,
+      "key": "8B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20529591",
+      "title": "Crazy For It (feat. Vinson)",
+      "artist": "Boys Noize, &ME, Rampa, Adam Port, Keinemusik, Vinson",
+      "bpm": 120,
+      "key": "1A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:19817639",
+      "title": "We Are The People",
+      "artist": "Empire Of The Sun",
+      "bpm": 125,
+      "key": "9A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30282596",
+      "title": "Moment",
+      "artist": "Nandu, Radeckt, Deija",
+      "bpm": 124,
+      "key": "7B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30098630",
+      "title": "Blow",
+      "artist": "Matt Fax",
+      "bpm": 126,
+      "key": "4A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29775211",
+      "title": "The Moment",
+      "artist": "Kiko, Olivier Giacomotto",
+      "bpm": 127,
+      "key": "12B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28440874",
+      "title": "Pa Ca",
+      "artist": "Massano, Silver Panda",
+      "bpm": 128,
+      "key": "1B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:22385378",
+      "title": "You Gonna Want Me (I Know)",
+      "artist": "Tiga, Meduza",
+      "bpm": 128,
+      "key": "6B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20064632",
+      "title": "Voices In My Head",
+      "artist": "Argy, Anyma (ofc), Son of Son",
+      "bpm": 128,
+      "key": "10B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:17415722",
+      "title": "Turn On The Lights again.. (feat. Future & Fred again..)",
+      "artist": "Future, Swedish House Mafia, Fred again..",
+      "bpm": 126,
+      "key": "11A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30217999",
+      "title": "Don't You Know",
+      "artist": "Alexey Union, Luciano Scalioni",
+      "bpm": 124,
+      "key": "9A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28525970",
+      "title": "Hot Sauce",
+      "artist": "Kapuchon, Miss Monique, GLZ",
+      "bpm": 129,
+      "key": "2B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28310150",
+      "title": "Be The One",
+      "artist": "Adam Port, Keinemusik, SG Lewis",
+      "bpm": 123,
+      "key": "4A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:11649874",
+      "title": "Return to Oz",
+      "artist": "Monolink",
+      "bpm": 124,
+      "key": "7A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30149904",
+      "title": "The Party",
+      "artist": "Jawora",
+      "bpm": 123,
+      "key": "9B",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30205337",
+      "title": "Everlight",
+      "artist": "Nils Hoffmann",
+      "bpm": 126,
+      "key": "11A",
+      "genre": "Melodic House & Techno",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29700311",
+      "title": "Liquid Hook",
+      "artist": "Liquid Soul, Victor Ruiz, Captain Hook",
+      "bpm": 135,
+      "key": "10B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29704299",
+      "title": "Don't Mess With Us",
+      "artist": "Victor Ruiz, Kaufmann (DE)",
+      "bpm": 130,
+      "key": "12B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29707476",
+      "title": "Y",
+      "artist": "Oliver Huntemann, Victor Ruiz",
+      "bpm": 130,
+      "key": "9B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29738440",
+      "title": "Blow Out",
+      "artist": "Phoenix Movement, Bora Project",
+      "bpm": 132,
+      "key": "6B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30128736",
+      "title": "Go Go Go",
+      "artist": "Marie Vaunt, Space 92",
+      "bpm": 145,
+      "key": "4B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29822180",
+      "title": "The Reason",
+      "artist": "HNGT",
+      "bpm": 134,
+      "key": "9B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29376482",
+      "title": "No Mercy",
+      "artist": "Armin van Buuren, Adam Beyer",
+      "bpm": 135,
+      "key": "5A",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29475205",
+      "title": "K.O.",
+      "artist": "Oliver Huntemann, Kaufmann (DE)",
+      "bpm": 130,
+      "key": "2B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29853518",
+      "title": "Solar Gravity",
+      "artist": "JOJ (IT)",
+      "bpm": 138,
+      "key": "7A",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30181002",
+      "title": "Dirty Bass",
+      "artist": "Nico Banfi",
+      "bpm": 132,
+      "key": "3B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30370119",
+      "title": "Addicted",
+      "artist": "YellowHeads, ADRIANNA",
+      "bpm": 135,
+      "key": "1A",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30201581",
+      "title": "Anairod",
+      "artist": "Sisko Electrofanatik, Alex Micca",
+      "bpm": 140,
+      "key": "4B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29757409",
+      "title": "Dancing",
+      "artist": "19:26, Bittermind",
+      "bpm": 130,
+      "key": "9B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30130758",
+      "title": "Everything Done",
+      "artist": "Mark Reeve",
+      "bpm": 132,
+      "key": "10B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29705143",
+      "title": "Vibrancy",
+      "artist": "UMEK",
+      "bpm": 132,
+      "key": "7B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29439194",
+      "title": "Proton",
+      "artist": "Alignment, Space 92",
+      "bpm": 150,
+      "key": "2B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30282602",
+      "title": "Mescaline",
+      "artist": "1200 Micrograms",
+      "bpm": 132,
+      "key": "12B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29914472",
+      "title": "Radar",
+      "artist": "Mattia Saviolo",
+      "bpm": 134,
+      "key": "11B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30075039",
+      "title": "Amplifier",
+      "artist": "Chris Veron, AXXX7en",
+      "bpm": 132,
+      "key": "8B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30078262",
+      "title": "Keep It Going",
+      "artist": "Zafer Atabey",
+      "bpm": 132,
+      "key": "9B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:24126659",
+      "title": "Labyrinth",
+      "artist": "Township Rebellion, Fab Massimo",
+      "bpm": 132,
+      "key": "11B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30310551",
+      "title": "In This World",
+      "artist": "Moby",
+      "bpm": 125,
+      "key": "1A",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30149858",
+      "title": "Inside Me",
+      "artist": "Montenegro",
+      "bpm": 132,
+      "key": "8B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29828650",
+      "title": "Nightcrawler",
+      "artist": "Raden (UK)",
+      "bpm": 136,
+      "key": "7A",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29904474",
+      "title": "Mantra",
+      "artist": "EVNTHZN",
+      "bpm": 144,
+      "key": "2A",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30355956",
+      "title": "Dancin",
+      "artist": "Jast",
+      "bpm": 131,
+      "key": "9B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29757412",
+      "title": "Blade",
+      "artist": "KENZ (US)",
+      "bpm": 132,
+      "key": "1A",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:26892190",
+      "title": "Coming In Heavy",
+      "artist": "Pan-Pot, Eli Brown",
+      "bpm": 138,
+      "key": "7B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29855553",
+      "title": "Caterpillar",
+      "artist": "Akari System",
+      "bpm": 132,
+      "key": "2B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29647007",
+      "title": "The Realm",
+      "artist": "Layton Giordani, KASIA (ofc)",
+      "bpm": 130,
+      "key": "10B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29315569",
+      "title": "Panic",
+      "artist": "Thomas Schumacher, A.D.H.S.",
+      "bpm": 135,
+      "key": "7B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29283652",
+      "title": "Your Mind on Acid",
+      "artist": "Bart Skils, Deniz Koyu",
+      "bpm": 133,
+      "key": "6A",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28186425",
+      "title": "Reflex",
+      "artist": "Tao Andra",
+      "bpm": 135,
+      "key": "8B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:27911150",
+      "title": "Amor (feat. CERES)",
+      "artist": "CERES, Charlotte de Witte",
+      "bpm": 140,
+      "key": "7B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20502223",
+      "title": "Mother",
+      "artist": "Kaufmann (DE)",
+      "bpm": 130,
+      "key": "6B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29084167",
+      "title": "come closer",
+      "artist": "Amelie Lens",
+      "bpm": 143,
+      "key": "3B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30128756",
+      "title": "The 1st",
+      "artist": "X-Dream, Ariel Electron",
+      "bpm": 138,
+      "key": "8B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30189242",
+      "title": "LAN Party",
+      "artist": "Konfusia",
+      "bpm": 130,
+      "key": "7B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:24534456",
+      "title": "For the Music",
+      "artist": "Bart Skils, Weska",
+      "bpm": 130,
+      "key": "11A",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30075038",
+      "title": "Brainchild",
+      "artist": "Nostrum, Mike Mooie",
+      "bpm": 142,
+      "key": "11B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29639704",
+      "title": "No Time To Talk",
+      "artist": "Mark Reeve",
+      "bpm": 132,
+      "key": "7B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30231689",
+      "title": "Neural Concentration",
+      "artist": "Svonco",
+      "bpm": 132,
+      "key": "10B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29615831",
+      "title": "Tropical Melons",
+      "artist": "2000 And One",
+      "bpm": 130,
+      "key": "11B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29083338",
+      "title": "Fluppe",
+      "artist": "Kaufmann (DE)",
+      "bpm": 130,
+      "key": "2B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20777709",
+      "title": "Broncho's Sandman",
+      "artist": "Kaufmann (DE)",
+      "bpm": 130,
+      "key": "10B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29664983",
+      "title": "Overdose",
+      "artist": "Eddy D'Amato",
+      "bpm": 136,
+      "key": "9B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29084169",
+      "title": "the energy is us",
+      "artist": "Amelie Lens",
+      "bpm": 96,
+      "key": "11A",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28873036",
+      "title": "Transcend",
+      "artist": "Tao Andra",
+      "bpm": 138,
+      "key": "4B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:26848003",
+      "title": "Dimension",
+      "artist": "Space 92",
+      "bpm": 137,
+      "key": "4B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30009966",
+      "title": "Dance4Life",
+      "artist": "Jay Lumen",
+      "bpm": 92,
+      "key": "7B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28628609",
+      "title": "Dark Place",
+      "artist": "Adam King (HU)",
+      "bpm": 134,
+      "key": "1B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29906538",
+      "title": "Ich will tanzen",
+      "artist": "Patrick Scuro, Alex Xandra",
+      "bpm": 150,
+      "key": "9B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30048205",
+      "title": "New Generation",
+      "artist": "Victor Ruiz, Alex Stein",
+      "bpm": 128,
+      "key": "7B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:16106728",
+      "title": "Believe",
+      "artist": "Eli Brown",
+      "bpm": 132,
+      "key": "6B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30181003",
+      "title": "Tribal",
+      "artist": "Nico Banfi",
+      "bpm": 131,
+      "key": "8B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:22309665",
+      "title": "Eyes On Me",
+      "artist": "Nicole Moudaber, Space 92",
+      "bpm": 137,
+      "key": "9B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30339679",
+      "title": "My Favorite Bassline",
+      "artist": "Nick Acid",
+      "bpm": 150,
+      "key": "9B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29914079",
+      "title": "Embrace",
+      "artist": "METODI, Martin Kinrus, Franco Smith",
+      "bpm": 134,
+      "key": "10B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28766716",
+      "title": "Love Within",
+      "artist": "Adam Beyer, Mark Reeve",
+      "bpm": 134,
+      "key": "3A",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:24517220",
+      "title": "Scorpio",
+      "artist": "Victor Ruiz",
+      "bpm": 134,
+      "key": "9B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:21312385",
+      "title": "Shook Ones, Pt. III",
+      "artist": "HNTR",
+      "bpm": 132,
+      "key": "6B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:19593871",
+      "title": "Blade",
+      "artist": "D'Angello & Francis",
+      "bpm": 150,
+      "key": "9B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29662861",
+      "title": "Rewind",
+      "artist": "Endica",
+      "bpm": 144,
+      "key": "11B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29183264",
+      "title": "Time To Be Free",
+      "artist": "Pan-Pot, Gray Cosmo",
+      "bpm": 135,
+      "key": "10B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:22708005",
+      "title": "Your Mind",
+      "artist": "Adam Beyer, Bart Skils, HNTR",
+      "bpm": 132,
+      "key": "1B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:19424689",
+      "title": "Rave",
+      "artist": "Sam Paganini",
+      "bpm": 125,
+      "key": "6B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29084160",
+      "title": "the only one",
+      "artist": "Amelie Lens",
+      "bpm": 148,
+      "key": "7B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29360833",
+      "title": "Step into the Unknown",
+      "artist": "Innervoix",
+      "bpm": 136,
+      "key": "10B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29097099",
+      "title": "Move Your Body",
+      "artist": "Veerus, Mattia Saviolo",
+      "bpm": 134,
+      "key": "9B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:22435804",
+      "title": "Voicemail",
+      "artist": "KUKO",
+      "bpm": 112,
+      "key": "3A",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30242978",
+      "title": "It's Show Time",
+      "artist": "Candela Nuzzolese",
+      "bpm": 140,
+      "key": "9B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29023608",
+      "title": "La Vida Loca",
+      "artist": "Karla Blum",
+      "bpm": 138,
+      "key": "2B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29826930",
+      "title": "Get Out",
+      "artist": "Jay Lumen",
+      "bpm": 138,
+      "key": "4A",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29663212",
+      "title": "Cognitive Flow",
+      "artist": "Phoenix Movement",
+      "bpm": 134,
+      "key": "4B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28309532",
+      "title": "That Acid",
+      "artist": "Marie Vaunt",
+      "bpm": 155,
+      "key": "4B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:906447",
+      "title": "On Off",
+      "artist": "CIREZ D",
+      "bpm": 128,
+      "key": "12B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29912923",
+      "title": "Watch Your Pulse",
+      "artist": "sin:port, Maurice Mino",
+      "bpm": 132,
+      "key": "5B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29833505",
+      "title": "Reboot.exe",
+      "artist": "YellowHeads",
+      "bpm": 138,
+      "key": "4B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29888308",
+      "title": "Master At Work",
+      "artist": "Golpe, Pupa Nas T, Denise Belfon",
+      "bpm": 153,
+      "key": "12A",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20625406",
+      "title": "Faded (Blacklizt Version)",
+      "artist": "ZHU, HNTR",
+      "bpm": 132,
+      "key": "7A",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30129254",
+      "title": "Louder & Dirtier",
+      "artist": "The Electronic Advance, DJ Nasty Deluxe",
+      "bpm": 136,
+      "key": "12B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30003599",
+      "title": "Feel The Beat",
+      "artist": "Cris Way, Virtual Velocity",
+      "bpm": 138,
+      "key": "9B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29849723",
+      "title": "Single Beat",
+      "artist": "Lluis Ribalta",
+      "bpm": 138,
+      "key": "7B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29877195",
+      "title": "Soulshift",
+      "artist": "NoNameLeft",
+      "bpm": 132,
+      "key": "10B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29377039",
+      "title": "Freaks",
+      "artist": "LUSU",
+      "bpm": 136,
+      "key": "7B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28936828",
+      "title": "The Pull",
+      "artist": "Alex Stein",
+      "bpm": 130,
+      "key": "7B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:7599710",
+      "title": "Just For One Day",
+      "artist": "Paride Saraceni",
+      "bpm": 125,
+      "key": "6A",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30145344",
+      "title": "Sushi",
+      "artist": "iLee",
+      "bpm": 130,
+      "key": "12B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29901447",
+      "title": "Feel My Bass",
+      "artist": "Sisko Electrofanatik, Katerino",
+      "bpm": 135,
+      "key": "5A",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20161298",
+      "title": "YKSI",
+      "artist": "Bart Skils, Heerhorst",
+      "bpm": 134,
+      "key": "7B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30170297",
+      "title": "Looking for You",
+      "artist": "Basilone",
+      "bpm": 134,
+      "key": "7B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29487537",
+      "title": "600 Degrees",
+      "artist": "HNTR, DeLorean Black",
+      "bpm": 132,
+      "key": "3B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29315570",
+      "title": "Achilles",
+      "artist": "Thomas Schumacher, A.D.H.S.",
+      "bpm": 136,
+      "key": "7B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:19974943",
+      "title": "One Mind",
+      "artist": "Charlotte de Witte, Amelie Lens",
+      "bpm": 140,
+      "key": "12B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:16556184",
+      "title": "Up Down Jumper",
+      "artist": "Boris Brejcha",
+      "bpm": 125,
+      "key": "10B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30339680",
+      "title": "Pulverträume",
+      "artist": "Nick Acid",
+      "bpm": 155,
+      "key": "7B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29509175",
+      "title": "Gwar Is Not The Answer",
+      "artist": "Acid Pauli",
+      "bpm": 128,
+      "key": "10B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29084158",
+      "title": "our frequency",
+      "artist": "Amelie Lens",
+      "bpm": 143,
+      "key": "4B",
+      "genre": "Techno (Peak Time / Driving)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29375194",
+      "title": "Dārin",
+      "artist": "Phil Berg",
+      "bpm": 142,
+      "key": "1A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28519881",
+      "title": "Crusher Wheels",
+      "artist": "Disguised",
+      "bpm": 142,
+      "key": "6A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29375195",
+      "title": "Tempest",
+      "artist": "Phil Berg",
+      "bpm": 140,
+      "key": "10B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30060932",
+      "title": "Connection",
+      "artist": "Yanamaste, Alaricø",
+      "bpm": 147,
+      "key": "8A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29032221",
+      "title": "Pull the Trigger",
+      "artist": "Klaps (BE)",
+      "bpm": 148,
+      "key": "6A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:21836584",
+      "title": "Norōbeki",
+      "artist": "CVNSUMED",
+      "bpm": 143,
+      "key": "8A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29375197",
+      "title": "Mephisto",
+      "artist": "Phil Berg",
+      "bpm": 142,
+      "key": "3A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29375196",
+      "title": "Tanoo",
+      "artist": "Phil Berg",
+      "bpm": 142,
+      "key": "2B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30247938",
+      "title": "Axis",
+      "artist": "Drunken Kong",
+      "bpm": 139,
+      "key": "7B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29874003",
+      "title": "Conjectura",
+      "artist": "DJ Dextro",
+      "bpm": 138,
+      "key": "2B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20068427",
+      "title": "Evil",
+      "artist": "Yanamaste",
+      "bpm": 145,
+      "key": "1B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29837098",
+      "title": "ISO-1",
+      "artist": "ISOSCELE",
+      "bpm": 135,
+      "key": "10A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29668567",
+      "title": "Dew at Night",
+      "artist": "Flug",
+      "bpm": 139,
+      "key": "2A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28519880",
+      "title": "Nightrun",
+      "artist": "Disguised",
+      "bpm": 142,
+      "key": "10A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29497670",
+      "title": "Bodies Out",
+      "artist": "Sons Of Hidden",
+      "bpm": 144,
+      "key": "9A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29768953",
+      "title": "The Roller",
+      "artist": "Ben Sims, Truncate, ASSAILANTS",
+      "bpm": 131,
+      "key": "6A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30265843",
+      "title": "Recentering",
+      "artist": "Kwartz, Temudo",
+      "bpm": 139,
+      "key": "9B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30134528",
+      "title": "Blind Angle",
+      "artist": "Axel Karakasis",
+      "bpm": 140,
+      "key": "11A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28740157",
+      "title": "Dobermann",
+      "artist": "Klint",
+      "bpm": 140,
+      "key": "11A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29874002",
+      "title": "Sempre os Mesmos",
+      "artist": "DJ Dextro",
+      "bpm": 140,
+      "key": "6B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30060913",
+      "title": "Dynamic",
+      "artist": "Rene Wise",
+      "bpm": 135,
+      "key": "8B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30202778",
+      "title": "When We Froze",
+      "artist": "Ignez",
+      "bpm": 140,
+      "key": "8A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:19996211",
+      "title": "Iruka",
+      "artist": "Alarico",
+      "bpm": 141,
+      "key": "10A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28899146",
+      "title": "Obsidian Code",
+      "artist": "Hollen",
+      "bpm": 143,
+      "key": "6A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29294375",
+      "title": "The Dive",
+      "artist": "SERA J",
+      "bpm": 145,
+      "key": "5B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28740790",
+      "title": "Planets and Stars",
+      "artist": "DJ Dextro",
+      "bpm": 92,
+      "key": "7A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:24231509",
+      "title": "Lunfardo",
+      "artist": "Ignez",
+      "bpm": 140,
+      "key": "4A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:23371256",
+      "title": "XTRA LOOP",
+      "artist": "BCCO, future.666",
+      "bpm": 144,
+      "key": "11A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20767022",
+      "title": "L Foot R Foot",
+      "artist": "Klaps (BE)",
+      "bpm": 142,
+      "key": "6A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29837100",
+      "title": "ISO-3",
+      "artist": "ISOSCELE",
+      "bpm": 140,
+      "key": "7B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29874005",
+      "title": "Os Vendidos",
+      "artist": "DJ Dextro",
+      "bpm": 140,
+      "key": "2A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:22403910",
+      "title": "Sappho",
+      "artist": "Phil Berg",
+      "bpm": 141,
+      "key": "3B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:4043392",
+      "title": "The Bells",
+      "artist": "Jeff Mills",
+      "bpm": 138,
+      "key": "8A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30202779",
+      "title": "Under Ice",
+      "artist": "Ignez",
+      "bpm": 138,
+      "key": "8A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29837099",
+      "title": "ISO-2",
+      "artist": "ISOSCELE",
+      "bpm": 138,
+      "key": "4B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30019054",
+      "title": "Blind Grain",
+      "artist": "Lee Van Cliff",
+      "bpm": 140,
+      "key": "4A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29768955",
+      "title": "Fracture 2",
+      "artist": "Ben Sims, Truncate, ASSAILANTS",
+      "bpm": 136,
+      "key": "2A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20814290",
+      "title": "Indigo",
+      "artist": "Disguised",
+      "bpm": 146,
+      "key": "4B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30202780",
+      "title": "Only Up",
+      "artist": "Ignez",
+      "bpm": 122,
+      "key": "8A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30004397",
+      "title": "Get the funk",
+      "artist": "Melvin Spix",
+      "bpm": 138,
+      "key": "4A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30247939",
+      "title": "Pressure Point",
+      "artist": "Drunken Kong",
+      "bpm": 140,
+      "key": "7B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29497673",
+      "title": "They've Always Been Here",
+      "artist": "No Valentia",
+      "bpm": 142,
+      "key": "6A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29375198",
+      "title": "Destiny Bond",
+      "artist": "Phil Berg",
+      "bpm": 137,
+      "key": "1A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20501498",
+      "title": "Sexiness",
+      "artist": "Mac Declos",
+      "bpm": 144,
+      "key": "4B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30202644",
+      "title": "Night Sentinel",
+      "artist": "Sciahri",
+      "bpm": 140,
+      "key": "11B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29849666",
+      "title": "Void Walker",
+      "artist": "UMEK",
+      "bpm": 140,
+      "key": "2B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29420513",
+      "title": "Gobble",
+      "artist": "Axel Karakasis",
+      "bpm": 138,
+      "key": "7A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20312776",
+      "title": "Dissolve to Evolve",
+      "artist": "Kuss, Sicion",
+      "bpm": 140,
+      "key": "8A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30265846",
+      "title": "Seeking",
+      "artist": "Red Rooms",
+      "bpm": 108,
+      "key": "4B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30004400",
+      "title": "Directors Bay",
+      "artist": "Melvin Spix",
+      "bpm": 140,
+      "key": "5A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30017894",
+      "title": "Assault",
+      "artist": "Zimer",
+      "bpm": 142,
+      "key": "12A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29674206",
+      "title": "Rainy",
+      "artist": "Kuss",
+      "bpm": 142,
+      "key": "6A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28519884",
+      "title": "All You Find feat. FANK",
+      "artist": "FANK, Disguised",
+      "bpm": 142,
+      "key": "3B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29497678",
+      "title": "Lumen",
+      "artist": "FUNKHAUS",
+      "bpm": 141,
+      "key": "2A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:24245030",
+      "title": "Lift Me Up",
+      "artist": "Toobris",
+      "bpm": 141,
+      "key": "8A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:23108906",
+      "title": "Similar Minds",
+      "artist": "SERA J",
+      "bpm": 145,
+      "key": "2A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:22454395",
+      "title": "Machina",
+      "artist": "Cirkle",
+      "bpm": 140,
+      "key": "5B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:21581725",
+      "title": "Bass Track",
+      "artist": "Yanamaste",
+      "bpm": 145,
+      "key": "10B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30202643",
+      "title": "Liminal",
+      "artist": "Sciahri",
+      "bpm": 142,
+      "key": "4B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30202642",
+      "title": "Moonwake",
+      "artist": "Sciahri",
+      "bpm": 140,
+      "key": "11B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29704438",
+      "title": "Havoc",
+      "artist": "Lars Huismann",
+      "bpm": 145,
+      "key": "8B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30355759",
+      "title": "Rawdog",
+      "artist": "Gary Beck",
+      "bpm": 140,
+      "key": "10A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29874007",
+      "title": "Age of Aquarius",
+      "artist": "DJ Dextro",
+      "bpm": 140,
+      "key": "6A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29497675",
+      "title": "The H Inside Me",
+      "artist": "DJ Dextro",
+      "bpm": 140,
+      "key": "11B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29576631",
+      "title": "Coaster",
+      "artist": "Surgeon",
+      "bpm": 138,
+      "key": "4A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29434382",
+      "title": "Shiganshina",
+      "artist": "Idu Berg",
+      "bpm": 135,
+      "key": "3B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29375199",
+      "title": "Seiko",
+      "artist": "Phil Berg",
+      "bpm": 139,
+      "key": "12A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29216641",
+      "title": "Ultrasound",
+      "artist": "The Southern",
+      "bpm": 143,
+      "key": "8A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28808569",
+      "title": "Undersense",
+      "artist": "Axel Karakasis",
+      "bpm": 143,
+      "key": "8A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28519885",
+      "title": "Silent Pulse",
+      "artist": "Disguised",
+      "bpm": 142,
+      "key": "7A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28519878",
+      "title": "Where Thoughts End feat. FANK",
+      "artist": "FANK, Disguised",
+      "bpm": 161,
+      "key": "4A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30265845",
+      "title": "Halftime",
+      "artist": "Pierce",
+      "bpm": 137,
+      "key": "12A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29731490",
+      "title": "Space Brutalism",
+      "artist": "Kaan Pirecioglu",
+      "bpm": 135,
+      "key": "12A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29469652",
+      "title": "Quadro",
+      "artist": "NØRBAK",
+      "bpm": 138,
+      "key": "12A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:17906507",
+      "title": "Dopamine Rush",
+      "artist": "Chlär",
+      "bpm": 144,
+      "key": "2B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30202646",
+      "title": "Too Much Time",
+      "artist": "Sciahri",
+      "bpm": 140,
+      "key": "8A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30134530",
+      "title": "Falloff",
+      "artist": "Axel Karakasis",
+      "bpm": 94,
+      "key": "5A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29618573",
+      "title": "Backside Velocity",
+      "artist": "DBFB",
+      "bpm": 139,
+      "key": "6A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29981126",
+      "title": "Ifthah",
+      "artist": "Robag Wruhme",
+      "bpm": 132,
+      "key": "2B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29768956",
+      "title": "Effort 12",
+      "artist": "Ben Sims, Truncate, ASSAILANTS",
+      "bpm": 138,
+      "key": "8B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29420511",
+      "title": "Absent Form",
+      "artist": "Axel Karakasis",
+      "bpm": 141,
+      "key": "7A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29530316",
+      "title": "Solace",
+      "artist": "Alarico",
+      "bpm": 147,
+      "key": "6A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28519886",
+      "title": "Sceptre Rd",
+      "artist": "Disguised",
+      "bpm": 143,
+      "key": "9B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30342292",
+      "title": "Down To Earth",
+      "artist": "HUJUS",
+      "bpm": 140,
+      "key": "12B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30265844",
+      "title": "Parallel Shift",
+      "artist": "Uvall",
+      "bpm": 138,
+      "key": "11A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30202782",
+      "title": "Frost Kiss",
+      "artist": "Ignez",
+      "bpm": 118,
+      "key": "5A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30283819",
+      "title": "Serotonin",
+      "artist": "FJAAK",
+      "bpm": 139,
+      "key": "11A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:26973804",
+      "title": "Soul Provider",
+      "artist": "Uncertain",
+      "bpm": 141,
+      "key": "1A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29701431",
+      "title": "Silver Sally",
+      "artist": "Lobster, Vault Records",
+      "bpm": 142,
+      "key": "11A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29294377",
+      "title": "Your Echo",
+      "artist": "SERA J",
+      "bpm": 145,
+      "key": "12A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28622842",
+      "title": "Higher Things",
+      "artist": "Chris Liebing",
+      "bpm": 137,
+      "key": "9A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28912840",
+      "title": "SWIPE THE FUNK",
+      "artist": "Dj Mad Dog, Vieze Asbak",
+      "bpm": 160,
+      "key": "4A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28341686",
+      "title": "KOBOLD",
+      "artist": "Len Faki",
+      "bpm": 139,
+      "key": "4B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28281047",
+      "title": "Ephemera",
+      "artist": "Regent",
+      "bpm": 142,
+      "key": "1B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:27811089",
+      "title": "Iso",
+      "artist": "Phil Berg",
+      "bpm": 142,
+      "key": "10B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:23697159",
+      "title": "Beneath the Surface",
+      "artist": "Lewis Fautzi",
+      "bpm": 138,
+      "key": "1A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:23277696",
+      "title": "Kinesis",
+      "artist": "Regent",
+      "bpm": 142,
+      "key": "1B",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:23371250",
+      "title": "Horse Power",
+      "artist": "Klaps (BE), BCCO",
+      "bpm": 146,
+      "key": "11A",
+      "genre": "Techno (Raw / Deep / Hypnotic)",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30091337",
+      "title": "MYSTERY OF RAW",
+      "artist": "Wu-Tang Clan, Michael Bibi, Kettama",
+      "bpm": 130,
+      "key": "4B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29486878",
+      "title": "Beat Goes On",
+      "artist": "Rafael, Adam Ten",
+      "bpm": 124,
+      "key": "11B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29945526",
+      "title": "Reason Why",
+      "artist": "Sapian",
+      "bpm": 130,
+      "key": "9A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30301767",
+      "title": "Friction",
+      "artist": "Riordan, Locky",
+      "bpm": 132,
+      "key": "7A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29762427",
+      "title": "Body Shake",
+      "artist": "Max Styler",
+      "bpm": 128,
+      "key": "12B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30191476",
+      "title": "4Get The Girl",
+      "artist": "Route 94, Samm (BE)",
+      "bpm": 122,
+      "key": "11A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30203824",
+      "title": "Bring That Beat Back",
+      "artist": "AMMIL",
+      "bpm": 130,
+      "key": "2A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29451984",
+      "title": "Never Leave U",
+      "artist": "Sonny Kane",
+      "bpm": 128,
+      "key": "10A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29386531",
+      "title": "Stay Sexy",
+      "artist": "Mili, HUGEL, LaBritney",
+      "bpm": 124,
+      "key": "3B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28628634",
+      "title": "La La Land",
+      "artist": "Green Velvet, Meduza, GENESI (ITA), ESSENTIA (IT)",
+      "bpm": 128,
+      "key": "11B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29158075",
+      "title": "wtf",
+      "artist": "Roland Clark, DvirNuns, Broken Hill",
+      "bpm": 127,
+      "key": "7A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28703046",
+      "title": "I Never Knew",
+      "artist": "Adam Ten",
+      "bpm": 125,
+      "key": "7A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29876958",
+      "title": "Upside Down",
+      "artist": "BELLEKOM, Ennio (NL)",
+      "bpm": 130,
+      "key": "6A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29166273",
+      "title": "Can I Ride",
+      "artist": "95 South, SIDEPIECE",
+      "bpm": 132,
+      "key": "2B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30175607",
+      "title": "Late Night Baddies",
+      "artist": "MALARKEY, Gaskin, Tom Did It",
+      "bpm": 132,
+      "key": "12A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20311844",
+      "title": "Don't Stop",
+      "artist": "Prospa",
+      "bpm": 128,
+      "key": "2A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:23308330",
+      "title": "neck",
+      "artist": "Mau P",
+      "bpm": 129,
+      "key": "10A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29673974",
+      "title": "Too Close",
+      "artist": "Dario, KamJam",
+      "bpm": 127,
+      "key": "12B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29144055",
+      "title": "Take Our Time",
+      "artist": "Chico Rose (NL)",
+      "bpm": 129,
+      "key": "4A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28678498",
+      "title": "Baby",
+      "artist": "Prospa, Murda Beatz",
+      "bpm": 130,
+      "key": "10A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:27913852",
+      "title": "Watching Me",
+      "artist": "Miro (AR)",
+      "bpm": 130,
+      "key": "11B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:26895695",
+      "title": "How Does It Feel",
+      "artist": "Fezzo, Dubdogz, Zaark",
+      "bpm": 130,
+      "key": "7A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30201786",
+      "title": "Swagon",
+      "artist": "Detlef, Ossey James",
+      "bpm": 130,
+      "key": "12B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:12635556",
+      "title": "Move Your Body",
+      "artist": "Marshall Jefferson, Solardo",
+      "bpm": 125,
+      "key": "9A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:7521298",
+      "title": "Innerbloom",
+      "artist": "RÜFÜS DU SOL",
+      "bpm": 106,
+      "key": "6B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30231526",
+      "title": "THE MOB",
+      "artist": "IDEMI",
+      "bpm": 130,
+      "key": "8A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30341958",
+      "title": "Coco Loco",
+      "artist": "Gama, Bautista (MX)",
+      "bpm": 128,
+      "key": "9B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:24021527",
+      "title": "In This Bih'",
+      "artist": "Chris Lorenzo, Kah-lo",
+      "bpm": 130,
+      "key": "2B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29347760",
+      "title": "Cardio",
+      "artist": "Viot",
+      "bpm": 128,
+      "key": "6A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:26839328",
+      "title": "So Hot!",
+      "artist": "Jake Bleu, Edris Omar",
+      "bpm": 128,
+      "key": "10A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29456738",
+      "title": "You Make Me Fall In Love",
+      "artist": "Ajna (BE), abrahamblue",
+      "bpm": 122,
+      "key": "11A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29850091",
+      "title": "Landslide",
+      "artist": "Jamback",
+      "bpm": 132,
+      "key": "7B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29658937",
+      "title": "LADIES & GENTLEMEN",
+      "artist": "KinAhau, WIFE MATERIAL",
+      "bpm": 130,
+      "key": "12B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29313202",
+      "title": "Slinging Dope",
+      "artist": "After Midnight, Matroda, San Pacho",
+      "bpm": 132,
+      "key": "2A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29615668",
+      "title": "Pacha",
+      "artist": "ZARO",
+      "bpm": 128,
+      "key": "5A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:23161337",
+      "title": "XTC",
+      "artist": "Cloonee, Jocelyn Enriquez",
+      "bpm": 130,
+      "key": "10A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20505201",
+      "title": "Like I Like It",
+      "artist": "Mau P",
+      "bpm": 128,
+      "key": "4B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29854390",
+      "title": "Do Da Doo",
+      "artist": "Robotman, Richie Hawtin, Marshall Jefferson",
+      "bpm": 131,
+      "key": "9B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30110566",
+      "title": "C-Line Woman",
+      "artist": "DJ Dan, Taurus (US)",
+      "bpm": 126,
+      "key": "1A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20085129",
+      "title": "The Less I Know The Better",
+      "artist": "Mau P",
+      "bpm": 128,
+      "key": "12B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:19427271",
+      "title": "It Feels So Good",
+      "artist": "Sonique, Matt Sassari, HUGEL",
+      "bpm": 128,
+      "key": "4A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20564331",
+      "title": "Verano En NY",
+      "artist": "Toman",
+      "bpm": 126,
+      "key": "9B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29964353",
+      "title": "Ride",
+      "artist": "Karen Harding, GUDFELLA, Yamagucci",
+      "bpm": 126,
+      "key": "6B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29895732",
+      "title": "Get Messy",
+      "artist": "Mishell, Toni B",
+      "bpm": 127,
+      "key": "7A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:23451235",
+      "title": "Out of My Mind",
+      "artist": "Joshwa",
+      "bpm": 132,
+      "key": "11B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30031046",
+      "title": "Automatic",
+      "artist": "Iglesias, KONXIOUS",
+      "bpm": 132,
+      "key": "8B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29983905",
+      "title": "Bombreaker",
+      "artist": "Foynez",
+      "bpm": 130,
+      "key": "9B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30235179",
+      "title": "Voodoo Time",
+      "artist": "KADI (IL), Yonadav",
+      "bpm": 126,
+      "key": "2B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30082427",
+      "title": "Brickell",
+      "artist": "ZARO, Kashovski",
+      "bpm": 126,
+      "key": "10B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28792028",
+      "title": "Oldskool Flavor",
+      "artist": "Max Styler, Greggio",
+      "bpm": 129,
+      "key": "6B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29625582",
+      "title": "Energy",
+      "artist": "Mishell, Vinter (BR)",
+      "bpm": 128,
+      "key": "10A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28418684",
+      "title": "Record Breaker",
+      "artist": "Summum",
+      "bpm": 131,
+      "key": "5B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28923874",
+      "title": "Profill",
+      "artist": "Bonafique, Yuvèe",
+      "bpm": 125,
+      "key": "5A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28873471",
+      "title": "Party Over Here (feat. Detroit's Filthiest)",
+      "artist": "Detroit's Filthiest, Jamie Fielding",
+      "bpm": 130,
+      "key": "6A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:24290878",
+      "title": "Morning Coffee",
+      "artist": "Jitwam, GUDFELLA",
+      "bpm": 128,
+      "key": "5A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:10766349",
+      "title": "Losing It",
+      "artist": "FISHER (OZ)",
+      "bpm": 125,
+      "key": "9B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29576842",
+      "title": "Reckonize",
+      "artist": "Dale Howard",
+      "bpm": 130,
+      "key": "10A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29173226",
+      "title": "On Lock",
+      "artist": "Dale Howard",
+      "bpm": 132,
+      "key": "8A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29841733",
+      "title": "Bottles",
+      "artist": "Gabss, Balanka",
+      "bpm": 130,
+      "key": "2B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28490349",
+      "title": "Make You Fight",
+      "artist": "Chris Lake, ATRIP",
+      "bpm": 131,
+      "key": "6A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29497072",
+      "title": "Bad B$tch",
+      "artist": "Dox, DvirNuns",
+      "bpm": 126,
+      "key": "9B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30022480",
+      "title": "Double The Funk",
+      "artist": "Joe Thomas (UK)",
+      "bpm": 128,
+      "key": "12B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30012152",
+      "title": "Party Time (feat. Aatig)",
+      "artist": "Tiga, Chris Lake, AYYBO, Aatig",
+      "bpm": 127,
+      "key": "4B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29762431",
+      "title": "Feel The XTC",
+      "artist": "Max Styler",
+      "bpm": 130,
+      "key": "9A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20601589",
+      "title": "London's On Fire",
+      "artist": "Audio Bullys, Chris Lorenzo, Max Styler",
+      "bpm": 130,
+      "key": "10B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30212546",
+      "title": "Make It Rain",
+      "artist": "Darmon",
+      "bpm": 125,
+      "key": "10B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30203825",
+      "title": "Break Your Back",
+      "artist": "AMMIL",
+      "bpm": 131,
+      "key": "6B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29762432",
+      "title": "Templo Disko",
+      "artist": "Max Styler",
+      "bpm": 126,
+      "key": "12B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20803176",
+      "title": "Make Believe",
+      "artist": "Luke Dean, Omar+",
+      "bpm": 133,
+      "key": "2A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29128474",
+      "title": "Blue Oyster",
+      "artist": "Sil, Rue Jay",
+      "bpm": 128,
+      "key": "7A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29854443",
+      "title": "Save My Soul",
+      "artist": "Kidoo, Rushin'",
+      "bpm": 130,
+      "key": "5B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29316520",
+      "title": "Invisible",
+      "artist": "Jazzy, Chris Lorenzo",
+      "bpm": 130,
+      "key": "2A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28473388",
+      "title": "Insane",
+      "artist": "Shermanology",
+      "bpm": 127,
+      "key": "7A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:21309496",
+      "title": "Fancy $hit",
+      "artist": "CID, Taylr Renee",
+      "bpm": 129,
+      "key": "7B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29897854",
+      "title": "Work",
+      "artist": "Gabss",
+      "bpm": 130,
+      "key": "4B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29224355",
+      "title": "Get Funky, Get Down",
+      "artist": "JØRD",
+      "bpm": 125,
+      "key": "9B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30235180",
+      "title": "Loco Luck",
+      "artist": "REBRN, Ben Lipshitz",
+      "bpm": 126,
+      "key": "8B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30080013",
+      "title": "Back Into Time",
+      "artist": "Simon Ray, Pavel Pasha, NATÜRA (IT)",
+      "bpm": 130,
+      "key": "3A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30188291",
+      "title": "Bad Bitch",
+      "artist": "HUGEL, Sexyy Red, Gatano",
+      "bpm": 125,
+      "key": "6B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20572171",
+      "title": "Lipstick",
+      "artist": "Alaia & Gallo",
+      "bpm": 128,
+      "key": "7A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:16771427",
+      "title": "Drugs From Amsterdam",
+      "artist": "Mau P",
+      "bpm": 125,
+      "key": "5B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30201787",
+      "title": "Music Please",
+      "artist": "Detlef",
+      "bpm": 130,
+      "key": "9A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30116168",
+      "title": "Loco Stop",
+      "artist": "Ammo Avenue",
+      "bpm": 130,
+      "key": "5A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:19589648",
+      "title": "MERTHER",
+      "artist": "Mau P",
+      "bpm": 128,
+      "key": "4A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29762430",
+      "title": "Close My Eyes",
+      "artist": "Max Styler",
+      "bpm": 128,
+      "key": "7B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29762429",
+      "title": "Uh Oh! (feat. Benni Ola)",
+      "artist": "Max Styler, Benni Ola",
+      "bpm": 128,
+      "key": "6A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29490200",
+      "title": "Rumpta",
+      "artist": "Solomun, Skrillex",
+      "bpm": 128,
+      "key": "9B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29182936",
+      "title": "F To This Beat",
+      "artist": "Balanka",
+      "bpm": 128,
+      "key": "12A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28677559",
+      "title": "Masterplan",
+      "artist": "Prospa",
+      "bpm": 129,
+      "key": "5A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:23894453",
+      "title": "Shepard's Tone",
+      "artist": "LUCH",
+      "bpm": 123,
+      "key": "7B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28721585",
+      "title": "Time",
+      "artist": "Hot Since 82, Kuuda",
+      "bpm": 124,
+      "key": "9A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30145603",
+      "title": "ALL DAY ALL NIGHT",
+      "artist": "Kamino",
+      "bpm": 134,
+      "key": "6B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29779710",
+      "title": "Super Hot",
+      "artist": "Marco Lys, Kevcody, Michael Ekow",
+      "bpm": 130,
+      "key": "6A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28780439",
+      "title": "Bad Wolf",
+      "artist": "Michael Bibi",
+      "bpm": 131,
+      "key": "4B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20728080",
+      "title": "POM",
+      "artist": "Chico Rose (NL)",
+      "bpm": 130,
+      "key": "5B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29718173",
+      "title": "Keep Control",
+      "artist": "Kyle Watson",
+      "bpm": 131,
+      "key": "9B",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29313203",
+      "title": "Got a Feeling",
+      "artist": "After Midnight, Matroda, San Pacho",
+      "bpm": 132,
+      "key": "4A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28264911",
+      "title": "Strong Rhyme",
+      "artist": "Bushbaby, Riordan",
+      "bpm": 133,
+      "key": "7A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:18257468",
+      "title": "Show Me Love",
+      "artist": "HELLMATE, Santiago & Carlitos, Chantal Lewis-Brown",
+      "bpm": 128,
+      "key": "8A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29568067",
+      "title": "Wish",
+      "artist": "Mat Eclair",
+      "bpm": 133,
+      "key": "5A",
+      "genre": "Tech House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30094423",
+      "title": "Life Is My Teacher",
+      "artist": "Miss Kittin",
+      "bpm": 122,
+      "key": "2B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29848987",
+      "title": "In Deep",
+      "artist": "DAVI",
+      "bpm": 125,
+      "key": "6B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29988957",
+      "title": "Natural Blues (TECIE)",
+      "artist": "Moby, BLOND:ISH, Kiko Franco, Jacob Lusk",
+      "bpm": 126,
+      "key": "3A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29899953",
+      "title": "Visitor",
+      "artist": "Quivver",
+      "bpm": 124,
+      "key": "5A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30075956",
+      "title": "Too High",
+      "artist": "Marsh",
+      "bpm": 126,
+      "key": "12A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30259281",
+      "title": "Homeboy",
+      "artist": "Khen",
+      "bpm": 124,
+      "key": "5A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30243593",
+      "title": "Sabata",
+      "artist": "Alex O'Rion, Zankee Gulati",
+      "bpm": 121,
+      "key": "10B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29899952",
+      "title": "Deception",
+      "artist": "Quivver",
+      "bpm": 124,
+      "key": "10B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30039232",
+      "title": "Hocu Pocu",
+      "artist": "Jamie Stevens, Kasey Taylor",
+      "bpm": 123,
+      "key": "4A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29455272",
+      "title": "Color Divino",
+      "artist": "Ezequiel Arias, FJL",
+      "bpm": 124,
+      "key": "6B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30185353",
+      "title": "Placebo",
+      "artist": "Guy J",
+      "bpm": 122,
+      "key": "9B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29849640",
+      "title": "Can You Flow",
+      "artist": "Dilby",
+      "bpm": 125,
+      "key": "10B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29854171",
+      "title": "Iguana",
+      "artist": "Maze 28",
+      "bpm": 122,
+      "key": "5B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29455268",
+      "title": "So Many Stars",
+      "artist": "Ezequiel Arias",
+      "bpm": 123,
+      "key": "2B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29409567",
+      "title": "Mercury & Solace",
+      "artist": "Jan Johnston, BT",
+      "bpm": 128,
+      "key": "3A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29455269",
+      "title": "Eterno",
+      "artist": "Ezequiel Arias",
+      "bpm": 124,
+      "key": "1A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30235411",
+      "title": "Parallax",
+      "artist": "Lexicon Avenue, Matt Black",
+      "bpm": 122,
+      "key": "6A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30185354",
+      "title": "My Existence",
+      "artist": "Guy J",
+      "bpm": 123,
+      "key": "8B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30016838",
+      "title": "Movin' Thru Your System",
+      "artist": "Jark Prongo, Hernan Cattaneo, Chocolate Puma, Brigado Crew",
+      "bpm": 125,
+      "key": "1A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29655050",
+      "title": "Rise",
+      "artist": "Guy J",
+      "bpm": 122,
+      "key": "4A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30035047",
+      "title": "Moonrise",
+      "artist": "Nicolas Rada",
+      "bpm": 123,
+      "key": "8A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30231914",
+      "title": "Inner Glow",
+      "artist": "Juan Deminicis, Casnik",
+      "bpm": 121,
+      "key": "4A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30259283",
+      "title": "Babylon",
+      "artist": "Khen",
+      "bpm": 123,
+      "key": "11B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29569189",
+      "title": "In the Blink of an Eye",
+      "artist": "Gai Barone",
+      "bpm": 122,
+      "key": "9A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30132423",
+      "title": "Retour A La Lumiere",
+      "artist": "Marcus Schmahl, Patrick Kunkel",
+      "bpm": 124,
+      "key": "9A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30185352",
+      "title": "Secret Serv1ce",
+      "artist": "Guy J",
+      "bpm": 117,
+      "key": "7B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30201160",
+      "title": "If I Win",
+      "artist": "Kostya Outta, Liam Garcia",
+      "bpm": 123,
+      "key": "12B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30316752",
+      "title": "Passion",
+      "artist": "Christian Smith",
+      "bpm": 123,
+      "key": "6A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:27181833",
+      "title": "Veamos",
+      "artist": "Gorge",
+      "bpm": 125,
+      "key": "8A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30208574",
+      "title": "Heartbeat",
+      "artist": "Hessian, Courtney Storm",
+      "bpm": 122,
+      "key": "7B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29885345",
+      "title": "I Got You",
+      "artist": "Dosem",
+      "bpm": 127,
+      "key": "4B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29817270",
+      "title": "Fortuna",
+      "artist": "Tash, Yves Eaux",
+      "bpm": 125,
+      "key": "8B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29455271",
+      "title": "Sin Control",
+      "artist": "Ezequiel Arias",
+      "bpm": 124,
+      "key": "10B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30025988",
+      "title": "Hielo",
+      "artist": "Stefan Obermaier, Marner",
+      "bpm": 125,
+      "key": "2B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29700842",
+      "title": "Stamina",
+      "artist": "Simon Vuarambon",
+      "bpm": 121,
+      "key": "11A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29455273",
+      "title": "Go",
+      "artist": "HANA, Ezequiel Arias",
+      "bpm": 124,
+      "key": "4B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29889279",
+      "title": "Tisno",
+      "artist": "Simply City, Solis [US]",
+      "bpm": 122,
+      "key": "9B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30287084",
+      "title": "Ethereal",
+      "artist": "Jonz (BR)",
+      "bpm": 122,
+      "key": "9B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30100940",
+      "title": "Jupiter Code",
+      "artist": "Kamilo Sanclemente",
+      "bpm": 123,
+      "key": "8A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29637920",
+      "title": "Rosea",
+      "artist": "Artic White",
+      "bpm": 122,
+      "key": "2B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30234285",
+      "title": "All About Her",
+      "artist": "Gai Barone",
+      "bpm": 122,
+      "key": "5A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29898124",
+      "title": "Storm Chasing",
+      "artist": "Spencer Brown",
+      "bpm": 103,
+      "key": "3B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29648651",
+      "title": "The Wave",
+      "artist": "Estiva",
+      "bpm": 124,
+      "key": "11A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28863332",
+      "title": "Psychodelia",
+      "artist": "Ezequiel Arias",
+      "bpm": 125,
+      "key": "3B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30245800",
+      "title": "Amethyst",
+      "artist": "Kamilo Sanclemente",
+      "bpm": 121,
+      "key": "9A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29854172",
+      "title": "Cobra",
+      "artist": "Maze 28",
+      "bpm": 122,
+      "key": "5B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29540066",
+      "title": "Drift Through Space",
+      "artist": "Dilby",
+      "bpm": 125,
+      "key": "7B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:15731334",
+      "title": "We Are Mirage",
+      "artist": "Eric Prydz, Empire Of The Sun",
+      "bpm": 128,
+      "key": "9A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30039233",
+      "title": "L'alba",
+      "artist": "Jamie Stevens, Kasey Taylor",
+      "bpm": 125,
+      "key": "8A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28913524",
+      "title": "Lunar Circuit",
+      "artist": "Durante, Emi Galvan",
+      "bpm": 124,
+      "key": "4B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:26901584",
+      "title": "Jolie Fille",
+      "artist": "Maz (BR), Antdot, Ginton, Layefa",
+      "bpm": 125,
+      "key": "5B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:21809459",
+      "title": "Worlds Apart",
+      "artist": "Guy J",
+      "bpm": 122,
+      "key": "8A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:16951393",
+      "title": "Rhythm (Of The Night)",
+      "artist": "YOTTO, Something Good",
+      "bpm": 122,
+      "key": "4A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30269952",
+      "title": "Echo Groove",
+      "artist": "Supacooks",
+      "bpm": 123,
+      "key": "9B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30162721",
+      "title": "Holcane",
+      "artist": "Vakabular, Teklix",
+      "bpm": 126,
+      "key": "2B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30078527",
+      "title": "Falling",
+      "artist": "M.O.S.",
+      "bpm": 125,
+      "key": "8B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29455270",
+      "title": "Estimulo",
+      "artist": "Ezequiel Arias",
+      "bpm": 125,
+      "key": "7A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29858480",
+      "title": "Luv 4 U",
+      "artist": "Cristoph, Seizmic (UK)",
+      "bpm": 126,
+      "key": "6A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28522915",
+      "title": "How Does It Feel",
+      "artist": "Durante, ALLKNIGHT",
+      "bpm": 125,
+      "key": "5A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:24445930",
+      "title": "Attraction",
+      "artist": "Ferry Corsten, Marsh",
+      "bpm": 126,
+      "key": "7A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30271706",
+      "title": "Die Magische Tijd",
+      "artist": "Roger Martinez",
+      "bpm": 122,
+      "key": "7B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30035049",
+      "title": "Entropy",
+      "artist": "Nicolas Rada",
+      "bpm": 123,
+      "key": "9B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29527514",
+      "title": "The Likes of You",
+      "artist": "Mike Rish",
+      "bpm": 120,
+      "key": "7B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29498849",
+      "title": "Against All Odds",
+      "artist": "Redspace, SHERRNX",
+      "bpm": 121,
+      "key": "7B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30231915",
+      "title": "Phasebreaker",
+      "artist": "Juan Deminicis, Casnik",
+      "bpm": 119,
+      "key": "5A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30201162",
+      "title": "Altitude",
+      "artist": "Kostya Outta, Frameloue",
+      "bpm": 122,
+      "key": "2B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30132424",
+      "title": "Return From Silence",
+      "artist": "Marcus Schmahl, Patrick Kunkel",
+      "bpm": 123,
+      "key": "4A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29637300",
+      "title": "Skywalkers",
+      "artist": "M.O.S.",
+      "bpm": 122,
+      "key": "9B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29470226",
+      "title": "Fiji",
+      "artist": "Atlantis",
+      "bpm": 123,
+      "key": "4A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:22385732",
+      "title": "Self CNTRL",
+      "artist": "DAVI",
+      "bpm": 125,
+      "key": "6B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30256610",
+      "title": "Mutual Horizons",
+      "artist": "Fabri Lopez, Callecat",
+      "bpm": 121,
+      "key": "1B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30256373",
+      "title": "Moments",
+      "artist": "Linney, Matt Dylan",
+      "bpm": 124,
+      "key": "7A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29885346",
+      "title": "Overgrafik",
+      "artist": "Dosem",
+      "bpm": 128,
+      "key": "10B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:22006157",
+      "title": "Sun In Your Eyes",
+      "artist": "Above & Beyond",
+      "bpm": 126,
+      "key": "5A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:17883087",
+      "title": "I Remember (John Summit Remix)",
+      "artist": "Kaskade, deadmau5",
+      "bpm": 126,
+      "key": "10A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30259282",
+      "title": "Limbo",
+      "artist": "Eli Nissan",
+      "bpm": 122,
+      "key": "11A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30232331",
+      "title": "Fake News feat. simona kust",
+      "artist": "SURFFACE",
+      "bpm": 122,
+      "key": "7B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29671216",
+      "title": "All I Want",
+      "artist": "Zuccasam",
+      "bpm": 126,
+      "key": "8B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30151445",
+      "title": "Lumara",
+      "artist": "Mattias Herrera",
+      "bpm": 121,
+      "key": "9B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28770820",
+      "title": "Cantus Solaris",
+      "artist": "Rauschhaus, SHERRNX",
+      "bpm": 122,
+      "key": "3A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29786008",
+      "title": "Chasing Halos",
+      "artist": "Stan Kolev",
+      "bpm": 123,
+      "key": "7B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29527110",
+      "title": "Rogelito",
+      "artist": "Hernan Cattaneo, Khen",
+      "bpm": 123,
+      "key": "7B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29263942",
+      "title": "Forever Seeking",
+      "artist": "Anthony Pappa, Fauxplay",
+      "bpm": 123,
+      "key": "1B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29331190",
+      "title": "Always",
+      "artist": "Aubrey Fry, Brian Gravel",
+      "bpm": 120,
+      "key": "7A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30289250",
+      "title": "(Mean Things) On My Mind",
+      "artist": "Ewan Hoo's Army",
+      "bpm": 124,
+      "key": "10A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30269953",
+      "title": "Un Mundo En Paz",
+      "artist": "Supacooks",
+      "bpm": 124,
+      "key": "7B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30181804",
+      "title": "Till The End",
+      "artist": "Rose Ringed",
+      "bpm": 127,
+      "key": "11A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29639734",
+      "title": "Inner Motion",
+      "artist": "Kamilo Sanclemente, Jossem",
+      "bpm": 123,
+      "key": "5A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29833110",
+      "title": "Zero",
+      "artist": "Alex O'Rion",
+      "bpm": 120,
+      "key": "6A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29221234",
+      "title": "Nightfalls",
+      "artist": "Dave Seaman",
+      "bpm": 125,
+      "key": "9B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30174746",
+      "title": "Fractured Lens",
+      "artist": "Barry Jamieson",
+      "bpm": 124,
+      "key": "12B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29533031",
+      "title": "Fuego",
+      "artist": "Nick Warren, Nicolas Rada",
+      "bpm": 124,
+      "key": "9B",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28948592",
+      "title": "Lose Your Mind",
+      "artist": "Kasey Taylor, Stereo Underground",
+      "bpm": 123,
+      "key": "9A",
+      "genre": "Progressive House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29738842",
+      "title": "1997",
+      "artist": "Beave",
+      "bpm": 132,
+      "key": "2A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30122457",
+      "title": "Sun is Shining (Lovelee Dae)",
+      "artist": "Tommy Phillips",
+      "bpm": 130,
+      "key": "6A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30050137",
+      "title": "Want To Know",
+      "artist": "Rooléh",
+      "bpm": 129,
+      "key": "7B",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:26919525",
+      "title": "Free Your Mind",
+      "artist": "Cloonee, Prospa",
+      "bpm": 128,
+      "key": "10A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29916295",
+      "title": "4Get The Girl",
+      "artist": "Route 94, Mellizos",
+      "bpm": 130,
+      "key": "11A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:24508685",
+      "title": "Talk To You",
+      "artist": "ANOTR, 54 Ultra",
+      "bpm": 132,
+      "key": "6A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29751348",
+      "title": "Good Girl",
+      "artist": "Tristan Henry, Cloonee, Prospa",
+      "bpm": 128,
+      "key": "9A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:24338437",
+      "title": "Shinjuku",
+      "artist": "Franky Rizardo",
+      "bpm": 129,
+      "key": "1A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30269315",
+      "title": "Funky Feeling",
+      "artist": "Simes",
+      "bpm": 129,
+      "key": "3A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29852354",
+      "title": "Echoes From The 90s",
+      "artist": "Atlantic Ocean, Desmond, Summum",
+      "bpm": 131,
+      "key": "6A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29548422",
+      "title": "Hey Everybody",
+      "artist": "Kolter",
+      "bpm": 132,
+      "key": "8A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30356724",
+      "title": "Another Night",
+      "artist": "RUZE, Ranger Trucco, Chesster",
+      "bpm": 130,
+      "key": "8B",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29715964",
+      "title": "Little More (Body Action)",
+      "artist": "Sean Doron",
+      "bpm": 130,
+      "key": "10B",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30219617",
+      "title": "Da Fonk (feat. Joni)",
+      "artist": "Joni, Mochakk",
+      "bpm": 127,
+      "key": "8B",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29254764",
+      "title": "My Place",
+      "artist": "Josh Baker, Poppy Baskcomb",
+      "bpm": 128,
+      "key": "9A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28763897",
+      "title": "My Life Is A Disco (In The Mix)",
+      "artist": "MIXMASTERS, Mellizos",
+      "bpm": 130,
+      "key": "3A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29593393",
+      "title": "All Night Long",
+      "artist": "Ferra Black, Chico Rose (NL)",
+      "bpm": 129,
+      "key": "2B",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29245419",
+      "title": "Absolute Scorcher",
+      "artist": "Desmond, Summum",
+      "bpm": 131,
+      "key": "3B",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30154202",
+      "title": "Paradise",
+      "artist": "CASSIMM",
+      "bpm": 128,
+      "key": "5A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29099904",
+      "title": "Rhythm Of The House",
+      "artist": "Ejeca, Alex Culross",
+      "bpm": 132,
+      "key": "11A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29993121",
+      "title": "Into The Light",
+      "artist": "Simon Kidzoo, Mønölitio, Jay de Lys",
+      "bpm": 126,
+      "key": "5A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28415247",
+      "title": "Groovejet (If This Ain’t Love)",
+      "artist": "Spiller, Sophie Ellis-Bextor, William Kiss, Jordan Brando, Luke Alessi, not without friends",
+      "bpm": 130,
+      "key": "11B",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:12247392",
+      "title": "Music Sounds Better With You",
+      "artist": "Stardust",
+      "bpm": 124,
+      "key": "7A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30269316",
+      "title": "Balance",
+      "artist": "Simes",
+      "bpm": 130,
+      "key": "11A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20625808",
+      "title": "Edge of Desire",
+      "artist": "Jonas Blue, Malive",
+      "bpm": 123,
+      "key": "9B",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30091657",
+      "title": "Cheri Cheri Lady",
+      "artist": "Gawdat",
+      "bpm": 128,
+      "key": "10A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30050335",
+      "title": "Loneliness",
+      "artist": "Robbie Doherty",
+      "bpm": 136,
+      "key": "7A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30287125",
+      "title": "Can't Stop",
+      "artist": "Kyle Icardi",
+      "bpm": 130,
+      "key": "6A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28868696",
+      "title": "Jammin'",
+      "artist": "Simon Kidzoo, Mellizos",
+      "bpm": 130,
+      "key": "5A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29642542",
+      "title": "The Bridge",
+      "artist": "Kyle Walker, Ranger Trucco, Nate Katz",
+      "bpm": 130,
+      "key": "1A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29355492",
+      "title": "Sexy M.F.",
+      "artist": "Jackie (IT), AVIV SAB",
+      "bpm": 124,
+      "key": "8A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30032117",
+      "title": "Yebisah",
+      "artist": "Mark Knight, Cristoph",
+      "bpm": 125,
+      "key": "7A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29996291",
+      "title": "I Get Lifted",
+      "artist": "Barbara Tucker, Michael Gray",
+      "bpm": 124,
+      "key": "7A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30265836",
+      "title": "One 25",
+      "artist": "Tatan Bilbao",
+      "bpm": 129,
+      "key": "4A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30265835",
+      "title": "Toda La Noche",
+      "artist": "Tatan Bilbao",
+      "bpm": 129,
+      "key": "4A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:16674122",
+      "title": "World Hold On feat. Steve Edwards",
+      "artist": "Bob Sinclar, Steve Edwards",
+      "bpm": 127,
+      "key": "1A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29546442",
+      "title": "Panteras",
+      "artist": "Reboot, Carloh",
+      "bpm": 130,
+      "key": "8A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:19201512",
+      "title": "TOO COOL TO BE CARELESS",
+      "artist": "PAWSA",
+      "bpm": 128,
+      "key": "11A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30178932",
+      "title": "Monaco Nights",
+      "artist": "Freenzy Music",
+      "bpm": 129,
+      "key": "1A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30055752",
+      "title": "Keep Up",
+      "artist": "Funkerman, Sama (US)",
+      "bpm": 125,
+      "key": "7B",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30172578",
+      "title": "I Want It",
+      "artist": "Emanuel Satie, Maga",
+      "bpm": 126,
+      "key": "10A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29658016",
+      "title": "Power",
+      "artist": "Jats (ofc)",
+      "bpm": 126,
+      "key": "5B",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:19672880",
+      "title": "This Rhythm (feat. RAHH)",
+      "artist": "Prospa, RAHH",
+      "bpm": 127,
+      "key": "3A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29478347",
+      "title": "Look Into My Eyes",
+      "artist": "Obskür",
+      "bpm": 134,
+      "key": "5A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:26881899",
+      "title": "Actin' Tough",
+      "artist": "Dean Turnley",
+      "bpm": 140,
+      "key": "5A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29993115",
+      "title": "Give Me The Rhythm",
+      "artist": "Piem",
+      "bpm": 128,
+      "key": "5A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29310911",
+      "title": "Feel",
+      "artist": "Franky Rizardo",
+      "bpm": 130,
+      "key": "10A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29835207",
+      "title": "Disco Whoops",
+      "artist": "FIRZA",
+      "bpm": 131,
+      "key": "5B",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29835210",
+      "title": "Talk",
+      "artist": "J. Worra",
+      "bpm": 126,
+      "key": "7B",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29964603",
+      "title": "Be Yourself",
+      "artist": "Pancratio",
+      "bpm": 136,
+      "key": "11B",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28677564",
+      "title": "Dreams",
+      "artist": "Prospa",
+      "bpm": 128,
+      "key": "1A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29634495",
+      "title": "Italian Job",
+      "artist": "SOSA (UK)",
+      "bpm": 132,
+      "key": "7A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20446885",
+      "title": "Baile De Fantome",
+      "artist": "Franky Rizardo",
+      "bpm": 128,
+      "key": "1A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30118176",
+      "title": "That's Right",
+      "artist": "Midas Field",
+      "bpm": 130,
+      "key": "8A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29219712",
+      "title": "Chica",
+      "artist": "Najeh, Ben Evers",
+      "bpm": 131,
+      "key": "7A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29672149",
+      "title": "Discombobulated",
+      "artist": "TB-203",
+      "bpm": 128,
+      "key": "9B",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:7422477",
+      "title": "The Weekend",
+      "artist": "Michael Gray",
+      "bpm": 127,
+      "key": "9A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:21977538",
+      "title": "Love Songs (feat. Kosmo Kint)",
+      "artist": "Prospa, Kosmo Kint",
+      "bpm": 127,
+      "key": "3A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:27813027",
+      "title": "HOTS 4 U",
+      "artist": "Chris Lorenzo, aMo (um)",
+      "bpm": 130,
+      "key": "10A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:4759617",
+      "title": "I Want Your Soul",
+      "artist": "Armand Van Helden",
+      "bpm": 128,
+      "key": "3A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:170858",
+      "title": "U Don't Know Me feat. Duane Harden",
+      "artist": "Armand Van Helden",
+      "bpm": 130,
+      "key": "7B",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30347447",
+      "title": "Take You To Paradise",
+      "artist": "Scott Steer",
+      "bpm": 128,
+      "key": "5A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29898431",
+      "title": "The Montana Girl",
+      "artist": "Kyle Walker",
+      "bpm": 130,
+      "key": "8B",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29866543",
+      "title": "Bongos (In The Morning)",
+      "artist": "Crazy Cousinz, Calista, Ferra Black, Tre Reynolds",
+      "bpm": 130,
+      "key": "1A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29717058",
+      "title": "Solar Skin",
+      "artist": "Malive, Carlita, jasper.wav",
+      "bpm": 126,
+      "key": "7A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:16628185",
+      "title": "Da Fonk feat. Joni",
+      "artist": "Mochakk",
+      "bpm": 127,
+      "key": "8A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:248289",
+      "title": "Stupidisco",
+      "artist": "Junior Jack",
+      "bpm": 125,
+      "key": "4A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29749069",
+      "title": "Pushin' On",
+      "artist": "RUZE",
+      "bpm": 132,
+      "key": "5A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30218263",
+      "title": "The Roller",
+      "artist": "Jewel Kid, Low Steppa",
+      "bpm": 128,
+      "key": "9A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29961973",
+      "title": "Distant Star System",
+      "artist": "Danny Snowden",
+      "bpm": 132,
+      "key": "7B",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29313855",
+      "title": "Get On Up",
+      "artist": "Michel De Hey, Job De Jong",
+      "bpm": 128,
+      "key": "4B",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30357411",
+      "title": "Wtfa",
+      "artist": "Dennis Cruz, Bora Uzer",
+      "bpm": 126,
+      "key": "7B",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29386524",
+      "title": "Movin' To The Sun",
+      "artist": "Ultra Nate, HUGEL, Imael Angel",
+      "bpm": 125,
+      "key": "4A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:18445022",
+      "title": "Make Me",
+      "artist": "Borai & Denham Audio",
+      "bpm": 130,
+      "key": "3A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30363542",
+      "title": "Strings of Life / Un Amore Supremo",
+      "artist": "Soul Central",
+      "bpm": 130,
+      "key": "9A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30053752",
+      "title": "Hip House Hammer",
+      "artist": "Caleb Jackson",
+      "bpm": 130,
+      "key": "10B",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29835977",
+      "title": "Explicit Behaviour",
+      "artist": "Jewel Kid",
+      "bpm": 128,
+      "key": "8A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:27976524",
+      "title": "Get Down",
+      "artist": "Sambo",
+      "bpm": 128,
+      "key": "2B",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:6014288",
+      "title": "One More Time",
+      "artist": "Daft Punk",
+      "bpm": 123,
+      "key": "10B",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29632528",
+      "title": "Comes and Goes",
+      "artist": "Dom Dolla, Kettama",
+      "bpm": 132,
+      "key": "2A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28932431",
+      "title": "Like That",
+      "artist": "DJ Dre, L.P. Rhythm",
+      "bpm": 132,
+      "key": "12B",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:22735704",
+      "title": "Velvet Avenue",
+      "artist": "Supernova",
+      "bpm": 129,
+      "key": "4A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:754757",
+      "title": "Blackwater feat. Ann Saunderson & Urban Soul Orchestra",
+      "artist": "Octave One",
+      "bpm": 134,
+      "key": "4A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29836897",
+      "title": "Let's Go",
+      "artist": "Shermanology",
+      "bpm": 128,
+      "key": "8A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28925754",
+      "title": "Lovely Flight",
+      "artist": "Didier Sinclair, Baron (FR)",
+      "bpm": 125,
+      "key": "2A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28470056",
+      "title": "Music Is The Answer (Dancin' And Prancin') (Extended)",
+      "artist": "Jesus Fernandez, Karl8 & Andrea Monta",
+      "bpm": 126,
+      "key": "1A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29468771",
+      "title": "Ain't No Game",
+      "artist": "Duke Dumont",
+      "bpm": 136,
+      "key": "5A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:23864263",
+      "title": "Another Night",
+      "artist": "RUZE, Chesster",
+      "bpm": 130,
+      "key": "8A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:13800396",
+      "title": "Show Me Love",
+      "artist": "Robin S",
+      "bpm": 120,
+      "key": "8A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:19164216",
+      "title": "It's That Time (FISHER Remix - Extended Mix)",
+      "artist": "Marlon Hoffstadt, FISHER (OZ), DJ Daddy Trance",
+      "bpm": 130,
+      "key": "1A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:10582198",
+      "title": "Point Of View",
+      "artist": "dB Boulevard",
+      "bpm": 129,
+      "key": "3B",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:17034755",
+      "title": "Relax My Eyes",
+      "artist": "ANOTR, Abel Balder",
+      "bpm": 132,
+      "key": "3A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30118177",
+      "title": "Ewaya",
+      "artist": "Jay Latune, Midas Field, Milan Fernandes",
+      "bpm": 128,
+      "key": "9A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:23443670",
+      "title": "Good Time",
+      "artist": "Trace (UZ)",
+      "bpm": 128,
+      "key": "1A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:6934180",
+      "title": "I feel for you",
+      "artist": "Bob Sinclar",
+      "bpm": 130,
+      "key": "2A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30095653",
+      "title": "La Pasión",
+      "artist": "Fioretti",
+      "bpm": 126,
+      "key": "12A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29093906",
+      "title": "Doing The Disco (feat. Jorge Bezerra)",
+      "artist": "Claptone, The Mekanism, Jorge Bezerra",
+      "bpm": 127,
+      "key": "4A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29387413",
+      "title": "Everybody",
+      "artist": "Nic Lorenz, Simes, Fero Duman, Perfect Timing (DE)",
+      "bpm": 130,
+      "key": "11A",
+      "genre": "House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28096073",
+      "title": "Trapped",
+      "artist": "Kolter",
+      "bpm": 130,
+      "key": "2A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30018797",
+      "title": "What We Got",
+      "artist": "Midas Field, Marijn Jansen",
+      "bpm": 128,
+      "key": "9A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:15178017",
+      "title": "Breather",
+      "artist": "S.A.M., CHRIS STASSY",
+      "bpm": 125,
+      "key": "9A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30280445",
+      "title": "Over You",
+      "artist": "Josh Baker, LEILAH",
+      "bpm": 114,
+      "key": "11A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29557659",
+      "title": "After You",
+      "artist": "Shokë",
+      "bpm": 125,
+      "key": "2A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28418300",
+      "title": "Apathy",
+      "artist": "Brunello, Hilel Lev",
+      "bpm": 127,
+      "key": "9A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29718013",
+      "title": "Can't Slow Down",
+      "artist": "Omar+",
+      "bpm": 130,
+      "key": "11A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29993117",
+      "title": "Moment 4 U",
+      "artist": "Late Replies",
+      "bpm": 129,
+      "key": "11A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28187274",
+      "title": "So Smooth",
+      "artist": "Malikk",
+      "bpm": 127,
+      "key": "12A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29993120",
+      "title": "Need You",
+      "artist": "Traumer, Andrew Azara",
+      "bpm": 129,
+      "key": "9A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:14957156",
+      "title": "Marea (we've lost dancing)",
+      "artist": "The Blessed Madonna, Fred again..",
+      "bpm": 123,
+      "key": "4A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:22480525",
+      "title": "Attention",
+      "artist": "Nick Curly, Joëlla Jackson",
+      "bpm": 128,
+      "key": "3A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:17436482",
+      "title": "Finder",
+      "artist": "Ninetoes",
+      "bpm": 126,
+      "key": "9A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:8330612",
+      "title": "Let the Drums Speak",
+      "artist": "Mighty Dub Katz",
+      "bpm": 125,
+      "key": "10A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:18575557",
+      "title": "Be Real",
+      "artist": "Kolter",
+      "bpm": 125,
+      "key": "5A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29546443",
+      "title": "Another Night",
+      "artist": "Reboot, Carloh",
+      "bpm": 129,
+      "key": "5A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29297501",
+      "title": "Bahia",
+      "artist": "Nick Curly",
+      "bpm": 128,
+      "key": "7A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:27072509",
+      "title": "Talking To Myself",
+      "artist": "Max Dean",
+      "bpm": 134,
+      "key": "6A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:18891935",
+      "title": "How You Feel",
+      "artist": "ANOTR, Leven Kali, Erik Bandt",
+      "bpm": 128,
+      "key": "10A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20515390",
+      "title": "Can't Decide",
+      "artist": "Max Dean, Luke Dean, Locky (UK)",
+      "bpm": 130,
+      "key": "4B",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29829256",
+      "title": "Desire",
+      "artist": "Caleb Laurenson, Alex Lynch (U.K.)",
+      "bpm": 133,
+      "key": "12A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29849641",
+      "title": "My Soul (feat. C1)",
+      "artist": "C1, Dilby",
+      "bpm": 125,
+      "key": "1B",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28835807",
+      "title": "What's Going On",
+      "artist": "M-High",
+      "bpm": 131,
+      "key": "2A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30455869",
+      "title": "BAD TIMES (Long Version)",
+      "artist": "Imael Angel",
+      "bpm": 108,
+      "key": "7B",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29451355",
+      "title": "Take Me Back",
+      "artist": "Frankey & Sandrino",
+      "bpm": 124,
+      "key": "5A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28395676",
+      "title": "So hot!",
+      "artist": "Sugar Hill",
+      "bpm": 126,
+      "key": "12B",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:3912676",
+      "title": "Underground",
+      "artist": "Nick Curly",
+      "bpm": 124,
+      "key": "7B",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:23616019",
+      "title": "Into My Life (feat. Joyce Sims)",
+      "artist": "Joyce Sims, Cam Stockman",
+      "bpm": 131,
+      "key": "1A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20209656",
+      "title": "Back It Up",
+      "artist": "Josh Baker, Omar+",
+      "bpm": 132,
+      "key": "1A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:17742428",
+      "title": "All Night Long",
+      "artist": "CHRIS STASSY",
+      "bpm": 133,
+      "key": "4A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29577942",
+      "title": "Don't Turn It Off",
+      "artist": "40 Thieves, Qzen",
+      "bpm": 125,
+      "key": "9A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28871644",
+      "title": "Be Your Baby",
+      "artist": "Sidney Charles, Kolter",
+      "bpm": 133,
+      "key": "4A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20214173",
+      "title": "Call It What You Like",
+      "artist": "Robbie Doherty",
+      "bpm": 134,
+      "key": "9A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:19407238",
+      "title": "Lately",
+      "artist": "RÜFÜS DU SOL, Adam Ten, Mita Gami",
+      "bpm": 126,
+      "key": "12A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30095654",
+      "title": "Alma",
+      "artist": "Fioretti",
+      "bpm": 126,
+      "key": "12A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29492250",
+      "title": "Out This World",
+      "artist": "Stef Davidse",
+      "bpm": 133,
+      "key": "10B",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:27196468",
+      "title": "Believe in yourself",
+      "artist": "CHRIS STASSY",
+      "bpm": 126,
+      "key": "7A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30118179",
+      "title": "Believe In Me",
+      "artist": "Midas Field",
+      "bpm": 126,
+      "key": "3A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29281638",
+      "title": "Black Cat",
+      "artist": "TMPLE",
+      "bpm": 125,
+      "key": "9A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:21399356",
+      "title": "Melted",
+      "artist": "Brunello",
+      "bpm": 127,
+      "key": "2A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:15809899",
+      "title": "Lauren (I Can't Stay Forever)",
+      "artist": "Oden & Fatzo",
+      "bpm": 128,
+      "key": "9A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30118178",
+      "title": "Respirando",
+      "artist": "Midas Field",
+      "bpm": 128,
+      "key": "5B",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28927627",
+      "title": "As Darkness Falls",
+      "artist": "Vernon & DaCosta, Apple Rochez",
+      "bpm": 123,
+      "key": "9B",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28971902",
+      "title": "Sun Goes Down",
+      "artist": "Mason Collective, FLETCH (GB), Ellie Allen",
+      "bpm": 127,
+      "key": "12A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:24264151",
+      "title": "Chiclayork",
+      "artist": "Andre Butano, Chinonegro",
+      "bpm": 128,
+      "key": "8A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29858147",
+      "title": "August In Paris",
+      "artist": "Shonky, Jen Cardini",
+      "bpm": 125,
+      "key": "12B",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29953835",
+      "title": "MYB",
+      "artist": "Ben Van Kuringen",
+      "bpm": 131,
+      "key": "10A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29993123",
+      "title": "Don't Hestitate",
+      "artist": "Stefan Meser",
+      "bpm": 130,
+      "key": "3A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:27932557",
+      "title": "Side to Side",
+      "artist": "CHRIS STASSY",
+      "bpm": 132,
+      "key": "5A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:19596504",
+      "title": "Won't Stop (Don't)",
+      "artist": "CHRIS STASSY",
+      "bpm": 133,
+      "key": "5A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:19130795",
+      "title": "Ju",
+      "artist": "Traumer, Anton, antraum",
+      "bpm": 127,
+      "key": "10A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29557661",
+      "title": "Chiamami",
+      "artist": "Shokë",
+      "bpm": 127,
+      "key": "6A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30078364",
+      "title": "Electric City",
+      "artist": "Hidde van Wee",
+      "bpm": 128,
+      "key": "8A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29873527",
+      "title": "Funky Beat",
+      "artist": "Easttown",
+      "bpm": 131,
+      "key": "5B",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29471863",
+      "title": "I Can Make You (Feel Good)",
+      "artist": "Scott Steer",
+      "bpm": 130,
+      "key": "10A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29546441",
+      "title": "Danse",
+      "artist": "Reboot, Carloh",
+      "bpm": 128,
+      "key": "2A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28939351",
+      "title": "GANGSTA",
+      "artist": "Joss Dean",
+      "bpm": 133,
+      "key": "5A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:24001642",
+      "title": "Strange Daze",
+      "artist": "Hipp-E",
+      "bpm": 127,
+      "key": "5B",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:10925513",
+      "title": "My Love",
+      "artist": "Route 94, Jess Glynne",
+      "bpm": 120,
+      "key": "5A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:423035",
+      "title": "The Sun Can't Compare",
+      "artist": "Larry Heard, Mr. White",
+      "bpm": 128,
+      "key": "9A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29535274",
+      "title": "Signals",
+      "artist": "OMRI.",
+      "bpm": 125,
+      "key": "12B",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20984396",
+      "title": "Te Conoci",
+      "artist": "GENNARO",
+      "bpm": 127,
+      "key": "5B",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20508157",
+      "title": "Nothing Wrong",
+      "artist": "OMRI.",
+      "bpm": 126,
+      "key": "2A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:19854665",
+      "title": "All By Myself",
+      "artist": "Mita Gami",
+      "bpm": 124,
+      "key": "6A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29354563",
+      "title": "Meet Hate With Love",
+      "artist": "DJ Pierre, Ann Nesby",
+      "bpm": 128,
+      "key": "6A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:24182212",
+      "title": "Losing My Sanity",
+      "artist": "Yuvèe",
+      "bpm": 124,
+      "key": "2A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:21067879",
+      "title": "Was I Loved?",
+      "artist": "Joss Dean",
+      "bpm": 132,
+      "key": "5A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20764801",
+      "title": "Me+U",
+      "artist": "Omar+",
+      "bpm": 124,
+      "key": "6A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:5252087",
+      "title": "Pushing On",
+      "artist": "Oliver Dollar, Jimi Jules",
+      "bpm": 122,
+      "key": "10A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30112280",
+      "title": "Back to Yours",
+      "artist": "ALONR",
+      "bpm": 125,
+      "key": "11A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:4085626",
+      "title": "No Eyes Feat. Jaw",
+      "artist": "Claptone",
+      "bpm": 120,
+      "key": "6B",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29988614",
+      "title": "Godsexy",
+      "artist": "Danny Howells",
+      "bpm": 124,
+      "key": "7A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29248811",
+      "title": "Deep Dimension",
+      "artist": "Job De Jong",
+      "bpm": 130,
+      "key": "12A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29090979",
+      "title": "Ritmo",
+      "artist": "Chesster",
+      "bpm": 128,
+      "key": "4B",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20279912",
+      "title": "Freydies",
+      "artist": "Yuvèe",
+      "bpm": 122,
+      "key": "12A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30130658",
+      "title": "Oh Don't Tell",
+      "artist": "Heirloom",
+      "bpm": 124,
+      "key": "7A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:23360610",
+      "title": "Day By Day",
+      "artist": "Hector Couto, KIRIK",
+      "bpm": 129,
+      "key": "2A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:19683364",
+      "title": "Go",
+      "artist": "Moby, CHRIS STASSY",
+      "bpm": 128,
+      "key": "9A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:19441928",
+      "title": "Closer",
+      "artist": "Gaskin",
+      "bpm": 132,
+      "key": "4A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:13979909",
+      "title": "Seeing & Believing",
+      "artist": "CHRIS STASSY",
+      "bpm": 128,
+      "key": "9A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:4731084",
+      "title": "Careless",
+      "artist": "Dusky",
+      "bpm": 121,
+      "key": "6A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30295708",
+      "title": "Turn Me Up",
+      "artist": "Isaac Carter, Biyi",
+      "bpm": 128,
+      "key": "5B",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28617638",
+      "title": "Twin Humanities",
+      "artist": "Whitesquare",
+      "bpm": 122,
+      "key": "4A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:24264148",
+      "title": "Groove Theory",
+      "artist": "Chinonegro",
+      "bpm": 128,
+      "key": "5B",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20946656",
+      "title": "Yosemite",
+      "artist": "Philip George, Interplanetary Criminal, Kettama",
+      "bpm": 130,
+      "key": "4A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20150521",
+      "title": "I Get Deep",
+      "artist": "Roland Clark",
+      "bpm": 124,
+      "key": "8A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29054798",
+      "title": "I Want Your Love",
+      "artist": "Riva Starr, Prunk, Danny Losito",
+      "bpm": 128,
+      "key": "4B",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:27486336",
+      "title": "Soul Drive",
+      "artist": "Danny Howells, Dilby",
+      "bpm": 126,
+      "key": "9B",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:22359783",
+      "title": "Take It Back (To The Old School)",
+      "artist": "Sidney Charles",
+      "bpm": 131,
+      "key": "4A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:18978017",
+      "title": "Known...Unknown...",
+      "artist": "Brunello",
+      "bpm": 130,
+      "key": "10A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:15731070",
+      "title": "Hideaway",
+      "artist": "Kiesza",
+      "bpm": 123,
+      "key": "6A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:2713236",
+      "title": "Something Special",
+      "artist": "Miguel Campbell",
+      "bpm": 123,
+      "key": "6B",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28835809",
+      "title": "Guess You Know...",
+      "artist": "M-High",
+      "bpm": 132,
+      "key": "7B",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28971248",
+      "title": "Forget Me Not",
+      "artist": "Alden Martin, Harry Thompson",
+      "bpm": 134,
+      "key": "11A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20613902",
+      "title": "Sakura",
+      "artist": "Locklead, CHRIS STASSY, Across Boundaries",
+      "bpm": 130,
+      "key": "9A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:19292794",
+      "title": "De Bongo Man",
+      "artist": "Toman",
+      "bpm": 128,
+      "key": "12A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:14153181",
+      "title": "Le Velour",
+      "artist": "Shonky",
+      "bpm": 124,
+      "key": "10A",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:3789116",
+      "title": "Love Somebody Else Feat. Joi Cardwell",
+      "artist": "Joi Cardwell, Jon Dasilva, Maceo Plex",
+      "bpm": 123,
+      "key": "1B",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30337345",
+      "title": "Trouble",
+      "artist": "Adrià Falcó",
+      "bpm": 126,
+      "key": "9B",
+      "genre": "Deep House",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30280444",
+      "title": "Breaking Point",
+      "artist": "Josh Baker",
+      "bpm": 132,
+      "key": "11A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30280448",
+      "title": "Your Star",
+      "artist": "Anabel Englund, Josh Baker",
+      "bpm": 130,
+      "key": "4B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30186716",
+      "title": "Feel The Same",
+      "artist": "Jeff Sorkowitz",
+      "bpm": 129,
+      "key": "8B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29297243",
+      "title": "Work It",
+      "artist": "SEBS",
+      "bpm": 130,
+      "key": "9A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30280446",
+      "title": "House With Acres",
+      "artist": "Capo Lee, Josh Baker",
+      "bpm": 135,
+      "key": "3A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28613880",
+      "title": "Trust Me feat. Ben Westbeech",
+      "artist": "Ben Westbeech, Dunmore Brothers",
+      "bpm": 126,
+      "key": "1B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:22236272",
+      "title": "Positive",
+      "artist": "Jamback",
+      "bpm": 130,
+      "key": "7B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29319994",
+      "title": "Move Shake",
+      "artist": "Jeff Sorkowitz",
+      "bpm": 128,
+      "key": "8B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:22180125",
+      "title": "Breath",
+      "artist": "LondonGround",
+      "bpm": 128,
+      "key": "8A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29492251",
+      "title": "To The Moo",
+      "artist": "Stef Davidse",
+      "bpm": 132,
+      "key": "12A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29873102",
+      "title": "Like Tha",
+      "artist": "DMC (UK)",
+      "bpm": 130,
+      "key": "8A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30307668",
+      "title": "What We Gonna Do",
+      "artist": "Mat.Theo",
+      "bpm": 129,
+      "key": "9A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:19324197",
+      "title": "The Clown's Corridor",
+      "artist": "Brunello, Connan",
+      "bpm": 127,
+      "key": "1B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30300132",
+      "title": "That Kick",
+      "artist": "Abel Budding",
+      "bpm": 134,
+      "key": "10B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29139472",
+      "title": "Rush",
+      "artist": "Ryan Nicholls",
+      "bpm": 132,
+      "key": "2A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30344685",
+      "title": "No Joke",
+      "artist": "Ben Griff",
+      "bpm": 132,
+      "key": "5B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29732570",
+      "title": "Bodu Imchi",
+      "artist": "Nachtbraker",
+      "bpm": 128,
+      "key": "7B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29783552",
+      "title": "Secrets",
+      "artist": "DumitrEscu",
+      "bpm": 128,
+      "key": "5B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:22183211",
+      "title": "Illusions",
+      "artist": "Brunello",
+      "bpm": 95,
+      "key": "12A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:23445507",
+      "title": "No Hesitating",
+      "artist": "Joe Rolét",
+      "bpm": 130,
+      "key": "3B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29981128",
+      "title": "Pentho",
+      "artist": "Robag Wruhme",
+      "bpm": 127,
+      "key": "1A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29625454",
+      "title": "Red Room",
+      "artist": "Discip",
+      "bpm": 130,
+      "key": "5A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:19217301",
+      "title": "So Good",
+      "artist": "GENNARO",
+      "bpm": 129,
+      "key": "5A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29732569",
+      "title": "Ompo",
+      "artist": "Nachtbraker",
+      "bpm": 132,
+      "key": "11B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29548830",
+      "title": "My Baby",
+      "artist": "Axle, Jess Morgan",
+      "bpm": 132,
+      "key": "7B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29756363",
+      "title": "XTC",
+      "artist": "Mike Morrisey, BLND (UK)",
+      "bpm": 132,
+      "key": "5A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29100581",
+      "title": "Lets Get High",
+      "artist": "Michael Bibi",
+      "bpm": 130,
+      "key": "7A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28297285",
+      "title": "Good Life",
+      "artist": "ALISHA, Inner City",
+      "bpm": 132,
+      "key": "10A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20889654",
+      "title": "Get Stupid",
+      "artist": "Julian Fijma",
+      "bpm": 130,
+      "key": "5B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:17355768",
+      "title": "Whatchagonnado",
+      "artist": "Franky Rizardo",
+      "bpm": 128,
+      "key": "3B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:19669154",
+      "title": "Searching",
+      "artist": "East End Dubs, Wheats",
+      "bpm": 130,
+      "key": "9B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29914468",
+      "title": "Feel The Beat",
+      "artist": "Paul C",
+      "bpm": 129,
+      "key": "4B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29614168",
+      "title": "Ah Ah Ah",
+      "artist": "Robbie Doherty",
+      "bpm": 136,
+      "key": "11A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30344687",
+      "title": "Take Your Time",
+      "artist": "Ben Griff",
+      "bpm": 131,
+      "key": "6A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28328287",
+      "title": "Rock Your Body",
+      "artist": "Jimi Latifi",
+      "bpm": 135,
+      "key": "10B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29183073",
+      "title": "De La Buena",
+      "artist": "Toman",
+      "bpm": 130,
+      "key": "11A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:24534723",
+      "title": "Excuse Me?",
+      "artist": "Ranger Trucco, Nate Katz",
+      "bpm": 129,
+      "key": "10A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30344686",
+      "title": "Feel This",
+      "artist": "Ben Griff",
+      "bpm": 131,
+      "key": "2A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29220232",
+      "title": "System (VIP)",
+      "artist": "Blaise Bracic",
+      "bpm": 128,
+      "key": "9B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:24284333",
+      "title": "Killa",
+      "artist": "Jimi Latifi",
+      "bpm": 132,
+      "key": "8A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29286564",
+      "title": "On Lock",
+      "artist": "Javi Miramontes",
+      "bpm": 128,
+      "key": "2B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28354592",
+      "title": "Fascination",
+      "artist": "Cam Stockman",
+      "bpm": 130,
+      "key": "7A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:21089091",
+      "title": "Can't Resist",
+      "artist": "Jamback",
+      "bpm": 130,
+      "key": "7B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:19506284",
+      "title": "Hold On Fuck That",
+      "artist": "Daniel Insogna, AJK (US)",
+      "bpm": 130,
+      "key": "2B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29317033",
+      "title": "Eternal",
+      "artist": "Wheats",
+      "bpm": 131,
+      "key": "10B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28702238",
+      "title": "What I Want",
+      "artist": "VITO (UK)",
+      "bpm": 128,
+      "key": "4A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28444563",
+      "title": "Face Bass",
+      "artist": "East End Dubs, Di Chiara Brothers",
+      "bpm": 133,
+      "key": "5B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:23858495",
+      "title": "Don't Stop",
+      "artist": "Teedee",
+      "bpm": 132,
+      "key": "12B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30300136",
+      "title": "Tunnel Vision",
+      "artist": "Abel Budding",
+      "bpm": 133,
+      "key": "2B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29875512",
+      "title": "Loving You",
+      "artist": "Ethan Walsh",
+      "bpm": 130,
+      "key": "2A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20001429",
+      "title": "Don't Touch That Dial",
+      "artist": "Rossi.",
+      "bpm": 132,
+      "key": "8A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30003817",
+      "title": "Pitch Black",
+      "artist": "Nacho Marco",
+      "bpm": 156,
+      "key": "8A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30021743",
+      "title": "House Feelings",
+      "artist": "ENNE (BR)",
+      "bpm": 129,
+      "key": "6A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29099738",
+      "title": "Anaconda",
+      "artist": "Beltran (BR)",
+      "bpm": 133,
+      "key": "4A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29732571",
+      "title": "Bathing",
+      "artist": "Nachtbraker",
+      "bpm": 130,
+      "key": "12B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29961974",
+      "title": "Drifting",
+      "artist": "Danny Snowden",
+      "bpm": 131,
+      "key": "9A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29732572",
+      "title": "Agiven",
+      "artist": "Nachtbraker",
+      "bpm": 133,
+      "key": "9A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:22302368",
+      "title": "Mr. Sub Bass",
+      "artist": "Ive Lovers",
+      "bpm": 132,
+      "key": "10A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:21359754",
+      "title": "4 Ya Mind",
+      "artist": "AYYBO, Discip",
+      "bpm": 128,
+      "key": "8B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:19309104",
+      "title": "On Deck",
+      "artist": "Tre Reynolds",
+      "bpm": 127,
+      "key": "3A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:17694403",
+      "title": "Messan",
+      "artist": "Jansons",
+      "bpm": 128,
+      "key": "11B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30171629",
+      "title": "Speed Up",
+      "artist": "Giuliano (CA), Relaxjosh",
+      "bpm": 130,
+      "key": "2A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29987024",
+      "title": "Human Voice",
+      "artist": "Four Tet",
+      "bpm": 132,
+      "key": "7A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29751255",
+      "title": "House Rules",
+      "artist": "FINKY",
+      "bpm": 131,
+      "key": "2A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:24527975",
+      "title": "Need U",
+      "artist": "Funk Cartel",
+      "bpm": 128,
+      "key": "7A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20655336",
+      "title": "Straight Through",
+      "artist": "Ninetree",
+      "bpm": 129,
+      "key": "11B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:23894214",
+      "title": "Going Acid",
+      "artist": "Pheelo",
+      "bpm": 129,
+      "key": "12B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:17545585",
+      "title": "Disco Party Baby",
+      "artist": "Vampire Sex",
+      "bpm": 127,
+      "key": "6B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30078363",
+      "title": "Freshness",
+      "artist": "Hidde van Wee",
+      "bpm": 132,
+      "key": "6A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30019134",
+      "title": "Own Me",
+      "artist": "Marco Consonni",
+      "bpm": 128,
+      "key": "5B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29510359",
+      "title": "Fade Away",
+      "artist": "Ninetree",
+      "bpm": 130,
+      "key": "6A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:19897556",
+      "title": "PlayBooyz",
+      "artist": "Fer BR",
+      "bpm": 127,
+      "key": "9B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:19557246",
+      "title": "The Rider",
+      "artist": "RUZE",
+      "bpm": 129,
+      "key": "7A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28096072",
+      "title": "What Did You Come For ?",
+      "artist": "Kolter",
+      "bpm": 131,
+      "key": "11A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:26782443",
+      "title": "Back 2 The Beat",
+      "artist": "Local Dub",
+      "bpm": 130,
+      "key": "2A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29953977",
+      "title": "How Ya Like Me Now",
+      "artist": "Owen Andrews, Luke Andrews",
+      "bpm": 131,
+      "key": "10B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20183108",
+      "title": "We Like To Party",
+      "artist": "Jordan Brando",
+      "bpm": 132,
+      "key": "7A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:19087254",
+      "title": "Something To Me",
+      "artist": "Josh Baker",
+      "bpm": 132,
+      "key": "6B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30035789",
+      "title": "Bassline Hit",
+      "artist": "Barragini, Agustin Leiva",
+      "bpm": 129,
+      "key": "4A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29492253",
+      "title": "Do It Right",
+      "artist": "Stef Davidse",
+      "bpm": 132,
+      "key": "9A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29718265",
+      "title": "Do You Not",
+      "artist": "BizZa",
+      "bpm": 128,
+      "key": "2A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28443787",
+      "title": "Buss It",
+      "artist": "Funk Cartel",
+      "bpm": 128,
+      "key": "8A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28443785",
+      "title": "Saints Row",
+      "artist": "Funk Cartel",
+      "bpm": 130,
+      "key": "1A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20104075",
+      "title": "K.E.T.",
+      "artist": "SLAMM, Dan Molinari",
+      "bpm": 130,
+      "key": "12A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:19585474",
+      "title": "First Light",
+      "artist": "Pedro Borlado",
+      "bpm": 130,
+      "key": "7A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:19630215",
+      "title": "Disco Cha Cha",
+      "artist": "Damelo",
+      "bpm": 128,
+      "key": "5A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:18977427",
+      "title": "Paradise",
+      "artist": "Bassel Darwish",
+      "bpm": 127,
+      "key": "7B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:18700009",
+      "title": "FEEL THE MUSIC",
+      "artist": "Jamback",
+      "bpm": 130,
+      "key": "7B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29905302",
+      "title": "Conga Blitz",
+      "artist": "Charlie iapicone",
+      "bpm": 130,
+      "key": "6A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29183859",
+      "title": "Bite This",
+      "artist": "Mellizos",
+      "bpm": 130,
+      "key": "6B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28096071",
+      "title": "Authentic Computers 2.0",
+      "artist": "Kolter",
+      "bpm": 130,
+      "key": "9A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:24129312",
+      "title": "Ease Your Mind",
+      "artist": "Rossi.",
+      "bpm": 132,
+      "key": "9A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:23207514",
+      "title": "How Does It Feel",
+      "artist": "Jeff Sorkowitz",
+      "bpm": 129,
+      "key": "10B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:23070855",
+      "title": "I Don't Even Love You",
+      "artist": "Teedee",
+      "bpm": 131,
+      "key": "7A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:22794289",
+      "title": "Keep the Crowd Moving",
+      "artist": "Boss Priester",
+      "bpm": 131,
+      "key": "5A",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20528913",
+      "title": "Give Me The Music",
+      "artist": "Ozzie Guven",
+      "bpm": 131,
+      "key": "2B",
+      "genre": "Minimal / Deep Tech",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30301446",
+      "title": "She Can Love U",
+      "artist": "Rafael, Toni B",
+      "bpm": 125,
+      "key": "9B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30101607",
+      "title": "Baby Do You Wanna Bump",
+      "artist": "JØRD",
+      "bpm": 124,
+      "key": "7B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30235178",
+      "title": "Just A Feeling",
+      "artist": "Peace Control, Eric Reyes, Nick Tew",
+      "bpm": 123,
+      "key": "4B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30258679",
+      "title": "Shine",
+      "artist": "Dodi, Buka",
+      "bpm": 126,
+      "key": "7A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29854462",
+      "title": "Synth Lines",
+      "artist": "Alexey Union, David LeSal, Broken Hill, STAY GOLDEN",
+      "bpm": 124,
+      "key": "2B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30186730",
+      "title": "Dangerous Women",
+      "artist": "Assaf Michael, Reef Kopel",
+      "bpm": 126,
+      "key": "7B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29854461",
+      "title": "Stay With Me",
+      "artist": "STAY GOLDEN",
+      "bpm": 125,
+      "key": "8B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29854458",
+      "title": "Silent Covenant",
+      "artist": "STAY GOLDEN",
+      "bpm": 125,
+      "key": "7B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30262911",
+      "title": "Burn It Up",
+      "artist": "Karry G",
+      "bpm": 128,
+      "key": "7B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:17985216",
+      "title": "Spring Girl",
+      "artist": "Maori, Adam Ten",
+      "bpm": 126,
+      "key": "5B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30145614",
+      "title": "Feelin",
+      "artist": "sone.",
+      "bpm": 125,
+      "key": "2A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30254609",
+      "title": "Move",
+      "artist": "DEFLEE, LIINA",
+      "bpm": 125,
+      "key": "2A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:14513658",
+      "title": "NY Lipps (feat. Nancy Whang)",
+      "artist": "Soulwax, Nancy Whang",
+      "bpm": 130,
+      "key": "8B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30077395",
+      "title": "Play With Me",
+      "artist": "Jonathan Kaspar",
+      "bpm": 124,
+      "key": "7B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29211469",
+      "title": "Tu Es Tout",
+      "artist": "Tom & Collins",
+      "bpm": 124,
+      "key": "9B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29756707",
+      "title": "Get It",
+      "artist": "Fairtone",
+      "bpm": 124,
+      "key": "7B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30310730",
+      "title": "Boogie Up",
+      "artist": "Alphadog, MELODIC (IL)",
+      "bpm": 125,
+      "key": "9B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30218000",
+      "title": "Mjoozik",
+      "artist": "Zare",
+      "bpm": 128,
+      "key": "6A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29648734",
+      "title": "Freak",
+      "artist": "HIGHLITE, Peredel",
+      "bpm": 125,
+      "key": "8A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30310729",
+      "title": "Rockstar",
+      "artist": "Alphadog",
+      "bpm": 128,
+      "key": "3A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30256407",
+      "title": "Naughty Monkey",
+      "artist": "bakh",
+      "bpm": 125,
+      "key": "8B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30054767",
+      "title": "Hiraita Hiraita",
+      "artist": "Deer Jade",
+      "bpm": 124,
+      "key": "11B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29066092",
+      "title": "No Bammer",
+      "artist": "axxa*",
+      "bpm": 127,
+      "key": "12B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30393482",
+      "title": "HOT WIFE",
+      "artist": "Tiga, Boys Noize",
+      "bpm": 124,
+      "key": "7A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30213823",
+      "title": "Take Me Home",
+      "artist": "Komashov",
+      "bpm": 126,
+      "key": "7B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30136264",
+      "title": "Make A Livin'",
+      "artist": "Cortado",
+      "bpm": 124,
+      "key": "6A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29805192",
+      "title": "Funk 4 You",
+      "artist": "s.o.l.i.d, Maguelli",
+      "bpm": 126,
+      "key": "9B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28337403",
+      "title": "Rock Like This",
+      "artist": "Amour Propre",
+      "bpm": 128,
+      "key": "1A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29816199",
+      "title": "Elektronic Motors",
+      "artist": "Waltervelt",
+      "bpm": 126,
+      "key": "10B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29714789",
+      "title": "Verschwinden",
+      "artist": "Kolsch",
+      "bpm": 125,
+      "key": "5A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30145616",
+      "title": "Keep It Fun",
+      "artist": "sone.",
+      "bpm": 126,
+      "key": "4A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29458244",
+      "title": "EASY TO GET",
+      "artist": "Gab Rhome, Philou",
+      "bpm": 126,
+      "key": "8B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:21530121",
+      "title": "Disco Boy",
+      "artist": "DJ Zombi, Guy Davidov",
+      "bpm": 125,
+      "key": "9A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29623977",
+      "title": "Between Us (Extended Mix)",
+      "artist": "LUCH, Orsay",
+      "bpm": 124,
+      "key": "9A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29191388",
+      "title": "Lemme Dance",
+      "artist": "Myd, Chloé Caillet",
+      "bpm": 132,
+      "key": "9A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30355963",
+      "title": "When The Fire Starts To Burn",
+      "artist": "Colyn",
+      "bpm": 126,
+      "key": "10B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30232218",
+      "title": "We Rule The World",
+      "artist": "Cristian Viviano",
+      "bpm": 126,
+      "key": "9B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30189235",
+      "title": "Calle Sur",
+      "artist": "Oliver Koletzki",
+      "bpm": 125,
+      "key": "9B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30000905",
+      "title": "CAN'T STOP",
+      "artist": "CHALANT",
+      "bpm": 125,
+      "key": "2A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:11817450",
+      "title": "Work It",
+      "artist": "Marie Davidson",
+      "bpm": 125,
+      "key": "9B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:9854126",
+      "title": "Miura",
+      "artist": "Metro Area",
+      "bpm": 123,
+      "key": "10B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30283905",
+      "title": "Could It Be Love",
+      "artist": "KENSHO (ofc)",
+      "bpm": 129,
+      "key": "9A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29174638",
+      "title": "Feel Alive",
+      "artist": "ZARO, Fancy Inc",
+      "bpm": 126,
+      "key": "7A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30310731",
+      "title": "Stay Close To Me",
+      "artist": "Alphadog",
+      "bpm": 123,
+      "key": "10A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29579088",
+      "title": "Encore",
+      "artist": "Touch The Sound",
+      "bpm": 126,
+      "key": "12B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29007250",
+      "title": "Foot on the Gas",
+      "artist": "POLOVICH",
+      "bpm": 127,
+      "key": "1A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20713407",
+      "title": "Be Where I Am feat. Daniel Wilson",
+      "artist": "Metroplane, Daniel Wilson",
+      "bpm": 124,
+      "key": "8A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:11769642",
+      "title": "Starry Night",
+      "artist": "Peggy Gou",
+      "bpm": 123,
+      "key": "1B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30080001",
+      "title": "Cold Hands",
+      "artist": "DJ Tennis, M-High",
+      "bpm": 130,
+      "key": "5A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:22255048",
+      "title": "GOAT",
+      "artist": "BLOND:ISH, Broken Hill, DARCO 09",
+      "bpm": 126,
+      "key": "10B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29899866",
+      "title": "Synthesia",
+      "artist": "Dee Montero",
+      "bpm": 124,
+      "key": "3B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30128683",
+      "title": "Serpent Cinema",
+      "artist": "Whitesquare",
+      "bpm": 126,
+      "key": "8A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:1008049",
+      "title": "Poison Lips",
+      "artist": "Vitalic",
+      "bpm": 126,
+      "key": "3A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30145615",
+      "title": "Always",
+      "artist": "sone., Talbot",
+      "bpm": 124,
+      "key": "2A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30024523",
+      "title": "Cigarette",
+      "artist": "Nala",
+      "bpm": 130,
+      "key": "9A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29659140",
+      "title": "Dance-Tool",
+      "artist": "Yannick Mueller",
+      "bpm": 125,
+      "key": "11B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29096162",
+      "title": "We Love Paul",
+      "artist": "Gregor Salto, Kapuchon, AfroSalto",
+      "bpm": 125,
+      "key": "2B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:10714563",
+      "title": "At Night",
+      "artist": "Shakedown",
+      "bpm": 127,
+      "key": "7B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:6616118",
+      "title": "Like A Fool",
+      "artist": "Crazy P",
+      "bpm": 125,
+      "key": "7A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30215475",
+      "title": "Shadows",
+      "artist": "KuKs",
+      "bpm": 122,
+      "key": "8B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30203587",
+      "title": "Bittersweet",
+      "artist": "Dirty Doering, Matchy",
+      "bpm": 124,
+      "key": "10B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29338749",
+      "title": "Rhodes in the Middle",
+      "artist": "Melchior Sultana",
+      "bpm": 128,
+      "key": "3B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29852153",
+      "title": "Movin' In",
+      "artist": "Berny, Futuristant",
+      "bpm": 126,
+      "key": "6B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29176710",
+      "title": "It's Not Right",
+      "artist": "Emanuele Esposito, Gianni Romano",
+      "bpm": 125,
+      "key": "5A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28774273",
+      "title": "Acid Groove Theory",
+      "artist": "Deer Jade",
+      "bpm": 123,
+      "key": "5B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:18810365",
+      "title": "First Choice",
+      "artist": "Yamagucci, DvirNuns",
+      "bpm": 123,
+      "key": "8B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30049268",
+      "title": "Nodisco",
+      "artist": "Floormagnet",
+      "bpm": 124,
+      "key": "7B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29897431",
+      "title": "Good Time",
+      "artist": "AYOUBYME, Roomer",
+      "bpm": 122,
+      "key": "4A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29053218",
+      "title": "Sun My Sweet Sun",
+      "artist": "Red Axes",
+      "bpm": 125,
+      "key": "5B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:24539755",
+      "title": "Nothing Is (Under Control) - Extended Version",
+      "artist": "NO STATIC",
+      "bpm": 130,
+      "key": "5A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:22717151",
+      "title": "Lost In The Mellow Circus",
+      "artist": "Brunello",
+      "bpm": 127,
+      "key": "6A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20300508",
+      "title": "El Internet",
+      "artist": "Matias Aguayo",
+      "bpm": 136,
+      "key": "6A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:18178128",
+      "title": "Out of Touch",
+      "artist": "Daryl Hall & John Oates",
+      "bpm": 120,
+      "key": "8A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:14758475",
+      "title": "Yes You Sexy",
+      "artist": "Eden Burns",
+      "bpm": 127,
+      "key": "4A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:7059442",
+      "title": "Inspector Norse",
+      "artist": "Todd Terje",
+      "bpm": 120,
+      "key": "7B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30242431",
+      "title": "LAYLA (extended)",
+      "artist": "BABA MUSIC",
+      "bpm": 120,
+      "key": "9B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29637203",
+      "title": "Impact Mechanism",
+      "artist": "Difler",
+      "bpm": 123,
+      "key": "12B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29821475",
+      "title": "This One",
+      "artist": "Berkay Sinmez, Kemal Kaya",
+      "bpm": 127,
+      "key": "10B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29491537",
+      "title": "Todo Cambiara",
+      "artist": "Pional",
+      "bpm": 122,
+      "key": "11A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:19334757",
+      "title": "All You Children",
+      "artist": "The Avalanches, Jamie xx",
+      "bpm": 120,
+      "key": "5B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:29053492",
+      "title": "Echoes Of Love",
+      "artist": "Andrew Meller",
+      "bpm": 126,
+      "key": "5A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:23211589",
+      "title": "Let It Happen",
+      "artist": "Tame Impala",
+      "bpm": 125,
+      "key": "12A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30118405",
+      "title": "Fight Club",
+      "artist": "Luca Saporito, Juliann",
+      "bpm": 126,
+      "key": "8B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30112437",
+      "title": "Hot Stuff",
+      "artist": "Mario Bazouri",
+      "bpm": 124,
+      "key": "5A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28429185",
+      "title": "Dead To Me",
+      "artist": "Morcheeba",
+      "bpm": 128,
+      "key": "8A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:28721195",
+      "title": "Far Out!",
+      "artist": "Rex The Dog",
+      "bpm": 125,
+      "key": "9B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:23899252",
+      "title": "Sunday Routine",
+      "artist": "Bonafique",
+      "bpm": 124,
+      "key": "11B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:23348877",
+      "title": "Creature Of The Night",
+      "artist": "Raxon",
+      "bpm": 131,
+      "key": "10B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:21308763",
+      "title": "Brainwave 2.0",
+      "artist": "Michael Mayer",
+      "bpm": 124,
+      "key": "9B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20648774",
+      "title": "Lose Your Soul",
+      "artist": "Omri Smadar, Jenia Tarsol, Nona Choir",
+      "bpm": 125,
+      "key": "1A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:20147392",
+      "title": "The Sound",
+      "artist": "Kiko, Waltervelt",
+      "bpm": 126,
+      "key": "10B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:16356699",
+      "title": "I Go",
+      "artist": "Peggy Gou",
+      "bpm": 125,
+      "key": "12A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:1246665",
+      "title": "Dancing On My Own",
+      "artist": "Robyn",
+      "bpm": 117,
+      "key": "2B",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    },
+    {
+      "id": "bp:30432282",
+      "title": "Draga Draga",
+      "artist": "Q.U.A.K.E, Nir Lahav",
+      "bpm": 124,
+      "key": "6A",
+      "genre": "Indie Dance",
+      "source": "catalog"
+    }
+  ]
 }
