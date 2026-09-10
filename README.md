@@ -1,5 +1,8 @@
 # Camelot Setlist
 
+**Live: [camelot-setlist-tool.vercel.app](https://camelot-setlist-tool.vercel.app)** — you can
+try it without an account; sets you build as a guest stay in your own browser.
+
 A web app that builds DJ setlists from your rekordbox library by matching **BPM** and
 **Camelot key**. It supports multiple users, and each one only ever sees their own data.
 
@@ -142,6 +145,9 @@ limited to a few messages an hour, which is fine for a handful of people; you ca
 email confirmation off under **Authentication → Providers → Email**.
 
 ### 3. Vercel
+
+The deployment lives at <https://camelot-setlist-tool.vercel.app> and tracks the `main`
+branch; `development` is where the work happens.
 
 1. Vercel → **Add New → Project** → import the repository. The framework is detected as
    `vite` (it is also declared in `vercel.json`).
