@@ -1,9 +1,6 @@
-import { readFileSync } from 'node:fs'
-import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
+import fixture from '../../test/fixtures/tracklists-weekly.html?raw'
 import { decodeEntities, extractChart, splitName } from './tracklists'
-
-const fixture = readFileSync(resolve('test/fixtures/tracklists-weekly.html'), 'utf8')
 
 describe('decodeEntities', () => {
   it('adlandırılmış varlıkları çözer', () => {
