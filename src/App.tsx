@@ -238,23 +238,6 @@ export function App() {
         <SuggestPanel />
       </main>
 
-      {/* GetSongBPM grants its free API key on the condition of a visible link back. */}
-      <footer className="credits">
-        <span>
-          Tempo and key data from{' '}
-          <a href="https://getsongbpm.com" target="_blank" rel="noreferrer">
-            GetSongBPM
-          </a>
-        </span>
-        <span className="faint">·</span>
-        <span>
-          Discovery catalog from{' '}
-          <a href="https://www.beatport.com" target="_blank" rel="noreferrer">
-            Beatport
-          </a>
-        </span>
-      </footer>
-
       <AuthDialog open={dialog === 'auth'} onClose={() => setDialog(null)} />
       <ImportDialog open={dialog === 'import'} onClose={() => setDialog(null)} />
       <TrackSearchDialog open={dialog === 'search'} onClose={() => setDialog(null)} />

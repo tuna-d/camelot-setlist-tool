@@ -8,6 +8,15 @@
   </head>
   <body>
     <div id="root"></div>
+
+    <!-- Static on purpose: GetSongBPM grants its free key on the condition of a visible
+         link back, and a check that reads the served HTML would not run our JavaScript. -->
+    <footer class="credits">
+      <span>Tempo and key data from <a href="https://getsongbpm.com">GetSongBPM</a></span>
+      <span class="faint">·</span>
+      <span>Discovery catalog from <a href="https://www.beatport.com">Beatport</a></span>
+    </footer>
+
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
