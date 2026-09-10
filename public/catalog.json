@@ -1,8 +1,4078 @@
 {
-  "updatedAt": "2026-09-08T18:51:57.181Z",
-  "source": "beatport",
-  "strategy": "next-data",
+  "updatedAt": "2026-09-10T14:11:42.496Z",
+  "source": "volumo",
+  "strategy": "volumo-chart",
   "tracks": [
+    {
+      "id": "vl:6632075",
+      "title": "Halo (Original Mix)",
+      "artist": "Shokë",
+      "bpm": 128,
+      "key": "8A",
+      "genre": "House",
+      "duration": 390,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6653295",
+      "title": "Sometimes (Original Mix)",
+      "artist": "Wildish",
+      "bpm": 130,
+      "key": "7A",
+      "genre": "House",
+      "duration": 354,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6653095",
+      "title": "Lost In The Rhythm (Original Mix)",
+      "artist": "Tim James (UK)",
+      "bpm": 131,
+      "key": "7A",
+      "genre": "House",
+      "duration": 352,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6652676",
+      "title": "Roll With the Rhythm (Original Mix)",
+      "artist": "Jamie Unknown",
+      "bpm": 133,
+      "key": "1A",
+      "genre": "House",
+      "duration": 341,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6652641",
+      "title": "Countdown (Deep Mix)",
+      "artist": "Morgan Bale",
+      "bpm": 128,
+      "key": "8A",
+      "genre": "House",
+      "duration": 397,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6652134",
+      "title": "Can&#x27;t Deny feat. Kerri Chandler (THEOS Extended Remix)",
+      "artist": "Josh Butler, Kerri Chandler",
+      "bpm": 130,
+      "key": "8A",
+      "genre": "House",
+      "duration": 343,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6651396",
+      "title": "The Joy (Daniel Steinberg Extended Remix)",
+      "artist": "Supernova",
+      "bpm": 127,
+      "key": "3B",
+      "genre": "House",
+      "duration": 333,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6666478",
+      "title": "Babylon Lova (Original Mix)",
+      "artist": "Mendy",
+      "bpm": 134,
+      "key": "12A",
+      "genre": "Minimal / Deep Tech",
+      "duration": 344,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6652395",
+      "title": "Size Mick (Original Mix)",
+      "artist": "Jjoska",
+      "bpm": 128,
+      "key": "4A",
+      "genre": "Minimal / Deep Tech",
+      "duration": 456,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6557745",
+      "title": "Stripes",
+      "artist": "J.K. Rollin",
+      "bpm": 131,
+      "key": "4A",
+      "genre": "Minimal / Deep Tech",
+      "duration": 340,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6633191",
+      "title": "MYB (Extended Mix)",
+      "artist": "Ben Van Kuringen",
+      "bpm": 131,
+      "key": "10A",
+      "genre": "Minimal / Deep Tech",
+      "duration": 337,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6558356",
+      "title": "Outer Rim",
+      "artist": "Jscott",
+      "bpm": 126,
+      "key": "8B",
+      "genre": "Minimal / Deep Tech",
+      "duration": 367,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6551560",
+      "title": "Jazz Freak",
+      "artist": "NoriKuest",
+      "bpm": 128,
+      "key": "8A",
+      "genre": "Minimal / Deep Tech",
+      "duration": 334,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6363431",
+      "title": "Feelin&#x27; Good",
+      "artist": "Menary",
+      "bpm": 126,
+      "key": "2A",
+      "genre": "Minimal / Deep Tech",
+      "duration": 367,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6629185",
+      "title": "Xperiment A (Original Mix)",
+      "artist": "Novelo (MX)",
+      "bpm": 126,
+      "key": "5A",
+      "genre": "Minimal / Deep Tech",
+      "duration": 400,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6616381",
+      "title": "Losing It (Original Mix)",
+      "artist": "Reber",
+      "bpm": 130,
+      "key": "4A",
+      "genre": "Minimal / Deep Tech",
+      "duration": 347,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6653107",
+      "title": "La Doida (Original Mix)",
+      "artist": "Currents",
+      "bpm": 126,
+      "key": "6A",
+      "genre": "Funky / Jackin&#x27; House",
+      "duration": 373,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6537426",
+      "title": "Keep on Bouncin&#x27; (Extended Mix)",
+      "artist": "Motion Twin",
+      "bpm": 133,
+      "key": "9A",
+      "genre": "Funky / Jackin&#x27; House",
+      "duration": 211,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6405406",
+      "title": "Muchacho (Extended Mix)",
+      "artist": "LEFTI",
+      "bpm": 126,
+      "key": "7B",
+      "genre": "Funky / Jackin&#x27; House",
+      "duration": 365,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6587055",
+      "title": "Another Night (Ranger Trucco Extended Remix)",
+      "artist": "RUZE, Chesster, Ranger Trucco",
+      "bpm": 130,
+      "key": "8B",
+      "genre": "House",
+      "duration": 386,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6641698",
+      "title": "Searching",
+      "artist": "Will Watt, Finn Penny",
+      "bpm": 128,
+      "key": "11A",
+      "genre": "House",
+      "duration": 322,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6593379",
+      "title": "Take It Higher (Extended Mix)",
+      "artist": "Flashmob",
+      "bpm": 129,
+      "key": "6A",
+      "genre": "House",
+      "duration": 361,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6670795",
+      "title": "Marble Dust (Original Mix)",
+      "artist": "Dachshund",
+      "bpm": 123,
+      "key": "8B",
+      "genre": "Deep House",
+      "duration": 417,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6669027",
+      "title": "Soul Connection (Original Mix)",
+      "artist": "Jose Vilches",
+      "bpm": 125,
+      "key": "7B",
+      "genre": "Deep House",
+      "duration": 340,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6667937",
+      "title": "Shake That (Original Mix)",
+      "artist": "Azit",
+      "bpm": 122,
+      "key": "12B",
+      "genre": "Deep House",
+      "duration": 379,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6234632",
+      "title": "Freaks (Original Mix)",
+      "artist": "Djebali, Reda daRE",
+      "bpm": 128,
+      "key": "4A",
+      "genre": "Minimal / Deep Tech",
+      "duration": 348,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6263347",
+      "title": "Sub Stance",
+      "artist": "Okain",
+      "bpm": 128,
+      "key": "8B",
+      "genre": "Deep House",
+      "duration": 319,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6468493",
+      "title": "Tempo (Original Mix)",
+      "artist": "Nick Curly",
+      "bpm": 128,
+      "key": "5A",
+      "genre": "House",
+      "duration": 361,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6360238",
+      "title": "Days of High and Low",
+      "artist": "Echonomist",
+      "bpm": 125,
+      "key": "9A",
+      "genre": "Indie Dance / Dark Disco",
+      "duration": 414,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6518531",
+      "title": "2012",
+      "artist": "Alexis Raphael",
+      "bpm": 124,
+      "key": "9B",
+      "genre": "Deep House",
+      "duration": 387,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6414005",
+      "title": "Need You",
+      "artist": "Huxley",
+      "bpm": 128,
+      "key": "6A",
+      "genre": "Deep House",
+      "duration": 318,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:5596515",
+      "title": "The Skipping Needle",
+      "artist": "Alexis Raphael",
+      "bpm": 130,
+      "key": "8A",
+      "genre": "Deep House",
+      "duration": 328,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6545171",
+      "title": "Pattern Siren",
+      "artist": "The Pattern Sound",
+      "bpm": 135,
+      "key": "4A",
+      "genre": "Breaks / Breakbeat",
+      "duration": 242,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6671306",
+      "title": "HHELLOFFAMEE (Vocal)",
+      "artist": "Calagad 13",
+      "bpm": 128,
+      "key": "7A",
+      "genre": "Electro (Classic / Detroit)",
+      "duration": 247,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6641536",
+      "title": "Dirtbox",
+      "artist": "Filta Freqz",
+      "bpm": 125,
+      "key": "3A",
+      "genre": "Funky / Jackin&#x27; House",
+      "duration": 324,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6671299",
+      "title": "Did I Ever (Original Mix)",
+      "artist": "Frank Amodo",
+      "bpm": 127,
+      "key": "4A",
+      "genre": "Funky / Jackin&#x27; House",
+      "duration": 347,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6673912",
+      "title": "Amour Inderdit",
+      "artist": "Sandy Groove, Boogietraxx",
+      "bpm": 128,
+      "key": "3A",
+      "genre": "Funky / Jackin&#x27; House",
+      "duration": 197,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6675907",
+      "title": "8 For 8 feat. Wiley & Local & Lucas Alexander (Remix)",
+      "artist": "Oldboy, DJ Cosworth, Wiley, Local, Lucas Alexander",
+      "bpm": 126,
+      "key": "6A",
+      "genre": "UK Garage / 2-Step",
+      "duration": 307,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6669313",
+      "title": "Feel The Same (Original Mix)",
+      "artist": "Jeff Sorkowitz",
+      "bpm": 129,
+      "key": "5A",
+      "genre": "Minimal / Deep Tech",
+      "duration": 327,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6669139",
+      "title": "This No More (Original Mix)",
+      "artist": "Allen(IT)",
+      "bpm": 130,
+      "key": "7A",
+      "genre": "Funky / Jackin&#x27; House",
+      "duration": 295,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6669140",
+      "title": "Thease Me (Original Mix)",
+      "artist": "Allen(IT)",
+      "bpm": 126,
+      "key": "8A",
+      "genre": "Funky / Jackin&#x27; House",
+      "duration": 338,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6617464",
+      "title": "I Always (Original Mix)",
+      "artist": "Saliva Commandos",
+      "bpm": 126,
+      "key": "12A",
+      "genre": "Funky / Jackin&#x27; House",
+      "duration": 375,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6668972",
+      "title": "Wavy Dayz feat. Bozi (Original Mix)",
+      "artist": "Matt Prehn, Fernando Ortega, Bozi",
+      "bpm": 125,
+      "key": "8A",
+      "genre": "Deep House",
+      "duration": 352,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6668500",
+      "title": "Deeper Love (Original Mix)",
+      "artist": "Nightly Closures",
+      "bpm": 123,
+      "key": "5A",
+      "genre": "Deep House",
+      "duration": 403,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6668132",
+      "title": "In My Soul (Original Mix)",
+      "artist": "Matt Gillespie",
+      "bpm": 128,
+      "key": "6B",
+      "genre": "Deep House",
+      "duration": 292,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6686435",
+      "title": "It&#x27;s That Real Type Of Thang",
+      "artist": "Roberto Pedoto",
+      "bpm": 126,
+      "key": "5A",
+      "genre": "Deep House",
+      "duration": 370,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6634358",
+      "title": "All Night Stompin&#x27;",
+      "artist": "Shabi",
+      "bpm": 126,
+      "key": "7A",
+      "genre": "Deep House",
+      "duration": 354,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6609918",
+      "title": "Secretos (Extended Mix)",
+      "artist": "Nautik",
+      "bpm": 129,
+      "key": "8A",
+      "genre": "Deep House",
+      "duration": 357,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6668501",
+      "title": "Deeper Love (TshegoTMM & Vencer Cafe Remix)",
+      "artist": "Nightly Closures",
+      "bpm": 123,
+      "key": "8B",
+      "genre": "Deep House",
+      "duration": 392,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6648205",
+      "title": "Take this feeling",
+      "artist": "Daryn Steytler, Vault Records",
+      "bpm": 140,
+      "key": "6B",
+      "genre": "Techno (Raw, Deep, Dub)",
+      "duration": 414,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6671858",
+      "title": "Semantic space",
+      "artist": "øxyde",
+      "bpm": 142,
+      "key": "6A",
+      "genre": "Techno (Raw, Deep, Dub)",
+      "duration": 360,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6664741",
+      "title": "Axis (Original Mix)",
+      "artist": "Drunken Kong",
+      "bpm": 139,
+      "key": "8B",
+      "genre": "Techno (Raw, Deep, Dub)",
+      "duration": 320,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6664736",
+      "title": "Ground Control (Original Mix)",
+      "artist": "Mankind",
+      "bpm": 138,
+      "key": "1A",
+      "genre": "Techno (Raw, Deep, Dub)",
+      "duration": 340,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6649439",
+      "title": "Nigromancias del Vacio",
+      "artist": "Gresil",
+      "bpm": 137,
+      "key": "2B",
+      "genre": "Techno (Raw, Deep, Dub)",
+      "duration": 286,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6627397",
+      "title": "Under Ice",
+      "artist": "Ignez",
+      "bpm": 137,
+      "key": "11A",
+      "genre": "Techno (Raw, Deep, Dub)",
+      "duration": 338,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6462537",
+      "title": "Cyclic Motion",
+      "artist": "Hakkon",
+      "bpm": 138,
+      "key": "6A",
+      "genre": "Techno (Raw, Deep, Dub)",
+      "duration": 307,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6627359",
+      "title": "Louisiana",
+      "artist": "Sciahri",
+      "bpm": 141,
+      "key": "5B",
+      "genre": "Techno (Raw, Deep, Dub)",
+      "duration": 300,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6590112",
+      "title": "Liquid Tool",
+      "artist": "Lee Van Cliff",
+      "bpm": 140,
+      "key": "12A",
+      "genre": "Techno (Raw, Deep, Dub)",
+      "duration": 384,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6668017",
+      "title": "Escoria (Original Mix)",
+      "artist": "PWCCA",
+      "bpm": 136,
+      "key": "3B",
+      "genre": "Techno (Raw, Deep, Dub)",
+      "duration": 310,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6645191",
+      "title": "Recentering",
+      "artist": "Temudo, Kwartz",
+      "bpm": 139,
+      "key": "8B",
+      "genre": "Techno (Raw, Deep, Dub)",
+      "duration": 315,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6608495",
+      "title": "Perfil 32 (Original Mix)",
+      "artist": "VERUAH, CIOFFI",
+      "bpm": 138,
+      "key": "5A",
+      "genre": "Techno (Raw, Deep, Dub)",
+      "duration": 330,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6652056",
+      "title": "Gotta Love (Original Mix)",
+      "artist": "Retrouve",
+      "bpm": 128,
+      "key": "1A",
+      "genre": "House",
+      "duration": 406,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6652057",
+      "title": "Open Your Mind (Original Mix)",
+      "artist": "Retrouve",
+      "bpm": 129,
+      "key": "9A",
+      "genre": "House",
+      "duration": 387,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6652058",
+      "title": "Gotta Love (Mihai Popoviciu Remix)",
+      "artist": "Retrouve",
+      "bpm": 128,
+      "key": "1A",
+      "genre": "Tech House",
+      "duration": 375,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6616894",
+      "title": "La Mousse (Original Mix)",
+      "artist": "Cuba",
+      "bpm": 130,
+      "key": "2A",
+      "genre": "House",
+      "duration": 387,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6532546",
+      "title": "Acid Culture",
+      "artist": "Kevin Toro",
+      "bpm": 127,
+      "key": "8B",
+      "genre": "House",
+      "duration": 397,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6594748",
+      "title": "Symphony Style (Original Mix)",
+      "artist": "Andre Zimmer",
+      "bpm": 131,
+      "key": "1A",
+      "genre": "House",
+      "duration": 289,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6122291",
+      "title": "To The People (Original Mix)",
+      "artist": "Mihai Popoviciu",
+      "bpm": 128,
+      "key": "10B",
+      "genre": "Deep House",
+      "duration": 360,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6048679",
+      "title": "Ecstasy",
+      "artist": "Steal Tapes",
+      "bpm": 127,
+      "key": "6B",
+      "genre": "Tech House",
+      "duration": 394,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:4311457",
+      "title": "A Never Ending Story (Original Mix)",
+      "artist": "Pancratio",
+      "bpm": 130,
+      "key": "11A",
+      "genre": "Minimal / Deep Tech",
+      "duration": 468,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6469162",
+      "title": "The Quest (Original Mix)",
+      "artist": "Andrew Azara",
+      "bpm": 128,
+      "key": "3A",
+      "genre": "House",
+      "duration": 409,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6632264",
+      "title": "Tarantula (Original Mix)",
+      "artist": "Hector Llamazares",
+      "bpm": 127,
+      "key": "5A",
+      "genre": "Melodic House / Techno",
+      "duration": 366,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6270132",
+      "title": "Shake It",
+      "artist": "Yamil",
+      "bpm": 123,
+      "key": "1A",
+      "genre": "Afro House",
+      "duration": 360,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:3219022",
+      "title": "I Am A Dancer (Skatman Remix)",
+      "artist": "Marc Romboy, C.A.R.",
+      "bpm": 124,
+      "key": "1A",
+      "genre": "Melodic House / Techno",
+      "duration": 423,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:1535548",
+      "title": "Peacetime",
+      "artist": "Architectural",
+      "bpm": 130,
+      "key": "6A",
+      "genre": "Techno (Raw, Deep, Dub)",
+      "duration": 475,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:2962117",
+      "title": "Free",
+      "artist": "Hardt Antoine",
+      "bpm": 124,
+      "key": "4A",
+      "genre": "Melodic House / Techno",
+      "duration": 343,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:5790850",
+      "title": "Novalight (Pole Position Extended Remix)",
+      "artist": "Riva Starr, Soul Speech, Close Counters",
+      "bpm": 124,
+      "key": "3A",
+      "genre": "House",
+      "duration": 344,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:5926880",
+      "title": "Till We Meet Again (Inner City Extended Edit of Carl Craig Remix)",
+      "artist": "Inner City",
+      "bpm": 124,
+      "key": "2A",
+      "genre": "House",
+      "duration": 435,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:5622728",
+      "title": "What Is House? (Extended Version)",
+      "artist": "Tim Engelhardt, Sean Doron",
+      "bpm": 126,
+      "key": "2A",
+      "genre": "House",
+      "duration": 336,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6594199",
+      "title": "Feeling (Original Mix)",
+      "artist": "Hector Llamazares",
+      "bpm": 128,
+      "key": "4A",
+      "genre": "Melodic House / Techno",
+      "duration": 390,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6596072",
+      "title": "Housetool (Original Mix)",
+      "artist": "Minas",
+      "bpm": 128,
+      "key": "7B",
+      "genre": "Progressive House",
+      "duration": 330,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:5956765",
+      "title": "Asa (Extended Mix)",
+      "artist": "Âme",
+      "bpm": 128,
+      "key": "2A",
+      "genre": "Melodic House / Techno",
+      "duration": 452,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:1481764",
+      "title": "Walk Music",
+      "artist": "Henrik Schwarz",
+      "bpm": 124,
+      "key": "12A",
+      "genre": "Deep House",
+      "duration": 425,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6651397",
+      "title": "Feel The Vibe (Extended Mix)",
+      "artist": "Juan Manuel",
+      "bpm": 130,
+      "key": "4B",
+      "genre": "House",
+      "duration": 384,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:5437946",
+      "title": "Make This Place",
+      "artist": "m.O.N.R.O.E., Klaudie",
+      "bpm": 127,
+      "key": "8A",
+      "genre": "Tech House",
+      "duration": 347,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:5576764",
+      "title": "Taking It Back (Original Mix)",
+      "artist": "Carl Booth, Glenn Pallas",
+      "bpm": 126,
+      "key": "11A",
+      "genre": "House",
+      "duration": 339,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6570555",
+      "title": "4Get The Girl (Mellizos Extended Remix)",
+      "artist": "Route 94, Mellizos",
+      "bpm": 130,
+      "key": "11A",
+      "genre": "House",
+      "duration": 328,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:5576882",
+      "title": "Get Up Girl (Extended Mix)",
+      "artist": "Rapham, Tough Art",
+      "bpm": 130,
+      "key": "2A",
+      "genre": "Tech House",
+      "duration": 295,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:5542118",
+      "title": "We Give Thee Honor (Extended Mix)",
+      "artist": "Floorplan",
+      "bpm": 125,
+      "key": "5A",
+      "genre": "House",
+      "duration": 341,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:5562308",
+      "title": "Mr. Sub Bass (Ozzie Guven Remix)",
+      "artist": "Ive Lovers",
+      "bpm": 132,
+      "key": "10A",
+      "genre": "Tech House",
+      "duration": 352,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6632074",
+      "title": "After You (Original Mix)",
+      "artist": "Shokë",
+      "bpm": 125,
+      "key": "2A",
+      "genre": "Deep House",
+      "duration": 353,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:5544479",
+      "title": "Blaxploitation",
+      "artist": "Frederick",
+      "bpm": 124,
+      "key": "5A",
+      "genre": "Deep House",
+      "duration": 415,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6653032",
+      "title": "Automatic (Extended Mix)",
+      "artist": "Iglesias, KONXIOUS",
+      "bpm": 132,
+      "key": "5A",
+      "genre": "Tech House",
+      "duration": 292,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6442938",
+      "title": "Sleepless (Okain Remix)",
+      "artist": "REda daRE",
+      "bpm": 128,
+      "key": "12B",
+      "genre": "Minimal / Deep Tech",
+      "duration": 397,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6290981",
+      "title": "Body Go Ah (The Trip Remix)",
+      "artist": "DJ Split",
+      "bpm": 127,
+      "key": "10A",
+      "genre": "House",
+      "duration": 335,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6549513",
+      "title": "Feel the groove (Original Mix)",
+      "artist": "Tuccillo",
+      "bpm": 125,
+      "key": "12A",
+      "genre": "Deep House",
+      "duration": 439,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6292906",
+      "title": "Feel The Beat (Original Mix)",
+      "artist": "Toollbox",
+      "bpm": 130,
+      "key": "6A",
+      "genre": "Minimal / Deep Tech",
+      "duration": 384,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6654464",
+      "title": "The moment of rise",
+      "artist": "iO (Mulen)",
+      "bpm": 128,
+      "key": "9A",
+      "genre": "Tech House",
+      "duration": 454,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6360210",
+      "title": "Selecta (Traumer Remix)",
+      "artist": "Job De Jong",
+      "bpm": 130,
+      "key": "6A",
+      "genre": "Deep House",
+      "duration": 328,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6385288",
+      "title": "Soulburn",
+      "artist": "Squash",
+      "bpm": 127,
+      "key": "9A",
+      "genre": "Tech House",
+      "duration": 396,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6652860",
+      "title": "Don&#x27;t Change Who You Are feat. Robert Owens (Extended Mix)",
+      "artist": "The Checkup, DJ Merci, Robert Owens",
+      "bpm": 124,
+      "key": "1A",
+      "genre": "Deep House",
+      "duration": 406,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6594769",
+      "title": "House Feeling (Original Mix)",
+      "artist": "Viktør",
+      "bpm": 128,
+      "key": "6A",
+      "genre": "House",
+      "duration": 331,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6567632",
+      "title": "Panteras (Original Mix)",
+      "artist": "Carloh, Reboot",
+      "bpm": 130,
+      "key": "8A",
+      "genre": "House",
+      "duration": 376,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6632076",
+      "title": "Chiamami (Original Mix)",
+      "artist": "Shokë",
+      "bpm": 127,
+      "key": "6A",
+      "genre": "Deep House",
+      "duration": 397,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6626811",
+      "title": "Baila Conmigo (Original Mix)",
+      "artist": "GENNARO",
+      "bpm": 129,
+      "key": "4A",
+      "genre": "House",
+      "duration": 379,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6632077",
+      "title": "BBuena (Original Mix)",
+      "artist": "Shokë",
+      "bpm": 127,
+      "key": "6A",
+      "genre": "House",
+      "duration": 393,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6632078",
+      "title": "Space II (Original Mix)",
+      "artist": "Shokë",
+      "bpm": 128,
+      "key": "8A",
+      "genre": "House",
+      "duration": 360,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6294403",
+      "title": "The Groove Quartet (Original Mix)",
+      "artist": "Shokë",
+      "bpm": 130,
+      "key": "11A",
+      "genre": "House",
+      "duration": 376,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6651801",
+      "title": "City Touchdown (Original Mix)",
+      "artist": "Mattia Scolaro",
+      "bpm": 129,
+      "key": "6A",
+      "genre": "Tech House",
+      "duration": 320,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6652063",
+      "title": "Secrets (Extended Mix)",
+      "artist": "DumitrEscu",
+      "bpm": 128,
+      "key": "5B",
+      "genre": "Tech House",
+      "duration": 390,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6651803",
+      "title": "Beat Is Pumpin&#x27; (Original Mix)",
+      "artist": "Mattia Scolaro",
+      "bpm": 130,
+      "key": "10A",
+      "genre": "Tech House",
+      "duration": 332,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:5809416",
+      "title": "Sexy Dancer (Original Mix)",
+      "artist": "Chinonegro",
+      "bpm": 130,
+      "key": "2A",
+      "genre": "House",
+      "duration": 369,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6590973",
+      "title": "Spinning",
+      "artist": "Eddy M",
+      "bpm": 131,
+      "key": "3A",
+      "genre": "Tech House",
+      "duration": 293,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6631717",
+      "title": "Questions (Extended Mix)",
+      "artist": "Alan Fitzpatrick, Piem, SLM",
+      "bpm": 129,
+      "key": "1A",
+      "genre": "House",
+      "duration": 298,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6521396",
+      "title": "Brainows (Okain Remix)",
+      "artist": "Ray Okpara",
+      "bpm": 132,
+      "key": "9A",
+      "genre": "Minimal / Deep Tech",
+      "duration": 366,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6242837",
+      "title": "Triba (Original Mix)",
+      "artist": "wAFF",
+      "bpm": 132,
+      "key": "7B",
+      "genre": "Tech House",
+      "duration": 363,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6471632",
+      "title": "Carnaval (Original Mix)",
+      "artist": "Late Replies",
+      "bpm": 130,
+      "key": "11A",
+      "genre": "Tech House",
+      "duration": 387,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6641914",
+      "title": "Skyfall (Original Mix)",
+      "artist": "Sunday Soulman",
+      "bpm": 120,
+      "key": "7A",
+      "genre": "Melodic House / Techno",
+      "duration": 384,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6542510",
+      "title": "Healing (Original Mix)",
+      "artist": "Jamek Ortega, Tiago Cruz",
+      "bpm": 123,
+      "key": "4A",
+      "genre": "Afro House",
+      "duration": 329,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6625510",
+      "title": "4Get The Girl (Samm (BE) Extended Remix)",
+      "artist": "Route 94, Samm (BE)",
+      "bpm": 122,
+      "key": "11A",
+      "genre": "House",
+      "duration": 350,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:3575710",
+      "title": "Funnyman (Original Mix)",
+      "artist": "Da Mike, Yamil",
+      "bpm": 122,
+      "key": "11A",
+      "genre": "Afro House",
+      "duration": 381,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6296152",
+      "title": "Sunset In Pretoria (Extended Mix)",
+      "artist": "Shimza, Demayä",
+      "bpm": 122,
+      "key": "9A",
+      "genre": "Afro House",
+      "duration": 474,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6292942",
+      "title": "Didn&#x27;t Miss You (Original Mix)",
+      "artist": "Liva K",
+      "bpm": 122,
+      "key": "4A",
+      "genre": "Melodic House / Techno",
+      "duration": 346,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6170583",
+      "title": "Anore",
+      "artist": "Vasilis",
+      "bpm": 120,
+      "key": "6A",
+      "genre": "Afro House",
+      "duration": 432,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6378505",
+      "title": "Tsipouro (Extended Mix)",
+      "artist": "DSF",
+      "bpm": 120,
+      "key": "7A",
+      "genre": "Organic House / Downtempo",
+      "duration": 357,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6122902",
+      "title": "Acido (Original Mix)",
+      "artist": "andhim",
+      "bpm": 123,
+      "key": "6A",
+      "genre": "Afro House",
+      "duration": 365,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6374009",
+      "title": "Agitato (SOMMERS UK Remix) (SOMMERS (UK))",
+      "artist": "Samer Soltan",
+      "bpm": 122,
+      "key": "6A",
+      "genre": "Afro House",
+      "duration": 458,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6212855",
+      "title": "Pumpin&#x27; It Up (Extended Mix)",
+      "artist": "Marijn Jansen",
+      "bpm": 130,
+      "key": "6B",
+      "genre": "Tech House",
+      "duration": 356,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6178318",
+      "title": "Record Breaker (Original Mix)",
+      "artist": "Summum",
+      "bpm": 131,
+      "key": "1A",
+      "genre": "Tech House",
+      "duration": 307,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6466465",
+      "title": "Badboyz (Original Mix)",
+      "artist": "Thijs Koning",
+      "bpm": 131,
+      "key": "4B",
+      "genre": "UK Garage / 2-Step",
+      "duration": 308,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:3566193",
+      "title": "Blockbustah (Original Mix)",
+      "artist": "Mees Mattern",
+      "bpm": 127,
+      "key": "1A",
+      "genre": "Microhouse / Rominimal",
+      "duration": 291,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6183560",
+      "title": "Midnight Protocol (Original Mix)",
+      "artist": "Fabio Santos (NL)",
+      "bpm": 132,
+      "key": "5A",
+      "genre": "Tech House",
+      "duration": 305,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6212242",
+      "title": "How I Feel (Original Mix)",
+      "artist": "Boss Priester",
+      "bpm": 129,
+      "key": "4A",
+      "genre": "Tech House",
+      "duration": 276,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6411428",
+      "title": "What U Say Girl (Original Mix)",
+      "artist": "AMMIL",
+      "bpm": 131,
+      "key": "5A",
+      "genre": "House",
+      "duration": 359,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6136869",
+      "title": "Guacamole (Original Mix)",
+      "artist": "Luke Alessi",
+      "bpm": 131,
+      "key": "4A",
+      "genre": "Tech House",
+      "duration": 329,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:2043406",
+      "title": "Delighful Funk",
+      "artist": "The Trip",
+      "bpm": 130,
+      "key": "2A",
+      "genre": "House",
+      "duration": 374,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6586494",
+      "title": "Stranger Danger",
+      "artist": "Mehlor",
+      "bpm": 130,
+      "key": "3A",
+      "genre": "Minimal / Deep Tech",
+      "duration": 297,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6600417",
+      "title": "Don&#x27;t Call It (Original Mix)",
+      "artist": "JAKKOB",
+      "bpm": 128,
+      "key": "7A",
+      "genre": "House",
+      "duration": 361,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6586776",
+      "title": "Happiness (Extended Mix)",
+      "artist": "Merlin, Sound De-Zign",
+      "bpm": 130,
+      "key": "4A",
+      "genre": "House",
+      "duration": 343,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6594627",
+      "title": "No Pares (Will Dawson Extended Remix)",
+      "artist": "Sullee, Isabel Fructuoso",
+      "bpm": 125,
+      "key": "11B",
+      "genre": "House",
+      "duration": 338,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6500443",
+      "title": "It&#x27;s All About Love (Extended Mix)",
+      "artist": "Francesco Capodaglio",
+      "bpm": 126,
+      "key": "6B",
+      "genre": "House",
+      "duration": 309,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6561066",
+      "title": "Baddaya",
+      "artist": "Guy Burns",
+      "bpm": 132,
+      "key": "7A",
+      "genre": "House",
+      "duration": 338,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6607307",
+      "title": "Check Into (Extended Mix)",
+      "artist": "KLP",
+      "bpm": 132,
+      "key": "9B",
+      "genre": "House",
+      "duration": 252,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6652135",
+      "title": "I Need I Want feat. Dawn Tallman (Chesster Extended Remix)",
+      "artist": "Manoova, Dawn Tallman",
+      "bpm": 128,
+      "key": "6B",
+      "genre": "House",
+      "duration": 334,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6590865",
+      "title": "We Gonna Dance feat. Alexis Hall (Extended Mix)",
+      "artist": "Trimtone, Alexis Hall",
+      "bpm": 128,
+      "key": "12A",
+      "genre": "House",
+      "duration": 324,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6590055",
+      "title": "Soul Flava (Extended Mix)",
+      "artist": "MAXJAX",
+      "bpm": 126,
+      "key": "6B",
+      "genre": "House",
+      "duration": 245,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6646254",
+      "title": "Sealine (Radio Mix)",
+      "artist": "Balearix, Crazibiza",
+      "bpm": 126,
+      "key": "8A",
+      "genre": "House",
+      "duration": 159,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6622449",
+      "title": "Play Right (Balearix Remix)",
+      "artist": "Effendi, Crazibiza",
+      "bpm": 126,
+      "key": "11A",
+      "genre": "Funky / Jackin&#x27; House",
+      "duration": 295,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6622460",
+      "title": "Set Me Free (Original Mix)",
+      "artist": "Crazibiza, Cheesecake Boys",
+      "bpm": 128,
+      "key": "4B",
+      "genre": "House",
+      "duration": 307,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6602356",
+      "title": "Latin Lover 2026 (Original Mix)",
+      "artist": "Crazibiza",
+      "bpm": 126,
+      "key": "6A",
+      "genre": "Funky / Jackin&#x27; House",
+      "duration": 217,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6274891",
+      "title": "Bluebell (Original Mix)",
+      "artist": "Bastian Bux",
+      "bpm": 130,
+      "key": "4A",
+      "genre": "Funky / Jackin&#x27; House",
+      "duration": 360,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:5523919",
+      "title": "Make You Mine (Extended Mix)",
+      "artist": "Marcus Cito",
+      "bpm": 131,
+      "key": "4A",
+      "genre": "House",
+      "duration": 341,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:1241563",
+      "title": "Ugly Baby",
+      "artist": "Stalace",
+      "bpm": null,
+      "key": "6B",
+      "genre": "House",
+      "duration": 324,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:3104117",
+      "title": "Provenance (Original Mix)",
+      "artist": "MANT, Todd Edwards",
+      "bpm": 129,
+      "key": "12A",
+      "genre": "House",
+      "duration": 401,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:4721258",
+      "title": "Never Far From You (DJ Q Extended Remix)",
+      "artist": "Todd Edwards",
+      "bpm": 130,
+      "key": "12A",
+      "genre": "UK Garage / 2-Step",
+      "duration": 284,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:4718979",
+      "title": "Shut The Door",
+      "artist": "Todd Edwards",
+      "bpm": 132,
+      "key": "11A",
+      "genre": "House",
+      "duration": 438,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6668443",
+      "title": "Osaka (Original Mix)",
+      "artist": "Angelo Raguso, FAW9",
+      "bpm": 127,
+      "key": "9B",
+      "genre": "Tech House",
+      "duration": 364,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6668444",
+      "title": "Shibuya Crossing (Original Mix)",
+      "artist": "Angelo Raguso, FAW9, Lee Jeffrey (UK)",
+      "bpm": 130,
+      "key": "7B",
+      "genre": "Tech House",
+      "duration": 373,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6668253",
+      "title": "Strong Grip (Original Mix)",
+      "artist": "Shaf Huse",
+      "bpm": 130,
+      "key": "8A",
+      "genre": "Tech House",
+      "duration": 356,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6667968",
+      "title": "Wanna Get Down (Original Mix)",
+      "artist": "Spencer Ramsay",
+      "bpm": 130,
+      "key": "5A",
+      "genre": "Tech House",
+      "duration": 266,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6667903",
+      "title": "Exict (Original Mix)",
+      "artist": "Julian Collazos",
+      "bpm": 129,
+      "key": "2B",
+      "genre": "Tech House",
+      "duration": 312,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6625109",
+      "title": "Don Choo (Extended Mix)",
+      "artist": "HeyDoc!",
+      "bpm": 127,
+      "key": "9B",
+      "genre": "Tech House",
+      "duration": 226,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6621167",
+      "title": "La Mala (Extended Mix)",
+      "artist": "Steffner, JANO (ES)",
+      "bpm": 128,
+      "key": "6A",
+      "genre": "Tech House",
+      "duration": 353,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6619440",
+      "title": "For The Nation (Extended Mix)",
+      "artist": "George Privatti, Tony Romera",
+      "bpm": 128,
+      "key": "9B",
+      "genre": "Tech House",
+      "duration": 390,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6588717",
+      "title": "Throw Back (Original Mix)",
+      "artist": "SIK&SEM, Panna (BR)",
+      "bpm": 130,
+      "key": "8A",
+      "genre": "Tech House",
+      "duration": 326,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6583107",
+      "title": "I Need You",
+      "artist": "Maickel Telussa",
+      "bpm": 123,
+      "key": "6A",
+      "genre": "Tech House",
+      "duration": 267,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6517628",
+      "title": "Eternos (Original Mix)",
+      "artist": "Lucio Agustin",
+      "bpm": 130,
+      "key": "9A",
+      "genre": "Minimal / Deep Tech",
+      "duration": 354,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6164833",
+      "title": "Underground Sound (Original Mix)",
+      "artist": "Mati Astroza",
+      "bpm": 133,
+      "key": "3A",
+      "genre": "Tech House",
+      "duration": 366,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6010745",
+      "title": "On The Beat (Original Mix)",
+      "artist": "Yaya, Obeid",
+      "bpm": 128,
+      "key": "6A",
+      "genre": "Tech House",
+      "duration": 360,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6010746",
+      "title": "Basement (Original Mix)",
+      "artist": "Yaya, Obeid",
+      "bpm": 130,
+      "key": "3A",
+      "genre": "Tech House",
+      "duration": 324,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6665597",
+      "title": "4U (Original Mix)",
+      "artist": "Simon Vazquez (AR)",
+      "bpm": 128,
+      "key": "4B",
+      "genre": "Minimal / Deep Tech",
+      "duration": 330,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6665598",
+      "title": "Beats4YourBody (Original Mix)",
+      "artist": "Simon Vazquez (AR)",
+      "bpm": 128,
+      "key": "5B",
+      "genre": "Minimal / Deep Tech",
+      "duration": 318,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6451170",
+      "title": "Ecstasy (Original Mix)",
+      "artist": "Mariche",
+      "bpm": 131,
+      "key": "9A",
+      "genre": "Minimal / Deep Tech",
+      "duration": 382,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6258070",
+      "title": "Rocket (Original Mix)",
+      "artist": "Bizza, LondonGround",
+      "bpm": 128,
+      "key": "5A",
+      "genre": "House",
+      "duration": 421,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6568171",
+      "title": "Golasso (Original Mix)",
+      "artist": "JUAAN, Mateo Dufour",
+      "bpm": 128,
+      "key": "5B",
+      "genre": "House",
+      "duration": 427,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6433639",
+      "title": "Love Fantasy (Original Mix)",
+      "artist": "Julian (AR), Maiti Merlino",
+      "bpm": 130,
+      "key": "1A",
+      "genre": "Minimal / Deep Tech",
+      "duration": 410,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6433971",
+      "title": "We Are One Big Mix feat. Madison Park (US) (Extended Mix)",
+      "artist": "Reelow, Madison Park (US)",
+      "bpm": 130,
+      "key": "8A",
+      "genre": "Tech House",
+      "duration": 424,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:3069969",
+      "title": "Speed Your Bassline (Detlef Remix)",
+      "artist": "Federico Ambrosi, Moreno Pezzolato",
+      "bpm": 131,
+      "key": "7A",
+      "genre": "Tech House",
+      "duration": 370,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6515556",
+      "title": "Leftright",
+      "artist": "Bulo Ae",
+      "bpm": 128,
+      "key": "10A",
+      "genre": "Minimal / Deep Tech",
+      "duration": 395,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6632855",
+      "title": "Lesson For Everybody feat. Kenny Summit (Extended Mix)",
+      "artist": "Di Saronno, Kenny Summit",
+      "bpm": 125,
+      "key": "7A",
+      "genre": "Funky / Jackin&#x27; House",
+      "duration": 435,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6632276",
+      "title": "Glitch In The Funk (Extended Mix)",
+      "artist": "Maxdal",
+      "bpm": 127,
+      "key": "11A",
+      "genre": "Funky / Jackin&#x27; House",
+      "duration": 338,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6583585",
+      "title": "Hit Em&#x27; (Extended Mix)",
+      "artist": "Sassy B",
+      "bpm": 126,
+      "key": "9A",
+      "genre": "Funky / Jackin&#x27; House",
+      "duration": 323,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6560883",
+      "title": "Like Tha (Eventual Groove Remix)",
+      "artist": "Papa Tony, Eventual Groove",
+      "bpm": 126,
+      "key": "4A",
+      "genre": "Funky / Jackin&#x27; House",
+      "duration": 285,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6470711",
+      "title": "No Breaks (Extended Mix)",
+      "artist": "Dompe",
+      "bpm": 127,
+      "key": "9B",
+      "genre": "Funky / Jackin&#x27; House",
+      "duration": 318,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6426486",
+      "title": "Who Are You",
+      "artist": "Delgado",
+      "bpm": 125,
+      "key": "8A",
+      "genre": "Funky / Jackin&#x27; House",
+      "duration": 366,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6632713",
+      "title": "Lost In Desire (Original Mix)",
+      "artist": "Low Blow",
+      "bpm": 125,
+      "key": "10A",
+      "genre": "House",
+      "duration": 338,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6631947",
+      "title": "Bangers And Mash (Original Mix)",
+      "artist": "Olive F",
+      "bpm": 129,
+      "key": "5B",
+      "genre": "House",
+      "duration": 342,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6617203",
+      "title": "The Holy Spirit (Original Mix)",
+      "artist": "Danny David",
+      "bpm": 125,
+      "key": "4B",
+      "genre": "Microhouse / Rominimal",
+      "duration": 507,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6583365",
+      "title": "Let_S Check (Original Mix)",
+      "artist": "Eros (RO), Dario Christian",
+      "bpm": 130,
+      "key": "7B",
+      "genre": "Tech House",
+      "duration": 339,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6587227",
+      "title": "Kiosks",
+      "artist": "BRNT",
+      "bpm": 142,
+      "key": "7B",
+      "genre": "Techno (Raw, Deep, Dub)",
+      "duration": 392,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6587229",
+      "title": "Rhokna",
+      "artist": "BRNT",
+      "bpm": 140,
+      "key": "4B",
+      "genre": "Techno (Raw, Deep, Dub)",
+      "duration": 356,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6587230",
+      "title": "Touch",
+      "artist": "BRNT",
+      "bpm": 139,
+      "key": "11A",
+      "genre": "Techno (Raw, Deep, Dub)",
+      "duration": 331,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6545604",
+      "title": "Night Guard",
+      "artist": "Perroxx",
+      "bpm": 138,
+      "key": "8A",
+      "genre": "Techno (Raw, Deep, Dub)",
+      "duration": 313,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6587232",
+      "title": "Break The Sound (Extended Mix)",
+      "artist": "Kiume",
+      "bpm": 130,
+      "key": "8B",
+      "genre": "Minimal / Deep Tech",
+      "duration": 384,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6651984",
+      "title": "How Can I Be Sure I am Really Awake? (Original Mix)",
+      "artist": "Daniel Watts",
+      "bpm": 125,
+      "key": "10A",
+      "genre": "Indie Dance / Dark Disco",
+      "duration": 371,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6641997",
+      "title": "Culto A La Vida (Elfenberg Remix)",
+      "artist": "Alejandro Molinari",
+      "bpm": 126,
+      "key": "8B",
+      "genre": "Indie Dance / Dark Disco",
+      "duration": 379,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6569532",
+      "title": "Secret Place on the Space (Aleito Remix)",
+      "artist": "James Rod",
+      "bpm": 123,
+      "key": "1A",
+      "genre": "Indie Dance / Dark Disco",
+      "duration": 425,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6560706",
+      "title": "Another Attention (Vocal Mix)",
+      "artist": "Italo Brutalo",
+      "bpm": 130,
+      "key": "5A",
+      "genre": "Indie Dance / Dark Disco",
+      "duration": 308,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6652787",
+      "title": "Island (Original Mix)",
+      "artist": "Haddadi Von Engst",
+      "bpm": 127,
+      "key": "8A",
+      "genre": "Indie Dance / Dark Disco",
+      "duration": 183,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6586505",
+      "title": "Calle Sur",
+      "artist": "Oliver Koletzki",
+      "bpm": 125,
+      "key": "6A",
+      "genre": "Indie Dance / Dark Disco",
+      "duration": 294,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6583327",
+      "title": "In My Mind",
+      "artist": "Jasym",
+      "bpm": 120,
+      "key": "8A",
+      "genre": "Indie Dance / Dark Disco",
+      "duration": 258,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6562377",
+      "title": "Catch Me",
+      "artist": "Mufti & NIKKNAME, Mufti, NIKKNAME",
+      "bpm": 127,
+      "key": "9A",
+      "genre": "Indie Dance / Dark Disco",
+      "duration": 386,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6652104",
+      "title": "Show Me Baby (Marchik Remix)",
+      "artist": "Leisan",
+      "bpm": 129,
+      "key": "6A",
+      "genre": "Indie Dance / Dark Disco",
+      "duration": 316,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6590323",
+      "title": "Higher Than",
+      "artist": "Jordan Lev",
+      "bpm": 125,
+      "key": "10B",
+      "genre": "Indie Dance / Dark Disco",
+      "duration": 401,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6617353",
+      "title": "Guy On Fire feat. Franco Botto (Timo Maas and Francesco Mami Remix)",
+      "artist": "Chelu Garcia, Franco Botto",
+      "bpm": 126,
+      "key": "2A",
+      "genre": "Deep House",
+      "duration": 431,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:3993095",
+      "title": "Mexico Tour (Ketiov Remix)",
+      "artist": "Fernanda Arrau, Ketiov",
+      "bpm": 134,
+      "key": "9B",
+      "genre": "Neo Rave / Hard House / Hard Dance",
+      "duration": 317,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6034858",
+      "title": "Dangerous Not Blind (Francesco Mami Remix)",
+      "artist": "Eric Louis, Francesco Mami",
+      "bpm": 127,
+      "key": "8A",
+      "genre": "Techno (Raw, Deep, Dub)",
+      "duration": 455,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:2843883",
+      "title": "Lajka (Chiari Remix)",
+      "artist": "Francesco Mami, Pedro Capelossi, Chiari",
+      "bpm": 127,
+      "key": "3A",
+      "genre": "Deep House",
+      "duration": 428,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:4758185",
+      "title": "Ceremonial (Original Mix)",
+      "artist": "Cristina Lazic, ABEL, Francesco Mami",
+      "bpm": 127,
+      "key": "7A",
+      "genre": "Deep House",
+      "duration": 379,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6469760",
+      "title": "Kasso Flight (Original Mix)",
+      "artist": "Franck Roger",
+      "bpm": 124,
+      "key": "3A",
+      "genre": "Deep House",
+      "duration": 402,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:3788062",
+      "title": "Herald Of The Change (Transient Mix)",
+      "artist": "AGELESS, Francesco Mami",
+      "bpm": 129,
+      "key": "9A",
+      "genre": "Dance / Pop",
+      "duration": 450,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:3969437",
+      "title": "Duncan feat. Eric D Clark (Vocal Mix)",
+      "artist": "Francesco Mami, Eric D Clark",
+      "bpm": 128,
+      "key": "8A",
+      "genre": "House",
+      "duration": 396,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:3547278",
+      "title": "Brother&#x27;s Yard (Francesco Mami Remix)",
+      "artist": "Sascha Dive",
+      "bpm": 128,
+      "key": "5A",
+      "genre": "Deep House",
+      "duration": 370,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:3237640",
+      "title": "Love Yourself Accept Yourself (Francesco Mami Remix)",
+      "artist": "Minoas Cirillo, Timothée Toussaint",
+      "bpm": 125,
+      "key": "11A",
+      "genre": "Melodic House / Techno",
+      "duration": 339,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6666037",
+      "title": "Jazzie [TFD142VLM] (powered by VOLUMO)",
+      "artist": "Trippy Journey",
+      "bpm": 130,
+      "key": "4B",
+      "genre": "Microhouse / Rominimal",
+      "duration": 355,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6645506",
+      "title": "Easy (Original Mix)",
+      "artist": "Luis Caballero",
+      "bpm": 130,
+      "key": "6A",
+      "genre": "Microhouse / Rominimal",
+      "duration": 522,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6653110",
+      "title": "Counting Stars (Instrumental)",
+      "artist": "Max Sinàl",
+      "bpm": 122,
+      "key": "4A",
+      "genre": "Deep House",
+      "duration": 394,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6125878",
+      "title": "I Like U (Original Mix)",
+      "artist": "Gab Jr., Lourene",
+      "bpm": 129,
+      "key": "9B",
+      "genre": "Deep House",
+      "duration": 389,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:4136614",
+      "title": "Porcelain (Original Mix)",
+      "artist": "Isaac Carter, Biyi",
+      "bpm": 133,
+      "key": "5A",
+      "genre": "House",
+      "duration": 348,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6630738",
+      "title": "CNSTRCT 4 (Original Mix)",
+      "artist": "CNTRL",
+      "bpm": 125,
+      "key": "4A",
+      "genre": "Microhouse / Rominimal",
+      "duration": 314,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:3025469",
+      "title": "Walk Into The Sun",
+      "artist": "Mr KS",
+      "bpm": 123,
+      "key": "2B",
+      "genre": "Deep House",
+      "duration": 422,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:5608625",
+      "title": "Maltek (Original Mix)",
+      "artist": "Felipe Cortes",
+      "bpm": 130,
+      "key": "3B",
+      "genre": "House",
+      "duration": 354,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:5692145",
+      "title": "Blessed (Original Mix)",
+      "artist": "Tree Threes",
+      "bpm": 125,
+      "key": "8B",
+      "genre": "Deep House",
+      "duration": 366,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6123209",
+      "title": "So High (Original Mix)",
+      "artist": "GENNARO",
+      "bpm": 129,
+      "key": "5A",
+      "genre": "House",
+      "duration": 450,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:5843004",
+      "title": "Big Sound (Original Mix)",
+      "artist": "Guest (UK)",
+      "bpm": 130,
+      "key": "3A",
+      "genre": "Tech House",
+      "duration": 326,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:5834881",
+      "title": "Away (Original Mix)",
+      "artist": "HATT.D",
+      "bpm": 130,
+      "key": "8B",
+      "genre": "House",
+      "duration": 358,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6183552",
+      "title": "One More Drink In The Chi (Original Mix)",
+      "artist": "Byron the Aquarius",
+      "bpm": 128,
+      "key": "4A",
+      "genre": "Deep House",
+      "duration": 325,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:4894400",
+      "title": "Am I Here (From House To Disco Remix)",
+      "artist": "Manuel Sahagun",
+      "bpm": 123,
+      "key": "11A",
+      "genre": "Deep House",
+      "duration": 378,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6183152",
+      "title": "Bus Seventy Seven (Original Mix)",
+      "artist": "Mick Jerome",
+      "bpm": 128,
+      "key": "10A",
+      "genre": "Deep House",
+      "duration": 362,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6118473",
+      "title": "All Hell Is Breaking Loose (Original Mix)",
+      "artist": "Demuja",
+      "bpm": 126,
+      "key": "2A",
+      "genre": "Deep House",
+      "duration": 277,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6242199",
+      "title": "Sofa (Original Mix)",
+      "artist": "KingCrowney",
+      "bpm": 124,
+      "key": "9A",
+      "genre": "Deep House",
+      "duration": 344,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6469235",
+      "title": "New One (Original Mix)",
+      "artist": "Zoo Brazil",
+      "bpm": 121,
+      "key": "7B",
+      "genre": "Deep House",
+      "duration": 493,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6563673",
+      "title": "Back to 90 (Original Mix)",
+      "artist": "NiCe7",
+      "bpm": 123,
+      "key": "3A",
+      "genre": "House",
+      "duration": 397,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6541213",
+      "title": "Can&#x27;t Get Enough (Extended Mix)",
+      "artist": "Sebb Junior",
+      "bpm": 128,
+      "key": "5A",
+      "genre": "House",
+      "duration": 351,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6234721",
+      "title": "Vice Versa (Original Mix)",
+      "artist": "Simon Kidzoo",
+      "bpm": 128,
+      "key": "7A",
+      "genre": "House",
+      "duration": 346,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:1649618",
+      "title": "Buffout Trax",
+      "artist": "Framboisier",
+      "bpm": 133,
+      "key": "7A",
+      "genre": "Tech House",
+      "duration": 328,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6590309",
+      "title": "Keep The Party Going",
+      "artist": "GOME & James Juke, GOME, James Juke",
+      "bpm": 125,
+      "key": "5A",
+      "genre": "House",
+      "duration": 319,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6651854",
+      "title": "Lost (Original Mix)",
+      "artist": "Felmann",
+      "bpm": 130,
+      "key": "9A",
+      "genre": "House",
+      "duration": 281,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6617531",
+      "title": "Fin (Original Mix)",
+      "artist": "Billy R",
+      "bpm": 127,
+      "key": "9A",
+      "genre": "House",
+      "duration": 363,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6532453",
+      "title": "Vibration",
+      "artist": "The Trip",
+      "bpm": 130,
+      "key": "3A",
+      "genre": "House",
+      "duration": 373,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6516653",
+      "title": "Real OG (Extended Mix)",
+      "artist": "Freenzy Music",
+      "bpm": 130,
+      "key": "7A",
+      "genre": "House",
+      "duration": 296,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6557817",
+      "title": "Etv",
+      "artist": "Novodisc",
+      "bpm": 131,
+      "key": "12A",
+      "genre": "House",
+      "duration": 313,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6479689",
+      "title": "Disco Nap (Extended Mix)",
+      "artist": "Javi Bora, Vibe Killers",
+      "bpm": 128,
+      "key": "12A",
+      "genre": "House",
+      "duration": 346,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6528507",
+      "title": "Waterman (Extended Mix)",
+      "artist": "Eats Everything, Olav Basoski, History Of Rave",
+      "bpm": 132,
+      "key": "10B",
+      "genre": "House",
+      "duration": 371,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6586774",
+      "title": "Everything Went My Way (Extended Mix)",
+      "artist": "Jenn Getz, Kritik (SA)",
+      "bpm": 128,
+      "key": "5A",
+      "genre": "House",
+      "duration": 361,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6594088",
+      "title": "Black Motorcade feat. Marc E. Bassy (Summer Mix)",
+      "artist": "Reelow, Vertigo, Marc E. Bassy",
+      "bpm": 132,
+      "key": "9A",
+      "genre": "House",
+      "duration": 370,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6594498",
+      "title": "Right Here (Original Mix)",
+      "artist": "Andy Sherman",
+      "bpm": 128,
+      "key": "4A",
+      "genre": "House",
+      "duration": 379,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6594016",
+      "title": "You Don&#x27;t Love Me feat. Jem Cooke (Extended Mix)",
+      "artist": "Anton Powers, SELKER, Jem Cooke",
+      "bpm": 130,
+      "key": "6A",
+      "genre": "House",
+      "duration": 249,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6617350",
+      "title": "What We Havin&#x27; (Extended Mix)",
+      "artist": "Niconé, Erhan Kesen",
+      "bpm": 125,
+      "key": "8A",
+      "genre": "House",
+      "duration": 293,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6616913",
+      "title": "Little More (Body Action) (Original Mix)",
+      "artist": "Sean Doron",
+      "bpm": 130,
+      "key": "7A",
+      "genre": "House",
+      "duration": 319,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6616892",
+      "title": "L.O.V.E. (Original Mix)",
+      "artist": "Cuba",
+      "bpm": 132,
+      "key": "11A",
+      "genre": "House",
+      "duration": 328,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6476828",
+      "title": "Magalenha feat. Sergio Mendes (Extended Mix)",
+      "artist": "Simon Fava, Sergio Mendes",
+      "bpm": 125,
+      "key": "8A",
+      "genre": "House",
+      "duration": 266,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6616444",
+      "title": "Thinking &#x27;Bout You (Extended Mix)",
+      "artist": "Alex Culross",
+      "bpm": 127,
+      "key": "4A",
+      "genre": "House",
+      "duration": 369,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6631520",
+      "title": "Love Love",
+      "artist": "Scon",
+      "bpm": 130,
+      "key": "8A",
+      "genre": "House",
+      "duration": 369,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6486911",
+      "title": "Boogie Time (Original Mix)",
+      "artist": "CASSIMM",
+      "bpm": 129,
+      "key": "4B",
+      "genre": "House",
+      "duration": 333,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6594750",
+      "title": "What Kind Of Boy (Original Mix)",
+      "artist": "Andre Zimmer",
+      "bpm": 128,
+      "key": "4B",
+      "genre": "House",
+      "duration": 260,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6652874",
+      "title": "Get Up (Alec Dienaar Remix)",
+      "artist": "Emma B",
+      "bpm": 133,
+      "key": "8A",
+      "genre": "House",
+      "duration": 319,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6555667",
+      "title": "Be Hot (Extended Mix)",
+      "artist": "Illyus Barrientos",
+      "bpm": 128,
+      "key": "11A",
+      "genre": "House",
+      "duration": 333,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6590806",
+      "title": "Corazón (Extended Mix)",
+      "artist": "David Novacek, DJ Barber",
+      "bpm": 122,
+      "key": "9A",
+      "genre": "House",
+      "duration": 285,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6589637",
+      "title": "Spirit",
+      "artist": "Tigerskin",
+      "bpm": 126,
+      "key": "1A",
+      "genre": "House",
+      "duration": 275,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6652182",
+      "title": "Infected (Extended Mix)",
+      "artist": "Josement",
+      "bpm": 130,
+      "key": "1A",
+      "genre": "House",
+      "duration": 343,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6498176",
+      "title": "Lipstick (Tony Romera Extended Mix)",
+      "artist": "Alaia & Gallo",
+      "bpm": 128,
+      "key": "8A",
+      "genre": "House",
+      "duration": 337,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6559060",
+      "title": "Got So High (Extended Mix)",
+      "artist": "Milk & Sugar, James Hurr",
+      "bpm": 126,
+      "key": "8A",
+      "genre": "House",
+      "duration": 328,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6554269",
+      "title": "Closing Summer (Extended Mix)",
+      "artist": "Lauti Mina",
+      "bpm": 130,
+      "key": "4A",
+      "genre": "House",
+      "duration": 384,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6473155",
+      "title": "Nobody Cares (bendrik Remix)",
+      "artist": "Pat Lezizmo, Morris Revy",
+      "bpm": 129,
+      "key": "11A",
+      "genre": "House",
+      "duration": 377,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6531478",
+      "title": "Bruno&#x27;s Magic Jungle",
+      "artist": "Coppola",
+      "bpm": 131,
+      "key": "12A",
+      "genre": "House",
+      "duration": 304,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6519596",
+      "title": "Love Like This (goodie bags Remix)",
+      "artist": "Arht, witchoneyouwant & Ryn Eckert, Arht, witchoneyouwant, Ryn Eckert",
+      "bpm": 130,
+      "key": "2A",
+      "genre": "House",
+      "duration": 361,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6588464",
+      "title": "Dirty (Extended Mix)",
+      "artist": "Jake Antonio",
+      "bpm": 130,
+      "key": "9A",
+      "genre": "House",
+      "duration": 369,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6590553",
+      "title": "Bring Me To The Party (Extended Mix)",
+      "artist": "Ciclo",
+      "bpm": 128,
+      "key": "4A",
+      "genre": "House",
+      "duration": 367,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6582281",
+      "title": "What Is This (Original Mix)",
+      "artist": "Kaiza",
+      "bpm": 129,
+      "key": "12A",
+      "genre": "House",
+      "duration": 390,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6535397",
+      "title": "Turn Me On feat. Steffanie Christi’an (Extended Mix)",
+      "artist": "Inner City, Steffanie Christi’an",
+      "bpm": 125,
+      "key": "2A",
+      "genre": "House",
+      "duration": 359,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6594530",
+      "title": "Move That Body (Original Mix)",
+      "artist": "Aitor Astiz",
+      "bpm": 132,
+      "key": "6B",
+      "genre": "House",
+      "duration": 382,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6553441",
+      "title": "That&#x27;s Why (Extended Mix)",
+      "artist": "Bruce Grooves",
+      "bpm": 125,
+      "key": "6A",
+      "genre": "House",
+      "duration": 357,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6594334",
+      "title": "Close 2 You (DJ Passion Remix)",
+      "artist": "Michael Pieterse",
+      "bpm": 125,
+      "key": "7A",
+      "genre": "House",
+      "duration": 352,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6487448",
+      "title": "Kiki&#x27;s Groove (Original Mix)",
+      "artist": "Qubiko, TOMY (IT)",
+      "bpm": 128,
+      "key": "8A",
+      "genre": "House",
+      "duration": 322,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6555805",
+      "title": "Concrete Shoes",
+      "artist": "Ratta",
+      "bpm": 174,
+      "key": "4A",
+      "genre": "Drum and Bass",
+      "duration": 228,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6537826",
+      "title": "No Secret",
+      "artist": "ring noord, The Upbeats",
+      "bpm": 172,
+      "key": "8B",
+      "genre": "Drum and Bass",
+      "duration": 192,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6479565",
+      "title": "Headshot",
+      "artist": "Kurbz",
+      "bpm": 175,
+      "key": "8B",
+      "genre": "Drum and Bass",
+      "duration": 220,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6458943",
+      "title": "Full Moon (Ft X and I)",
+      "artist": "K SONIC, X and I",
+      "bpm": 174,
+      "key": "6A",
+      "genre": "Drum and Bass",
+      "duration": 272,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6490373",
+      "title": "Man Ah Junglist",
+      "artist": "Serial Killaz, Mad Sam",
+      "bpm": 175,
+      "key": "9B",
+      "genre": "Drum and Bass",
+      "duration": 267,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6584028",
+      "title": "Plastic Man",
+      "artist": "Evil Quest",
+      "bpm": 172,
+      "key": "6A",
+      "genre": "Drum and Bass",
+      "duration": 340,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6586227",
+      "title": "Creation",
+      "artist": "Theoretical",
+      "bpm": 175,
+      "key": "10B",
+      "genre": "Drum and Bass",
+      "duration": 292,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6415886",
+      "title": "Heaven",
+      "artist": "Melinki, Qua Rush",
+      "bpm": 172,
+      "key": "9B",
+      "genre": "Drum and Bass",
+      "duration": 344,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6493941",
+      "title": "I&#x27;m Alive (Sudley Remix)",
+      "artist": "Stretch & Vern",
+      "bpm": 174,
+      "key": "10B",
+      "genre": "Drum and Bass",
+      "duration": 215,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6594160",
+      "title": "Then I Got Wicked (Original Mix)",
+      "artist": "Conrad Subs",
+      "bpm": 176,
+      "key": "6B",
+      "genre": "Drum and Bass",
+      "duration": 264,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6545671",
+      "title": "What&#x27;s Up",
+      "artist": "Tesen, Magenta",
+      "bpm": 175,
+      "key": "7B",
+      "genre": "Drum and Bass",
+      "duration": 219,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6387990",
+      "title": "Catch Your Breath",
+      "artist": "Hexa",
+      "bpm": 174,
+      "key": "5A",
+      "genre": "Drum and Bass",
+      "duration": 204,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6492444",
+      "title": "So Dark",
+      "artist": "Sammo, Pingz",
+      "bpm": 175,
+      "key": "7A",
+      "genre": "Drum and Bass",
+      "duration": 219,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6501399",
+      "title": "Roughest",
+      "artist": "Milo (UK)",
+      "bpm": 174,
+      "key": "8B",
+      "genre": "Drum and Bass",
+      "duration": 266,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6553730",
+      "title": "Border Run",
+      "artist": "Garrett Jr.",
+      "bpm": 165,
+      "key": "5A",
+      "genre": "Drum and Bass",
+      "duration": 290,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6558815",
+      "title": "Are You Happy Now?",
+      "artist": "Akov",
+      "bpm": 172,
+      "key": "4A",
+      "genre": "Drum and Bass",
+      "duration": 224,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6513106",
+      "title": "Eyes of Madusa",
+      "artist": "Heist",
+      "bpm": 175,
+      "key": "3A",
+      "genre": "Drum and Bass",
+      "duration": 247,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6431772",
+      "title": "Dong",
+      "artist": "Klippee",
+      "bpm": 174,
+      "key": "3B",
+      "genre": "Drum and Bass",
+      "duration": 275,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6593871",
+      "title": "Grains (Original Mix)",
+      "artist": "GLXY",
+      "bpm": 174,
+      "key": "12A",
+      "genre": "Drum and Bass",
+      "duration": 204,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6616241",
+      "title": "Styx (Original Mix)",
+      "artist": "Serpnt, Wingz",
+      "bpm": 172,
+      "key": "11A",
+      "genre": "Drum and Bass",
+      "duration": 250,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6454213",
+      "title": "Gold",
+      "artist": "Amott DnB",
+      "bpm": 175,
+      "key": "4A",
+      "genre": "Drum and Bass",
+      "duration": 266,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6627170",
+      "title": "Mishap",
+      "artist": "SMG, Duskee",
+      "bpm": 174,
+      "key": "9A",
+      "genre": "Drum and Bass",
+      "duration": 226,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6599554",
+      "title": "Make your flow",
+      "artist": "Blade (Dnb)",
+      "bpm": 176,
+      "key": "5A",
+      "genre": "Drum and Bass",
+      "duration": 354,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6427614",
+      "title": "Murda",
+      "artist": "Gravital",
+      "bpm": 172,
+      "key": "4A",
+      "genre": "Drum and Bass",
+      "duration": 206,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6653190",
+      "title": "What You Sayin&#x27;? (Original Mix)",
+      "artist": "EVABEE, DRS, Submorphics",
+      "bpm": 174,
+      "key": "3A",
+      "genre": "Drum and Bass",
+      "duration": 206,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6273319",
+      "title": "Projex",
+      "artist": "Agro",
+      "bpm": 174,
+      "key": "2B",
+      "genre": "Drum and Bass",
+      "duration": 242,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6559047",
+      "title": "Freedom",
+      "artist": "RISC",
+      "bpm": 174,
+      "key": "10A",
+      "genre": "Drum and Bass",
+      "duration": 318,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6544637",
+      "title": "Green Grocer",
+      "artist": "Nick The Lot, MC Shabba D",
+      "bpm": 175,
+      "key": "4A",
+      "genre": "Drum and Bass",
+      "duration": 126,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6519630",
+      "title": "Next Level",
+      "artist": "Aznok, Abstractonia, Trickyskill",
+      "bpm": 174,
+      "key": "4A",
+      "genre": "Drum and Bass",
+      "duration": 286,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6586392",
+      "title": "Swipes",
+      "artist": "D-Formator",
+      "bpm": 174,
+      "key": "9A",
+      "genre": "Drum and Bass",
+      "duration": 260,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6387992",
+      "title": "Cicadas",
+      "artist": "GDS",
+      "bpm": 174,
+      "key": "9A",
+      "genre": "Drum and Bass",
+      "duration": 224,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6492337",
+      "title": "Rollz",
+      "artist": "Level State",
+      "bpm": 175,
+      "key": "9A",
+      "genre": "Drum and Bass",
+      "duration": 274,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6456304",
+      "title": "Touch Down feat. Mr Quest",
+      "artist": "Arfur Six, Mr Quest",
+      "bpm": 175,
+      "key": "9A",
+      "genre": "Drum and Bass",
+      "duration": 301,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6593503",
+      "title": "How Do I (Original Mix)",
+      "artist": "Intergalactic Alliance Of The Blessed",
+      "bpm": 174,
+      "key": "5A",
+      "genre": "Drum and Bass",
+      "duration": 200,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6283319",
+      "title": "Framework",
+      "artist": "Tom Hostile, Section 63",
+      "bpm": 174,
+      "key": "4A",
+      "genre": "Drum and Bass",
+      "duration": 356,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6336470",
+      "title": "Helpless",
+      "artist": "Accelerate",
+      "bpm": 175,
+      "key": "2A",
+      "genre": "Drum and Bass",
+      "duration": 222,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6564386",
+      "title": "Run Di Place",
+      "artist": "Brian Brainstorm",
+      "bpm": 175,
+      "key": "4A",
+      "genre": "Drum and Bass",
+      "duration": 170,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6608623",
+      "title": "Parallel",
+      "artist": "Agressor Bunx",
+      "bpm": 172,
+      "key": "7A",
+      "genre": "Drum and Bass",
+      "duration": 214,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6600511",
+      "title": "Cavaties",
+      "artist": "Guzi",
+      "bpm": 174,
+      "key": "4B",
+      "genre": "Drum and Bass",
+      "duration": 222,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6616591",
+      "title": "Tainted Love (Nicky Blackmarket & Millz Remix) (DJ Millz)",
+      "artist": "Deekline, Zylo, Fats, Milson",
+      "bpm": 175,
+      "key": "6A",
+      "genre": "Drum and Bass",
+      "duration": 233,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6589452",
+      "title": "The Medium (Original Mix)",
+      "artist": "Blix, Dauntless, Zule",
+      "bpm": 174,
+      "key": "9B",
+      "genre": "Drum and Bass",
+      "duration": 226,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6330569",
+      "title": "Big Frequencies",
+      "artist": "H.I.J.K.",
+      "bpm": 174,
+      "key": "7A",
+      "genre": "Drum and Bass",
+      "duration": 186,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6626849",
+      "title": "Spiritual Powa (Original Mix)",
+      "artist": "Unlimited Vibes",
+      "bpm": 170,
+      "key": "6A",
+      "genre": "Drum and Bass",
+      "duration": 361,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6235467",
+      "title": "The Power of Zeus",
+      "artist": "Ironlung",
+      "bpm": 174,
+      "key": "9A",
+      "genre": "Drum and Bass",
+      "duration": 266,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6519498",
+      "title": "Sound Test",
+      "artist": "Flash, Thees",
+      "bpm": 174,
+      "key": "9A",
+      "genre": "Drum and Bass",
+      "duration": 156,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6622930",
+      "title": "Never Went Away",
+      "artist": "Command Strange, Cnof, Untrue, Kays",
+      "bpm": 174,
+      "key": "3A",
+      "genre": "Drum and Bass",
+      "duration": 209,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6336567",
+      "title": "Smudge feat. Dayze",
+      "artist": "Lymitless, Dayze",
+      "bpm": 174,
+      "key": "9A",
+      "genre": "Drum and Bass",
+      "duration": 219,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6136010",
+      "title": "621",
+      "artist": "Vital",
+      "bpm": 174,
+      "key": "5B",
+      "genre": "Drum and Bass",
+      "duration": 270,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6331614",
+      "title": "Armed",
+      "artist": "Nooch",
+      "bpm": 174,
+      "key": "5B",
+      "genre": "Drum and Bass",
+      "duration": 263,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6645606",
+      "title": "Ay Sí (Extended Mix)",
+      "artist": "Melé, RIA",
+      "bpm": 127,
+      "key": "3A",
+      "genre": "Afro House",
+      "duration": 244,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6617450",
+      "title": "Isla Luna feat. Shibui (Exended Mix)",
+      "artist": "TWENTY SIX, Shibui",
+      "bpm": 128,
+      "key": "3A",
+      "genre": "Afro House",
+      "duration": 332,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6438371",
+      "title": "Landing Soft (Extended Mix)",
+      "artist": "Latanya Alberto, andhim",
+      "bpm": 122,
+      "key": "8A",
+      "genre": "Afro House",
+      "duration": 318,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6404612",
+      "title": "Let It Shine feat. Stefano Steve Salmaso",
+      "artist": "Gledd, Stefano Steve Salmaso",
+      "bpm": 124,
+      "key": "3A",
+      "genre": "Afro House",
+      "duration": 325,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6588416",
+      "title": "It Just Won&#x27;t Do (Original Mix)",
+      "artist": "Matt Sawyer, Chris Leon, Aares",
+      "bpm": 125,
+      "key": "8B",
+      "genre": "Afro House",
+      "duration": 295,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6564608",
+      "title": "Sahara Dena feat. Soukou",
+      "artist": "Emo Rugene feat. Soukou, Emo Rugene, Soukou",
+      "bpm": 122,
+      "key": "4B",
+      "genre": "Afro House",
+      "duration": 344,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6616855",
+      "title": "Puma Koma (Original Mix)",
+      "artist": "Secret Factory",
+      "bpm": 124,
+      "key": "7B",
+      "genre": "Afro House",
+      "duration": 387,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6593371",
+      "title": "This Is How (Original Mix)",
+      "artist": "Josef Schumacher, Rapto, Dres (MX)",
+      "bpm": 122,
+      "key": "7A",
+      "genre": "Afro House",
+      "duration": 379,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6593372",
+      "title": "Dansa (Extended Mix)",
+      "artist": "Paul Christian (DE)",
+      "bpm": 122,
+      "key": "3A",
+      "genre": "Afro House",
+      "duration": 430,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6564594",
+      "title": "Django",
+      "artist": "Last Men On Earth",
+      "bpm": 125,
+      "key": "1A",
+      "genre": "Afro House",
+      "duration": 341,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6465395",
+      "title": "Better Wait (Extended Mix)",
+      "artist": "ROSEY GOLD, lordkez",
+      "bpm": 120,
+      "key": "8A",
+      "genre": "Afro House",
+      "duration": 455,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6561649",
+      "title": "Spend The Night (Close Counters Remix)",
+      "artist": "Lyric Jones, Wake The Wild, Close Counters",
+      "bpm": 129,
+      "key": "6A",
+      "genre": "Afro House",
+      "duration": 290,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6532500",
+      "title": "Ashe (Club Mix)",
+      "artist": "Eyama, Azola & Sanzatrump, Eyama, Azola, Sanzatrump",
+      "bpm": 120,
+      "key": "1A",
+      "genre": "Afro House",
+      "duration": 433,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6617202",
+      "title": "Do It Again feat. Kabusa Oriental Choir (Original Mix)",
+      "artist": "Bensy, Serve Cold, Neyl, Kabusa Oriental Choir",
+      "bpm": 122,
+      "key": "12A",
+      "genre": "Afro House",
+      "duration": 284,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6617763",
+      "title": "Lean Into The Sunshine (Sparrow (CH), BATU (TR) Remix)",
+      "artist": "Sparrow (CH), Young Saab",
+      "bpm": 120,
+      "key": "4A",
+      "genre": "Afro House",
+      "duration": 290,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6617101",
+      "title": "Don&#x27;t Look Back (Original Mix)",
+      "artist": "Alex Silvestri, Lorenzo Marenna",
+      "bpm": 123,
+      "key": "9A",
+      "genre": "Afro House",
+      "duration": 331,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6576264",
+      "title": "I’m Not Like You (Extended Mix)",
+      "artist": "Zarubin",
+      "bpm": 120,
+      "key": "5A",
+      "genre": "Afro House",
+      "duration": 356,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6553452",
+      "title": "Come Together (Extended Mix)",
+      "artist": "Max Tresher",
+      "bpm": 122,
+      "key": "4A",
+      "genre": "Afro House",
+      "duration": 377,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6286414",
+      "title": "Folhas Sagradas (Extended Mix)",
+      "artist": "João Vaz Rosário",
+      "bpm": 123,
+      "key": "6A",
+      "genre": "Afro House",
+      "duration": 284,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6636660",
+      "title": "Impatient feat. kisskisskiss (Extended Mix)",
+      "artist": "Zakes Bantwini, Sun-El Musician, kisskisskiss",
+      "bpm": 119,
+      "key": "11A",
+      "genre": "Afro House",
+      "duration": 274,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6591651",
+      "title": "Activate (Ed-Ward Remix)",
+      "artist": "Lohrasp Kansara & Leon Blaq, Lohrasp Kansara, Leon Blaq",
+      "bpm": 120,
+      "key": "2A",
+      "genre": "Afro House",
+      "duration": 360,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6460024",
+      "title": "Djamana",
+      "artist": "Baba Sissoko, Yemanjo",
+      "bpm": 120,
+      "key": "6A",
+      "genre": "Afro House",
+      "duration": 326,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6600238",
+      "title": "On My Mind (Extended)",
+      "artist": "Martin Mind, Andreas Fischer",
+      "bpm": 123,
+      "key": "11A",
+      "genre": "Afro House",
+      "duration": 321,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6652226",
+      "title": "Ngai (Original Mix)",
+      "artist": "Lost Desert",
+      "bpm": 122,
+      "key": "2A",
+      "genre": "Afro House",
+      "duration": 326,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6556069",
+      "title": "Mandinga",
+      "artist": "Abigail Sales, Mezomo",
+      "bpm": 124,
+      "key": "7A",
+      "genre": "Afro House",
+      "duration": 313,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6271457",
+      "title": "Pure",
+      "artist": "LARKIN",
+      "bpm": 123,
+      "key": "6A",
+      "genre": "Afro House",
+      "duration": 409,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6302208",
+      "title": "Ithuba (Original Mix)",
+      "artist": "Mike Syntec, Toshi",
+      "bpm": 124,
+      "key": "4A",
+      "genre": "Afro House",
+      "duration": 329,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6476650",
+      "title": "Flashback (Extended Mix)",
+      "artist": "TEDDY-O, SENATVS",
+      "bpm": 122,
+      "key": "12A",
+      "genre": "Afro House",
+      "duration": 289,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6594934",
+      "title": "Ride With Me (Original Mix)",
+      "artist": "Novak, Raise (ofc)",
+      "bpm": 120,
+      "key": "5B",
+      "genre": "Afro House",
+      "duration": 353,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6594586",
+      "title": "Tomorrow Never Happens (Extended Mix)",
+      "artist": "Ewerseen",
+      "bpm": 121,
+      "key": "5A",
+      "genre": "Afro House",
+      "duration": 335,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6595182",
+      "title": "Dark Side (Extended Mix)",
+      "artist": "MONTA (TN)",
+      "bpm": 120,
+      "key": "8A",
+      "genre": "Afro House",
+      "duration": 390,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6597046",
+      "title": "Oh Baby (Extended)",
+      "artist": "NOAYDI, Mathias Pace, Idd Aziz",
+      "bpm": 120,
+      "key": "12A",
+      "genre": "Afro House",
+      "duration": 310,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6616269",
+      "title": "Wena (Original Mix)",
+      "artist": "Alvin Chunky",
+      "bpm": 122,
+      "key": "6A",
+      "genre": "Afro House",
+      "duration": 315,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6643741",
+      "title": "Nightlong Obsession (Original Mix)",
+      "artist": "Massio",
+      "bpm": 122,
+      "key": "6A",
+      "genre": "Afro House",
+      "duration": 354,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6632812",
+      "title": "Down (Original Mix)",
+      "artist": "Guztavo PT, MELØ",
+      "bpm": 124,
+      "key": "1A",
+      "genre": "Afro House",
+      "duration": 298,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6653086",
+      "title": "Movin&#x27; (Extended Mix)",
+      "artist": "MONOLIT, SPIRITO",
+      "bpm": 122,
+      "key": "5A",
+      "genre": "Afro House",
+      "duration": 314,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6467323",
+      "title": "Hakuna Patata",
+      "artist": "Camiel Daamen",
+      "bpm": 125,
+      "key": "7A",
+      "genre": "Deep House",
+      "duration": 345,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6653178",
+      "title": "Strange (Original Mix)",
+      "artist": "Toby Simpson",
+      "bpm": 125,
+      "key": "8A",
+      "genre": "Deep House",
+      "duration": 387,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6627558",
+      "title": "What You Running From",
+      "artist": "Monolink",
+      "bpm": 122,
+      "key": "7A",
+      "genre": "Deep House",
+      "duration": 284,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6586782",
+      "title": "I Can&#x27;t Believe I Loved Her (Extended Mix)",
+      "artist": "Peven Everett, Bambounou",
+      "bpm": 130,
+      "key": "12A",
+      "genre": "Deep House",
+      "duration": 274,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6243893",
+      "title": "A Deep-Felt Love (Ralph Session Extended Basement Mix)",
+      "artist": "Demarkus Lewis, DJ Lady D",
+      "bpm": 125,
+      "key": "1A",
+      "genre": "Deep House",
+      "duration": 410,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6594456",
+      "title": "On The Dancefloor (Original Mix)",
+      "artist": "Josh Butler",
+      "bpm": 128,
+      "key": "9A",
+      "genre": "Deep House",
+      "duration": 346,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6593377",
+      "title": "Hot Sauce (Original Mix)",
+      "artist": "Julius Strieder",
+      "bpm": 128,
+      "key": "3B",
+      "genre": "Deep House",
+      "duration": 337,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6652861",
+      "title": "It Ain&#x27;t Over feat. Lee Wilson (Extended Mix)",
+      "artist": "The Checkup, DJ Merci, Lee Wilson",
+      "bpm": 124,
+      "key": "4B",
+      "genre": "Deep House",
+      "duration": 387,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6630759",
+      "title": "Aubade (Original Mix)",
+      "artist": "Alton Miller",
+      "bpm": 123,
+      "key": "4A",
+      "genre": "Deep House",
+      "duration": 376,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6631946",
+      "title": "Touch Me (Original Mix)",
+      "artist": "Tiger Stripes",
+      "bpm": 126,
+      "key": "3B",
+      "genre": "Deep House",
+      "duration": 316,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6633285",
+      "title": "Exclusive Lovin (Original Mix)",
+      "artist": "Fasa",
+      "bpm": 126,
+      "key": "6B",
+      "genre": "Deep House",
+      "duration": 260,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6632371",
+      "title": "Thrillseekers (Chuck Daniels Remix)",
+      "artist": "Chuck Daniels, Andy Toth, Billy Love",
+      "bpm": 124,
+      "key": "12A",
+      "genre": "Deep House",
+      "duration": 434,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6406190",
+      "title": "Slow Down Chat (Maya Jane Coles Remix)",
+      "artist": "Awkward Moments, Houston X",
+      "bpm": 85,
+      "key": "3A",
+      "genre": "Deep House",
+      "duration": 322,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6652265",
+      "title": "Every Night feat. Shawni (Original Mix)",
+      "artist": "Cali Lanauze, Shawni",
+      "bpm": 126,
+      "key": "9A",
+      "genre": "Deep House",
+      "duration": 267,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6651513",
+      "title": "First Gear (Original Mix)",
+      "artist": "Mike Huckaby",
+      "bpm": 120,
+      "key": "4B",
+      "genre": "Deep House",
+      "duration": 365,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6653108",
+      "title": "Counting Stars (Extended Mix)",
+      "artist": "Max Sinàl, Sio",
+      "bpm": 122,
+      "key": "4A",
+      "genre": "Deep House",
+      "duration": 394,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6465514",
+      "title": "Suave",
+      "artist": "Djuanma",
+      "bpm": 127,
+      "key": "5A",
+      "genre": "Deep House",
+      "duration": 447,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6561648",
+      "title": "Wait For Me (Byron The Aquarius Remix)",
+      "artist": "Lyric Jones, Byron the Aquarius, Wake The Wild, EAST WEST HONEY",
+      "bpm": 126,
+      "key": "3A",
+      "genre": "Deep House",
+      "duration": 264,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6558827",
+      "title": "Be My Love (Atjazz Galaxy Aart Remix)",
+      "artist": "Dave Anthony, Lisa Millett",
+      "bpm": 124,
+      "key": "4B",
+      "genre": "Deep House",
+      "duration": 412,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6617805",
+      "title": "Caffe Romantico (Iner Remix)",
+      "artist": "Nicolas Kotowicz",
+      "bpm": 123,
+      "key": "4A",
+      "genre": "Deep House",
+      "duration": 349,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6467619",
+      "title": "No Way Back (Migues Remix)",
+      "artist": "Giorgio Leone, Gudru, Migues",
+      "bpm": 127,
+      "key": "6A",
+      "genre": "Deep House",
+      "duration": 411,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6585629",
+      "title": "California Love (Original Mix)",
+      "artist": "Fradji",
+      "bpm": 124,
+      "key": "9A",
+      "genre": "Deep House",
+      "duration": 280,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6532547",
+      "title": "Tourist",
+      "artist": "Kevin Toro & Chiro, Kevin Toro, Chiro",
+      "bpm": 125,
+      "key": "1A",
+      "genre": "Deep House",
+      "duration": 401,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6624610",
+      "title": "The Intro House Joint",
+      "artist": "Kid Sublime",
+      "bpm": 120,
+      "key": "11B",
+      "genre": "Deep House",
+      "duration": 340,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6594626",
+      "title": "New Possibilities (Original Mix)",
+      "artist": "N.W.N.",
+      "bpm": 121,
+      "key": "9A",
+      "genre": "Deep House",
+      "duration": 338,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6594691",
+      "title": "Blue Magic (Original Mix)",
+      "artist": "Franck Roger",
+      "bpm": 124,
+      "key": "10A",
+      "genre": "Deep House",
+      "duration": 410,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6594203",
+      "title": "Stay With Me (Original Mix)",
+      "artist": "Tom Fills",
+      "bpm": 121,
+      "key": "9A",
+      "genre": "Deep House",
+      "duration": 271,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6594276",
+      "title": "Dreams (Original Mix)",
+      "artist": "Nathalie Capello",
+      "bpm": 128,
+      "key": "5A",
+      "genre": "Deep House",
+      "duration": 288,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6489647",
+      "title": "Seaweed Tongue",
+      "artist": "Black Eyes",
+      "bpm": 122,
+      "key": "11A",
+      "genre": "Deep House",
+      "duration": 396,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6595079",
+      "title": "Your Love (Original Mix)",
+      "artist": "SizLeCaude",
+      "bpm": 130,
+      "key": "10A",
+      "genre": "Deep House",
+      "duration": 285,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6557241",
+      "title": "Always Lovin",
+      "artist": "Bienk",
+      "bpm": 122,
+      "key": "4A",
+      "genre": "Deep House",
+      "duration": 315,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6586778",
+      "title": "Telling Me Lies (Extended Mix)",
+      "artist": "Cecilia&#x27;s Groove",
+      "bpm": 128,
+      "key": "10A",
+      "genre": "Deep House",
+      "duration": 352,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6611176",
+      "title": "Chubut (Original Mix)",
+      "artist": "n0fake",
+      "bpm": 125,
+      "key": "7A",
+      "genre": "Deep House",
+      "duration": 326,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6616988",
+      "title": "Lost In Sound feat. Juliet Mendoza (Extended Mix)",
+      "artist": "Rulers Of The Deep, Juliet Mendoza",
+      "bpm": 124,
+      "key": "4A",
+      "genre": "Deep House",
+      "duration": 358,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6609917",
+      "title": "So Deep",
+      "artist": "Nathan G",
+      "bpm": 120,
+      "key": "1A",
+      "genre": "Deep House",
+      "duration": 338,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6557592",
+      "title": "Balmes",
+      "artist": "Mint",
+      "bpm": 128,
+      "key": "11A",
+      "genre": "Deep House",
+      "duration": 270,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6453967",
+      "title": "Only One (Pornbugs Remix)",
+      "artist": "Alejo Ruiz (AR)",
+      "bpm": 128,
+      "key": "7A",
+      "genre": "Deep House",
+      "duration": 365,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6558475",
+      "title": "Mastiff",
+      "artist": "Julien Charles",
+      "bpm": 126,
+      "key": "2A",
+      "genre": "Deep House",
+      "duration": 366,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6576741",
+      "title": "Wool (Extended Mix)",
+      "artist": "Dani Sinergia",
+      "bpm": 125,
+      "key": "9A",
+      "genre": "Deep House",
+      "duration": 384,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6583796",
+      "title": "Can&#x27;t Get Enough (Extended Mix)",
+      "artist": "Rem Siman",
+      "bpm": 125,
+      "key": "2A",
+      "genre": "Deep House",
+      "duration": 339,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6595472",
+      "title": "Sweatbox (Extended Mix)",
+      "artist": "Huisman",
+      "bpm": 130,
+      "key": "5A",
+      "genre": "Deep House",
+      "duration": 384,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6565783",
+      "title": "Side Effect",
+      "artist": "Bogeyman, Silja Ellis",
+      "bpm": 130,
+      "key": "4A",
+      "genre": "Deep House",
+      "duration": 275,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6491538",
+      "title": "Jazz Reverie (Extended Mix)",
+      "artist": "Banana Groovz, Jackie",
+      "bpm": 125,
+      "key": "12A",
+      "genre": "Deep House",
+      "duration": 357,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6616212",
+      "title": "I Know So Well (Original Mix)",
+      "artist": "Sebasti",
+      "bpm": 123,
+      "key": "1B",
+      "genre": "Deep House",
+      "duration": 365,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6621342",
+      "title": "She Runs (Original Mix)",
+      "artist": "The AM",
+      "bpm": 128,
+      "key": "9A",
+      "genre": "Deep House",
+      "duration": 313,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6525901",
+      "title": "Like You Do (Extended Mix)",
+      "artist": "OKPLUS, L2Sounds, KayV",
+      "bpm": 125,
+      "key": "4A",
+      "genre": "Deep House",
+      "duration": 339,
+      "source": "catalog"
+    },
+    {
+      "id": "vl:6264923",
+      "title": "Moment&#x27;s Notice",
+      "artist": "GgDeX",
+      "bpm": 128,
+      "key": "3A",
+      "genre": "Deep House",
+      "duration": 363,
+      "source": "catalog"
+    },
     {
       "id": "bp:29491329",
       "title": "Whisper To Me",
@@ -1849,15 +5919,6 @@
       "source": "catalog"
     },
     {
-      "id": "bp:30247938",
-      "title": "Axis",
-      "artist": "Drunken Kong",
-      "bpm": 139,
-      "key": "7B",
-      "genre": "Techno (Raw / Deep / Hypnotic)",
-      "source": "catalog"
-    },
-    {
       "id": "bp:29874003",
       "title": "Conjectura",
       "artist": "DJ Dextro",
@@ -2068,15 +6129,6 @@
       "id": "bp:4043392",
       "title": "The Bells",
       "artist": "Jeff Mills",
-      "bpm": 138,
-      "key": "8A",
-      "genre": "Techno (Raw / Deep / Hypnotic)",
-      "source": "catalog"
-    },
-    {
-      "id": "bp:30202779",
-      "title": "Under Ice",
-      "artist": "Ignez",
       "bpm": 138,
       "key": "8A",
       "genre": "Techno (Raw / Deep / Hypnotic)",
@@ -3064,15 +7116,6 @@
       "source": "catalog"
     },
     {
-      "id": "bp:30031046",
-      "title": "Automatic",
-      "artist": "Iglesias, KONXIOUS",
-      "bpm": 132,
-      "key": "8B",
-      "genre": "Tech House",
-      "source": "catalog"
-    },
-    {
       "id": "bp:29983905",
       "title": "Bombreaker",
       "artist": "Foynez",
@@ -3114,15 +7157,6 @@
       "artist": "Mishell, Vinter (BR)",
       "bpm": 128,
       "key": "10A",
-      "genre": "Tech House",
-      "source": "catalog"
-    },
-    {
-      "id": "bp:28418684",
-      "title": "Record Breaker",
-      "artist": "Summum",
-      "bpm": 131,
-      "key": "5B",
       "genre": "Tech House",
       "source": "catalog"
     },
@@ -4504,15 +8538,6 @@
       "source": "catalog"
     },
     {
-      "id": "bp:29715964",
-      "title": "Little More (Body Action)",
-      "artist": "Sean Doron",
-      "bpm": 130,
-      "key": "10B",
-      "genre": "House",
-      "source": "catalog"
-    },
-    {
       "id": "bp:30219617",
       "title": "Da Fonk (feat. Joni)",
       "artist": "Joni, Mochakk",
@@ -5314,15 +9339,6 @@
       "source": "catalog"
     },
     {
-      "id": "bp:29557659",
-      "title": "After You",
-      "artist": "Shokë",
-      "bpm": 125,
-      "key": "2A",
-      "genre": "Deep House",
-      "source": "catalog"
-    },
-    {
       "id": "bp:28418300",
       "title": "Apathy",
       "artist": "Brunello, Hilel Lev",
@@ -5692,15 +9708,6 @@
       "source": "catalog"
     },
     {
-      "id": "bp:29953835",
-      "title": "MYB",
-      "artist": "Ben Van Kuringen",
-      "bpm": 131,
-      "key": "10A",
-      "genre": "Deep House",
-      "source": "catalog"
-    },
-    {
       "id": "bp:29993123",
       "title": "Don't Hestitate",
       "artist": "Stefan Meser",
@@ -5733,15 +9740,6 @@
       "artist": "Traumer, Anton, antraum",
       "bpm": 127,
       "key": "10A",
-      "genre": "Deep House",
-      "source": "catalog"
-    },
-    {
-      "id": "bp:29557661",
-      "title": "Chiamami",
-      "artist": "Shokë",
-      "bpm": 127,
-      "key": "6A",
       "genre": "Deep House",
       "source": "catalog"
     },
@@ -6187,15 +10185,6 @@
       "source": "catalog"
     },
     {
-      "id": "bp:30186716",
-      "title": "Feel The Same",
-      "artist": "Jeff Sorkowitz",
-      "bpm": 129,
-      "key": "8B",
-      "genre": "Minimal / Deep Tech",
-      "source": "catalog"
-    },
-    {
       "id": "bp:29297243",
       "title": "Work It",
       "artist": "SEBS",
@@ -6318,15 +10307,6 @@
       "artist": "Nachtbraker",
       "bpm": 128,
       "key": "7B",
-      "genre": "Minimal / Deep Tech",
-      "source": "catalog"
-    },
-    {
-      "id": "bp:29783552",
-      "title": "Secrets",
-      "artist": "DumitrEscu",
-      "bpm": 128,
-      "key": "5B",
       "genre": "Minimal / Deep Tech",
       "source": "catalog"
     },
@@ -7361,15 +11341,6 @@
       "title": "We Rule The World",
       "artist": "Cristian Viviano",
       "bpm": 126,
-      "key": "9B",
-      "genre": "Indie Dance",
-      "source": "catalog"
-    },
-    {
-      "id": "bp:30189235",
-      "title": "Calle Sur",
-      "artist": "Oliver Koletzki",
-      "bpm": 125,
       "key": "9B",
       "genre": "Indie Dance",
       "source": "catalog"

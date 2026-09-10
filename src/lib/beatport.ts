@@ -288,7 +288,8 @@ const MIN_KEY_RATE = 0.95
 const MIN_BPM_RATE = 0.9
 const MIN_GENRES = 3
 const BPM_FLOOR = 90
-const BPM_CEILING = 165
+// Drum and bass sits at 170–176; the window only has to catch a column mix-up.
+const BPM_CEILING = 180
 
 export function validateCatalog(next: Track[], prev: Track[] = []): ValidationResult {
   const count = next.length

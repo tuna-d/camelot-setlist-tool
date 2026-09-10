@@ -217,7 +217,7 @@ describe('validateCatalog', () => {
   it('BPM aralığı dışındaki parçalar çoğaldıysa reddeder', () => {
     const result = validateCatalog(catalogTracks(120, (i) => (i % 5 === 0 ? { bpm: 40 } : {})))
     expect(result.ok).toBe(false)
-    expect(result.reasons.join(' ')).toMatch(/between 90 and 165/)
+    expect(result.reasons.join(' ')).toMatch(/between 90 and 180/)
   })
 
   it('üçten az tür varsa reddeder', () => {

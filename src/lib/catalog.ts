@@ -96,6 +96,9 @@ export interface VolumoOptions {
 
 export const DEFAULT_MAX_CHARTS = 25
 
+/** Upper bound on the accumulated catalog, oldest entries dropping off the end. */
+export const CATALOG_CAP = 2000
+
 /**
  * Volumo publishes dozens of DJ charts, each a short list with tempo, key and
  * genre already in the page. Walking a slice of them gives a catalog of the same
@@ -149,14 +152,20 @@ export async function refreshFromVolumo(options: VolumoOptions): Promise<Refresh
     }
   }
 
-  const tracks = dedupeBySignature(collected)
+  const fresh = dedupeBySignature(collected)
+
+  // The charts are small and change weekly, so a run adds to the catalog instead
+  // of replacing it: the pool grows and one bad run can never shrink it. The
+  // freshly read tracks are what gets validated — merging would hide a failure.
+  const merged = dedupeBySignature([...fresh, ...(previous?.tracks ?? [])]).slice(0, CATALOG_CAP)
+
   const candidate: Catalog = {
     updatedAt: new Date().toISOString(),
     source: 'volumo',
-    strategy: tracks.length > 0 ? 'volumo-chart' : 'none',
-    tracks,
+    strategy: fresh.length > 0 ? 'volumo-chart' : 'none',
+    tracks: merged,
   }
-  const validation = validateCatalog(tracks, previous?.tracks ?? [])
+  const validation = validateCatalog(fresh, [])
 
   return {
     ok: validation.ok,
