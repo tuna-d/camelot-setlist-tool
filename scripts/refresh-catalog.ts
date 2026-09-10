@@ -115,7 +115,10 @@ async function collectCharts(previous: Catalog | null): Promise<Catalog | null> 
   const lookup = async (query: string): Promise<SongHit[]> => {
     await wait(LOOKUP_DELAY_MS)
     const response = await fetch(searchUrl(query, apiKey), { headers: { accept: 'application/json' } })
-    if (!response.ok) throw new Error(`HTTP ${response.status}`)
+    if (!response.ok) {
+      // The body carries the real reason, e.g. "Invalid API Key, or inactive."
+      throw new Error(`HTTP ${response.status} ${(await response.text()).slice(0, 120)}`)
+    }
     return readSearchResults(await response.json()).results
   }
 
@@ -128,6 +131,12 @@ async function collectCharts(previous: Catalog | null): Promise<Catalog | null> 
   console.log(`  ${collected.tracks.length}/${collected.entries.length} entries matched a tempo and key`)
   if (collected.unmatched.length > 0) {
     console.log(`  unmatched: ${collected.unmatched.slice(0, 8).join(' · ')}`)
+  }
+
+  if (collected.lookupError) {
+    console.error(`
+${collected.lookupError}`)
+    return null
   }
 
   const validation = validateDiscovery(collected.tracks, collected.entries.length)

@@ -195,4 +195,37 @@ describe('collectFromCharts', () => {
     expect(result.tracks).toEqual([])
     expect(result.unmatched).toHaveLength(2)
   })
+
+  it('servis üst üste düşerse erken durur ve sebebini söyler', async () => {
+    const rows = Array.from({ length: 20 }, (_, index) => ({ id: `t${index}`, name: `Sanatçı - Parça ${index}` }))
+    let asked = 0
+    const result = await collectFromCharts({
+      pages: ['cok'],
+      fetchPage: () => Promise.resolve(chartPage(rows)),
+      lookup: () => {
+        asked += 1
+        return Promise.reject(new Error('HTTP 401 Invalid API Key, or inactive.'))
+      },
+    })
+
+    expect(asked).toBe(5)
+    expect(result.lookupError).toMatch(/failed 5 times in a row/)
+    expect(result.lookupError).toMatch(/Invalid API Key/)
+  })
+
+  it('tek tük hata erken durdurmaz', async () => {
+    const rows = Array.from({ length: 8 }, (_, index) => ({ id: `t${index}`, name: `Sanatçı - Parça ${index}` }))
+    let asked = 0
+    const result = await collectFromCharts({
+      pages: ['bazen'],
+      fetchPage: () => Promise.resolve(chartPage(rows)),
+      lookup: () => {
+        asked += 1
+        return asked % 2 === 0 ? Promise.reject(new Error('geçici')) : Promise.resolve([])
+      },
+    })
+
+    expect(asked).toBe(8)
+    expect(result.lookupError).toBeNull()
+  })
 })

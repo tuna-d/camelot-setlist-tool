@@ -103,7 +103,12 @@ export interface CollectResult {
   reports: ChartReport[]
   /** Chart names the lookup could not place, worth reading when the rate drops. */
   unmatched: string[]
+  /** Set when the run gave up: the service itself is failing, not the matching. */
+  lookupError: string | null
 }
+
+/** A handful of failures in a row means the service is down or the key is dead. */
+const MAX_LOOKUP_FAILURES = 5
 
 export interface CollectOptions {
   pages: string[]
@@ -141,11 +146,14 @@ export async function collectFromCharts(options: CollectOptions): Promise<Collec
 
   const tracks: Track[] = []
   const unmatched: string[] = []
+  let failures = 0
+  let lookupError: string | null = null
 
   for (const entry of entries) {
     const name = `${entry.artist} - ${entry.title}`.trim()
     try {
       const hit = pickHit(entry, await lookup(lookupQuery(entry)))
+      failures = 0
       if (hit) {
         tracks.push(toTrack(entry, hit))
         onStep?.(`matched ${name}`)
@@ -154,10 +162,18 @@ export async function collectFromCharts(options: CollectOptions): Promise<Collec
         onStep?.(`no match for ${name}`)
       }
     } catch (problem) {
+      const reason = problem instanceof Error ? problem.message : String(problem)
       unmatched.push(name)
-      onStep?.(`lookup failed for ${name}: ${problem instanceof Error ? problem.message : String(problem)}`)
+      onStep?.(`lookup failed for ${name}: ${reason}`)
+      failures += 1
+
+      // Asking 40 more times would only repeat the same answer.
+      if (failures >= MAX_LOOKUP_FAILURES) {
+        lookupError = `The lookup service failed ${failures} times in a row: ${reason}. Stopped early; fix the service or the API key before running again.`
+        break
+      }
     }
   }
 
-  return { tracks, entries, reports, unmatched }
+  return { tracks, entries, reports, unmatched, lookupError }
 }
