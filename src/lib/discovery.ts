@@ -37,13 +37,17 @@ export function usableTracks(tracks: Track[]): Track[] {
   return tracks.filter((track) => typeof track.bpm === 'number' && track.bpm > 0 && !!track.key)
 }
 
-export function validateDiscovery(incoming: Track[]): DiscoveryResult {
+/**
+ * `attempted` is how many chart entries were looked up; the matched tracks are
+ * what came back. Comparing the two is the honest way to see a broken lookup.
+ */
+export function validateDiscovery(incoming: Track[], attempted = incoming.length): DiscoveryResult {
   const usable = usableTracks(incoming)
   const inRange = usable.filter(
     (track) => track.bpm !== null && track.bpm >= BPM_FLOOR && track.bpm <= BPM_CEILING,
   )
 
-  const keyRate = incoming.length === 0 ? 0 : usable.length / incoming.length
+  const keyRate = attempted === 0 ? 0 : usable.length / attempted
   const bpmRate = usable.length === 0 ? 0 : inRange.length / usable.length
   const reasons: string[] = []
 
@@ -69,7 +73,7 @@ export function validateDiscovery(incoming: Track[]): DiscoveryResult {
     ok: reasons.length === 0,
     reasons,
     stats: {
-      incoming: incoming.length,
+      incoming: attempted,
       usable: usable.length,
       keyRate: Math.round(keyRate * 1000) / 1000,
       bpmRate: Math.round(bpmRate * 1000) / 1000,

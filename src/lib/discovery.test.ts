@@ -49,10 +49,15 @@ describe('validateDiscovery', () => {
   })
 
   it('eşleşme oranı düşükse reddeder', () => {
-    const list = [...many(10), ...many(30, 100).map((item) => ({ ...item, key: null }))]
-    const result = validateDiscovery(list)
+    // 12 parça eşleşti ama 40 isim denendi: oran %30.
+    const result = validateDiscovery(many(12), 40)
     expect(result.ok).toBe(false)
     expect(result.reasons.join(' ')).toMatch(/could be matched/)
+  })
+
+  it('denenen sayısı verilmezse gelen listeyi esas alır', () => {
+    expect(validateDiscovery(many(20)).stats.incoming).toBe(20)
+    expect(validateDiscovery(many(20), 25).stats.incoming).toBe(25)
   })
 
   it('tempolar aralık dışındaysa reddeder', () => {
