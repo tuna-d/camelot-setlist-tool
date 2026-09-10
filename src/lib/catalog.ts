@@ -1,6 +1,7 @@
 import { BEATPORT_GENRES, extractTracks, genreUrl, validateCatalog } from './beatport'
 import type { BeatportGenre, ExtractResult, ValidationResult } from './beatport'
 import { dedupeBySignature } from './search'
+import { VOLUMO_CHARTS, extractChartLinks, extractTracks as extractVolumoTracks } from './volumo'
 import type { Catalog, Track } from './types'
 
 /** The catalog table holds a single row; its id is fixed. */
@@ -12,7 +13,7 @@ export interface GenreReport {
   genre: string
   url: string
   count: number
-  strategy: ExtractResult['strategy']
+  strategy: ExtractResult['strategy'] | 'volumo-chart'
   error: string | null
 }
 
@@ -83,6 +84,93 @@ export async function refreshCatalog(
     reports,
     validation,
   }
+}
+
+export interface VolumoOptions {
+  fetcher: CatalogFetcher
+  previous?: Catalog | null
+  /** How many chart pages to walk. Each holds ~15 tracks. */
+  maxCharts?: number
+  onStep?: (message: string) => void
+}
+
+export const DEFAULT_MAX_CHARTS = 25
+
+/**
+ * Volumo publishes dozens of DJ charts, each a short list with tempo, key and
+ * genre already in the page. Walking a slice of them gives a catalog of the same
+ * size as the old Beatport scrape without a second lookup service.
+ */
+export async function refreshFromVolumo(options: VolumoOptions): Promise<RefreshResult> {
+  const { fetcher, previous = null, maxCharts = DEFAULT_MAX_CHARTS, onStep } = options
+  const reports: GenreReport[] = []
+  const collected: Track[] = []
+
+  let links: string[] = []
+  try {
+    links = extractChartLinks(await fetcher(VOLUMO_CHARTS)).slice(0, maxCharts)
+  } catch (error) {
+    reports.push({
+      genre: 'chart index',
+      url: VOLUMO_CHARTS,
+      count: 0,
+      strategy: 'none',
+      error: errorMessage(error),
+    })
+  }
+
+  if (links.length === 0 && reports.length === 0) {
+    reports.push({
+      genre: 'chart index',
+      url: VOLUMO_CHARTS,
+      count: 0,
+      strategy: 'none',
+      error: 'No chart links on the index page. The page structure may have changed; the fix belongs in extractChartLinks.',
+    })
+  }
+
+  for (const url of links) {
+    try {
+      onStep?.(url)
+      const tracks = extractVolumoTracks(await fetcher(url))
+      collected.push(...tracks)
+      reports.push({
+        genre: chartName(url),
+        url,
+        count: tracks.length,
+        strategy: 'volumo-chart',
+        error:
+          tracks.length === 0
+            ? 'No tracks could be extracted from this chart. The page structure may have changed; review extractTracks in volumo.ts.'
+            : null,
+      })
+    } catch (error) {
+      reports.push({ genre: chartName(url), url, count: 0, strategy: 'none', error: errorMessage(error) })
+    }
+  }
+
+  const tracks = dedupeBySignature(collected)
+  const candidate: Catalog = {
+    updatedAt: new Date().toISOString(),
+    source: 'volumo',
+    strategy: tracks.length > 0 ? 'volumo-chart' : 'none',
+    tracks,
+  }
+  const validation = validateCatalog(tracks, previous?.tracks ?? [])
+
+  return {
+    ok: validation.ok,
+    catalog: validation.ok ? candidate : previous,
+    candidate,
+    reports,
+    validation,
+  }
+}
+
+/** The readable half of a chart address, for the report lines. */
+function chartName(url: string): string {
+  const slug = url.split('/chart/')[1] ?? url
+  return slug.replace(/^[a-z0-9]+-/i, '').replace(/-/g, ' ')
 }
 
 export function formatReports(result: RefreshResult): string {

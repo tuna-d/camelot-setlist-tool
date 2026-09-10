@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { BEATPORT_GENRES, genreUrl } from './beatport'
-import { formatReports, isCatalog, refreshCatalog } from './catalog'
+import { formatReports, isCatalog, refreshCatalog, refreshFromVolumo } from './catalog'
 import type { Catalog, Track } from './types'
 
 const KEYS = ['G Minor', 'A Minor', 'C Major', 'F# Minor']
@@ -132,5 +132,91 @@ describe('isCatalog', () => {
     expect(isCatalog({ tracks: 'değil' })).toBe(false)
     expect(isCatalog({ tracks: [{ id: 1 }] })).toBe(false)
     expect(isCatalog({ tracks: [{ id: 'a' }] })).toBe(false)
+  })
+})
+
+describe('refreshFromVolumo', () => {
+  const index = `
+    <a href="/chart/aaa-tech-house-picks">bir</a>
+    <a href="/chart/bbb-afro-house-picks">iki</a>
+  `
+
+  function chartPage(rows: { id: string; title: string; bpm: number; key: string; genre: string }[]): string {
+    return rows
+      .map(
+        (row) =>
+          `<a href="/track/${row.id}-slug">${row.title}</a>` +
+          `<span data-test-id="artists"><a href="/artist/1-x">Sanatçı ${row.id}</a></span>` +
+          `<a class="TrackSecondaryData_genre___QkPF" href="/x">${row.genre}</a>` +
+          `<span data-test-id="bpm">${row.bpm} BPM</span>` +
+          `<span data-test-id="keysign">${row.key}</span>` +
+          `<span data-test-id="duration">5:00</span>`,
+      )
+      .join('')
+  }
+
+  // Volumo track ids are numeric; the parser refuses anything else.
+  function bigChart(prefix: number, genre: string, count: number) {
+    return chartPage(
+      Array.from({ length: count }, (_, index) => ({
+        id: `${prefix + index}`,
+        title: `Parça ${prefix + index}`,
+        bpm: 120 + (index % 20),
+        key: 'A minor',
+        genre,
+      })),
+    )
+  }
+
+  const pages: Record<string, string> = {
+    'https://volumo.com/charts': index,
+    'https://volumo.com/chart/aaa-tech-house-picks': bigChart(1000, 'Tech House', 60),
+    'https://volumo.com/chart/bbb-afro-house-picks': bigChart(2000, 'Afro House', 60),
+  }
+
+  const fetcher = (url: string) =>
+    pages[url] ? Promise.resolve(pages[url]) : Promise.reject(new Error('HTTP 404'))
+
+  it('liste sayfalarını gezip katalog kurar', async () => {
+    const result = await refreshFromVolumo({ fetcher, maxCharts: 2 })
+    expect(result.candidate.tracks.length).toBe(120)
+    expect(result.candidate.source).toBe('volumo')
+    expect(result.reports.map((report) => report.count)).toEqual([60, 60])
+  })
+
+  it('gezilecek liste sayısını sınırlar', async () => {
+    const result = await refreshFromVolumo({ fetcher, maxCharts: 1 })
+    expect(result.reports).toHaveLength(1)
+  })
+
+  it('bir liste düşerse diğerlerini sürdürür', async () => {
+    const withBroken = { ...pages, 'https://volumo.com/charts': `${index}<a href="/chart/ccc-yok">üç</a>` }
+    const result = await refreshFromVolumo({
+      fetcher: (url) => (withBroken[url] ? Promise.resolve(withBroken[url]) : Promise.reject(new Error('HTTP 500'))),
+      maxCharts: 3,
+    })
+    expect(result.reports.at(-1)?.error).toBe('HTTP 500')
+    expect(result.candidate.tracks.length).toBe(120)
+  })
+
+  it('dizin sayfası düşerse sebebini rapora yazar', async () => {
+    const result = await refreshFromVolumo({ fetcher: () => Promise.reject(new Error('HTTP 403')) })
+    expect(result.ok).toBe(false)
+    expect(result.reports[0].error).toBe('HTTP 403')
+  })
+
+  it('doğrulama geçmezse eski katalogu korur', async () => {
+    const previous = {
+      updatedAt: '2026-01-01T00:00:00.000Z',
+      source: 'volumo',
+      strategy: 'volumo-chart',
+      tracks: [],
+    }
+    const result = await refreshFromVolumo({
+      fetcher: () => Promise.resolve('<html></html>'),
+      previous,
+    })
+    expect(result.ok).toBe(false)
+    expect(result.catalog).toBe(previous)
   })
 })
