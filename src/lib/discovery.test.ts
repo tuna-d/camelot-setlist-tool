@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { CATALOG_CAP, mergeCatalog, usableTracks, validateDiscovery } from './discovery'
+import { CATALOG_CAP, collectFromCharts, mergeCatalog, usableTracks, validateDiscovery } from './discovery'
+import type { SongHit } from './getsongbpm'
 import type { Track } from './types'
 
 function track(partial: Partial<Track> & { id: string }): Track {
@@ -101,5 +102,92 @@ describe('mergeCatalog', () => {
     const previous = many(4)
     const incoming = [track({ id: 'x' })]
     expect(mergeCatalog(previous, incoming)).toEqual(mergeCatalog(previous, incoming))
+  })
+})
+
+function chartPage(rows: { id: string; name: string }[]): string {
+  return rows
+    .map(
+      (row) =>
+        `<div class="bItm oItm" data-id="${row.id}"><div class="bRank">1</div>` +
+        `<a href="/track/${row.id}/x/index.html">${row.name}</a></div>`,
+    )
+    .join('')
+}
+
+describe('collectFromCharts', () => {
+  const pages: Record<string, string> = {
+    weekly: chartPage([
+      { id: 'a', name: 'MEDUZA &amp; Kevin de Vries - 7 Days' },
+      { id: 'b', name: 'Adam Beyer - Let Loose' },
+    ]),
+    trending: chartPage([{ id: 'a', name: 'MEDUZA &amp; Kevin de Vries - 7 Days' }]),
+  }
+
+  const hits: Record<string, SongHit[]> = {
+    'MEDUZA - 7 Days': [{ title: '7 Days', artist: 'MEDUZA', bpm: 124, key: '8A' }],
+    'Adam Beyer - Let Loose': [{ title: 'Let Loose', artist: 'Adam Beyer', bpm: 132, key: '5A' }],
+  }
+
+  it('sayfaları okur, isimleri tempo ve keyle eşler', async () => {
+    const result = await collectFromCharts({
+      pages: ['weekly'],
+      fetchPage: (url) => Promise.resolve(pages[url]),
+      lookup: (query) => Promise.resolve(hits[query] ?? []),
+    })
+
+    expect(result.tracks).toHaveLength(2)
+    expect(result.tracks[0]).toMatchObject({ title: '7 Days', bpm: 124, key: '8A', source: 'catalog' })
+    expect(result.unmatched).toEqual([])
+  })
+
+  it('aynı parça iki listede varsa bir kez sorar', async () => {
+    const asked: string[] = []
+    const result = await collectFromCharts({
+      pages: ['weekly', 'trending'],
+      fetchPage: (url) => Promise.resolve(pages[url]),
+      lookup: (query) => {
+        asked.push(query)
+        return Promise.resolve(hits[query] ?? [])
+      },
+    })
+
+    expect(result.entries).toHaveLength(2)
+    expect(asked).toHaveLength(2)
+    expect(result.reports.map((report) => report.found)).toEqual([2, 0])
+  })
+
+  it('bir sayfa düşerse diğerlerini sürdürür', async () => {
+    const result = await collectFromCharts({
+      pages: ['kirik', 'weekly'],
+      fetchPage: (url) =>
+        url === 'kirik' ? Promise.reject(new Error('HTTP 403')) : Promise.resolve(pages[url]),
+      lookup: (query) => Promise.resolve(hits[query] ?? []),
+    })
+
+    expect(result.reports[0].error).toBe('HTTP 403')
+    expect(result.tracks).toHaveLength(2)
+  })
+
+  it('eşleşmeyen ismi rapora yazar, çökmez', async () => {
+    const result = await collectFromCharts({
+      pages: ['weekly'],
+      fetchPage: (url) => Promise.resolve(pages[url]),
+      lookup: (query) => (query.includes('Let Loose') ? Promise.resolve([]) : Promise.resolve(hits[query])),
+    })
+
+    expect(result.tracks).toHaveLength(1)
+    expect(result.unmatched).toEqual(['Adam Beyer - Let Loose'])
+  })
+
+  it('arama servisi çökerse o parçayı atlar', async () => {
+    const result = await collectFromCharts({
+      pages: ['weekly'],
+      fetchPage: (url) => Promise.resolve(pages[url]),
+      lookup: () => Promise.reject(new Error('kota doldu')),
+    })
+
+    expect(result.tracks).toEqual([])
+    expect(result.unmatched).toHaveLength(2)
   })
 })

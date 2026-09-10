@@ -26,6 +26,19 @@ export function splitQuery(query: string): SongQuery {
   return { artist: match[1].trim(), song: match[2].trim() }
 }
 
+export const GETSONGBPM_ENDPOINT = 'https://api.getsong.co/search/'
+
+/**
+ * Used by the refresh script, which holds the key itself. The Vercel function
+ * keeps its own copy: Vercel compiles the files under api/ on their own and
+ * cannot import from src/lib.
+ */
+export function searchUrl(query: string, apiKey: string): string {
+  const { song, artist } = splitQuery(query)
+  const lookup = artist ? `song:${song} artist:${artist}` : `song:${song}`
+  return `${GETSONGBPM_ENDPOINT}?api_key=${encodeURIComponent(apiKey)}&type=both&lookup=${encodeURIComponent(lookup)}`
+}
+
 function text(value: unknown): string {
   return typeof value === 'string' ? value.trim() : ''
 }

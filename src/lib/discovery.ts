@@ -1,4 +1,8 @@
+import { lookupQuery, pickHit, toTrack } from './enrich'
 import { dedupeBySignature } from './search'
+import { extractChart } from './tracklists'
+import type { SongHit } from './getsongbpm'
+import type { ChartEntry } from './tracklists'
 import type { Track } from './types'
 
 /**
@@ -81,4 +85,75 @@ export function validateDiscovery(incoming: Track[]): DiscoveryResult {
 export function mergeCatalog(previous: Track[], incoming: Track[], cap = CATALOG_CAP): Track[] {
   const merged = dedupeBySignature([...usableTracks(incoming), ...previous])
   return cap > 0 ? merged.slice(0, cap) : merged
+}
+
+export interface ChartReport {
+  url: string
+  found: number
+  error: string | null
+}
+
+export interface CollectResult {
+  tracks: Track[]
+  entries: ChartEntry[]
+  reports: ChartReport[]
+  /** Chart names the lookup could not place, worth reading when the rate drops. */
+  unmatched: string[]
+}
+
+export interface CollectOptions {
+  pages: string[]
+  fetchPage: (url: string) => Promise<string>
+  lookup: (query: string) => Promise<SongHit[]>
+  onStep?: (message: string) => void
+}
+
+/**
+ * Reads the chart pages, then asks the lookup service for each entry.
+ * Network calls are injected so the whole path is testable without one.
+ */
+export async function collectFromCharts(options: CollectOptions): Promise<CollectResult> {
+  const { pages, fetchPage, lookup, onStep } = options
+
+  const entries: ChartEntry[] = []
+  const reports: ChartReport[] = []
+  const seen = new Set<string>()
+
+  for (const url of pages) {
+    try {
+      const found = extractChart(await fetchPage(url))
+      const fresh = found.filter((entry) => !seen.has(entry.id))
+      for (const entry of fresh) seen.add(entry.id)
+      entries.push(...fresh)
+      reports.push({ url, found: fresh.length, error: null })
+    } catch (problem) {
+      reports.push({
+        url,
+        found: 0,
+        error: problem instanceof Error ? problem.message : String(problem),
+      })
+    }
+  }
+
+  const tracks: Track[] = []
+  const unmatched: string[] = []
+
+  for (const entry of entries) {
+    const name = `${entry.artist} - ${entry.title}`.trim()
+    try {
+      const hit = pickHit(entry, await lookup(lookupQuery(entry)))
+      if (hit) {
+        tracks.push(toTrack(entry, hit))
+        onStep?.(`matched ${name}`)
+      } else {
+        unmatched.push(name)
+        onStep?.(`no match for ${name}`)
+      }
+    } catch (problem) {
+      unmatched.push(name)
+      onStep?.(`lookup failed for ${name}: ${problem instanceof Error ? problem.message : String(problem)}`)
+    }
+  }
+
+  return { tracks, entries, reports, unmatched }
 }

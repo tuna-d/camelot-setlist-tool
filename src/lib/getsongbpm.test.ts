@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { readSearchResults, splitQuery } from './getsongbpm'
+import { readSearchResults, searchUrl, splitQuery } from './getsongbpm'
 
 describe('splitQuery', () => {
   it('"Sanatçı - Parça" biçimini ayırır', () => {
@@ -17,6 +17,23 @@ describe('splitQuery', () => {
 
   it('boş sorguda boş alanlar', () => {
     expect(splitQuery('   ')).toEqual({ artist: '', song: '' })
+  })
+})
+
+describe('searchUrl', () => {
+  it('sanatçı varsa lookup’a ekler', () => {
+    const url = searchUrl('Ayla - Gece', 'ANAHTAR')
+    expect(url).toContain('api_key=ANAHTAR')
+    expect(url).toContain('type=both')
+    expect(decodeURIComponent(url)).toContain('lookup=song:Gece artist:Ayla')
+  })
+
+  it('sanatçı yoksa yalnızca parça arar', () => {
+    expect(decodeURIComponent(searchUrl('Gece', 'X'))).toContain('lookup=song:Gece')
+  })
+
+  it('anahtarı adres için kaçırır', () => {
+    expect(searchUrl('Gece', 'a b&c')).toContain('api_key=a%20b%26c')
   })
 })
 
