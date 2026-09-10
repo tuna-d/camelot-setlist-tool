@@ -17,9 +17,15 @@ function param(request: VercelRequest, name: string): string {
   return (value ?? '').trim()
 }
 
+/**
+ * `type=both` demands both halves: sending only `song:` answers 400 "Bad query."
+ * With no artist typed the plain `type=song` form is the one that works.
+ */
 function searchUrl(song: string, artist: string, apiKey: string): string {
-  const lookup = artist ? `song:${song} artist:${artist}` : `song:${song}`
-  return `${ENDPOINT}?api_key=${encodeURIComponent(apiKey)}&type=both&lookup=${encodeURIComponent(lookup)}`
+  const key = encodeURIComponent(apiKey)
+  if (!artist) return `${ENDPOINT}?api_key=${key}&type=song&lookup=${encodeURIComponent(song)}`
+  const lookup = encodeURIComponent(`song:${song} artist:${artist}`)
+  return `${ENDPOINT}?api_key=${key}&type=both&lookup=${lookup}`
 }
 
 /**
