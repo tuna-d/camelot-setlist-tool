@@ -17,5 +17,6 @@ npm-debug.log*
 
 # local working notes
 CLAUDE.md
+AGENTS.md
 BUILD-PLAN.md
 .claude/
