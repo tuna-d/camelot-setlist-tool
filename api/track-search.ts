@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
+import type { SupabaseClient } from '@supabase/supabase-js'
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 
 /**
@@ -21,18 +22,50 @@ function searchUrl(song: string, artist: string, apiKey: string): string {
   return `${ENDPOINT}?api_key=${encodeURIComponent(apiKey)}&type=both&lookup=${encodeURIComponent(lookup)}`
 }
 
+/**
+ * The environment variable is foreign data too: a value pasted with a missing
+ * scheme, a stray quote or a newline used to crash the whole function with
+ * "Invalid supabaseUrl". Fail with an answer that says what to fix instead.
+ */
+function connect(): { client: SupabaseClient | null; problem: string | null } {
+  const url = (process.env.SUPABASE_URL ?? '').trim().replace(/^["']|["']$/g, '')
+  const key = (process.env.SUPABASE_SERVICE_ROLE_KEY ?? '').trim()
+
+  if (!url || !key) {
+    return {
+      client: null,
+      problem:
+        'The server side is not connected to Supabase. Add SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY to the Vercel environment variables.',
+    }
+  }
+
+  if (!/^https?:\/\//i.test(url)) {
+    return {
+      client: null,
+      problem: `SUPABASE_URL does not start with https:// (it reads "${url}"). Set it to the Project URL exactly as Supabase shows it, for example https://your-ref.supabase.co`,
+    }
+  }
+
+  try {
+    return { client: createClient(url, key, { auth: { persistSession: false } }), problem: null }
+  } catch (error) {
+    return {
+      client: null,
+      problem: `SUPABASE_URL is not a usable address: ${error instanceof Error ? error.message : String(error)}. Copy the Project URL from Supabase → Settings → API without a trailing path.`,
+    }
+  }
+}
+
 /** Id of the session owner; `null` when the header is missing or the token is invalid. */
 async function readUserId(request: VercelRequest): Promise<string | null> {
-  const url = process.env.SUPABASE_URL ?? ''
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY ?? ''
-  if (!url || !key) return null
+  const { client } = connect()
+  if (!client) return null
 
   const header = request.headers.authorization
   const raw = Array.isArray(header) ? (header[0] ?? '') : (header ?? '')
   const token = raw.replace(/^Bearer\s+/i, '')
   if (!token) return null
 
-  const client = createClient(url, key, { auth: { persistSession: false } })
   const { data, error } = await client.auth.getUser(token)
   return error ? null : (data.user?.id ?? null)
 }
