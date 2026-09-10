@@ -190,7 +190,7 @@ describe('refreshFromVolumo', () => {
   })
 
   it('bir liste düşerse diğerlerini sürdürür', async () => {
-    const withBroken = { ...pages, 'https://volumo.com/charts': `${index}<a href="/chart/ccc-yok">üç</a>` }
+    const withBroken: Record<string, string> = { ...pages, 'https://volumo.com/charts': `${index}<a href="/chart/ccc-yok">üç</a>` }
     const result = await refreshFromVolumo({
       fetcher: (url) => (withBroken[url] ? Promise.resolve(withBroken[url]) : Promise.reject(new Error('HTTP 500'))),
       maxCharts: 3,

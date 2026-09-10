@@ -20,3 +20,6 @@ CLAUDE.md
 AGENTS.md
 BUILD-PLAN.md
 .claude/
+*.tmp.html
+*.tmp.mjs
+*.tmp.ts
