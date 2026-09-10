@@ -174,19 +174,20 @@ the key is in use.
 
 ### The weekly refresh runs in GitHub Actions
 
-`.github/workflows/refresh-catalog.yml` scrapes Beatport every Monday at 06:00 UTC,
-writes the result to the `catalog` table and commits `public/catalog.json` when it
-changed. Add two repository secrets to turn it on (Settings → Secrets and variables →
-Actions):
+`.github/workflows/refresh-catalog.yml` holds two jobs. **keep-awake** reads
+`/api/catalog` on Mondays and Thursdays so the free Supabase project is never paused for
+inactivity. **refresh** scrapes Beatport, writes the `catalog` table and commits
+`public/catalog.json` when it changed — it runs only when you start it by hand, because
+Beatport currently refuses the scraper (see the note further down). Add two repository
+secrets for it (Settings → Secrets and variables → Actions):
 
 | secret | value |
 |---|---|
 | `SUPABASE_URL` | the project address |
 | `SUPABASE_SERVICE_ROLE_KEY` | the secret key |
 
-Without the secrets the workflow simply fails and nothing else breaks; you can always
-refresh from your own machine with `npm run refresh:catalog -- --supabase`. The Actions
-tab also has a "Run workflow" button for a manual run.
+Without the secrets the refresh job fails and nothing else breaks; you can always refresh
+from your own machine with `npm run refresh:catalog -- --supabase`.
 
 **Why not a Vercel cron?** Vercel compiles each file under `api/` on its own and does not
 follow imports into `src/lib`, so a function cannot reach the scraper — an import like
@@ -296,8 +297,19 @@ Three things guard against it:
 When the page structure changes, `npm run refresh:catalog -- --dry` says how many tracks
 each strategy found; the fix belongs in the extraction strategies in `src/lib/beatport.ts`.
 
-The last scrape pulled 875 tracks from nine genres with a 100% key parse rate; the strategy
-that held was `__NEXT_DATA__`.
+**Status, 2026-09-10: Beatport now answers 403 to this scraper.** Every genre page is
+refused, from a home connection and from a GitHub Actions runner alike, so the block is not
+about the address. The last good scrape (2026-09-08) pulled 875 tracks from nine genres with
+a 100% key parse rate through `__NEXT_DATA__`, and that snapshot is what the app still
+serves: it sits in the `catalog` table and in `public/catalog.json`.
+
+Nothing in the app is degraded by this — discovery search, the wheel, scoring and the set
+builder all read the stored snapshot. What is frozen is its freshness.
+
+The refresh job is therefore manual (`workflow_dispatch`) rather than scheduled; run it now
+and then to see whether the block has lifted. If Beatport keeps refusing, the options are to
+apply for their official API, or to lean on your own rekordbox library as the pool, which is
+what the app is built around anyway.
 
 ## Smoke test
 

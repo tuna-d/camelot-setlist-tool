@@ -1,22 +1,41 @@
-name: Refresh the discovery catalog
+name: Catalog
 
-# The Vercel function cannot host the scraper: Vercel compiles the files under
-# api/ on their own and does not follow imports into src/lib. The refresh runs
-# here instead, writes straight to Supabase, and also keeps the free Supabase
-# project awake.
+# Two jobs, because they differ wildly in how reliable they are:
+#
+# keep-awake — a plain read of our own endpoint, twice a week. Free Supabase
+#              projects are paused after 7 days of inactivity; this touches the
+#              database often enough to prevent that.
+# refresh    — scrapes Beatport. Manual only: as of 2026-09-10 Beatport answers
+#              403 to this scraper from every address we tried, so a scheduled
+#              run would only mail a failure every week. Run it by hand to see
+#              whether the block has lifted; a failed run never overwrites the
+#              stored catalog.
+#
+# The scrape does not live in a Vercel function because Vercel compiles the
+# files under api/ on their own and does not follow imports into src/lib.
 
 on:
   schedule:
-    - cron: '0 6 * * 1' # Mondays, 06:00 UTC
-  workflow_dispatch: # lets you run it by hand from the Actions tab
+    - cron: '0 6 * * 1,4' # Mondays and Thursdays, 06:00 UTC
+  workflow_dispatch:
 
-# The last step pushes the refreshed catalog back, which the default read-only
+# The refresh job pushes the updated catalog back, which the default read-only
 # token cannot do.
 permissions:
   contents: write
 
 jobs:
+  keep-awake:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Read the catalog endpoint
+        run: |
+          code=$(curl -s -o /dev/null -w '%{http_code}' https://camelot-setlist-tool.vercel.app/api/catalog)
+          echo "catalog endpoint answered $code"
+          test "$code" = "200"
+
   refresh:
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
