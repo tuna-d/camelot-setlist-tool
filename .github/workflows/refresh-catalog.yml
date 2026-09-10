@@ -10,6 +10,11 @@ on:
     - cron: '0 6 * * 1' # Mondays, 06:00 UTC
   workflow_dispatch: # lets you run it by hand from the Actions tab
 
+# The last step pushes the refreshed catalog back, which the default read-only
+# token cannot do.
+permissions:
+  contents: write
+
 jobs:
   refresh:
     runs-on: ubuntu-latest
