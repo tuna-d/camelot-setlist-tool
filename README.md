@@ -29,7 +29,7 @@ It runs with no environment variables at all: sign-in stays off, the app falls b
 guest mode, and everything lives in the browser's `localStorage`.
 
 ```bash
-npm test           # vitest (346 tests)
+npm test           # vitest (369 tests)
 npm run typecheck  # tsc -b --noEmit
 npm run lint       # eslint
 npm run build      # tsc -b && vite build
@@ -176,9 +176,8 @@ the key is in use.
 
 `.github/workflows/refresh-catalog.yml` holds two jobs. **keep-awake** reads
 `/api/catalog` on Mondays and Thursdays so the free Supabase project is never paused for
-inactivity. **refresh** scrapes Beatport, writes the `catalog` table and commits
-`public/catalog.json` when it changed — it runs only when you start it by hand, because
-Beatport currently refuses the scraper (see the note further down). Add two repository
+inactivity. **refresh** reads Volumo's DJ charts, writes the `catalog` table and commits
+`public/catalog.json` when it changed. Add two repository
 secrets for it (Settings → Secrets and variables → Actions):
 
 | secret | value |
@@ -219,8 +218,9 @@ src/lib/          Pure logic — never touches React, the DOM or window; every m
   setbuilder.ts     beam-search set builder, energy curves
   setstats.ts       transition verdict and set totals, shared by the list and the summary
   search.ts         local search that folds diacritics (Turkish included)
-  beatport.ts       catalog extraction (three strategies) and validation
-  catalog.ts        genre-page refresh, per-genre report
+  volumo.ts         chart page extraction: tempo, key, genre, length
+  beatport.ts       the older source, kept for --source=beatport
+  catalog.ts        refresh flows for both sources, validation, per-chart report
   getsongbpm.ts     single-track query and response reading
   state-rows.ts     app state ↔ database rows mapping
   merge.ts          merges guest work into an account without replacing anything
@@ -279,37 +279,40 @@ Even when a playlist filter is active, the **whole collection** is saved; the fi
 narrows the view. (Saving the filtered list used to lose the rest of the collection on
 reload.)
 
-## An honest note on scraping Beatport
+## An honest note on the discovery catalog
 
-Beatport has no public API. The discovery catalog is extracted from genre Top 100 pages,
-and **that is fragile**: the page structure can change without warning.
+Neither Beatport nor its stand-ins have a public API, so the catalog is scraped, and
+**scraping is fragile**: a page can change or close its doors without warning. That has now
+happened twice in one week, which is the best argument for the guards described below.
 
-Three things guard against it:
+**What broke, and when.** Beatport started answering 403 to this scraper on 2026-09-10 —
+from a home connection and from a CI runner alike, so the block is not about the address.
+BeatStats and Traxsource sit behind the same wall; Juno Download has shut down altogether;
+1001tracklists is readable but publishes no tempo or key; and GetSongBPM, whose free API
+would have supplied them, does not index new club releases (looking up ten chart tracks
+returned Craig David, David Bowie and Madonna instead).
 
-- **Three separate strategies** are tried in order — the `__NEXT_DATA__` block, embedded
-  JSON / RSC streams, and plain HTML text. A strategy that finds fewer than 10 tracks is
-  not trusted, and the one that worked is recorded in the catalog's `strategy` field.
-- **Validation**: at least 100 tracks, key parse rate ≥95%, ≥90% of BPMs between 90 and
-  165, at least 3 genres, and the new catalog larger than half of the old one.
-- **If validation fails the old catalog is kept.** Bad data never overwrites good data, and
-  the refresh reports why it failed.
+**What the catalog reads now.** Volumo publishes dozens of DJ charts and puts tempo, key,
+genre and length straight into the served HTML, behind `data-test-id` hooks that exist for
+their own tests and are therefore steadier than a class name. Its robots.txt allows it. One
+run walks 25 charts and yields around 400 tracks across 18 genres with a 100% key parse
+rate. `src/lib/beatport.ts` is still there and still tested; `--source=beatport` runs it, so
+you can check whether the block has lifted.
 
-When the page structure changes, `npm run refresh:catalog -- --dry` says how many tracks
-each strategy found; the fix belongs in the extraction strategies in `src/lib/beatport.ts`.
+Three things guard the result:
 
-**Status, 2026-09-10: Beatport now answers 403 to this scraper.** Every genre page is
-refused, from a home connection and from a GitHub Actions runner alike, so the block is not
-about the address. The last good scrape (2026-09-08) pulled 875 tracks from nine genres with
-a 100% key parse rate through `__NEXT_DATA__`, and that snapshot is what the app still
-serves: it sits in the `catalog` table and in `public/catalog.json`.
+- **Extraction is defensive.** A remix title is split across several anchors, so the parser
+  reads the full credit line from the row's play button instead. A track linked twice on one
+  page is merged field by field rather than letting the thinner occurrence win.
+- **Validation**: at least 100 tracks, key parse rate ≥95%, ≥90% of tempos between 90 and
+  180 (drum and bass sits at 174), at least 3 genres.
+- **A run adds, never replaces.** Fresh tracks go in front of the existing catalog,
+  de-duplicated by artist and title and capped at 2000. Validation runs on the freshly read
+  tracks alone, so merging can never paper over a failed scrape, and a bad run leaves the
+  stored catalog untouched.
 
-Nothing in the app is degraded by this — discovery search, the wheel, scoring and the set
-builder all read the stored snapshot. What is frozen is its freshness.
-
-The refresh job is therefore manual (`workflow_dispatch`) rather than scheduled; run it now
-and then to see whether the block has lifted. If Beatport keeps refusing, the options are to
-apply for their official API, or to lean on your own rekordbox library as the pool, which is
-what the app is built around anyway.
+`npm run refresh:catalog -- --dry` prints how many tracks each chart gave without writing
+anything; the fix for a structural change belongs in `src/lib/volumo.ts`.
 
 ## Smoke test
 

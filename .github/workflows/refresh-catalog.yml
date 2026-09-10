@@ -5,11 +5,11 @@ name: Catalog
 # keep-awake — a plain read of our own endpoint, twice a week. Free Supabase
 #              projects are paused after 7 days of inactivity; this touches the
 #              database often enough to prevent that.
-# refresh    — scrapes Beatport. Manual only: as of 2026-09-10 Beatport answers
-#              403 to this scraper from every address we tried, so a scheduled
-#              run would only mail a failure every week. Run it by hand to see
-#              whether the block has lifted; a failed run never overwrites the
-#              stored catalog.
+# refresh    — reads Volumo's DJ charts, which carry tempo, key and genre in the
+#              page. Beatport has answered 403 to this scraper since September
+#              2026, so Volumo is the default source. A run that fails validation
+#              never overwrites the stored catalog, and a good run only adds to
+#              it, so the pool can grow but never shrink.
 #
 # The scrape does not live in a Vercel function because Vercel compiles the
 # files under api/ on their own and does not follow imports into src/lib.
@@ -35,7 +35,6 @@ jobs:
           test "$code" = "200"
 
   refresh:
-    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -47,7 +46,7 @@ jobs:
 
       - run: npm ci
 
-      - name: Scrape Beatport and write the catalog table
+      - name: Read the charts and write the catalog table
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
