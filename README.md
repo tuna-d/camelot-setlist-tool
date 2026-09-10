@@ -164,6 +164,10 @@ branch; `development` is where the work happens.
 | `SUPABASE_SERVICE_ROLE_KEY` | Catalog writes and session verification | Supabase → Settings → API | Same |
 | `GETSONGBPM_API_KEY` | Single-track lookup | [getsongbpm.com/api](https://getsongbpm.com/api) | "search the web" explains it is missing; manual entry still works |
 
+GetSongBPM grants the free key on the condition that the site links back to them. The
+footer carries that link (`Tempo and key data from GetSongBPM`); do not remove it while
+the key is in use.
+
 `CRON_SECRET` is no longer used: the weekly refresh moved to GitHub Actions (below).
 
 `.env.example` carries the same information for local development.
