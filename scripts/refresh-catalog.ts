@@ -2,7 +2,14 @@ import { readFileSync, writeFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { createClient } from '@supabase/supabase-js'
 import { BEATPORT_GENRES } from '../src/lib/beatport'
-import { CATALOG_ID, formatReports, isCatalog, refreshCatalog } from '../src/lib/catalog'
+import {
+  CATALOG_ID,
+  DEFAULT_MAX_CHARTS,
+  formatReports,
+  isCatalog,
+  refreshCatalog,
+  refreshFromVolumo,
+} from '../src/lib/catalog'
 import { parseEnvFile } from '../src/lib/env-file'
 import type { Catalog } from '../src/lib/types'
 
@@ -72,6 +79,28 @@ async function pushToSupabase(catalog: Catalog): Promise<void> {
   console.log(`Supabase catalog table updated (${catalog.tracks.length} tracks).`)
 }
 
+
+// One request every second and a half: nothing on their side asks for it, but a
+// weekly catalog refresh has no reason to hurry.
+const CHART_DELAY_MS = 1500
+
+function wait(ms: number): Promise<void> {
+  return new Promise((done) => setTimeout(done, ms))
+}
+
+async function withCourtesy(previous: Catalog | null) {
+  console.log(`Walking up to ${DEFAULT_MAX_CHARTS} Volumo charts…`)
+  let first = true
+  return refreshFromVolumo({
+    previous,
+    fetcher: async (url) => {
+      if (!first) await wait(CHART_DELAY_MS)
+      first = false
+      return fetchPage(url)
+    },
+  })
+}
+
 async function main(): Promise<void> {
   const dry = process.argv.includes('--dry')
   const push = process.argv.includes('--supabase')
@@ -96,9 +125,16 @@ async function main(): Promise<void> {
   }
 
   const previous = readExisting()
+  const volumo = !process.argv.includes('--source=beatport')
 
-  console.log(`Fetching ${BEATPORT_GENRES.length} genres…`)
-  const result = await refreshCatalog(fetchPage, previous)
+  // Volumo is the default source: Beatport has answered 403 to this scraper
+  // since September 2026. Ask for beatport explicitly to test whether it is back.
+  const result = volumo
+    ? await withCourtesy(previous)
+    : await (async () => {
+        console.log(`Fetching ${BEATPORT_GENRES.length} genres…`)
+        return refreshCatalog(fetchPage, previous)
+      })()
   console.log(formatReports(result))
 
   if (!result.ok || !result.catalog) {

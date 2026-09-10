@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import fixture from '../../test/fixtures/volumo-chart.html?raw'
-import { VOLUMO_BASE, extractChartLinks, extractTracks, parseDuration } from './volumo'
+import { VOLUMO_BASE, extractChartLinks, extractTracks, parseDuration, splitCredit } from './volumo'
 
 describe('parseDuration', () => {
   it('dakika:saniyeyi saniyeye çevirir', () => {
@@ -16,6 +16,27 @@ describe('parseDuration', () => {
     expect(parseDuration(null)).toBeUndefined()
     expect(parseDuration('beş dakika')).toBeUndefined()
     expect(parseDuration('')).toBeUndefined()
+  })
+})
+
+describe('splitCredit', () => {
+  it('künyeyi sanatçı ve başlığa böler', () => {
+    expect(splitCredit('Forbidden Society, Drumago — Trashstar (Drumago Remix)')).toEqual({
+      artist: 'Forbidden Society, Drumago',
+      title: 'Trashstar (Drumago Remix)',
+    })
+  })
+
+  it('başlıktaki tireyi bozmaz', () => {
+    expect(splitCredit('Kiko — Gece - Extended Mix')).toEqual({
+      artist: 'Kiko',
+      title: 'Gece - Extended Mix',
+    })
+  })
+
+  it('ayraç yoksa null döner', () => {
+    expect(splitCredit('Yalnızca bir isim')).toBeNull()
+    expect(splitCredit('')).toBeNull()
   })
 })
 

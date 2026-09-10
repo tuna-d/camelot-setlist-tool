@@ -53,6 +53,18 @@ export function parseDuration(text: string | null): number | undefined {
   return undefined
 }
 
+/**
+ * "Forbidden Society, Drumago — Trashstar (Drumago Remix)" → artist and title.
+ * Splits on the first separator only: the title may hold dashes of its own.
+ */
+export function splitCredit(credit: string): { artist: string; title: string } | null {
+  const match = /^(.{1,150}?)\s+[—–·-]\s+(.+)$/.exec(credit.trim())
+  if (!match) return null
+  const artist = match[1].trim()
+  const title = match[2].trim()
+  return title ? { artist, title } : null
+}
+
 /** Chart addresses from the /charts index, in page order and without repeats. */
 export function extractChartLinks(html: string): string[] {
   if (typeof html !== 'string') return []
@@ -77,20 +89,27 @@ export function extractTracks(html: string, fallbackGenre?: string): Track[] {
   if (typeof html !== 'string' || html.length === 0) return []
 
   const tracks: Track[] = []
-  const seen = new Set<string>()
-  const blocks = html.split(/href="\/track\//)
+  const positions = new Map<string, number>()
+  // Server-rendered React splits interpolated text with comment markers, which
+  // would cut "Trashstar (Drumago Remix)" down to "Trashstar (".
+  const blocks = html.replace(/<!--.*?-->/g, '').split(/href="\/track\//)
 
   for (const block of blocks.slice(1)) {
     const slug = /^([0-9]+)-[^"]*"/.exec(block)
     if (!slug) continue
 
     const id = slug[1]
-    if (seen.has(id)) continue
 
-    const title = pick(block, /^[^>]*>\s*([^<]{1,200})</)
+    // A remix title is split across several anchors ("Trashstar (" + a link to
+    // the remixer + " Remix)"), so the anchor text alone is a fragment. The play
+    // button beside it carries the whole credit line, which is what we read.
+    const credit = pick(block, /aria-label="Play &quot;([^"]{3,300})&quot;"/i)
+    const named = credit ? splitCredit(credit) : null
+
+    const title = named?.title ?? pick(block, /^[^>]*>\s*([^<]{1,200})</)
     if (!title) continue
 
-    const artist = pick(block, /data-test-id="artists"[^>]*>([\s\S]{0,400}?)<\/span>/i)
+    const artist = named?.artist ?? pick(block, /data-test-id="artists"[^>]*>([\s\S]{0,400}?)<\/span>/i)
     const bpmText = pick(block, /data-test-id="bpm"[^>]*>\s*([0-9]+(?:\.[0-9]+)?)/i)
     const keyText = pick(block, /data-test-id="keysign"[^>]*>\s*([^<]{1,30})</i)
     const genre = pick(block, /TrackSecondaryData_genre[^"]*"\s+href="\/[^"]+"\s*>([^<]{1,60})</i)
@@ -98,8 +117,7 @@ export function extractTracks(html: string, fallbackGenre?: string): Track[] {
 
     const bpm = bpmText ? Number.parseFloat(bpmText) : Number.NaN
 
-    seen.add(id)
-    tracks.push({
+    const track: Track = {
       id: `vl:${id}`,
       title,
       artist: artist ?? '',
@@ -108,7 +126,28 @@ export function extractTracks(html: string, fallbackGenre?: string): Track[] {
       genre: genre ?? fallbackGenre,
       duration,
       source: 'catalog',
-    })
+    }
+
+    // A track can be linked twice on a page: once in the full row with the tempo
+    // and key badges, once in a bare list. Merge field by field rather than
+    // letting the second, thinner occurrence overwrite a good row.
+    const at = positions.get(id)
+    if (at === undefined) {
+      positions.set(id, tracks.length)
+      tracks.push(track)
+      continue
+    }
+
+    const stored = tracks[at]
+    tracks[at] = {
+      ...stored,
+      title: stored.title.length >= track.title.length ? stored.title : track.title,
+      artist: stored.artist || track.artist,
+      bpm: stored.bpm ?? track.bpm,
+      key: stored.key ?? track.key,
+      genre: stored.genre ?? track.genre,
+      duration: stored.duration ?? track.duration,
+    }
   }
 
   return tracks
