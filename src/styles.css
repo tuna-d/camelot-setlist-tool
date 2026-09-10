@@ -50,7 +50,15 @@ body {
   padding: 0;
 }
 
+/* Paints the overscroll area, and stops the body gradient from ending in a seam
+   when the page is shorter than the window. */
+html {
+  background-color: var(--bg);
+  min-height: 100%;
+}
+
 body {
+  min-height: 100vh;
   background:
     radial-gradient(1100px 620px at 12% -10%, color-mix(in srgb, var(--accent) 8%, transparent), transparent 70%),
     radial-gradient(900px 520px at 100% 0%, color-mix(in srgb, var(--tone-color) 8%, transparent), transparent 68%),
