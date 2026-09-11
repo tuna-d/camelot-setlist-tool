@@ -47,16 +47,18 @@ function readEnv(name: string): string {
   }
 }
 
+/** An expected stop with a message for the person running the script, not a crash. */
+class Fail extends Error {}
+
 async function pushToSupabase(catalog: Catalog): Promise<void> {
   const url = readEnv('SUPABASE_URL')
   const key = readEnv('SUPABASE_SERVICE_ROLE_KEY')
 
   if (!url || !key) {
-    console.error(
-      '\nSUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY not found. Put both in .env\n' +
-        '(the values live in Supabase → Project Settings → API) or export them before the command.',
+    throw new Fail(
+      'SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY not found. Put both in .env' +
+        ' (Supabase → Settings → API Keys; use a secret key) or export them before the command.',
     )
-    process.exit(1)
   }
 
   const client = createClient(url, key, { auth: { persistSession: false } })
@@ -69,11 +71,11 @@ async function pushToSupabase(catalog: Catalog): Promise<void> {
   })
 
   if (error) {
-    console.error(
-      `\nCould not write the catalog to the table: ${error.message}\n` +
-        'Check that the key is the service_role one and that supabase/schema.sql has been run.',
+    throw new Fail(
+      `Could not write the catalog to the table: ${error.message}.` +
+        ' Check that SUPABASE_SERVICE_ROLE_KEY holds a current secret key (sb_secret_…) and that' +
+        ' supabase/schema.sql has been run.',
     )
-    process.exit(1)
   }
 
   console.log(`Supabase catalog table updated (${catalog.tracks.length} tracks).`)
@@ -107,17 +109,12 @@ async function main(): Promise<void> {
   const fromFile = process.argv.includes('--from-file')
 
   if (fromFile) {
-    if (!push) {
-      console.error('--from-file only makes sense with --supabase: it uploads the existing file.')
-      process.exit(1)
-    }
+    if (!push) throw new Fail('--from-file only makes sense with --supabase: it uploads the existing file.')
     const existing = readExisting()
     if (!existing) {
-      console.error(
-        'public/catalog.json could not be read, or is not a valid catalog.\n' +
-          'Run without --from-file first to produce the file.',
+      throw new Fail(
+        'public/catalog.json could not be read, or is not a valid catalog. Run without --from-file first to produce the file.',
       )
-      process.exit(1)
     }
     console.log(`Uploading public/catalog.json (${existing.tracks.length} tracks)…`)
     await pushToSupabase(existing)
@@ -138,11 +135,10 @@ async function main(): Promise<void> {
   console.log(formatReports(result))
 
   if (!result.ok || !result.catalog) {
-    console.error(
-      '\nValidation failed, public/catalog.json was left alone. Look at the reasons above;\n' +
-        'if the page structure changed, the fix belongs in the strategies in src/lib/beatport.ts.',
+    throw new Fail(
+      'Validation failed, public/catalog.json and the table were left alone. Look at the reasons above;' +
+        ` if the page structure changed, the fix belongs in src/lib/${volumo ? 'volumo' : 'beatport'}.ts.`,
     )
-    process.exit(1)
   }
 
   if (dry) {
@@ -157,6 +153,9 @@ async function main(): Promise<void> {
 }
 
 main().catch((error: unknown) => {
-  console.error(`Refresh crashed: ${error instanceof Error ? error.message : String(error)}`)
-  process.exit(1)
+  if (error instanceof Fail) console.error(`\n${error.message}`)
+  else console.error(`Refresh crashed: ${error instanceof Error ? error.message : String(error)}`)
+  // exitCode rather than process.exit(): exiting while a fetch socket is still
+  // closing trips a libuv assertion on Windows and buries the real message.
+  process.exitCode = 1
 })

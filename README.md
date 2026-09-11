@@ -12,8 +12,8 @@ What it does:
 - Scores and ranks candidates that fit the track at the cursor harmonically and in tempo.
 - Builds a whole set automatically along an energy curve (rising / arc / flat / descending).
 - Exports the setlist to the clipboard, to an `.m3u8` file, or as YouTube searches.
-- Offers a discovery catalog scraped from Beatport genre Top 100 pages, plus single-track
-  lookup through GetSongBPM, for music that isn't in your library.
+- Offers a discovery catalog read from Volumo's DJ charts (around 1,300 tracks over 20-odd
+  genres), plus single-track lookup through GetSongBPM, for music that isn't in your library.
 
 The interface, the code and the documentation are in English. Test names are still
 written in Turkish, left over from the project’s original working language.
@@ -119,13 +119,19 @@ rename and delete buttons, plus "+ new set".
 2. **SQL Editor** → paste the contents of `supabase/schema.sql` and run it. It creates the
    tables, triggers and Row Level Security policies. Running it again is safe, and the
    upgrade statements at the bottom bring an older project up to date.
-3. From **Settings → API** take the `Project URL` and the `anon public` key →
-   `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`.
-4. From the same page take the `service_role` key → `SUPABASE_SERVICE_ROLE_KEY` (server
-   side only — never give it a `VITE_` prefix).
+3. From **Settings → API Keys** take the `Project URL` and a **publishable** key
+   (`sb_publishable_…`) → `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`.
+4. On the same page create a **secret** key (`sb_secret_…`) → `SUPABASE_SERVICE_ROLE_KEY`
+   (server side only — never give it a `VITE_` prefix). The variable keeps its old name, the
+   code reads it either way.
 
-Free Supabase projects are paused after 7 days of inactivity. The weekly catalog refresh
-writes to the database, which keeps the project awake on its own.
+   Prefer these over the legacy `anon` / `service_role` JWT keys: a secret key can be revoked
+   on its own, and once you press **Disable JWT-based API keys** every script and secret
+   still holding a legacy key stops with "Legacy API keys are disabled" — update `.env`,
+   Vercel and the GitHub Actions secrets together.
+
+Free Supabase projects are paused after 7 days of inactivity. The **keep-awake** job in
+GitHub Actions reads the catalog twice a week, which keeps the project awake on its own.
 
 ### 2. Sign in with Google
 
@@ -158,10 +164,10 @@ branch; `development` is where the work happens.
 
 | variable | what it does | where from | without it |
 |---|---|---|---|
-| `VITE_SUPABASE_URL` | Supabase address for the browser | Supabase → Settings → API | Sign-in off, app runs in guest mode |
+| `VITE_SUPABASE_URL` | Supabase address for the browser | Supabase → Settings → API Keys | Sign-in off, app runs in guest mode |
 | `VITE_SUPABASE_ANON_KEY` | Public key for the browser | same page | Same |
 | `SUPABASE_URL` | Server-side address | same value as above | Catalog cannot be written, track search cannot verify sessions |
-| `SUPABASE_SERVICE_ROLE_KEY` | Catalog writes and session verification | Supabase → Settings → API | Same |
+| `SUPABASE_SERVICE_ROLE_KEY` | Catalog writes and session verification | Supabase → Settings → API Keys (secret key) | Same |
 | `GETSONGBPM_API_KEY` | Single-track lookup | [getsongbpm.com/api](https://getsongbpm.com/api) | "search the web" explains it is missing; manual entry still works |
 
 GetSongBPM grants the free key on the condition that the site links back to them. The
