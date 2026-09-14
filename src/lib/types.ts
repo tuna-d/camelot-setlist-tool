@@ -58,6 +58,8 @@ export interface Catalog {
 export interface AppState {
   library: Track[]
   extras: Track[]
+  /** Newest first; whole copies, see lib/favorites. */
+  favorites: Track[]
   playlists: Playlist[]
   playlistId: string | null
   setlists: Setlist[]

@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { DEFAULT_RELATIONS } from '../lib/camelot'
 import { DEFAULT_TOLERANCE } from '../lib/suggest'
+import { readFavorites, toggleFavorite } from '../lib/favorites'
 import { trackKey } from '../lib/suggest'
 import type { RekordboxLibrary } from '../lib/rekordbox'
 import type {
@@ -33,6 +34,8 @@ export interface StoreState extends AppState {
   toggleGenre: (genre: string) => void
   setGenres: (genres: string[]) => void
   setPoolSource: (poolSource: PoolSource) => void
+
+  toggleFavorite: (track: Track) => void
 
   newSetlist: (name?: string) => string
   selectSetlist: (id: string) => void
@@ -77,6 +80,7 @@ export function initialAppState(): AppState {
   return {
     library: [],
     extras: [],
+    favorites: [],
     playlists: [],
     playlistId: null,
     setlists: [set],
@@ -126,6 +130,8 @@ export const useStore = create<StoreState>((set, get) => ({
 
   setGenres: (genres) => set({ genres }),
   setPoolSource: (poolSource) => set({ poolSource }),
+
+  toggleFavorite: (track) => set((state) => ({ favorites: toggleFavorite(state.favorites, track) })),
 
   newSetlist: (name) => {
     const setlist = emptySetlist(name ?? `Set ${get().setlists.length + 1}`)
@@ -241,6 +247,7 @@ export const useStore = create<StoreState>((set, get) => ({
     return {
       library: state.library,
       extras: state.extras,
+      favorites: state.favorites,
       playlists: state.playlists,
       playlistId: state.playlistId,
       setlists: state.setlists,
@@ -264,6 +271,8 @@ export const useStore = create<StoreState>((set, get) => ({
       return {
         library: incoming.library ?? state.library,
         extras: incoming.extras ?? state.extras,
+        // Records saved before favorites existed carry none; keep what is on screen.
+        favorites: incoming.favorites === undefined ? state.favorites : readFavorites(incoming.favorites),
         playlists: incoming.playlists ?? state.playlists,
         playlistId: incoming.playlistId ?? null,
         setlists,

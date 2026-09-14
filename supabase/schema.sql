@@ -24,6 +24,8 @@ create table if not exists public.libraries (
   tracks jsonb not null default '[]'::jsonb,
   playlists jsonb not null default '[]'::jsonb,
   extras jsonb not null default '[]'::jsonb,
+  -- Whole track copies, newest first: a favorite must outlive the catalog entry it came from.
+  favorites jsonb not null default '[]'::jsonb,
   updated_at timestamptz not null default now()
 );
 
@@ -118,7 +120,10 @@ create policy catalog_readable on public.catalog
   using (true);
 
 -- ——— upgrades for projects created before this file changed ———
--- Safe to run again: both statements are no-ops when already applied.
+-- Safe to run again: every statement is a no-op when already applied.
 
 alter table public.settings
   alter column tolerance type numeric(4, 1);
+
+alter table public.libraries
+  add column if not exists favorites jsonb not null default '[]'::jsonb;

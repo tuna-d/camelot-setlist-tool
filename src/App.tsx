@@ -49,6 +49,7 @@ function snapshot(state: StoreState): unknown[] {
   return [
     state.library,
     state.extras,
+    state.favorites,
     state.playlists,
     state.playlistId,
     state.setlists,

@@ -90,6 +90,10 @@ describe('hasContent', () => {
     expect(hasContent(stateAt(1, 'Set', [{ trackId: '1' }]))).toBe(true)
     expect(hasContent({ ...stateAt(1), library: [track('1')] })).toBe(true)
   })
+
+  it('yalnızca favori varsa da taşınmaya değer', () => {
+    expect(hasContent({ ...stateAt(1), favorites: [track('1')] })).toBe(true)
+  })
 })
 
 describe('yerel kayıt', () => {

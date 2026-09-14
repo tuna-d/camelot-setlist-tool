@@ -1,3 +1,4 @@
+import { mergeFavorites, readFavorites } from './favorites'
 import type { AppState, Playlist, Setlist, Track } from './types'
 
 function byId<T extends { id: string }>(mine: T[], theirs: T[]): T[] {
@@ -45,6 +46,8 @@ export function mergeGuestWork(account: AppState, guest: AppState): AppState {
 
   const library: Track[] = byId(account.library, guest.library)
   const extras: Track[] = byId(account.extras, guest.extras)
+  // A guest record from before favorites existed has no list at all.
+  const favorites = mergeFavorites(readFavorites(account.favorites), readFavorites(guest.favorites))
   const playlists: Playlist[] = byId(account.playlists, guest.playlists)
   const setlists = [...account.setlists, ...moved]
 
@@ -52,6 +55,7 @@ export function mergeGuestWork(account: AppState, guest: AppState): AppState {
     ...account,
     library,
     extras,
+    favorites,
     playlists,
     setlists,
     // Surface the moved set so the user can see the move happened.

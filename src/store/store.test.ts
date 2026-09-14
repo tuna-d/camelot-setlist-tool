@@ -269,6 +269,39 @@ describe('süzgeç ayarları', () => {
   })
 })
 
+describe('favoriler', () => {
+  it('kalbe basınca ekler, tekrar basınca çıkarır', () => {
+    useStore.getState().toggleFavorite(track({ id: 'c1', source: 'catalog' }))
+    expect(useStore.getState().favorites.map((item) => item.id)).toEqual(['c1'])
+    useStore.getState().toggleFavorite(track({ id: 'c1', source: 'catalog' }))
+    expect(useStore.getState().favorites).toEqual([])
+  })
+
+  it('favori eklemek seti değiştirmez', () => {
+    useStore.getState().toggleFavorite(track({ id: '1' }))
+    expect(selectActive(useStore.getState()).entries).toEqual([])
+  })
+
+  it('dışa aktarımla gidip gelir', () => {
+    useStore.getState().toggleFavorite(track({ id: 'w1', source: 'web' }))
+    const exported = useStore.getState().exportState()
+    useStore.setState({ ...initialAppState(), catalog: null })
+    useStore.getState().hydrate(exported)
+    expect(useStore.getState().favorites.map((item) => item.id)).toEqual(['w1'])
+  })
+
+  it('favorisi olmayan eski kayıt ekrandaki favorileri silmez', () => {
+    useStore.getState().toggleFavorite(track({ id: '1' }))
+    useStore.getState().hydrate({ library: [] })
+    expect(useStore.getState().favorites).toHaveLength(1)
+  })
+
+  it('bozuk favori listesinde çökmez', () => {
+    useStore.getState().hydrate({ favorites: [null, { id: 'x' }] as unknown as Track[] })
+    expect(useStore.getState().favorites).toEqual([])
+  })
+})
+
 describe('dışa/içe aktarım', () => {
   it('durum kayıpsız gidip geliyor', () => {
     const store = useStore.getState()

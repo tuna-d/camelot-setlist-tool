@@ -83,7 +83,11 @@ export function readBackup(): AppState | null {
 /** Is there guest work worth moving into the account? */
 export function hasContent(state: AppState | null): boolean {
   if (!state) return false
-  return state.setlists.some((setlist) => setlist.entries.length > 0) || state.library.length > 0
+  return (
+    state.setlists.some((setlist) => setlist.entries.length > 0) ||
+    state.library.length > 0 ||
+    (state.favorites?.length ?? 0) > 0
+  )
 }
 
 export interface BootstrapResult {

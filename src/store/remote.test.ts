@@ -11,6 +11,7 @@ interface Tables {
 
 let tables: Tables
 let failOn: string | null = null
+let failMessage = 'upsert düştü'
 
 /** Kullandığımız zincirin (select/eq/order/maybeSingle/upsert/delete/in) bellek içi taklidi. */
 function fakeClient(): SupabaseClient {
@@ -61,7 +62,7 @@ function fakeClient(): SupabaseClient {
         })
       },
       upsert: (input: Record<string, unknown> | Record<string, unknown>[]) => {
-        if (failOn === table) return Promise.resolve({ data: null, error: { message: 'upsert düştü' } })
+        if (failOn === table) return Promise.resolve({ data: null, error: { message: failMessage } })
         for (const row of Array.isArray(input) ? input : [input]) {
           const key = table === 'setlists' ? 'id' : 'user_id'
           const index = tables[table].findIndex((existing) => existing[key] === row[key])
@@ -88,6 +89,7 @@ function state(partial: Partial<AppState> = {}): AppState {
   return {
     library: [track('1')],
     extras: [],
+    favorites: [],
     playlists: [],
     playlistId: null,
     setlists: [{ id: 'set-a', name: 'Cuma', entries: [{ trackId: '1' }], createdAt: 1735000000000 }],
@@ -105,6 +107,7 @@ function state(partial: Partial<AppState> = {}): AppState {
 beforeEach(() => {
   tables = { libraries: [], setlists: [], settings: [] }
   failOn = null
+  failMessage = 'upsert düştü'
 })
 
 describe('createSupabaseStore', () => {
@@ -123,6 +126,22 @@ describe('createSupabaseStore', () => {
     expect(loaded.state?.library).toHaveLength(1)
     expect(loaded.state?.setlists[0].name).toBe('Cuma')
     expect(loaded.state?.savedAt).toBe(1000)
+  })
+
+  it('favorileri kütüphane satırında taşır', async () => {
+    const store = createSupabaseStore(fakeClient())
+    await store.save('u1', state({ favorites: [track('f1'), track('f2')] }))
+    const loaded = await store.load('u1')
+    expect(loaded.state?.favorites.map((item) => item.id)).toEqual(['f1', 'f2'])
+  })
+
+  it('favori sütunu yoksa şemanın yeniden çalıştırılmasını söyler', async () => {
+    const store = createSupabaseStore(fakeClient())
+    failOn = 'libraries'
+    failMessage = "Could not find the 'favorites' column of 'libraries' in the schema cache"
+    const result = await store.save('u1', state())
+    expect(result.ok).toBe(false)
+    expect(result.message).toMatch(/Run supabase\/schema.sql again/)
   })
 
   it('kullanıcılar birbirinin kaydını görmez', async () => {

@@ -112,6 +112,17 @@ export function createSupabaseStore(client: SupabaseClient): RemoteStore {
 }
 
 function written(detail: string): RemoteSave {
+  // A database set up before favorites existed has no column for them, and every
+  // save would fail on it. Name the fix instead of passing the raw error along.
+  if (/favorites/i.test(detail) && /column/i.test(detail)) {
+    return {
+      ok: false,
+      conflict: false,
+      remote: null,
+      message:
+        'Save failed: the database has no place for favorites yet. Run supabase/schema.sql again in the Supabase SQL Editor; your changes are on this device until then.',
+    }
+  }
   return { ok: false, conflict: false, remote: null, message: failure('writing', detail) }
 }
 

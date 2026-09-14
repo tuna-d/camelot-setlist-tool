@@ -14,6 +14,7 @@ function state(partial: Partial<AppState> = {}): AppState {
   return {
     library: [],
     extras: [],
+    favorites: [],
     playlists: [],
     playlistId: null,
     setlists: [setlist('set-a', 'Set 1')],
@@ -79,6 +80,19 @@ describe('mergeGuestWork', () => {
     )
     expect(merged.library.map((item) => item.id)).toEqual(['1', '2'])
     expect(merged.extras.map((item) => item.id)).toEqual(['x'])
+  })
+
+  it('misafir favorilerini hesabınkilerin arkasına ekler, tekrarı atar', () => {
+    const merged = mergeGuestWork(
+      state({ favorites: [track('1'), track('2')] }),
+      state({ favorites: [track('2'), track('3')] }),
+    )
+    expect(merged.favorites.map((item) => item.id)).toEqual(['1', '2', '3'])
+  })
+
+  it('favori listesi olmayan eski misafir kaydında çökmez', () => {
+    const guest = { ...state(), favorites: undefined } as unknown as AppState
+    expect(mergeGuestWork(state({ favorites: [track('1')] }), guest).favorites).toHaveLength(1)
   })
 
   it('taşınan seti aktif yapar ve imleci başa alır', () => {

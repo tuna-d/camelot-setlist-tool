@@ -10,6 +10,7 @@ function track(id: string): Track {
 const state: AppState = {
   library: [track('1'), track('2')],
   extras: [track('m1')],
+  favorites: [track('f1')],
   playlists: [{ id: 'p1', name: 'Açılış', trackIds: ['1'] }],
   playlistId: 'p1',
   setlists: [

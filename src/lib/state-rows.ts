@@ -1,5 +1,6 @@
 import { DEFAULT_RELATIONS } from './camelot'
 import { DEFAULT_TOLERANCE } from './suggest'
+import { readFavorites } from './favorites'
 import type {
   AppState,
   PoolSource,
@@ -15,6 +16,7 @@ export interface LibraryRow {
   tracks: Track[]
   playlists: Playlist[]
   extras: Track[]
+  favorites: Track[]
 }
 
 export interface SetlistRow {
@@ -52,6 +54,7 @@ export function toRows(userId: string, state: AppState): StateRows {
       tracks: state.library,
       playlists: state.playlists,
       extras: state.extras,
+      favorites: state.favorites,
     },
     setlists: state.setlists.map((setlist, index) => ({
       id: setlist.id,
@@ -134,6 +137,7 @@ export function fromRows(rows: RowInput): AppState {
   return {
     library: array<Track>(rows.library?.tracks),
     extras: array<Track>(rows.library?.extras),
+    favorites: readFavorites(rows.library?.favorites),
     playlists: array<Playlist>(rows.library?.playlists),
     playlistId: text(rows.settings?.playlist_id),
     setlists: safeSetlists,
