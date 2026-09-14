@@ -11,6 +11,7 @@ What it does:
 - Imports a rekordbox collection XML (tracks, playlists, nested folders).
 - Scores and ranks candidates that fit the track at the cursor harmonically and in tempo.
 - Builds a whole set automatically along an energy curve (rising / arc / flat / descending).
+- Keeps a favorites list: a heart on every track row, and a **favorites** window in the top bar.
 - Exports the setlist to the clipboard, to an `.m3u8` file, or as YouTube searches.
 - Offers a discovery catalog read from Volumo's DJ charts (around 1,300 tracks over 20-odd
   genres), plus single-track lookup through GetSongBPM, for music that isn't in your library.
@@ -29,7 +30,7 @@ It runs with no environment variables at all: sign-in stays off, the app falls b
 guest mode, and everything lives in the browser's `localStorage`.
 
 ```bash
-npm test           # vitest (369 tests)
+npm test           # vitest (400 tests)
 npm run typecheck  # tsc -b --noEmit
 npm run lint       # eslint
 npm run build      # tsc -b && vite build
@@ -96,7 +97,7 @@ back-to-back repeat of the same artist is never picked while another candidate e
 The screen has three areas:
 
 - **Set** (left) — the ordered track list. Each row shows position, title, key, BPM,
-  length, Beatport/YouTube search buttons, and a remove button. Rows are draggable. Under
+  length, a favorite heart, Beatport/YouTube search buttons, and a remove button. Rows are draggable. Under
   each row you can rate the track's energy 1–5 (click the same star again to clear it) and
   write a per-track note. Between rows a bridge shows the transition's relation and tempo
   difference, and warns when either is out of bounds.
@@ -110,6 +111,13 @@ The screen has three areas:
 
 Saved setlists live in the top bar under **my sets**: a dropdown lists every set with
 rename and delete buttons, plus "+ new set".
+
+**Favorites** sit next to it. The heart appears on set rows, on suggestions and on search
+results; pressing it again removes the track. The favorites window lists them newest first,
+filters them by title or artist, adds one to the open set, and badges each with how it would
+follow the selected track (its relation, or "no fit"). A favorite is stored as a full copy
+of the track, so it survives the track dropping out of the weekly catalog, and the same song
+from the catalog, your library or a web search counts as one favorite.
 
 ## Setup
 
@@ -230,6 +238,7 @@ src/lib/          Pure logic — never touches React, the DOM or window; every m
   getsongbpm.ts     single-track query and response reading
   state-rows.ts     app state ↔ database rows mapping
   merge.ts          merges guest work into an account without replacing anything
+  favorites.ts      favorite toggling, same-song matching, reading stored lists safely
   auth-message.ts   turns Supabase errors into actionable text
   env-file.ts       .env reader for the command-line scripts
   state.ts, types.ts, ui.ts
@@ -243,7 +252,7 @@ src/store/        State, session and persistence
 
 src/components/   UI
   SetlistPanel, SetSummaryPanel, SetlistMenu, SuggestPanel, CamelotWheel, TempoCurve,
-  AuthDialog, ImportDialog, TrackSearchDialog, AutoBuildDialog, common
+  AuthDialog, ImportDialog, TrackSearchDialog, AutoBuildDialog, FavoritesDialog, common
 
 api/              Vercel functions
   track-search.ts   authenticated GetSongBPM proxy (holds the key, parses nothing)
@@ -269,7 +278,7 @@ There are two layers:
 2. **Supabase** — for signed-in users only. Writes are debounced by ~2.5 seconds, so a
    burst of edits collapses into one request.
 
-Data is split across three tables: `libraries` (the collection, one row per user),
+Data is split across three tables: `libraries` (the collection and favorites, one row per user),
 `setlists` (one row per set) and `settings` (filters, cursor, save stamp). The library is
 kept separate because of its size — we do not want to resend 20,000 tracks on every note
 keystroke.

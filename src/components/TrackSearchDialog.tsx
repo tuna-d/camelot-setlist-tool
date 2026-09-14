@@ -5,7 +5,7 @@ import { dedupeBySignature, localSearch } from '../lib/search'
 import { getAccessToken } from '../store/supabase'
 import { useStore } from '../store/store'
 import { selectLibrary } from '../store/store'
-import { Bpm, KeyChip } from './common'
+import { Bpm, FavoriteButton, KeyChip } from './common'
 import { Dialog } from './common'
 import type { Track } from '../lib/types'
 
@@ -162,6 +162,7 @@ export function TrackSearchDialog({ open, onClose }: TrackSearchDialogProps) {
           </span>
           <KeyChip code={track.key} />
           <Bpm value={track.bpm} />
+          <FavoriteButton track={track} />
           <button type="button" className="btn btn-primary" onClick={() => add(track)}>
             add
           </button>

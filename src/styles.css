@@ -27,6 +27,7 @@
 
   --beatport: #23e58c;
   --youtube: #ff3d46;
+  --favorite: #ff5c93;
 
   --radius: 20px;
   --radius-sm: 14px;
@@ -750,6 +751,76 @@ dialog::backdrop {
   color: var(--danger);
 }
 
+/* ——— favorites ——— */
+
+.fav-btn {
+  align-items: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  color: var(--text-faint);
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  padding: 5px;
+  transition: color 140ms ease, background 140ms ease, transform 140ms ease;
+}
+
+.fav-btn:hover {
+  background: color-mix(in srgb, var(--favorite) 14%, transparent);
+  color: var(--favorite);
+}
+
+.fav-btn:focus-visible {
+  outline: 2px solid var(--favorite);
+  outline-offset: 1px;
+}
+
+.fav-btn[aria-pressed='true'] {
+  color: var(--favorite);
+}
+
+.fav-btn:active {
+  transform: scale(0.88);
+}
+
+.heart-icon {
+  display: block;
+  height: 17px;
+  width: 17px;
+}
+
+.fav-nav .heart-icon {
+  color: var(--favorite);
+  height: 15px;
+  width: 15px;
+}
+
+.fav-nav:hover {
+  background: color-mix(in srgb, var(--favorite) 12%, var(--panel-raised));
+  border-color: var(--favorite);
+  color: var(--favorite);
+}
+
+.fav-count {
+  background: color-mix(in srgb, var(--favorite) 18%, transparent);
+  border-radius: var(--radius-pill);
+  color: var(--favorite);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  min-width: 20px;
+  padding: 1px 6px;
+  text-align: center;
+}
+
+.fit-badge {
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  padding: 2px 8px;
+  white-space: nowrap;
+}
+
 /* ——— setlist dropdown ——— */
 
 .menu {
@@ -903,11 +974,11 @@ dialog::backdrop {
   }
 
   .setlist-panel .entry {
-    grid-template-columns: 30px minmax(0, 1fr) 96px 50px 46px 74px 36px;
+    grid-template-columns: 30px minmax(0, 1fr) 96px 50px 46px 30px 74px 36px;
   }
 
   .suggest-panel .entry {
-    grid-template-columns: 44px minmax(0, 1fr) 96px 50px 56px 74px 60px;
+    grid-template-columns: 44px minmax(0, 1fr) 96px 50px 56px 30px 74px 60px;
   }
 }
 

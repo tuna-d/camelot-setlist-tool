@@ -5,6 +5,7 @@ import { createRoot } from 'react-dom/client'
 import type { Root } from 'react-dom/client'
 import { initialAppState, selectEntries, useStore } from '../store/store'
 import { AutoBuildDialog } from './AutoBuildDialog'
+import { FavoritesDialog } from './FavoritesDialog'
 import { ImportDialog } from './ImportDialog'
 import { TrackSearchDialog } from './TrackSearchDialog'
 import type { Catalog, Track } from '../lib/types'
@@ -257,6 +258,63 @@ describe('AutoBuildDialog', () => {
     await click(apply!)
 
     expect(selectEntries(useStore.getState()).length).toBeGreaterThan(1)
+    await view.unmount()
+  })
+})
+
+describe('FavoritesDialog', () => {
+  it('favori yokken kalbin nerede olduğunu anlatır', async () => {
+    const view = await mount(<FavoritesDialog open onClose={() => {}} />)
+    expect(view.html()).toContain('No favorites yet')
+    expect(view.html()).toContain('Favorites · 0')
+    await view.unmount()
+  })
+
+  it('favorileri listeler ve süzgeçle daraltır', async () => {
+    useStore.getState().toggleFavorite(track({ id: 'a', title: 'Gece Treni' }))
+    useStore.getState().toggleFavorite(track({ id: 'b', title: 'Sabah Yolu' }))
+    const view = await mount(<FavoritesDialog open onClose={() => {}} />)
+    expect(view.html()).toContain('Gece Treni')
+    expect(view.html()).toContain('Sabah Yolu')
+
+    await type(view.container.querySelector<HTMLInputElement>('input')!, 'gece')
+    expect(view.html()).toContain('Gece Treni')
+    expect(view.html()).not.toContain('Sabah Yolu')
+
+    await type(view.container.querySelector<HTMLInputElement>('input')!, 'yok böyle')
+    expect(view.html()).toContain('Clear the filter')
+    await view.unmount()
+  })
+
+  it('favoriyi sete ekler ve "in set" diye işaretler', async () => {
+    useStore.getState().toggleFavorite(track({ id: 'a', title: 'Gece Treni' }))
+    const view = await mount(<FavoritesDialog open onClose={() => {}} />)
+    const add = [...view.container.querySelectorAll('button')].find((item) => item.textContent === 'add')!
+    await click(add)
+
+    expect(selectEntries(useStore.getState()).map((item) => item.id)).toEqual(['a'])
+    const marked = [...view.container.querySelectorAll('button')].find((item) => item.textContent === 'in set')
+    expect(marked?.hasAttribute('disabled')).toBe(true)
+    await view.unmount()
+  })
+
+  it('kalbe basınca favoriden çıkarır', async () => {
+    useStore.getState().toggleFavorite(track({ id: 'a' }))
+    const view = await mount(<FavoritesDialog open onClose={() => {}} />)
+    await click(view.container.querySelector('.fav-btn')!)
+    expect(useStore.getState().favorites).toEqual([])
+    expect(view.html()).toContain('No favorites yet')
+    await view.unmount()
+  })
+
+  it('seçili parçaya göre uyum rozetini gösterir', async () => {
+    useStore.getState().addTrack(track({ id: 'ref', title: 'Referans', key: '8A', bpm: 124 }))
+    useStore.getState().toggleFavorite(track({ id: 'up', title: 'Uyumlu', key: '9A', bpm: 125 }))
+    useStore.getState().toggleFavorite(track({ id: 'off', title: 'Uyumsuz', key: '2A', bpm: 124 }))
+    const view = await mount(<FavoritesDialog open onClose={() => {}} />)
+    const badges = [...view.container.querySelectorAll('.fit-badge')].map((item) => item.textContent)
+    expect(badges).toEqual(['no fit', '+1 · energy ↑'])
+    expect(view.html()).toContain('would follow <strong>Referans</strong>')
     await view.unmount()
   })
 })

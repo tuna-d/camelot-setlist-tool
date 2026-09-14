@@ -117,6 +117,22 @@ describe('SetlistPanel', () => {
     expect(html).toContain('outside your tolerance (6%)')
   })
 
+  it('kalp parçayı favoriye ekler ama imleci kaydırmaz', async () => {
+    useStore.getState().addTrack(track({ id: '1', title: 'Gece' }))
+    useStore.getState().addTrack(track({ id: '2', title: 'Sabah' }))
+    const view = await mount(<SetlistPanel />)
+    const hearts = view.container.querySelectorAll<HTMLElement>('.fav-btn')
+    expect(hearts).toHaveLength(2)
+
+    await act(async () => {
+      hearts[1].dispatchEvent(new MouseEvent('click', { bubbles: true }))
+    })
+    expect(useStore.getState().favorites.map((item) => item.id)).toEqual(['2'])
+    expect(useStore.getState().cursor).toBe(0)
+    expect(view.container.querySelectorAll('.fav-btn')[1].getAttribute('aria-pressed')).toBe('true')
+    await view.unmount()
+  })
+
   it('parça ekleme düğmelerini gösterir', async () => {
     const html = await render(<SetlistPanel onOpenSearch={() => {}} onOpenAutoBuild={() => {}} />)
     expect(html).toContain('find a track')
@@ -192,6 +208,18 @@ describe('SuggestPanel', () => {
     expect(html).toContain('Referans')
     expect(html).toContain('target 116.6 – 131.4 BPM')
     expect(html).toContain('wheel-slice')
+  })
+
+  it('öneriyi sete eklemeden favoriye alır', async () => {
+    useStore.getState().setCatalog(catalog)
+    useStore.getState().addTrack(track({ id: '1', bpm: 124, key: '8A' }))
+    const view = await mount(<SuggestPanel />)
+    await view.click('.fav-btn')
+    const state = useStore.getState()
+    expect(state.favorites).toHaveLength(1)
+    expect(state.favorites[0].source).toBe('catalog')
+    expect(state.setlists[0].entries).toHaveLength(1)
+    await view.unmount()
   })
 
   it('adayları ilişkiye göre gruplar ve uyumsuzu listelemez', async () => {

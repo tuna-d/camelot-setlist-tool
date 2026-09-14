@@ -10,6 +10,8 @@ import { getSupabase } from './store/supabase'
 import { bootstrapGuest, bootstrapUser, createSaver, writeBackup } from './store/sync'
 import { AuthDialog } from './components/AuthDialog'
 import { AutoBuildDialog } from './components/AutoBuildDialog'
+import { HeartIcon } from './components/common'
+import { FavoritesDialog } from './components/FavoritesDialog'
 import { ImportDialog } from './components/ImportDialog'
 import { SetlistMenu } from './components/SetlistMenu'
 import { SetlistPanel } from './components/SetlistPanel'
@@ -17,7 +19,7 @@ import { SetSummaryPanel } from './components/SetSummaryPanel'
 import { SuggestPanel } from './components/SuggestPanel'
 import { TrackSearchDialog } from './components/TrackSearchDialog'
 
-type OpenDialog = 'import' | 'search' | 'auto' | 'auth' | null
+type OpenDialog = 'import' | 'search' | 'auto' | 'auth' | 'favorites' | null
 
 const SYNC_LABEL: Record<SyncStatus, string> = {
   idle: 'ready',
@@ -154,6 +156,17 @@ export function App() {
 
         <SetlistMenu />
 
+        <button
+          type="button"
+          className="btn fav-nav"
+          onClick={() => setDialog('favorites')}
+          title="Tracks you marked with the heart"
+        >
+          <HeartIcon filled={state.favorites.length > 0} />
+          favorites
+          <span className="fav-count">{state.favorites.length}</span>
+        </button>
+
         <span className="chip chip-static lib-stats">
           {state.library.length === 0
             ? 'no library — import your rekordbox XML'
@@ -243,6 +256,7 @@ export function App() {
       <ImportDialog open={dialog === 'import'} onClose={() => setDialog(null)} />
       <TrackSearchDialog open={dialog === 'search'} onClose={() => setDialog(null)} />
       <AutoBuildDialog open={dialog === 'auto'} onClose={() => setDialog(null)} />
+      <FavoritesDialog open={dialog === 'favorites'} onClose={() => setDialog(null)} />
     </div>
   )
 }

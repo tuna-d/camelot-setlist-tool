@@ -16,7 +16,7 @@ import {
   useStore,
 } from '../store/store'
 import { CamelotWheel } from './CamelotWheel'
-import { Bpm, KeyChip, TrackLinks } from './common'
+import { Bpm, FavoriteButton, KeyChip, TrackLinks } from './common'
 
 const SUGGESTION_LIMIT = 60
 
@@ -218,6 +218,7 @@ export function SuggestPanel() {
                         <span className="mono faint" title="tempo gap against the reference">
                           {formatDelta(item.delta)}
                         </span>
+                        <FavoriteButton track={item.track} />
                         <TrackLinks track={item.track} />
                         <button
                           type="button"

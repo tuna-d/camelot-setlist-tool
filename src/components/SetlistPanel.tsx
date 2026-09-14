@@ -4,7 +4,7 @@ import { transition } from '../lib/setstats'
 import { formatDelta } from '../lib/suggest'
 import { formatDuration, formatTotal, toneColor } from '../lib/ui'
 import { selectActive, selectEntries, useStore } from '../store/store'
-import { Bpm, EnergyStars, KeyChip, TrackLinks } from './common'
+import { Bpm, EnergyStars, FavoriteButton, KeyChip, TrackLinks } from './common'
 import type { Track } from '../lib/types'
 
 function TransitionBridge({ from, to, tolerance }: { from: Track; to: Track; tolerance: number }) {
@@ -100,6 +100,7 @@ export function SetlistPanel({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProp
                   <KeyChip code={track.key} />
                   <Bpm value={track.bpm} />
                   <span className="mono faint">{formatDuration(track.duration)}</span>
+                  <FavoriteButton track={track} />
                   <TrackLinks track={track} />
                   <button
                     type="button"

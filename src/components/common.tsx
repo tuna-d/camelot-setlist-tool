@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react'
 import type { ReactNode } from 'react'
 import { NOTE_NAME, keyColor } from '../lib/camelot'
+import { isFavorite } from '../lib/favorites'
+import { useStore } from '../store/store'
 import { formatBpm } from '../lib/ui'
 import type { Track } from '../lib/types'
 
@@ -47,6 +49,44 @@ export function EnergyStars({ value, onChange, label }: EnergyStarsProps) {
         </button>
       ))}
     </span>
+  )
+}
+
+/** Drawn rather than typed: "♥" turns into a colour emoji on some phones. */
+export function HeartIcon({ filled }: { filled: boolean }) {
+  return (
+    <svg className="heart-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path
+        d="M12 20.5s-7.5-4.6-9.4-9.3C1.4 8.2 3.3 4.5 6.8 4.5c2.1 0 3.6 1.2 5.2 3.1 1.6-1.9 3.1-3.1 5.2-3.1 3.5 0 5.4 3.7 4.2 6.7-1.9 4.7-9.4 9.3-9.4 9.3Z"
+        fill={filled ? 'currentColor' : 'none'}
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
+export function FavoriteButton({ track }: { track: Track }) {
+  const favorites = useStore((state) => state.favorites)
+  const toggleFavorite = useStore((state) => state.toggleFavorite)
+  const active = isFavorite(favorites, track)
+
+  return (
+    <button
+      type="button"
+      className="fav-btn"
+      aria-pressed={active}
+      aria-label={active ? `Remove ${track.title} from favorites` : `Add ${track.title} to favorites`}
+      title={active ? 'In your favorites — press to remove' : 'Add to favorites'}
+      onClick={(event) => {
+        // Rows select the track on click; the heart must not move the cursor.
+        event.stopPropagation()
+        toggleFavorite(track)
+      }}
+    >
+      <HeartIcon filled={active} />
+    </button>
   )
 }
 
