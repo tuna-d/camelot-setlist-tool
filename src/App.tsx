@@ -90,6 +90,8 @@ export function App() {
       if (cancelled) return
 
       if (result.state) store.hydrate(result.state as AppState)
+      // Suggestions follow the cursor, and a set is continued from its end.
+      store.focusSetEnd()
       store.setSync(result.sync)
       setPendingGuest(result.pendingGuest)
 

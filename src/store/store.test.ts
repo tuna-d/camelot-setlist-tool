@@ -222,9 +222,9 @@ describe('havuz ve seçiciler', () => {
     store.importLibrary(imported)
     store.addTrack(library[0])
     useStore.getState().addTrack(library[1])
-    expect(selectReference(useStore.getState())?.id).toBe('1')
-    useStore.getState().setCursor(1)
     expect(selectReference(useStore.getState())?.id).toBe('2')
+    useStore.getState().setCursor(0)
+    expect(selectReference(useStore.getState())?.id).toBe('1')
     useStore.getState().setCursor(99)
     expect(selectReference(useStore.getState())?.id).toBe('2')
   })
@@ -266,6 +266,59 @@ describe('süzgeç ayarları', () => {
   it('tolerans ayarlanır', () => {
     useStore.getState().setTolerance(9)
     expect(useStore.getState().tolerance).toBe(9)
+  })
+})
+
+describe('imleç', () => {
+  it('eklenen her parça imleci kendine alır', () => {
+    useStore.getState().addTrack(track({ id: '1' }))
+    expect(useStore.getState().cursor).toBe(0)
+    useStore.getState().addTrack(track({ id: '2' }))
+    useStore.getState().addTrack(track({ id: '3' }))
+    expect(useStore.getState().cursor).toBe(2)
+  })
+
+  it('öneriler son eklenen parçadan üretilir', () => {
+    useStore.getState().addTrack(track({ id: '1', key: '8A', bpm: 120 }))
+    useStore.getState().addTrack(track({ id: '2', key: '9A', bpm: 128 }))
+    expect(selectReference(useStore.getState())?.id).toBe('2')
+  })
+
+  it('elle seçilen satır imleçte kalır', () => {
+    useStore.getState().addTrack(track({ id: '1' }))
+    useStore.getState().addTrack(track({ id: '2' }))
+    useStore.getState().setCursor(0)
+    expect(selectReference(useStore.getState())?.id).toBe('1')
+  })
+
+  it('başka bir sete geçince o setin sonundan devam eder', () => {
+    useStore.getState().addTrack(track({ id: '1' }))
+    useStore.getState().addTrack(track({ id: '2' }))
+    const first = useStore.getState().activeId!
+    useStore.getState().newSetlist('İkinci')
+    expect(useStore.getState().cursor).toBe(0)
+
+    useStore.getState().selectSetlist(first)
+    expect(useStore.getState().cursor).toBe(1)
+  })
+
+  it('boş sete geçince imleç başa döner', () => {
+    useStore.getState().addTrack(track({ id: '1' }))
+    const full = useStore.getState().activeId!
+    const empty = useStore.getState().newSetlist('Boş')
+    useStore.getState().selectSetlist(full)
+    useStore.getState().selectSetlist(empty)
+    expect(useStore.getState().cursor).toBe(0)
+  })
+
+  it('kayıt açılırken setin sonuna konumlanır', () => {
+    useStore.getState().addTrack(track({ id: '1' }))
+    useStore.getState().addTrack(track({ id: '2' }))
+    const exported = { ...useStore.getState().exportState(), cursor: 0 }
+    useStore.setState({ ...initialAppState(), catalog: null })
+    useStore.getState().hydrate(exported)
+    useStore.getState().focusSetEnd()
+    expect(useStore.getState().cursor).toBe(1)
   })
 })
 

@@ -124,12 +124,14 @@ describe('SetlistPanel', () => {
     const hearts = view.container.querySelectorAll<HTMLElement>('.fav-btn')
     expect(hearts).toHaveLength(2)
 
+    // The cursor sits on the last added track; the heart must not drag it back.
+    expect(useStore.getState().cursor).toBe(1)
     await act(async () => {
-      hearts[1].dispatchEvent(new MouseEvent('click', { bubbles: true }))
+      hearts[0].dispatchEvent(new MouseEvent('click', { bubbles: true }))
     })
-    expect(useStore.getState().favorites.map((item) => item.id)).toEqual(['2'])
-    expect(useStore.getState().cursor).toBe(0)
-    expect(view.container.querySelectorAll('.fav-btn')[1].getAttribute('aria-pressed')).toBe('true')
+    expect(useStore.getState().favorites.map((item) => item.id)).toEqual(['1'])
+    expect(useStore.getState().cursor).toBe(1)
+    expect(view.container.querySelectorAll('.fav-btn')[0].getAttribute('aria-pressed')).toBe('true')
     await view.unmount()
   })
 

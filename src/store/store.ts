@@ -10,6 +10,7 @@ import type {
   PoolSource,
   RelationId,
   Setlist,
+  SetlistEntry,
   Track,
 } from '../lib/types'
 
@@ -51,6 +52,7 @@ export interface StoreState extends AppState {
   replaceEntries: (tracks: Track[]) => void
   clearSetlist: () => void
   setCursor: (index: number) => void
+  focusSetEnd: () => void
 
   exportState: () => AppState
   hydrate: (state: Partial<AppState>) => void
@@ -92,6 +94,16 @@ export function initialAppState(): AppState {
     poolSource: 'catalog',
     savedAt: 0,
   }
+}
+
+function activeEntries(state: StoreState): SetlistEntry[] {
+  const active = state.setlists.find((setlist) => setlist.id === state.activeId)
+  return active?.entries ?? []
+}
+
+/** The end of a set is where building continues, so that is where the cursor belongs. */
+function lastIndex(entries: SetlistEntry[]): number {
+  return Math.max(0, entries.length - 1)
 }
 
 function updateActive(state: StoreState, change: (setlist: Setlist) => Setlist): Partial<StoreState> {
@@ -139,7 +151,12 @@ export const useStore = create<StoreState>((set, get) => ({
     return setlist.id
   },
 
-  selectSetlist: (id) => set({ activeId: id, cursor: 0 }),
+  selectSetlist: (id) =>
+    set((state) => ({
+      activeId: id,
+      // Opening a saved set means carrying on from its end, not from its first track.
+      cursor: lastIndex(state.setlists.find((setlist) => setlist.id === id)?.entries ?? []),
+    })),
 
   renameSetlist: (id, name) =>
     set((state) => ({
@@ -174,6 +191,9 @@ export const useStore = create<StoreState>((set, get) => ({
           ...setlist,
           entries: [...setlist.entries, { trackId: track.id }],
         })),
+        // Suggestions are built from the track at the cursor, and a set is built
+        // forwards: the track just added is the one you want to follow next.
+        cursor: activeEntries(state).length,
       }
     }),
 
@@ -240,6 +260,11 @@ export const useStore = create<StoreState>((set, get) => ({
     set((state) => ({ ...updateActive(state, (setlist) => ({ ...setlist, entries: [] })), cursor: 0 })),
 
   setCursor: (index) => set({ cursor: Math.max(0, index) }),
+
+  // Called once the saved record is loaded. Records written before the cursor
+  // followed new tracks all hold 0, which would suggest from the opening track
+  // of a finished set; a session starts where the set left off instead.
+  focusSetEnd: () => set((state) => ({ cursor: lastIndex(activeEntries(state)) })),
 
   exportState: () => {
     const state = get()
