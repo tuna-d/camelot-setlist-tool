@@ -206,6 +206,59 @@ describe('SetlistPanel enerji', () => {
   })
 })
 
+describe('SetlistPanel enerji düşüşü', () => {
+  function drops(view: Mounted): string[] {
+    return [...view.container.querySelectorAll('.bridge-drop')].map((node) => node.textContent ?? '')
+  }
+
+  async function mountRated(levels: number[]): Promise<Mounted> {
+    levels.forEach((_, index) => useStore.getState().addTrack(track({ id: String(index + 1) })))
+    levels.forEach((level, index) => useStore.getState().setEntryEnergy(index, level))
+    return mount(<SetlistPanel />)
+  }
+
+  it('iki seviyelik düşüşü köprüde uyarır, ne olduğunu ve ne yapılacağını söyler', async () => {
+    const view = await mountRated([5, 3])
+    expect(drops(view)).toHaveLength(1)
+    expect(drops(view)[0]).toContain('Energy falls from 5 to 3')
+    expect(drops(view)[0]).toContain('put a track between them')
+    await view.unmount()
+  })
+
+  it('bir seviyelik düşüşü ve yükselişi uyarmaz', async () => {
+    const view = await mountRated([4, 3, 5])
+    expect(drops(view)).toEqual([])
+    await view.unmount()
+  })
+
+  it('enerjisi olmayan tarafta hüküm yok', async () => {
+    // No pool, so the unrated track has no estimate.
+    useStore.getState().addTrack(track({ id: '1' }))
+    useStore.getState().addTrack(track({ id: '2' }))
+    useStore.getState().setEntryEnergy(0, 5)
+    const view = await mount(<SetlistPanel />)
+    expect(drops(view)).toEqual([])
+    await view.unmount()
+  })
+
+  it('tahmini seviye de uyarır, uyarı puanlanmışla aynı okunur', async () => {
+    useStore.setState({ catalog })
+    // Against the catalog's tempos 126 BPM estimates 5, 120 BPM estimates 1.
+    useStore.getState().addTrack(track({ id: '1', bpm: 126 }))
+    useStore.getState().addTrack(track({ id: '2', bpm: 120 }))
+    const estimated = await mount(<SetlistPanel />)
+    const estimatedText = drops(estimated)
+    await estimated.unmount()
+
+    useStore.getState().setEntryEnergy(0, 5)
+    useStore.getState().setEntryEnergy(1, 1)
+    const rated = await mount(<SetlistPanel />)
+    expect(estimatedText).toHaveLength(1)
+    expect(drops(rated)).toEqual(estimatedText)
+    await rated.unmount()
+  })
+})
+
 describe('SetlistPanel bulunamayan giriş', () => {
   // A catalog refresh can drop a track that a set still points at.
   function withMissingMiddle() {
@@ -531,6 +584,20 @@ describe('SetSummaryPanel', () => {
     expect(html).toContain('15 min')
     expect(html).toContain('120–124')
     expect(html).toContain('rough transitions')
+  })
+
+  it('enerji düşüşlerini zorlayan geçişlerin yanında sayar', async () => {
+    useStore.getState().addTrack(track({ id: '1' }))
+    useStore.getState().addTrack(track({ id: '2' }))
+    useStore.getState().addTrack(track({ id: '3' }))
+    useStore.getState().setEntryEnergy(0, 5)
+    useStore.getState().setEntryEnergy(1, 2)
+    useStore.getState().setEntryEnergy(2, 1)
+    const view = await mount(<SetSummaryPanel />)
+    const stat = view.container.querySelector('.stat-drops .stat-value')
+    expect(stat?.textContent).toBe('1')
+    expect(view.container.querySelector('.stat-drops')?.textContent).toContain('energy drops')
+    await view.unmount()
   })
 })
 
