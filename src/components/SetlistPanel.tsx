@@ -1,10 +1,11 @@
 import { useMemo, useState } from 'react'
 import { relationInfo } from '../lib/camelot'
+import { advanceQueue, EMPTY_QUEUE, queueView } from '../lib/queue'
 import { transition } from '../lib/setstats'
 import { formatDelta } from '../lib/suggest'
 import { formatDuration, formatTotal, toneColor } from '../lib/ui'
 import { selectActive, selectEntries, useStore } from '../store/store'
-import { Bpm, EnergyStars, FavoriteButton, KeyChip, TrackLinks } from './common'
+import { Bpm, EnergyStars, FavoriteButton, KeyChip, TrackLinks, youtubeSearchUrl } from './common'
 import type { Track } from '../lib/types'
 
 function TransitionBridge({ from, to, tolerance }: { from: Track; to: Track; tolerance: number }) {
@@ -36,14 +37,33 @@ export interface SetlistPanelProps {
   onOpenAutoBuild?: () => void
 }
 
-export function SetlistPanel({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProps) {
+export function SetlistPanel(props: SetlistPanelProps) {
+  // Keyed by the set so the YouTube queue starts over whenever another set is opened,
+  // without resetting state from an effect.
+  const activeId = useStore((state) => selectActive(state).id)
+  return <SetlistPanelBody key={activeId} {...props} />
+}
+
+function SetlistPanelBody({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProps) {
   // Whole-state subscription on purpose: derived lists would break per-selector caching.
   const state = useStore()
   const [dragIndex, setDragIndex] = useState<number | null>(null)
+  // Session only: nothing about the pass is written to the record.
+  const [queue, setQueue] = useState(EMPTY_QUEUE)
 
   const active = selectActive(state)
   const tracks = useMemo(() => selectEntries(state), [state])
   const totalSeconds = tracks.reduce((total, track) => total + (track.duration ?? 360), 0)
+  const trackIds = tracks.map((track) => track.id)
+  const pass = queueView(trackIds, queue)
+  const nextTrack = pass.nextIndex >= 0 ? tracks[pass.nextIndex] : null
+
+  // One press, one tab: a single window.open per user gesture is never blocked.
+  function openNextOnYoutube() {
+    if (!nextTrack) return
+    window.open(youtubeSearchUrl(nextTrack), '_blank', 'noopener')
+    setQueue(advanceQueue(trackIds, queue))
+  }
 
   function handleDrop(target: number) {
     if (dragIndex !== null && dragIndex !== target) state.moveEntry(dragIndex, target)
@@ -70,6 +90,37 @@ export function SetlistPanel({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProp
         ) : null}
       </div>
 
+      {tracks.length > 0 ? (
+        <div className="row-wrap queue-bar">
+          <button
+            type="button"
+            className="btn btn-sm btn-youtube queue-open"
+            onClick={openNextOnYoutube}
+            disabled={!nextTrack}
+            title={nextTrack ? `Search YouTube for ${nextTrack.title}` : undefined}
+          >
+            ▶ next on YouTube
+          </button>
+          <span className="mono queue-count" aria-label="Tracks opened on YouTube">
+            {pass.opened} / {pass.total}
+          </span>
+          {pass.finished ? (
+            <span className="muted queue-done">
+              Every track has been opened. Reset to go through the set again.
+            </span>
+          ) : null}
+          {queue !== EMPTY_QUEUE ? (
+            <button
+              type="button"
+              className="btn btn-ghost btn-sm queue-reset"
+              onClick={() => setQueue(EMPTY_QUEUE)}
+            >
+              reset
+            </button>
+          ) : null}
+        </div>
+      ) : null}
+
       {tracks.length === 0 ? (
         <p className="muted">
           Empty set. Add a starting track with "find a track", then keep going from the suggestions below.
@@ -83,7 +134,9 @@ export function SetlistPanel({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProp
               ) : null}
 
               <div
-                className="entry"
+                className={index === pass.nextIndex ? 'entry entry-queued' : 'entry'}
+                data-queue={index === pass.nextIndex ? 'next' : undefined}
+                title={index === pass.nextIndex ? 'Next on YouTube' : undefined}
                 draggable
                 aria-current={index === state.cursor}
                 onDragStart={() => setDragIndex(index)}

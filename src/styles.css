@@ -602,6 +602,41 @@ dialog::backdrop {
   border-color: var(--accent);
 }
 
+/* The YouTube queue mark is an inner stripe, not a border, so it still reads
+   when the same entry is also the reference track. */
+.entry-queued {
+  box-shadow: inset 4px 0 0 var(--youtube);
+}
+
+.entry-queued .entry-index {
+  color: var(--youtube);
+}
+
+.queue-bar {
+  gap: 8px;
+}
+
+.btn-youtube {
+  background: color-mix(in srgb, var(--youtube) 14%, transparent);
+  border-color: color-mix(in srgb, var(--youtube) 40%, transparent);
+  color: var(--youtube);
+}
+
+.btn-youtube:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--youtube) 26%, transparent);
+  border-color: var(--youtube);
+  color: var(--youtube);
+}
+
+.queue-count {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.queue-done {
+  font-size: 12px;
+}
+
 .entry-index {
   color: var(--text-faint);
   min-width: 26px;
