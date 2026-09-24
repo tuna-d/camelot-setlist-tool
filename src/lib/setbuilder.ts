@@ -248,14 +248,19 @@ export function buildSet(opts: BuildOptions): BuildResult {
         continue
       }
 
-      const lastStep = state.steps[state.steps.length - 1]
+      const step = state.steps.length
+      const lastStep = state.steps[step - 1]
       const last = lastStep.track
-      const target = targetBpm(opts.shape, start, opts.bpmSpan, state.steps.length, requested)
-      const energyTarget = energyTargetAt(state.steps.length)
-      const heading =
-        energyTarget === null || lastStep.targetEnergy === null
-          ? 0
-          : Math.sign(energyTarget - lastStep.targetEnergy)
+      const target = targetBpm(opts.shape, start, opts.bpmSpan, step, requested)
+      const energyTarget = energyTargetAt(step)
+      // Read from the shape's unit curve, not the energy target: a rise that starts at
+      // the top has a target pinned at 5, yet the floor must still not drop.
+      const heading = opts.energy
+        ? Math.sign(
+            targetBpm(opts.shape, 0, 1, step, requested) -
+              targetBpm(opts.shape, 0, 1, step - 1, requested),
+          )
+        : 0
       const limit = ((last.bpm ?? start) * opts.tolerance) / 100
 
       const candidates: Candidate[] = []

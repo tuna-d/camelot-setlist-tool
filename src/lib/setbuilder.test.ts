@@ -319,6 +319,46 @@ describe('buildSet — enerji hedefi', () => {
     expect(result.steps[1].track.id).toBe('steady')
   })
 
+  it('en üst seviyeden başlayan rise da enerjisi düşen parçayı seçmez', () => {
+    const near: Track = { ...seed, id: 'near', title: 'Yakın', artist: 'Bir', bpm: 126 }
+    const steady: Track = { ...seed, id: 'steady', title: 'Sabit', artist: 'İki', bpm: 120 }
+    const ratings = ratingsFor([
+      { track: seed, energy: 5 },
+      { track: near, energy: 4 },
+      { track: steady, energy: 5 },
+    ])
+    const result = buildSet(
+      options({
+        pool: [near, steady],
+        count: 3,
+        shape: 'rise',
+        bpmSpan: 12,
+        energy: { scale, ratings },
+      }),
+    )
+    expect(result.steps[1].track.id).toBe('steady')
+  })
+
+  it('en alt seviyeden başlayan descend enerjisi yükselen parçayı seçmez', () => {
+    const near: Track = { ...seed, id: 'near', title: 'Yakın', artist: 'Bir', bpm: 114 }
+    const steady: Track = { ...seed, id: 'steady', title: 'Sabit', artist: 'İki', bpm: 120 }
+    const ratings = ratingsFor([
+      { track: seed, energy: 1 },
+      { track: near, energy: 2 },
+      { track: steady, energy: 1 },
+    ])
+    const result = buildSet(
+      options({
+        pool: [near, steady],
+        count: 3,
+        shape: 'descend',
+        bpmSpan: 12,
+        energy: { scale, ratings },
+      }),
+    )
+    expect(result.steps[1].track.id).toBe('steady')
+  })
+
   it('yön bozmayan aday yoksa enerjisi düşeni de alıp seti sürdürür', () => {
     const lower: Track = { ...seed, id: 'lower', title: 'Alçak', artist: 'Bir', bpm: 124 }
     const ratings = ratingsFor([

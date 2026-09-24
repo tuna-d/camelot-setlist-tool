@@ -112,7 +112,14 @@ export function entryEnergy(
   entry: SetlistEntry | undefined,
   track: Track,
 ): EntryEnergy | null {
-  const rated = energyLevel(entry?.energy)
+  return ratedOrEstimated(scale, energyLevel(entry?.energy), track)
+}
+
+function ratedOrEstimated(
+  scale: EnergyScale,
+  rated: number | null,
+  track: Track,
+): EntryEnergy | null {
   if (rated !== null) return { level: rated, rated: true }
   const estimate = estimateEnergy(scale, track)
   return estimate === null ? null : { level: estimate, rated: false }
@@ -175,7 +182,5 @@ export function trackEnergy(
   const signature = signatureKey(track)
   const rated =
     ratings.get(idKey(track.id)) ?? (signature !== null ? ratings.get(signature) : undefined)
-  if (rated !== undefined) return { level: rated, rated: true }
-  const estimate = estimateEnergy(scale, track)
-  return estimate === null ? null : { level: estimate, rated: false }
+  return ratedOrEstimated(scale, rated ?? null, track)
 }
