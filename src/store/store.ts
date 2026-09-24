@@ -2,8 +2,8 @@ import { create } from 'zustand'
 import { DEFAULT_RELATIONS } from '../lib/camelot'
 import { DEFAULT_TOLERANCE } from '../lib/suggest'
 import { readFavorites, toggleFavorite } from '../lib/favorites'
-import { buildEnergyScale } from '../lib/energy'
-import type { EnergyScale } from '../lib/energy'
+import { buildEnergyScale, buildRatingIndex } from '../lib/energy'
+import type { EnergyScale, RatingIndex } from '../lib/energy'
 import { buildSeenIndex } from '../lib/seen'
 import type { SeenIndex } from '../lib/seen'
 import { trackKey } from '../lib/suggest'
@@ -341,14 +341,31 @@ export function selectSeenIndex(state: StoreState): SeenIndex {
   const key = [state.setlists, state.activeId, state.library, state.catalog, state.extras]
   if (seenCache && seenCache.key.every((part, i) => part === key[i])) return seenCache.index
 
+  const index = buildSeenIndex(state.setlists, state.activeId, trackResolver(state))
+  seenCache = { key, index }
+  return index
+}
+
+/** `selectTrack` for a whole pass over the sets: one map instead of a scan per entry. */
+function trackResolver(state: StoreState): (id: string) => Track | null {
   const byId = new Map<string, Track>()
   // Reversed so the first source wins, matching selectTrack.
   for (const list of [state.extras, state.catalog?.tracks ?? [], state.library]) {
     for (const track of list) byId.set(track.id, track)
   }
-  const index = buildSeenIndex(state.setlists, state.activeId, (id) => byId.get(id) ?? null)
-  seenCache = { key, index }
-  return index
+  return (id) => byId.get(id) ?? null
+}
+
+let ratingCache: { key: readonly unknown[]; ratings: RatingIndex } | null = null
+
+/** Every rating across the DJ's sets, active one included; rebuilt only when they change. */
+export function selectRatingIndex(state: StoreState): RatingIndex {
+  const key = [state.setlists, state.library, state.catalog, state.extras]
+  if (ratingCache && ratingCache.key.every((part, i) => part === key[i])) return ratingCache.ratings
+
+  const ratings = buildRatingIndex(state.setlists, trackResolver(state))
+  ratingCache = { key, ratings }
+  return ratings
 }
 
 export interface EntryRow {
