@@ -7,7 +7,15 @@ import { formatDelta } from '../lib/suggest'
 import { formatDuration, formatTotal, toneColor } from '../lib/ui'
 import { selectActive, selectEnergyScale, selectEntryRows, useStore } from '../store/store'
 import type { EntryRow } from '../store/store'
-import { Bpm, EnergyStars, FavoriteButton, KeyChip, TrackLinks, youtubeSearchUrl } from './common'
+import {
+  Bpm,
+  EnergyStars,
+  FavoriteButton,
+  KeyChip,
+  SeenBadge,
+  TrackLinks,
+  youtubeSearchUrl,
+} from './common'
 import type { Track } from '../lib/types'
 
 function TransitionBridge({ from, to, tolerance }: { from: Track; to: Track; tolerance: number }) {
@@ -210,6 +218,7 @@ function SetlistPanelBody({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProps) 
                 >
                   <span className="mono entry-index">{index + 1}</span>
                   <span className="entry-title">
+                    <SeenBadge track={track} />
                     <strong>{track.title}</strong>
                     <span className="muted"> — {track.artist}</span>
                   </span>
