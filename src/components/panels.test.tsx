@@ -191,6 +191,100 @@ describe('SetlistPanel enerji', () => {
   })
 })
 
+describe('SetlistPanel bulunamayan giriş', () => {
+  // A catalog refresh can drop a track that a set still points at.
+  function withMissingMiddle() {
+    useStore.getState().addTrack(track({ id: '1', title: 'Gece', bpm: 120 }))
+    useStore.getState().addTrack(track({ id: '2', title: 'Sabah', bpm: 122 }))
+    const active = useStore.getState().setlists[0]
+    useStore.setState({
+      setlists: [
+        {
+          ...active,
+          entries: [
+            { trackId: '1', note: 'bir' },
+            { trackId: 'kayıp', note: 'kayıp' },
+            { trackId: '2', note: 'iki', energy: 4 },
+          ],
+        },
+      ],
+      cursor: 2,
+    })
+  }
+
+  function rows(view: Mounted): HTMLElement[] {
+    return [...view.container.querySelectorAll<HTMLElement>('ol.entries > li')]
+  }
+
+  it('bulunamayan girişi ne olduğunu ve ne yapılacağını söyleyen satırla gösterir', async () => {
+    withMissingMiddle()
+    const view = await mount(<SetlistPanel />)
+    const items = rows(view)
+    expect(items).toHaveLength(3)
+    expect(items[1].querySelector('.entry-missing')?.textContent).toContain('no longer available')
+    expect(items[1].textContent).toContain('Remove it')
+    expect(view.html()).toContain('1 missing')
+    await view.unmount()
+  })
+
+  it('bulunamayan girişten sonraki satır kendi notunu, puanını ve sıra numarasını gösterir', async () => {
+    withMissingMiddle()
+    const view = await mount(<SetlistPanel />)
+    const last = rows(view)[2]
+    expect(last.textContent).toContain('Sabah')
+    expect(last.querySelector('.entry-index')?.textContent).toBe('3')
+    expect(last.querySelector<HTMLInputElement>('.entry-note')?.value).toBe('iki')
+    expect(last.querySelector<HTMLElement>('.stars')?.dataset.energy).toBe('rated')
+    expect(last.querySelectorAll('.star[aria-pressed="true"]')).toHaveLength(4)
+    expect(last.querySelector('.entry')?.getAttribute('aria-current')).toBe('true')
+    await view.unmount()
+  })
+
+  it('sonraki satırdaki düzenleme doğru girişe yazılır', async () => {
+    withMissingMiddle()
+    const view = await mount(<SetlistPanel />)
+    await act(async () => {
+      rows(view)[2].querySelectorAll<HTMLElement>('.star')[1].dispatchEvent(
+        new MouseEvent('click', { bubbles: true }),
+      )
+    })
+    const entries = useStore.getState().setlists[0].entries
+    expect(entries.map((entry) => entry.energy)).toEqual([undefined, undefined, 2])
+    await view.unmount()
+  })
+
+  it('bulunamayan giriş silinince sonrakiler yerinde kalır', async () => {
+    withMissingMiddle()
+    const view = await mount(<SetlistPanel />)
+    await act(async () => {
+      rows(view)[1].querySelector<HTMLElement>('.btn-danger')?.dispatchEvent(
+        new MouseEvent('click', { bubbles: true }),
+      )
+    })
+    expect(useStore.getState().setlists[0].entries.map((entry) => entry.trackId)).toEqual(['1', '2'])
+    expect(rows(view)).toHaveLength(2)
+    expect(rows(view)[1].querySelector<HTMLInputElement>('.entry-note')?.value).toBe('iki')
+    await view.unmount()
+  })
+
+  it('YouTube kuyruğu sıradaki parçanın kendi satırını işaretler', async () => {
+    withMissingMiddle()
+    const view = await mount(<SetlistPanel />)
+    await view.click('.queue-open')
+    const queued = view.container.querySelector('[data-queue="next"]')
+    expect(queued?.textContent).toContain('Sabah')
+    expect(queued?.querySelector('.entry-index')?.textContent).toBe('3')
+    await view.unmount()
+  })
+
+  it('bulunamayan girişin iki yanına geçiş köprüsü çizmez', async () => {
+    withMissingMiddle()
+    const view = await mount(<SetlistPanel />)
+    expect(view.container.querySelectorAll('.bridge')).toHaveLength(0)
+    await view.unmount()
+  })
+})
+
 describe('SetlistPanel YouTube kuyruğu', () => {
   function addThree() {
     useStore.getState().addTrack(track({ id: '1', title: 'Gece', artist: 'Kaya' }))
@@ -363,6 +457,23 @@ describe('SetSummaryPanel', () => {
     useStore.getState().addTrack(track({ id: '1', bpm: 120 }))
     useStore.getState().addTrack(track({ id: '2', bpm: 124, key: '9A' }))
     expect(await render(<SetSummaryPanel />)).toContain('<polyline')
+  })
+
+  it('yalnızca bulunamayan parçalardan oluşan set de temizlenebilir', async () => {
+    const active = useStore.getState().setlists[0]
+    useStore.setState({ setlists: [{ ...active, entries: [{ trackId: 'kayıp' }] }] })
+    vi.stubGlobal('confirm', () => true)
+    const view = await mount(<SetSummaryPanel />)
+    const clear = [...view.container.querySelectorAll<HTMLButtonElement>('button')].find(
+      (button) => button.textContent === 'clear',
+    )
+    expect(clear?.disabled).toBe(false)
+    await act(async () => {
+      clear?.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+    })
+    expect(useStore.getState().setlists[0].entries).toEqual([])
+    vi.unstubAllGlobals()
+    await view.unmount()
   })
 
   it('dışa aktarım düğmelerini ve set notunu gösterir', async () => {

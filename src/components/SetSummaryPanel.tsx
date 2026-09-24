@@ -64,11 +64,15 @@ export function SetSummaryPanel() {
     setNotice(`${withPath.length} tracks downloaded as m3u8.`)
   }
 
+  // Counted from the entries, not the resolved tracks: a set holding only missing
+  // tracks must still be clearable.
+  const entryCount = active.entries.length
+
   function clearAll() {
-    if (tracks.length === 0) return
-    if (window.confirm(`Delete the ${tracks.length} tracks in "${active.name}"?`)) {
+    if (entryCount === 0) return
+    if (window.confirm(`Delete the ${entryCount} tracks in "${active.name}"?`)) {
       state.clearSetlist()
-      setNotice('Set temizlendi.')
+      setNotice('Set cleared.')
     }
   }
 
@@ -160,7 +164,7 @@ export function SetSummaryPanel() {
           type="button"
           className="btn btn-sm btn-danger"
           onClick={clearAll}
-          disabled={tracks.length === 0}
+          disabled={entryCount === 0}
         >
           clear
         </button>
