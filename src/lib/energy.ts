@@ -7,7 +7,10 @@ import type { SetlistEntry, Track } from './types'
  * is recomputed on every render and never stored, see docs/adr/0001.
  */
 
-/** Below this many tempos a genre's spread is noise, so the whole pool is used. */
+/**
+ * Below this many tracks a genre's spread is noise, so the whole pool is used.
+ * Only tracks with a tempo count: the rest say nothing about the distribution.
+ */
 export const MIN_GENRE_TRACKS = 20
 
 const LEVELS = 5
@@ -40,7 +43,7 @@ function genreKey(value: unknown): string | null {
 export function buildEnergyScale(pool: readonly Track[]): EnergyScale {
   const all: number[] = []
   const grouped = new Map<string, number[]>()
-  // The pool comes from the catalog JSON or a rekordbox import, so each field is checked.
+  // The pool is the discovery catalog or the library import, so each field is checked.
   for (const item of Array.isArray(pool) ? (pool as unknown[]) : []) {
     if (!item || typeof item !== 'object') continue
     const record = item as Record<string, unknown>

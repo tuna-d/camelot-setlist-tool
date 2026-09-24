@@ -144,7 +144,6 @@ function SetlistPanelBody({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProps) 
         <ol className="entries entries-scroll">
           {tracks.map((track, index) => {
             const isQueued = index === pass.nextIndex
-            const energy = entryEnergy(energyScale, active.entries[index], track)
             return (
               <li key={`${track.id}-${index}`}>
                 {index > 0 ? (
@@ -195,8 +194,7 @@ function SetlistPanelBody({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProps) 
                   <span className="entry-energy">
                     <span className="faint">energy</span>
                     <EnergyStars
-                      value={energy?.rated ? energy.level : undefined}
-                      estimate={energy && !energy.rated ? energy.level : null}
+                      energy={entryEnergy(energyScale, active.entries[index], track)}
                       onChange={(value) => state.setEntryEnergy(index, value)}
                       label={`Energy rating for ${track.title}`}
                     />

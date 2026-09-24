@@ -54,7 +54,7 @@ describe('TrackLinks', () => {
 
 describe('EnergyStars', () => {
   it('verilen puana kadar dolu yıldız çizer', () => {
-    const html = renderToStaticMarkup(<EnergyStars value={3} onChange={() => {}} label="enerji" />)
+    const html = renderToStaticMarkup(<EnergyStars energy={{ level: 3, rated: true }} onChange={() => {}} label="enerji" />)
     expect(html.match(/★/g)).toHaveLength(3)
     expect(html.match(/☆/g)).toHaveLength(2)
     expect(html.match(/aria-pressed="true"/g)).toHaveLength(3)
@@ -62,7 +62,7 @@ describe('EnergyStars', () => {
 
   it('puan yokken hepsi boş', () => {
     const html = renderToStaticMarkup(
-      <EnergyStars value={undefined} onChange={() => {}} label="enerji" />,
+      <EnergyStars energy={null} onChange={() => {}} label="enerji" />,
     )
     expect(html.match(/☆/g)).toHaveLength(5)
     expect(html).not.toContain('aria-pressed="true"')
@@ -72,7 +72,7 @@ describe('EnergyStars', () => {
 describe('EnergyStars tahmini', () => {
   it('puan yokken tahmini soluk yıldızlarla gösterir, hiçbirini basılı saymaz', () => {
     const html = renderToStaticMarkup(
-      <EnergyStars value={undefined} estimate={4} onChange={() => {}} label="enerji" />,
+      <EnergyStars energy={{ level: 4, rated: false }} onChange={() => {}} label="enerji" />,
     )
     expect(html.match(/star star-estimated/g)).toHaveLength(4)
     expect(html.match(/★/g)).toHaveLength(4)
@@ -81,9 +81,9 @@ describe('EnergyStars tahmini', () => {
     expect(html).toContain('Estimated energy 4/5')
   })
 
-  it('verilen puan tahminin önüne geçer', () => {
+  it('verilen puan dolu ve basılı, soluk değil', () => {
     const html = renderToStaticMarkup(
-      <EnergyStars value={2} estimate={4} onChange={() => {}} label="enerji" />,
+      <EnergyStars energy={{ level: 2, rated: true }} onChange={() => {}} label="enerji" />,
     )
     expect(html).not.toContain('star-estimated')
     expect(html.match(/★/g)).toHaveLength(2)
@@ -92,7 +92,7 @@ describe('EnergyStars tahmini', () => {
 
   it('tahmin de puan da yoksa yıldızlar boş kalır', () => {
     const html = renderToStaticMarkup(
-      <EnergyStars value={undefined} estimate={null} onChange={() => {}} label="enerji" />,
+      <EnergyStars energy={null} onChange={() => {}} label="enerji" />,
     )
     expect(html.match(/☆/g)).toHaveLength(5)
     expect(html).toContain('data-energy="none"')

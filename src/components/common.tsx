@@ -5,6 +5,7 @@ import { isFavorite } from '../lib/favorites'
 import { seenIn } from '../lib/seen'
 import { selectSeenIndex, useStore } from '../store/store'
 import { formatBpm } from '../lib/ui'
+import type { EntryEnergy } from '../lib/energy'
 import type { Track } from '../lib/types'
 
 export function KeyChip({ code }: { code: string | null }) {
@@ -25,35 +26,40 @@ export function Bpm({ value }: { value: number | null | undefined }) {
 const STARS = [1, 2, 3, 4, 5]
 
 export interface EnergyStarsProps {
-  /** Rated energy; wins over the estimate whenever present. */
-  value: number | undefined
-  /** Shown faintly until the DJ rates; null when the track has no tempo. */
-  estimate?: number | null
+  /** The rating, or the estimate until there is one; null when neither exists. */
+  energy: EntryEnergy | null
   onChange: (value: number) => void
   label: string
 }
 
-export function EnergyStars({ value, estimate = null, onChange, label }: EnergyStarsProps) {
-  const rated = value !== undefined
-  const shown = rated ? value : (estimate ?? 0)
-  const kind = rated ? 'rated' : estimate !== null ? 'estimated' : 'none'
-  const summary = rated
-    ? `Rated energy ${value}/5`
-    : estimate !== null
-      ? `Estimated energy ${estimate}/5 from the tempo within its genre — touch a star to rate it`
-      : 'No tempo, so no estimate — touch a star to rate it'
+const ENERGY_SUMMARY = {
+  rated: (level: number) => `Rated energy ${level}/5`,
+  estimated: (level: number) =>
+    `Estimated energy ${level}/5 from the tempo within its genre — touch a star to rate it`,
+  none: () => 'No tempo, so no estimate — touch a star to rate it',
+}
+
+export function EnergyStars({ energy, onChange, label }: EnergyStarsProps) {
+  const kind = energy === null ? 'none' : energy.rated ? 'rated' : 'estimated'
+  const shown = energy?.level ?? 0
 
   return (
-    <span className="stars" role="group" aria-label={label} data-energy={kind} title={summary}>
+    <span
+      className="stars"
+      role="group"
+      aria-label={label}
+      data-energy={kind}
+      title={ENERGY_SUMMARY[kind](shown)}
+    >
       {STARS.map((star) => (
         <button
           key={star}
           type="button"
-          className={!rated && star <= shown ? 'star star-estimated' : 'star'}
-          aria-pressed={rated && star <= shown}
+          className={kind === 'estimated' && star <= shown ? 'star star-estimated' : 'star'}
+          aria-pressed={kind === 'rated' && star <= shown}
           aria-label={`${star} stars`}
           title={
-            rated
+            kind === 'rated'
               ? `Energy ${star}/5 — press the same star again to clear it`
               : `Rate energy ${star}/5`
           }
