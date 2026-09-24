@@ -3,6 +3,7 @@ import {
   initialAppState,
   selectActive,
   selectEntries,
+  selectEntryRows,
   selectExclude,
   selectGenres,
   selectLibrary,
@@ -383,6 +384,75 @@ describe('imleç', () => {
     useStore.getState().hydrate(exported)
     useStore.getState().focusSetEnd()
     expect(useStore.getState().cursor).toBe(1)
+  })
+})
+
+describe('bulunamayan giriş', () => {
+  // The middle entry points at a track no source holds any more, as after a
+  // catalog refresh drops it.
+  function withMissingMiddle() {
+    const store = useStore.getState()
+    store.importLibrary(imported)
+    store.addTrack(library[0])
+    useStore.getState().addTrack(library[1])
+    const active = selectActive(useStore.getState())
+    useStore.setState({
+      setlists: [
+        {
+          ...active,
+          entries: [
+            { trackId: '1', note: 'bir' },
+            { trackId: 'kayıp', note: 'kayıp' },
+            { trackId: '2', note: 'iki', energy: 4 },
+          ],
+        },
+      ],
+    })
+  }
+
+  it('satırlar gerçek giriş indeksini ve notunu taşır, bulunamayanı atlamaz', () => {
+    withMissingMiddle()
+    const rows = selectEntryRows(useStore.getState())
+    expect(rows.map((row) => [row.index, row.track?.id ?? null, row.entry.note])).toEqual([
+      [0, '1', 'bir'],
+      [1, null, 'kayıp'],
+      [2, '2', 'iki'],
+    ])
+  })
+
+  it('imleç bulunamayan girişin ardındaysa referans doğru parçadır', () => {
+    withMissingMiddle()
+    useStore.getState().setCursor(2)
+    expect(selectReference(useStore.getState())?.id).toBe('2')
+  })
+
+  it('imleç bulunamayan girişteyse referans ondan önceki parçadır', () => {
+    withMissingMiddle()
+    useStore.getState().setCursor(1)
+    expect(selectReference(useStore.getState())?.id).toBe('1')
+  })
+
+  it('önünde parça yoksa referans ardındaki ilk parçadır', () => {
+    withMissingMiddle()
+    useStore.getState().removeEntry(0)
+    useStore.getState().setCursor(0)
+    expect(selectReference(useStore.getState())?.id).toBe('2')
+  })
+
+  it('hiçbir giriş bulunamıyorsa referans yok', () => {
+    withMissingMiddle()
+    useStore.getState().removeEntry(0)
+    useStore.getState().removeEntry(1)
+    expect(selectReference(useStore.getState())).toBeNull()
+  })
+
+  it('bulunamayan girişi silmek sonrakilerin notunu ve puanını korur', () => {
+    withMissingMiddle()
+    useStore.getState().removeEntry(1)
+    expect(selectActive(useStore.getState()).entries).toEqual([
+      { trackId: '1', note: 'bir' },
+      { trackId: '2', note: 'iki', energy: 4 },
+    ])
   })
 })
 

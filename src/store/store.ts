@@ -351,21 +351,42 @@ export function selectSeenIndex(state: StoreState): SeenIndex {
   return index
 }
 
+export interface EntryRow {
+  entry: SetlistEntry
+  /** Position in the set's entries: what every entry action takes. */
+  index: number
+  /** Null when no source holds the track any more, e.g. a catalog refresh dropped it. */
+  track: Track | null
+}
+
+/**
+ * Every entry of the active set, resolved or not. Rows that edit an entry read
+ * this rather than `selectEntries`, whose positions shift past a missing track.
+ */
+export function selectEntryRows(state: StoreState): EntryRow[] {
+  return selectActive(state).entries.map((entry, index) => ({
+    entry,
+    index,
+    track: selectTrack(state, entry.trackId),
+  }))
+}
+
+/** The tracks of the active set in order, skipping entries that no longer resolve. */
 export function selectEntries(state: StoreState): Track[] {
-  const active = selectActive(state)
   const out: Track[] = []
-  for (const entry of active.entries) {
-    const track = selectTrack(state, entry.trackId)
-    if (track) out.push(track)
-  }
+  for (const row of selectEntryRows(state)) if (row.track) out.push(row.track)
   return out
 }
 
 export function selectReference(state: StoreState): Track | null {
-  const entries = selectEntries(state)
-  if (entries.length === 0) return null
-  const index = Math.min(state.cursor, entries.length - 1)
-  return entries[index]
+  const rows = selectEntryRows(state)
+  if (rows.length === 0) return null
+  // The cursor is an entry position. On a missing entry the reference falls back to
+  // the track before it, the one the DJ was mixing out of, and only then to one after.
+  const at = Math.min(state.cursor, rows.length - 1)
+  for (let i = at; i >= 0; i--) if (rows[i].track) return rows[i].track
+  for (let i = at + 1; i < rows.length; i++) if (rows[i].track) return rows[i].track
+  return null
 }
 
 export function selectLibrary(state: StoreState): Track[] {
