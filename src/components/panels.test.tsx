@@ -153,6 +153,10 @@ describe('SetlistPanel YouTube kuyruğu', () => {
     return container.querySelector('[data-queue="next"] .entry-title strong')?.textContent ?? null
   }
 
+  function queueCount(container: HTMLElement): string | null {
+    return container.querySelector('.queue-count')?.textContent ?? null
+  }
+
   afterEach(() => {
     vi.restoreAllMocks()
   })
@@ -165,7 +169,7 @@ describe('SetlistPanel YouTube kuyruğu', () => {
     addThree()
     const open = vi.spyOn(window, 'open').mockReturnValue(null)
     const view = await mount(<SetlistPanel />)
-    expect(view.container.querySelector('.queue-count')?.textContent).toBe('0 / 3')
+    expect(queueCount(view.container)).toBe('0 / 3')
     expect(queuedTitle(view.container)).toBe('Gece')
 
     await view.click('.queue-open')
@@ -175,7 +179,7 @@ describe('SetlistPanel YouTube kuyruğu', () => {
       '_blank',
       'noopener',
     )
-    expect(view.container.querySelector('.queue-count')?.textContent).toBe('1 / 3')
+    expect(queueCount(view.container)).toBe('1 / 3')
     expect(queuedTitle(view.container)).toBe('Sabah')
 
     await view.click('.queue-open')
@@ -208,12 +212,12 @@ describe('SetlistPanel YouTube kuyruğu', () => {
     for (let i = 0; i < 3; i++) await view.click('.queue-open')
 
     expect(view.html()).toContain('Every track has been opened')
-    expect(view.container.querySelector('.queue-count')?.textContent).toBe('3 / 3')
+    expect(queueCount(view.container)).toBe('3 / 3')
     expect(view.container.querySelector<HTMLButtonElement>('.queue-open')?.disabled).toBe(true)
     expect(queuedTitle(view.container)).toBeNull()
 
     await view.click('.queue-reset')
-    expect(view.container.querySelector('.queue-count')?.textContent).toBe('0 / 3')
+    expect(queueCount(view.container)).toBe('0 / 3')
     expect(queuedTitle(view.container)).toBe('Gece')
     await view.unmount()
   })
@@ -228,7 +232,7 @@ describe('SetlistPanel YouTube kuyruğu', () => {
     // Gece was opened; removing it leaves the queue on the track that followed it.
     await act(async () => useStore.getState().removeEntry(0))
     expect(queuedTitle(view.container)).toBe('Sabah')
-    expect(view.container.querySelector('.queue-count')?.textContent).toBe('0 / 2')
+    expect(queueCount(view.container)).toBe('0 / 2')
 
     await act(async () => useStore.getState().moveEntry(0, 1))
     expect(queuedTitle(view.container)).toBe('Sabah')
@@ -249,7 +253,7 @@ describe('SetlistPanel YouTube kuyruğu', () => {
 
     await act(async () => useStore.getState().newSetlist('İkinci'))
     await act(async () => useStore.getState().selectSetlist(first))
-    expect(view.container.querySelector('.queue-count')?.textContent).toBe('0 / 3')
+    expect(queueCount(view.container)).toBe('0 / 3')
     await view.unmount()
   })
 })

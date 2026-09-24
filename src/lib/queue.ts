@@ -19,7 +19,7 @@ export interface QueueView {
   /** Where `next` sits in the set, -1 when there is none. */
   nextIndex: number
   /** How many entries of the set have been opened. */
-  opened: number
+  openedCount: number
   total: number
   /** Every entry has been opened. An empty set is never finished. */
   finished: boolean
@@ -45,13 +45,16 @@ export function queueView(ids: readonly string[], state: QueueState): QueueView 
   return {
     next: nextIndex >= 0 ? ids[nextIndex] : null,
     nextIndex,
-    opened: openedCount,
+    openedCount,
     total: ids.length,
     finished: ids.length > 0 && openedCount === ids.length,
   }
 }
 
-/** The state after the next track has been opened. */
+/**
+ * The state after the next track has been opened. The caller opens the tab itself,
+ * so this stays pure and one press can never open two.
+ */
 export function advanceQueue(ids: readonly string[], state: QueueState): QueueState {
   const { next, nextIndex } = queueView(ids, state)
   if (next === null) return state

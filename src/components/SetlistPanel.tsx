@@ -101,15 +101,15 @@ function SetlistPanelBody({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProps) 
           >
             ▶ next on YouTube
           </button>
-          <span className="mono queue-count" aria-label="Tracks opened on YouTube">
-            {pass.opened} / {pass.total}
+          <span className="mono queue-count" title="Tracks opened on YouTube">
+            {pass.openedCount} / {pass.total}
           </span>
           {pass.finished ? (
             <span className="muted queue-done">
               Every track has been opened. Reset to go through the set again.
             </span>
           ) : null}
-          {queue !== EMPTY_QUEUE ? (
+          {queue.opened.length > 0 ? (
             <button
               type="button"
               className="btn btn-ghost btn-sm queue-reset"
@@ -127,66 +127,73 @@ function SetlistPanelBody({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProps) 
         </p>
       ) : (
         <ol className="entries entries-scroll">
-          {tracks.map((track, index) => (
-            <li key={`${track.id}-${index}`}>
-              {index > 0 ? (
-                <TransitionBridge from={tracks[index - 1]} to={track} tolerance={state.tolerance} />
-              ) : null}
-
-              <div
-                className={index === pass.nextIndex ? 'entry entry-queued' : 'entry'}
-                data-queue={index === pass.nextIndex ? 'next' : undefined}
-                title={index === pass.nextIndex ? 'Next on YouTube' : undefined}
-                draggable
-                aria-current={index === state.cursor}
-                onDragStart={() => setDragIndex(index)}
-                onDragOver={(event) => event.preventDefault()}
-                onDrop={() => handleDrop(index)}
-                onClick={() => state.setCursor(index)}
-              >
-                <span className="mono entry-index">{index + 1}</span>
-                <span className="entry-title">
-                  <strong>{track.title}</strong>
-                  <span className="muted"> — {track.artist}</span>
-                </span>
-                <span className="entry-meta">
-                  <KeyChip code={track.key} />
-                  <Bpm value={track.bpm} />
-                  <span className="mono faint">{formatDuration(track.duration)}</span>
-                  <FavoriteButton track={track} />
-                  <TrackLinks track={track} />
-                  <button
-                    type="button"
-                    className="btn btn-ghost btn-icon btn-danger"
-                    onClick={(event) => {
-                      event.stopPropagation()
-                      state.removeEntry(index)
-                    }}
-                    aria-label={`Remove ${track.title} from the set`}
-                  >
-                    ✕
-                  </button>
-                </span>
-              </div>
-
-              <div className="entry-extras">
-                <span className="entry-energy">
-                  <span className="faint">energy</span>
-                  <EnergyStars
-                    value={active.entries[index]?.energy}
-                    onChange={(value) => state.setEntryEnergy(index, value)}
-                    label={`Energy rating for ${track.title}`}
+          {tracks.map((track, index) => {
+            const isQueued = index === pass.nextIndex
+            return (
+              <li key={`${track.id}-${index}`}>
+                {index > 0 ? (
+                  <TransitionBridge
+                    from={tracks[index - 1]}
+                    to={track}
+                    tolerance={state.tolerance}
                   />
-                </span>
-                <input
-                  className="input entry-note"
-                  placeholder="track note"
-                  value={active.entries[index]?.note ?? ''}
-                  onChange={(event) => state.setEntryNote(index, event.target.value)}
-                />
-              </div>
-            </li>
-          ))}
+                ) : null}
+
+                <div
+                  className={isQueued ? 'entry entry-queued' : 'entry'}
+                  data-queue={isQueued ? 'next' : undefined}
+                  title={isQueued ? 'Next on YouTube' : undefined}
+                  draggable
+                  aria-current={index === state.cursor}
+                  onDragStart={() => setDragIndex(index)}
+                  onDragOver={(event) => event.preventDefault()}
+                  onDrop={() => handleDrop(index)}
+                  onClick={() => state.setCursor(index)}
+                >
+                  <span className="mono entry-index">{index + 1}</span>
+                  <span className="entry-title">
+                    <strong>{track.title}</strong>
+                    <span className="muted"> — {track.artist}</span>
+                  </span>
+                  <span className="entry-meta">
+                    <KeyChip code={track.key} />
+                    <Bpm value={track.bpm} />
+                    <span className="mono faint">{formatDuration(track.duration)}</span>
+                    <FavoriteButton track={track} />
+                    <TrackLinks track={track} />
+                    <button
+                      type="button"
+                      className="btn btn-ghost btn-icon btn-danger"
+                      onClick={(event) => {
+                        event.stopPropagation()
+                        state.removeEntry(index)
+                      }}
+                      aria-label={`Remove ${track.title} from the set`}
+                    >
+                      ✕
+                    </button>
+                  </span>
+                </div>
+
+                <div className="entry-extras">
+                  <span className="entry-energy">
+                    <span className="faint">energy</span>
+                    <EnergyStars
+                      value={active.entries[index]?.energy}
+                      onChange={(value) => state.setEntryEnergy(index, value)}
+                      label={`Energy rating for ${track.title}`}
+                    />
+                  </span>
+                  <input
+                    className="input entry-note"
+                    placeholder="track note"
+                    value={active.entries[index]?.note ?? ''}
+                    onChange={(event) => state.setEntryNote(index, event.target.value)}
+                  />
+                </div>
+              </li>
+            )
+          })}
         </ol>
       )}
     </section>
