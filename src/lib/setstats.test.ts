@@ -75,6 +75,13 @@ describe('energyDrop', () => {
     expect(energyDrop(null, null)).toBeNull()
   })
 
+  it('aynı girdi aynı hükmü verir', () => {
+    expect(energyDrop(5, 3)).toBe(energyDrop(5, 3))
+    expect(transition(track({ id: '1' }), track({ id: '2' }), 6, { from: 5, to: 3 })).toEqual(
+      transition(track({ id: '1' }), track({ id: '2' }), 6, { from: 5, to: 3 }),
+    )
+  })
+
   it('1-5 dışındaki ya da kesirli seviyeyi enerji saymaz', () => {
     expect(energyDrop(7, 2)).toBeNull()
     expect(energyDrop(4, 0)).toBeNull()
@@ -147,7 +154,7 @@ describe('setStats', () => {
       track({ id: '4' }),
       track({ id: '5' }),
     ]
-    // 5→3 düşüş, 3→2 değil, 2→null hükümsüz, null→1 hükümsüz.
+    // 5→3 falls two levels, 3→2 only one; either side of the null gives no verdict.
     const stats = setStats(tracks, 6, [5, 3, 2, null, 1])
     expect(stats.drops).toBe(1)
     expect(stats.rough).toBe(0)
