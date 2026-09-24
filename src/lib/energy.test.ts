@@ -3,11 +3,13 @@ import {
   ENERGY_LEVELS,
   MIN_GENRE_TRACKS,
   buildEnergyScale,
+  buildRatingIndex,
   energyLevel,
   entryEnergy,
   estimateEnergy,
+  trackEnergy,
 } from './energy'
-import type { Track } from './types'
+import type { Setlist, Track } from './types'
 
 let counter = 0
 
@@ -183,5 +185,74 @@ describe('energyLevel', () => {
     for (const value of [0, 6, -1, 3.4, Number.NaN, Infinity, '3', null, undefined, {}]) {
       expect(energyLevel(value)).toBeNull()
     }
+  })
+})
+
+function setlist(id: string, entries: Setlist['entries']): Setlist {
+  return { id, name: id, entries, createdAt: 0 }
+}
+
+describe('buildRatingIndex ve trackEnergy', () => {
+  const hot = track({ genre: 'Techno', bpm: 145 })
+  const byId = new Map([[hot.id, hot]])
+  const resolve = (id: string) => byId.get(id) ?? null
+
+  it('herhangi bir sette verilmiş puan tahminin önüne geçer', () => {
+    const ratings = buildRatingIndex([setlist('a', [{ trackId: hot.id, energy: 2 }])], resolve)
+    expect(trackEnergy(scale, ratings, hot)).toEqual({ level: 2, rated: true })
+  })
+
+  it('puan yoksa tahmini döner', () => {
+    const ratings = buildRatingIndex([setlist('a', [{ trackId: hot.id }])], resolve)
+    expect(trackEnergy(scale, ratings, hot)).toEqual({ level: 5, rated: false })
+  })
+
+  it('aynı şarkının başka kimlikli kopyasını da puanlı sayar', () => {
+    const ratings = buildRatingIndex([setlist('a', [{ trackId: hot.id, energy: 2 }])], resolve)
+    const copy = { ...hot, id: 'library-copy', source: 'library' as const }
+    expect(trackEnergy(scale, ratings, copy)).toEqual({ level: 2, rated: true })
+  })
+
+  it('başlığı boş iki parça birbirinin puanını almaz', () => {
+    const blank = track({ title: '', artist: '', bpm: null })
+    const other = track({ title: '', artist: '', bpm: null })
+    const ratings = buildRatingIndex(
+      [setlist('a', [{ trackId: blank.id, energy: 4 }])],
+      (id) => (id === blank.id ? blank : null),
+    )
+    expect(trackEnergy(scale, ratings, blank)).toEqual({ level: 4, rated: true })
+    expect(trackEnergy(scale, ratings, other)).toBeNull()
+  })
+
+  it('iki sette farklı puan varsa set sırasında ilk bulunan kazanır', () => {
+    const sets = [
+      setlist('a', [{ trackId: hot.id, energy: 3 }]),
+      setlist('b', [{ trackId: hot.id, energy: 1 }]),
+    ]
+    expect(trackEnergy(scale, buildRatingIndex(sets, resolve), hot)?.level).toBe(3)
+    expect(trackEnergy(scale, buildRatingIndex([...sets].reverse(), resolve), hot)?.level).toBe(1)
+  })
+
+  it('geçersiz puanı yok sayar, sonraki geçerli puanı kullanır', () => {
+    const sets = [
+      setlist('a', [{ trackId: hot.id, energy: 9 }]),
+      setlist('b', [{ trackId: hot.id, energy: 2 }]),
+    ]
+    expect(trackEnergy(scale, buildRatingIndex(sets, resolve), hot)).toEqual({
+      level: 2,
+      rated: true,
+    })
+  })
+
+  it('bozuk set verisinde çökmez', () => {
+    const broken = [null, 7, { entries: 'x' }, { entries: [null, { trackId: 5, energy: 3 }] }]
+    const ratings = buildRatingIndex(broken as unknown as Setlist[], resolve)
+    expect(ratings.size).toBe(0)
+    expect(buildRatingIndex(null as unknown as Setlist[], resolve).size).toBe(0)
+  })
+
+  it('boş sette ve boş havuzda puan da tahmin de yok', () => {
+    const ratings = buildRatingIndex([], resolve)
+    expect(trackEnergy(buildEnergyScale([]), ratings, hot)).toBeNull()
   })
 })

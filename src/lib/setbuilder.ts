@@ -1,4 +1,6 @@
 import { relation, relationInfo } from './camelot'
+import { ENERGY_LEVELS, trackEnergy } from './energy'
+import type { EnergyScale, EntryEnergy, RatingIndex } from './energy'
 import { bpmDelta, trackKey } from './suggest'
 import type { BpmDelta } from './suggest'
 import type { RelationId, Track } from './types'
@@ -25,6 +27,13 @@ const KEY_REPEAT_PENALTY = 25
 
 const RELATION_WEIGHT = 0.55
 const CURVE_WEIGHT = 0.45
+// Added on top of the tempo score rather than carved out of it, so a build without
+// energy scores exactly as it always has.
+const ENERGY_WEIGHT = 0.35
+/** Levels off target at which a candidate earns no energy credit at all. */
+const ENERGY_WINDOW = 2
+/** Where the energy target starts when the seed has neither a rating nor an estimate. */
+const MIDDLE_ENERGY = 3
 
 const MAX_STEPS = 200
 
@@ -40,6 +49,13 @@ export interface BuildOptions {
   artistGap?: number
   beamWidth?: number
   exclude?: Set<string>
+  /** Scores candidates against an energy target too; tempo alone when absent. */
+  energy?: BuildEnergy
+}
+
+export interface BuildEnergy {
+  scale: EnergyScale
+  ratings: RatingIndex
 }
 
 export interface BuildStep {
@@ -47,6 +63,9 @@ export interface BuildStep {
   relation: RelationId | null
   delta: BpmDelta | null
   targetBpm: number
+  /** Null when the build ran without energy. */
+  targetEnergy: number | null
+  energy: EntryEnergy | null
 }
 
 export interface BuildResult {
@@ -77,6 +96,15 @@ export function targetBpm(
   }
 }
 
+/**
+ * The same curve as the tempo, drawn on the 1-5 scale: a rise climbs to the top, a
+ * descent falls to the bottom, and an arc peaks at the top.
+ */
+export function targetEnergy(shape: EnergyShape, start: number, i: number, n: number): number {
+  const span = shape === 'descend' ? start - 1 : ENERGY_LEVELS - start
+  return targetBpm(shape, start, span, i, n)
+}
+
 function seconds(track: Track): number {
   return track.duration ?? ASSUMED_SECONDS
 }
@@ -97,6 +125,7 @@ interface Candidate {
   track: Track
   relation: RelationId
   delta: BpmDelta
+  energy: EntryEnergy | null
   score: number
 }
 
@@ -108,6 +137,8 @@ function stepScore(
   target: number,
   tolerance: number,
   artistGap: number,
+  energy: EntryEnergy | null,
+  energyTarget: number | null,
 ): number {
   const info = relationInfo(id)
   if (!info) return 0
@@ -115,6 +146,10 @@ function stepScore(
   const window = Math.max(1, (target * tolerance) / 100)
   const curve = 100 * Math.max(0, 1 - Math.abs(delta.matched - target) / window)
   let score = info.score * RELATION_WEIGHT + curve * CURVE_WEIGHT
+  if (energy !== null && energyTarget !== null) {
+    const fit = 100 * Math.max(0, 1 - Math.abs(energy.level - energyTarget) / ENERGY_WINDOW)
+    score += fit * ENERGY_WEIGHT
+  }
 
   const recent = state.steps.slice(-artistGap)
   if (recent.some((step) => artistOf(step.track) === artistOf(cand))) score -= ARTIST_PENALTY
@@ -162,11 +197,20 @@ export function buildSet(opts: BuildOptions): BuildResult {
       ? Math.max(2, Math.round(targetSeconds / averageSeconds))
       : 1
 
+  const energyOf = (track: Track): EntryEnergy | null =>
+    opts.energy ? trackEnergy(opts.energy.scale, opts.energy.ratings, track) : null
+  const seedEnergy = energyOf(opts.seed)
+  const startEnergy = seedEnergy?.level ?? MIDDLE_ENERGY
+  const energyTargetAt = (i: number): number | null =>
+    opts.energy ? targetEnergy(opts.shape, startEnergy, i, requested) : null
+
   const first: BuildStep = {
     track: opts.seed,
     relation: null,
     delta: null,
     targetBpm: targetBpm(opts.shape, start, opts.bpmSpan, 0, requested),
+    targetEnergy: energyTargetAt(0),
+    energy: seedEnergy,
   }
 
   let beam: BeamState[] = [
@@ -204,8 +248,19 @@ export function buildSet(opts: BuildOptions): BuildResult {
         continue
       }
 
-      const last = state.steps[state.steps.length - 1].track
-      const target = targetBpm(opts.shape, start, opts.bpmSpan, state.steps.length, requested)
+      const step = state.steps.length
+      const lastStep = state.steps[step - 1]
+      const last = lastStep.track
+      const target = targetBpm(opts.shape, start, opts.bpmSpan, step, requested)
+      const energyTarget = energyTargetAt(step)
+      // Read from the shape's unit curve, not the energy target: a rise that starts at
+      // the top has a target pinned at 5, yet the floor must still not drop.
+      const heading = opts.energy
+        ? Math.sign(
+            targetBpm(opts.shape, 0, 1, step, requested) -
+              targetBpm(opts.shape, 0, 1, step - 1, requested),
+          )
+        : 0
       const limit = ((last.bpm ?? start) * opts.tolerance) / 100
 
       const candidates: Candidate[] = []
@@ -220,11 +275,23 @@ export function buildSet(opts: BuildOptions): BuildResult {
         const delta = bpmDelta(last.bpm ?? start, cand.bpm ?? start)
         if (delta.abs > limit) continue
 
+        const energy = energyOf(cand)
         candidates.push({
           track: cand,
           relation: id,
           delta,
-          score: stepScore(state, cand, id, delta, target, opts.tolerance, artistGap),
+          energy,
+          score: stepScore(
+            state,
+            cand,
+            id,
+            delta,
+            target,
+            opts.tolerance,
+            artistGap,
+            energy,
+            energyTarget,
+          ),
         })
       }
 
@@ -234,7 +301,20 @@ export function buildSet(opts: BuildOptions): BuildResult {
       }
 
       const withoutRepeat = candidates.filter((item) => artistOf(item.track) !== artistOf(last))
-      const usableCandidates = withoutRepeat.length > 0 ? withoutRepeat : candidates
+      const varied = withoutRepeat.length > 0 ? withoutRepeat : candidates
+      // Closeness to the target alone lets a rise dip a level when that track sits
+      // nearer the tempo curve; a floor that drops mid-climb is what the DJ notices,
+      // so a step against the shape's direction is taken only when nothing else fits.
+      const lastLevel = lastStep.energy?.level
+      const onCourse =
+        heading === 0 || lastLevel === undefined
+          ? varied
+          : varied.filter(
+              (item) =>
+                item.energy === null ||
+                (heading > 0 ? item.energy.level >= lastLevel : item.energy.level <= lastLevel),
+            )
+      const usableCandidates = onCourse.length > 0 ? onCourse : varied
 
       usableCandidates.sort(compareCandidates)
       for (const candidate of usableCandidates.slice(0, beamWidth)) {
@@ -246,6 +326,8 @@ export function buildSet(opts: BuildOptions): BuildResult {
               relation: candidate.relation,
               delta: candidate.delta,
               targetBpm: target,
+              targetEnergy: energyTarget,
+              energy: candidate.energy,
             },
           ],
           usedIds: new Set(state.usedIds).add(candidate.track.id),
