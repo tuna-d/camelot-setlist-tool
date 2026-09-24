@@ -590,6 +590,19 @@ dialog::backdrop {
   stroke-width: 1.5;
 }
 
+/* Estimated bars stay faint so the part of the shape the DJ vouched for stands out. */
+.energy-bar {
+  fill: var(--tone-energy);
+}
+
+.energy-bar.rated {
+  opacity: 0.5;
+}
+
+.energy-bar.estimated {
+  opacity: 0.2;
+}
+
 /* ——— setlist rows ——— */
 
 .entries {

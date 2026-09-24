@@ -1,8 +1,9 @@
 import { useMemo, useState } from 'react'
+import { entryEnergy } from '../lib/energy'
 import { toM3u8 } from '../lib/rekordbox'
 import { setStats } from '../lib/setstats'
 import { formatBpm, formatTotal } from '../lib/ui'
-import { selectActive, selectEntries, useStore } from '../store/store'
+import { selectActive, selectEnergyScale, selectEntryRows, useStore } from '../store/store'
 import { TempoCurve } from './TempoCurve'
 import { youtubeSearchUrl } from './common'
 import type { Track } from '../lib/types'
@@ -23,7 +24,17 @@ export function SetSummaryPanel() {
   const [notice, setNotice] = useState<string | null>(null)
 
   const active = selectActive(state)
-  const tracks = useMemo(() => selectEntries(state), [state])
+  const energyScale = selectEnergyScale(state)
+  // Missing tracks are skipped here as everywhere in the summary, so each bar stays on
+  // the same position as the point its energy belongs to.
+  const resolved = useMemo(
+    () =>
+      selectEntryRows(state).flatMap((row) =>
+        row.track ? [{ entry: row.entry, track: row.track }] : [],
+      ),
+    [state],
+  )
+  const tracks = useMemo(() => resolved.map((row) => row.track), [resolved])
   const stats = useMemo(() => setStats(tracks, state.tolerance), [tracks, state.tolerance])
 
   async function copyToClipboard() {
@@ -95,6 +106,7 @@ export function SetSummaryPanel() {
               key: track.key,
               label: `${track.artist} - ${track.title}`,
             }))}
+            energy={resolved.map((row) => entryEnergy(energyScale, row.entry, row.track))}
             height={80}
           />
         ) : (
