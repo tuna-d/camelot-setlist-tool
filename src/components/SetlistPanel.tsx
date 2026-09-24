@@ -3,6 +3,7 @@ import { relationInfo } from '../lib/camelot'
 import { entryEnergy } from '../lib/energy'
 import { advanceQueue, EMPTY_QUEUE, queueView } from '../lib/queue'
 import { transition } from '../lib/setstats'
+import type { TransitionEnergy } from '../lib/setstats'
 import { formatDelta } from '../lib/suggest'
 import { formatDuration, formatTotal, toneColor } from '../lib/ui'
 import { selectActive, selectEnergyScale, selectEntryRows, useStore } from '../store/store'
@@ -18,8 +19,15 @@ import {
 } from './common'
 import type { Track } from '../lib/types'
 
-function TransitionBridge({ from, to, tolerance }: { from: Track; to: Track; tolerance: number }) {
-  const step = transition(from, to, tolerance)
+interface TransitionBridgeProps {
+  from: Track
+  to: Track
+  tolerance: number
+  energy: TransitionEnergy
+}
+
+function TransitionBridge({ from, to, tolerance, energy }: TransitionBridgeProps) {
+  const step = transition(from, to, tolerance, energy)
   const info = step.relation ? relationInfo(step.relation) : null
 
   const color = step.ok && info ? toneColor(info.tone) : 'var(--danger)'
@@ -38,6 +46,14 @@ function TransitionBridge({ from, to, tolerance }: { from: Track; to: Track; tol
       <span className="mono faint">{tempoText}</span>
       {step.delta?.halved ? <span className="faint">half/double tempo</span> : null}
       {!step.ok ? <span style={{ color: 'var(--danger)' }}>⚠ {warning}</span> : null}
+      {/* Worded from the level alone: an estimate is shown in place of a rating, so the
+          warning does not tell the two apart. */}
+      {step.energyDrop ? (
+        <span className="bridge-drop" style={{ color: 'var(--danger)' }}>
+          ⚠ Energy falls from {energy.from} to {energy.to} — put a track between them or step it
+          down one level at a time.
+        </span>
+      ) : null}
     </div>
   )
 }
@@ -166,7 +182,8 @@ function SetlistPanelBody({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProps) 
       ) : (
         <ol className="entries entries-scroll">
           {rows.map(({ entry, index, track }) => {
-            const previous = index > 0 ? rows[index - 1].track : null
+            const before = index > 0 ? rows[index - 1] : null
+            const previous = before?.track ?? null
             if (!track) {
               return (
                 <li key={`missing-${entry.trackId}-${index}`}>
@@ -202,7 +219,15 @@ function SetlistPanelBody({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProps) 
             return (
               <li key={`${track.id}-${index}`}>
                 {previous ? (
-                  <TransitionBridge from={previous} to={track} tolerance={state.tolerance} />
+                  <TransitionBridge
+                    from={previous}
+                    to={track}
+                    tolerance={state.tolerance}
+                    energy={{
+                      from: entryEnergy(energyScale, before?.entry, previous)?.level ?? null,
+                      to: entryEnergy(energyScale, entry, track)?.level ?? null,
+                    }}
+                  />
                 ) : null}
 
                 <div

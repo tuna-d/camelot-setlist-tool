@@ -35,7 +35,19 @@ export function SetSummaryPanel() {
     [state],
   )
   const tracks = useMemo(() => resolved.map((row) => row.track), [resolved])
-  const stats = useMemo(() => setStats(tracks, state.tolerance), [tracks, state.tolerance])
+  const energy = useMemo(
+    () => resolved.map((row) => entryEnergy(energyScale, row.entry, row.track)),
+    [resolved, energyScale],
+  )
+  const stats = useMemo(
+    () =>
+      setStats(
+        tracks,
+        state.tolerance,
+        energy.map((value) => value?.level ?? null),
+      ),
+    [tracks, state.tolerance, energy],
+  )
 
   async function copyToClipboard() {
     try {
@@ -106,7 +118,7 @@ export function SetSummaryPanel() {
               key: track.key,
               label: `${track.artist} - ${track.title}`,
             }))}
-            energy={resolved.map((row) => entryEnergy(energyScale, row.entry, row.track))}
+            energy={energy}
             height={80}
           />
         ) : (
@@ -139,6 +151,20 @@ export function SetSummaryPanel() {
             }
           >
             {stats.rough}
+          </span>
+        </div>
+        <div className="stat stat-drops">
+          <span className="stat-label">energy drops</span>
+          <span
+            className="stat-value"
+            style={{ color: stats.drops > 0 ? 'var(--danger)' : 'var(--ok)' }}
+            title={
+              stats.drops > 0
+                ? 'The energy falls two levels or more between some tracks; the list flags where. Put a track between them to step it down.'
+                : 'The energy never falls more than one level between tracks.'
+            }
+          >
+            {stats.drops}
           </span>
         </div>
       </div>
