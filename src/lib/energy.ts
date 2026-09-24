@@ -1,5 +1,6 @@
 import { keyLetter } from './camelot'
-import type { SetlistEntry, Track } from './types'
+import { trackKey } from './suggest'
+import type { Setlist, SetlistEntry, Track } from './types'
 
 /**
  * Energy on a 1-5 scale. A rating the DJ gave is the truth; until then an estimate
@@ -113,6 +114,68 @@ export function entryEnergy(
 ): EntryEnergy | null {
   const rated = energyLevel(entry?.energy)
   if (rated !== null) return { level: rated, rated: true }
+  const estimate = estimateEnergy(scale, track)
+  return estimate === null ? null : { level: estimate, rated: false }
+}
+
+/** Tagged track id or signature → the level the DJ gave that track in some set. */
+export type RatingIndex = ReadonlyMap<string, number>
+
+// Ids and signatures share one map, so each is tagged: an id that reads like
+// `artist|title` must not match that song.
+function idKey(id: string): string {
+  return `id:${id}`
+}
+
+/** A blank manual entry has no signature, or every blank entry would share one rating. */
+function signatureKey(track: Track): string | null {
+  const key = trackKey(track)
+  return key.endsWith('|') ? null : `sig:${key}`
+}
+
+/**
+ * Every rating across the DJ's sets. The signature lets a rating follow the song to a
+ * copy with another id, e.g. the library import of a catalog track. When two sets rate
+ * the same track differently the first in set order wins, so the answer never depends
+ * on anything but the sets.
+ */
+export function buildRatingIndex(
+  setlists: readonly Setlist[],
+  resolve: (id: string) => Track | null,
+): RatingIndex {
+  const ratings = new Map<string, number>()
+  if (!Array.isArray(setlists)) return ratings
+
+  // Sets come back from localStorage and the database, so each field is checked.
+  for (const setlist of setlists as unknown[]) {
+    if (!setlist || typeof setlist !== 'object') continue
+    const entries = (setlist as Record<string, unknown>).entries
+    if (!Array.isArray(entries)) continue
+    for (const entry of entries as unknown[]) {
+      if (!entry || typeof entry !== 'object') continue
+      const record = entry as Record<string, unknown>
+      const level = energyLevel(record.energy)
+      if (level === null || typeof record.trackId !== 'string' || !record.trackId) continue
+
+      const track = resolve(record.trackId)
+      for (const key of [idKey(record.trackId), track ? signatureKey(track) : null]) {
+        if (key !== null && !ratings.has(key)) ratings.set(key, level)
+      }
+    }
+  }
+  return ratings
+}
+
+/** A pool track's energy: a rating from any set when there is one, the estimate otherwise. */
+export function trackEnergy(
+  scale: EnergyScale,
+  ratings: RatingIndex,
+  track: Track,
+): EntryEnergy | null {
+  const signature = signatureKey(track)
+  const rated =
+    ratings.get(idKey(track.id)) ?? (signature !== null ? ratings.get(signature) : undefined)
+  if (rated !== undefined) return { level: rated, rated: true }
   const estimate = estimateEnergy(scale, track)
   return estimate === null ? null : { level: estimate, rated: false }
 }
