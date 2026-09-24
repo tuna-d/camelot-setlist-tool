@@ -58,10 +58,9 @@ function SetlistPanelBody({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProps) 
   const pass = queueView(trackIds, queue)
   const nextTrack = pass.nextIndex >= 0 ? tracks[pass.nextIndex] : null
 
-  // One press, one tab: a single window.open per user gesture is never blocked.
-  function openNextOnYoutube() {
-    if (!nextTrack) return
-    window.open(youtubeSearchUrl(nextTrack), '_blank', 'noopener')
+  // The browser opens the tab itself from the link, never a script: nothing for a popup
+  // blocker to catch, and ctrl/cmd+click or middle-click keep this page in front.
+  function advancePastNext() {
     setQueue(advanceQueue(trackIds, queue))
   }
 
@@ -92,18 +91,32 @@ function SetlistPanelBody({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProps) 
 
       {tracks.length > 0 ? (
         <div className="row-wrap queue-bar">
-          <button
-            type="button"
-            className="btn btn-sm btn-youtube queue-open"
-            onClick={openNextOnYoutube}
-            disabled={!nextTrack}
-            title={nextTrack ? `Search YouTube for ${nextTrack.title}` : undefined}
-          >
-            ▶ next on YouTube
-          </button>
+          {nextTrack ? (
+            <a
+              className="btn btn-sm btn-youtube queue-open"
+              href={youtubeSearchUrl(nextTrack)}
+              target="_blank"
+              rel="noreferrer"
+              onClick={advancePastNext}
+              onAuxClick={(event) => {
+                // Middle button only: a right click opens the context menu, not a tab.
+                if (event.button === 1) advancePastNext()
+              }}
+              title={`Search YouTube for ${nextTrack.title}`}
+            >
+              ▶ next on YouTube
+            </a>
+          ) : (
+            <button type="button" className="btn btn-sm btn-youtube queue-open" disabled>
+              ▶ next on YouTube
+            </button>
+          )}
           <span className="mono queue-count" title="Tracks opened on YouTube">
             {pass.openedCount} / {pass.total}
           </span>
+          {nextTrack ? (
+            <span className="faint queue-hint">ctrl/⌘+click or middle-click to stay here</span>
+          ) : null}
           {pass.finished ? (
             <span className="muted queue-done">
               Every track has been opened. Reset to go through the set again.

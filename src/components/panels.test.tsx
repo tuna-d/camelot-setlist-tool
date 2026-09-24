@@ -165,30 +165,48 @@ describe('SetlistPanel YouTube kuyruğu', () => {
     expect(await render(<SetlistPanel />)).not.toContain('queue-open')
   })
 
-  it('her basışta tek sekme açar ve sayacı ilerletir', async () => {
+  function queueLink(container: HTMLElement): HTMLAnchorElement | null {
+    return container.querySelector<HTMLAnchorElement>('a.queue-open')
+  }
+
+  it('sıradaki parçanın aramasına giden tek bir bağlantı sunar ve basınca ilerler', async () => {
     addThree()
-    const open = vi.spyOn(window, 'open').mockReturnValue(null)
+    // happy-dom follows target=_blank links through window.open; keep it from doing so.
+    vi.spyOn(window, 'open').mockReturnValue(null)
     const view = await mount(<SetlistPanel />)
     expect(queueCount(view.container)).toBe('0 / 3')
     expect(queuedTitle(view.container)).toBe('Gece')
 
-    await view.click('.queue-open')
-    expect(open).toHaveBeenCalledTimes(1)
-    expect(open).toHaveBeenLastCalledWith(
+    // A real link, so ctrl/cmd+click and middle-click open the tab in the background.
+    const link = queueLink(view.container)
+    expect(link?.getAttribute('href')).toBe(
       'https://www.youtube.com/results?search_query=Kaya%20Gece',
-      '_blank',
-      'noopener',
     )
-    expect(queueCount(view.container)).toBe('1 / 3')
-    expect(queuedTitle(view.container)).toBe('Sabah')
+    expect(link?.getAttribute('target')).toBe('_blank')
 
     await view.click('.queue-open')
-    expect(open).toHaveBeenCalledTimes(2)
-    expect(open).toHaveBeenLastCalledWith(
+    expect(queueCount(view.container)).toBe('1 / 3')
+    expect(queuedTitle(view.container)).toBe('Sabah')
+    expect(queueLink(view.container)?.getAttribute('href')).toBe(
       'https://www.youtube.com/results?search_query=Deniz%20Sabah',
-      '_blank',
-      'noopener',
     )
+    await view.unmount()
+  })
+
+  it('orta tuşla açınca da ilerler, sağ tık ilerletmez', async () => {
+    addThree()
+    const view = await mount(<SetlistPanel />)
+    const aux = async (button: number) => {
+      await act(async () => {
+        const event = new MouseEvent('auxclick', { bubbles: true, button })
+        queueLink(view.container)!.dispatchEvent(event)
+      })
+    }
+    await aux(2)
+    expect(queueCount(view.container)).toBe('0 / 3')
+    await aux(1)
+    expect(queueCount(view.container)).toBe('1 / 3')
+    expect(queuedTitle(view.container)).toBe('Sabah')
     await view.unmount()
   })
 
@@ -213,7 +231,9 @@ describe('SetlistPanel YouTube kuyruğu', () => {
 
     expect(view.html()).toContain('Every track has been opened')
     expect(queueCount(view.container)).toBe('3 / 3')
-    expect(view.container.querySelector<HTMLButtonElement>('.queue-open')?.disabled).toBe(true)
+    expect(queueLink(view.container)).toBeNull()
+    const spent = view.container.querySelector<HTMLButtonElement>('button.queue-open')
+    expect(spent?.disabled).toBe(true)
     expect(queuedTitle(view.container)).toBeNull()
 
     await view.click('.queue-reset')
