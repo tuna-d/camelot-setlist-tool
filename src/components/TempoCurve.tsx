@@ -1,4 +1,5 @@
 import { keyColor } from '../lib/camelot'
+import { ENERGY_LEVELS, energyLevel } from '../lib/energy'
 import type { EntryEnergy } from '../lib/energy'
 import { formatBpm } from '../lib/ui'
 
@@ -11,7 +12,7 @@ export interface CurvePoint {
 export interface TempoCurveProps {
   points: CurvePoint[]
   /**
-   * Energy per point, by position. A null or missing slot leaves a gap: a zero-height
+   * Energy per point, by position. A null or missing position leaves a gap: a zero-height
    * bar would read as "no energy", which is not what an unknown level means.
    */
   energy?: readonly (EntryEnergy | null)[]
@@ -20,13 +21,13 @@ export interface TempoCurveProps {
 
 const WIDTH = 320
 const PADDING = 10
-const ENERGY_LEVELS = 5
 // A two-track set would otherwise get bars wide enough to hide the line.
 const MAX_BAR_WIDTH = 14
 
-function barLevel(energy: EntryEnergy | null | undefined): number | null {
-  if (!energy || !Number.isFinite(energy.level) || energy.level < 1) return null
-  return Math.min(ENERGY_LEVELS, energy.level)
+/** The entry's energy when its level is a real one; anything else draws as a gap. */
+function usableEnergy(energy: EntryEnergy | null | undefined): EntryEnergy | null {
+  const level = energyLevel(energy?.level)
+  return level === null ? null : { level, rated: energy?.rated === true }
 }
 
 export function TempoCurve({ points, energy = [], height = 64 }: TempoCurveProps) {
@@ -41,6 +42,7 @@ export function TempoCurve({ points, energy = [], height = 64 }: TempoCurveProps
   const span = max - min || 4
   const usable = height - PADDING * 2
 
+  const levels = points.map((_, index) => usableEnergy(energy[index]))
   const coords = points.map((point, index) => {
     const x =
       PADDING + (index / Math.max(1, points.length - 1)) * (WIDTH - PADDING * 2)
@@ -54,16 +56,16 @@ export function TempoCurve({ points, energy = [], height = 64 }: TempoCurveProps
   const step = (WIDTH - PADDING * 2) / Math.max(1, points.length - 1)
   const barWidth = Math.round(Math.min(MAX_BAR_WIDTH, step * 0.6) * 100) / 100
   const bars = coords.flatMap((item, index) => {
-    const level = barLevel(energy[index])
+    const level = levels[index]
     if (level === null) return []
-    const barHeight = Math.round((level / ENERGY_LEVELS) * usable * 100) / 100
+    const barHeight = Math.round((level.level / ENERGY_LEVELS) * usable * 100) / 100
     return [
       {
         index,
         x: Math.round((item.x - barWidth / 2) * 100) / 100,
         y: Math.round((height - PADDING - barHeight) * 100) / 100,
         height: barHeight,
-        rated: energy[index]?.rated === true,
+        rated: level.rated,
       },
     ]
   })
@@ -101,7 +103,7 @@ export function TempoCurve({ points, energy = [], height = 64 }: TempoCurveProps
           <title>
             {`${index + 1}. ${item.point.label ?? 'track'} — ${formatBpm(item.point.bpm)} BPM${
               item.point.key ? ` · ${item.point.key}` : ''
-            }${energyText(energy[index])}`}
+            }${energyText(levels[index])}`}
           </title>
         </circle>
       ))}
@@ -109,8 +111,7 @@ export function TempoCurve({ points, energy = [], height = 64 }: TempoCurveProps
   )
 }
 
-function energyText(energy: EntryEnergy | null | undefined): string {
-  const level = barLevel(energy)
-  if (level === null) return ''
-  return ` · energy ${level}${energy?.rated ? '' : ' (estimated)'}`
+function energyText(energy: EntryEnergy | null): string {
+  if (energy === null) return ''
+  return ` · energy ${energy.level}${energy.rated ? '' : ' (estimated)'}`
 }

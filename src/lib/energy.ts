@@ -13,7 +13,7 @@ import type { SetlistEntry, Track } from './types'
  */
 export const MIN_GENRE_TRACKS = 20
 
-const LEVELS = 5
+export const ENERGY_LEVELS = 5
 /** Major keys read brighter than minor at the same tempo: half a band. */
 const MAJOR_NUDGE = 0.5
 
@@ -94,12 +94,13 @@ export function estimateEnergy(scale: EnergyScale, track: Track): number | null 
   if (tempos.length === 0) return null
 
   const nudge = keyLetter(track.key) === 'B' ? MAJOR_NUDGE : 0
-  const band = Math.floor(percentile(tempos, bpm) * LEVELS + nudge) + 1
-  return Math.min(LEVELS, Math.max(1, band))
+  const band = Math.floor(percentile(tempos, bpm) * ENERGY_LEVELS + nudge) + 1
+  return Math.min(ENERGY_LEVELS, Math.max(1, band))
 }
 
-function ratedEnergy(value: unknown): number | null {
-  return typeof value === 'number' && Number.isInteger(value) && value >= 1 && value <= LEVELS
+/** A whole level on the 1-5 scale, or null for anything else. */
+export function energyLevel(value: unknown): number | null {
+  return typeof value === 'number' && Number.isInteger(value) && value >= 1 && value <= ENERGY_LEVELS
     ? value
     : null
 }
@@ -110,7 +111,7 @@ export function entryEnergy(
   entry: SetlistEntry | undefined,
   track: Track,
 ): EntryEnergy | null {
-  const rated = ratedEnergy(entry?.energy)
+  const rated = energyLevel(entry?.energy)
   if (rated !== null) return { level: rated, rated: true }
   const estimate = estimateEnergy(scale, track)
   return estimate === null ? null : { level: estimate, rated: false }

@@ -240,7 +240,7 @@ describe('TempoCurve', () => {
     expect(line(withEnergy)).toBe(line(plain))
   })
 
-  it('bozuk seviyeyi çizmez, fazlasını tavana kırpar', () => {
+  it('bozuk ya da ölçek dışı seviyeyi çizmez', () => {
     const html = renderToStaticMarkup(
       <TempoCurve
         points={three}
@@ -251,12 +251,7 @@ describe('TempoCurve', () => {
         ]}
       />,
     )
-    const heights = barHeights(html)
-    expect(heights).toHaveLength(1)
-    const full = renderToStaticMarkup(
-      <TempoCurve points={three} energy={[null, null, { level: 5, rated: true }]} />,
-    )
-    expect(heights[0]).toBe(barHeights(full)[0])
+    expect(html).not.toContain('energy-bar')
   })
 
   it('aynı girdiden aynı çizimi üretir', () => {

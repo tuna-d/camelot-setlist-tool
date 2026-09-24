@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest'
-import { MIN_GENRE_TRACKS, buildEnergyScale, entryEnergy, estimateEnergy } from './energy'
+import {
+  ENERGY_LEVELS,
+  MIN_GENRE_TRACKS,
+  buildEnergyScale,
+  energyLevel,
+  entryEnergy,
+  estimateEnergy,
+} from './energy'
 import type { Track } from './types'
 
 let counter = 0
@@ -164,5 +171,17 @@ describe('entryEnergy', () => {
   it('giriş yoksa tahmine düşer', () => {
     const probe = track({ genre: 'Techno', bpm: 145 })
     expect(entryEnergy(scale, undefined, probe)).toEqual({ level: 5, rated: false })
+  })
+})
+
+describe('energyLevel', () => {
+  it('1-5 arası tam sayıyı olduğu gibi döner', () => {
+    for (let level = 1; level <= ENERGY_LEVELS; level++) expect(energyLevel(level)).toBe(level)
+  })
+
+  it('ölçek dışını, kesirliyi ve sayı olmayanı reddeder', () => {
+    for (const value of [0, 6, -1, 3.4, Number.NaN, Infinity, '3', null, undefined, {}]) {
+      expect(energyLevel(value)).toBeNull()
+    }
   })
 })
