@@ -5,7 +5,7 @@ import { localSearch } from '../lib/search'
 import { transition } from '../lib/setstats'
 import { toneColor } from '../lib/ui'
 import { selectActive, selectExclude, selectReference, useStore } from '../store/store'
-import { Bpm, Dialog, FavoriteButton, KeyChip, TrackLinks } from './common'
+import { Bpm, Dialog, FavoriteButton, KeyChip, SeenBadge, TrackLinks } from './common'
 import type { Track } from '../lib/types'
 
 /** How a favorite would follow the selected track, so a fitting one is easy to spot. */
@@ -89,6 +89,7 @@ export function FavoritesDialog({ open, onClose }: FavoritesDialogProps) {
                   <div className="entry" key={track.id}>
                     <FavoriteButton track={track} />
                     <span className="entry-title">
+                      <SeenBadge track={track} />
                       <strong>{track.title}</strong>
                       <span className="muted"> — {track.artist}</span>
                       {track.genre ? <span className="faint"> · {track.genre}</span> : null}

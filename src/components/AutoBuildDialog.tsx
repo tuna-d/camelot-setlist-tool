@@ -5,7 +5,7 @@ import { formatDelta } from '../lib/suggest'
 import { formatTotal, toneColor } from '../lib/ui'
 import { relationInfo } from '../lib/camelot'
 import { selectExclude, selectPool, selectReference, useStore } from '../store/store'
-import { Bpm, KeyChip } from './common'
+import { Bpm, KeyChip, SeenBadge } from './common'
 import { Dialog } from './common'
 
 export interface AutoBuildDialogProps {
@@ -128,6 +128,7 @@ export function AutoBuildDialog({ open, onClose }: AutoBuildDialogProps) {
                   <div className="entry" key={`${step.track.id}-${index}`}>
                     <span className="mono faint entry-index">{index + 1}</span>
                     <span className="entry-title">
+                      <SeenBadge track={step.track} />
                       <strong>{step.track.title}</strong>
                       <span className="muted"> — {step.track.artist}</span>
                     </span>

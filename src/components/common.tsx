@@ -2,7 +2,8 @@ import { useEffect, useRef } from 'react'
 import type { ReactNode } from 'react'
 import { NOTE_NAME, keyColor } from '../lib/camelot'
 import { isFavorite } from '../lib/favorites'
-import { useStore } from '../store/store'
+import { seenIn } from '../lib/seen'
+import { selectSeenIndex, useStore } from '../store/store'
 import { formatBpm } from '../lib/ui'
 import type { Track } from '../lib/types'
 
@@ -87,6 +88,35 @@ export function FavoriteButton({ track }: { track: Track }) {
     >
       <HeartIcon filled={active} />
     </button>
+  )
+}
+
+export function DownloadIcon() {
+  return (
+    <svg className="seen-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path
+        d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19.5h14"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
+/** Marks a track already in another set; renders nothing otherwise. */
+export function SeenBadge({ track }: { track: Track }) {
+  const index = useStore(selectSeenIndex)
+  const sets = seenIn(index, track)
+  if (sets.length === 0) return null
+
+  const label = `Already in ${sets.join(', ')} — you may have downloaded it`
+  return (
+    <span className="seen-badge" role="img" aria-label={label} title={label}>
+      <DownloadIcon />
+    </span>
   )
 }
 

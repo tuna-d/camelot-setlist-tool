@@ -220,6 +220,63 @@ describe('TrackSearchDialog', () => {
   })
 })
 
+/** Puts the track in a set called "Cuma", then opens a fresh set around it. */
+function seenBefore(item: Track): void {
+  useStore.getState().renameSetlist(useStore.getState().setlists[0].id, 'Cuma')
+  useStore.getState().addTrack(item)
+  useStore.getState().newSetlist('Bu gece')
+}
+
+describe('daha önce görülmüş rozeti', () => {
+  it('aramada başka setteki parçayı rozetler, etkin settekini rozetlemez', async () => {
+    useStore.getState().setCatalog(catalog)
+    seenBefore(catalog.tracks[0])
+    useStore.getState().addTrack(catalog.tracks[1])
+
+    const view = await mount(<TrackSearchDialog open onClose={() => {}} />)
+    await type(view.container.querySelector('input.input') as HTMLInputElement, 'a')
+    const badged = [...view.container.querySelectorAll('.seen-badge')].map(
+      (badge) => badge.closest('.entry')?.querySelector('strong')?.textContent,
+    )
+    expect(badged).toEqual(['Gece Yürüyüşü'])
+    await view.unmount()
+  })
+
+  it('favorilerde rozetin ipucu setleri sırayla sayar', async () => {
+    const song = track({ id: 'a', title: 'Gece Treni' })
+    seenBefore(song)
+    useStore.getState().addTrack(song)
+    useStore.getState().newSetlist('Pazar')
+    useStore.getState().toggleFavorite(song)
+
+    const view = await mount(<FavoritesDialog open onClose={() => {}} />)
+    expect(view.container.querySelector('.seen-badge')?.getAttribute('title')).toBe(
+      'Already in Cuma, Bu gece — you may have downloaded it',
+    )
+    await view.unmount()
+  })
+
+  it('favori hiçbir sette değilse rozet çıkmaz', async () => {
+    useStore.getState().toggleFavorite(track({ id: 'a' }))
+    const view = await mount(<FavoritesDialog open onClose={() => {}} />)
+    expect(view.container.querySelector('.seen-badge')).toBeNull()
+    await view.unmount()
+  })
+
+  it('otomatik kurucunun önizlemesinde de rozet çıkar', async () => {
+    useStore.getState().setCatalog(catalog)
+    seenBefore(catalog.tracks[1])
+    useStore.getState().addTrack(track({ id: 'seed', title: 'Başlangıç', key: '8A', bpm: 124 }))
+
+    const view = await mount(<AutoBuildDialog open onClose={() => {}} />)
+    const badged = [...view.container.querySelectorAll('.seen-badge')].map(
+      (badge) => badge.closest('.entry')?.querySelector('strong')?.textContent,
+    )
+    expect(badged).toEqual(['Kum Saati'])
+    await view.unmount()
+  })
+})
+
 describe('AutoBuildDialog', () => {
   it('başlangıç parçası yoksa ne yapılacağını söyler', async () => {
     const view = await mount(<AutoBuildDialog open onClose={() => {}} />)

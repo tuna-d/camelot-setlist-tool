@@ -360,6 +360,27 @@ describe('SuggestPanel', () => {
     await view.unmount()
   })
 
+  it('başka sette geçen öneriye rozet koyar, sırasını ve görünüşünü değiştirmez', async () => {
+    useStore.getState().setCatalog(catalog)
+    useStore.getState().addTrack(track({ id: '1', bpm: 124, key: '8A' }))
+    const before = await render(<SuggestPanel />)
+
+    useStore.getState().renameSetlist(useStore.getState().setlists[0].id, 'Cuma')
+    useStore.getState().addTrack(catalog.tracks[1])
+    useStore.getState().removeEntry(0)
+    useStore.getState().newSetlist('Bu gece')
+    useStore.getState().addTrack(track({ id: '1', bpm: 124, key: '8A' }))
+    const view = await mount(<SuggestPanel />)
+
+    const badges = view.container.querySelectorAll('.seen-badge')
+    expect(badges).toHaveLength(1)
+    expect(badges[0].getAttribute('title')).toContain('Already in Cuma')
+    expect(badges[0].closest('.entry')?.textContent).toContain('Parça c2')
+    const withoutBadge = view.html().replace(/<span class="seen-badge".*?<\/span>/g, '')
+    expect(withoutBadge).toBe(before)
+    await view.unmount()
+  })
+
   it('adayları ilişkiye göre gruplar ve uyumsuzu listelemez', async () => {
     useStore.getState().setCatalog(catalog)
     useStore.getState().addTrack(track({ id: '1', bpm: 124, key: '8A' }))
