@@ -8,11 +8,13 @@ import {
   selectLibrary,
   selectPool,
   selectReference,
+  selectEnergyScale,
   selectSeenIndex,
   selectTrack,
   useStore,
 } from './store'
 import type { RekordboxLibrary } from '../lib/rekordbox'
+import { entryEnergy } from '../lib/energy'
 import { seenIn } from '../lib/seen'
 import type { Catalog, Track } from '../lib/types'
 
@@ -98,6 +100,34 @@ describe('setlist düzenleme', () => {
 
     useStore.getState().setEntryEnergy(0, 4)
     expect(selectActive(useStore.getState()).entries[0].energy).toBeUndefined()
+  })
+
+  it('verilen puan havuz değişince de yerinde kalır, tahmin kayda yazılmaz', () => {
+    const rated = track({ id: '1', bpm: 128 })
+    useStore.getState().addTrack(rated)
+    useStore.getState().addTrack(track({ id: '2', bpm: 122 }))
+    useStore.getState().setEntryEnergy(0, 2)
+
+    useStore.getState().importLibrary(imported)
+    useStore.getState().setPoolSource('library')
+    const state = useStore.getState()
+    const entries = selectActive(state).entries
+    expect(entryEnergy(selectEnergyScale(state), entries[0], rated)).toEqual({ level: 2, rated: true })
+
+    const exported = state.exportState().setlists[0].entries
+    expect(exported[0]).toEqual({ trackId: '1', energy: 2 })
+    expect(exported[1]).toEqual({ trackId: '2' })
+  })
+
+  it('enerji ölçeği havuzdan kurulur ve havuz değişmedikçe aynı kalır', () => {
+    const state = useStore.getState()
+    expect(selectEnergyScale(state)).toBe(selectEnergyScale(state))
+    useStore.getState().setTolerance(8)
+    expect(selectEnergyScale(useStore.getState())).toBe(selectEnergyScale(state))
+
+    useStore.getState().importLibrary(imported)
+    useStore.getState().setPoolSource('library')
+    expect(selectEnergyScale(useStore.getState()).all).toHaveLength(3)
   })
 
   it('aralık dışındaki enerji puanını yok sayar', () => {

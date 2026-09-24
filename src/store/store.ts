@@ -2,6 +2,8 @@ import { create } from 'zustand'
 import { DEFAULT_RELATIONS } from '../lib/camelot'
 import { DEFAULT_TOLERANCE } from '../lib/suggest'
 import { readFavorites, toggleFavorite } from '../lib/favorites'
+import { buildEnergyScale } from '../lib/energy'
+import type { EnergyScale } from '../lib/energy'
 import { buildSeenIndex } from '../lib/seen'
 import type { SeenIndex } from '../lib/seen'
 import { trackKey } from '../lib/suggest'
@@ -376,6 +378,18 @@ export function selectLibrary(state: StoreState): Track[] {
 
 export function selectPool(state: StoreState): Track[] {
   return state.poolSource === 'library' ? selectLibrary(state) : (state.catalog?.tracks ?? [])
+}
+
+let energyCache: { key: readonly unknown[]; scale: EnergyScale } | null = null
+
+/** Sorting the pool per render would be wasted work: rebuilt only when the pool changes. */
+export function selectEnergyScale(state: StoreState): EnergyScale {
+  const key = [state.poolSource, state.library, state.playlists, state.playlistId, state.catalog]
+  if (energyCache && energyCache.key.every((part, i) => part === key[i])) return energyCache.scale
+
+  const scale = buildEnergyScale(selectPool(state))
+  energyCache = { key, scale }
+  return scale
 }
 
 export function selectExclude(state: StoreState): Set<string> {
