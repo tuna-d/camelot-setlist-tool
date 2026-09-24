@@ -91,7 +91,7 @@ export function FavoriteButton({ track }: { track: Track }) {
   )
 }
 
-export function DownloadIcon() {
+function SeenIcon() {
   return (
     <svg className="seen-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
       <path
@@ -106,16 +106,17 @@ export function DownloadIcon() {
   )
 }
 
-/** Marks a track already in another set; renders nothing otherwise. */
+/** Marks a track already in another set; renders nothing otherwise. The arrow
+    hints at why it matters (it may already be downloaded), the text names the sets. */
 export function SeenBadge({ track }: { track: Track }) {
   const index = useStore(selectSeenIndex)
   const sets = seenIn(index, track)
   if (sets.length === 0) return null
 
-  const label = `Already in ${sets.join(', ')} — you may have downloaded it`
+  const label = `Already in another set: ${sets.join(', ')}`
   return (
     <span className="seen-badge" role="img" aria-label={label} title={label}>
-      <DownloadIcon />
+      <SeenIcon />
     </span>
   )
 }

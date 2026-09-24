@@ -374,7 +374,7 @@ describe('SuggestPanel', () => {
 
     const badges = view.container.querySelectorAll('.seen-badge')
     expect(badges).toHaveLength(1)
-    expect(badges[0].getAttribute('title')).toContain('Already in Cuma')
+    expect(badges[0].getAttribute('title')).toBe('Already in another set: Cuma')
     expect(badges[0].closest('.entry')?.textContent).toContain('Parça c2')
     const withoutBadge = view.html().replace(/<span class="seen-badge".*?<\/span>/g, '')
     expect(withoutBadge).toBe(before)

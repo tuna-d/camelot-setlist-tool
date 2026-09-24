@@ -220,6 +220,12 @@ describe('TrackSearchDialog', () => {
   })
 })
 
+function badgedTitles(container: HTMLElement): (string | null | undefined)[] {
+  return [...container.querySelectorAll('.seen-badge')].map(
+    (badge) => badge.closest('.entry')?.querySelector('strong')?.textContent,
+  )
+}
+
 /** Puts the track in a set called "Cuma", then opens a fresh set around it. */
 function seenBefore(item: Track): void {
   useStore.getState().renameSetlist(useStore.getState().setlists[0].id, 'Cuma')
@@ -235,10 +241,7 @@ describe('daha önce görülmüş rozeti', () => {
 
     const view = await mount(<TrackSearchDialog open onClose={() => {}} />)
     await type(view.container.querySelector('input.input') as HTMLInputElement, 'a')
-    const badged = [...view.container.querySelectorAll('.seen-badge')].map(
-      (badge) => badge.closest('.entry')?.querySelector('strong')?.textContent,
-    )
-    expect(badged).toEqual(['Gece Yürüyüşü'])
+    expect(badgedTitles(view.container)).toEqual(['Gece Yürüyüşü'])
     await view.unmount()
   })
 
@@ -251,7 +254,7 @@ describe('daha önce görülmüş rozeti', () => {
 
     const view = await mount(<FavoritesDialog open onClose={() => {}} />)
     expect(view.container.querySelector('.seen-badge')?.getAttribute('title')).toBe(
-      'Already in Cuma, Bu gece — you may have downloaded it',
+      'Already in another set: Cuma, Bu gece',
     )
     await view.unmount()
   })
@@ -269,10 +272,7 @@ describe('daha önce görülmüş rozeti', () => {
     useStore.getState().addTrack(track({ id: 'seed', title: 'Başlangıç', key: '8A', bpm: 124 }))
 
     const view = await mount(<AutoBuildDialog open onClose={() => {}} />)
-    const badged = [...view.container.querySelectorAll('.seen-badge')].map(
-      (badge) => badge.closest('.entry')?.querySelector('strong')?.textContent,
-    )
-    expect(badged).toEqual(['Kum Saati'])
+    expect(badgedTitles(view.container)).toEqual(['Kum Saati'])
     await view.unmount()
   })
 })

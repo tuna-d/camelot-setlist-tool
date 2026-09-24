@@ -88,6 +88,11 @@ describe('seenIn', () => {
     expect(seenIn(index, track({ id: 'y', title: '', artist: '' }))).toEqual([])
   })
 
+  it('imza gibi görünen bir kimliği o şarkıyla karıştırmaz', () => {
+    const index = buildSeenIndex([setlist('s1', 'Cuma', ['mantavi|ritual'])], null, () => null)
+    expect(seenIn(index, track({ id: 'x', title: 'Ritual', artist: 'Mantavi' }))).toEqual([])
+  })
+
   it('adı boş sete okunabilir bir ad verir', () => {
     const index = buildSeenIndex([setlist('s1', '   ', ['a'])], null, resolve)
     expect(seenIn(index, a)).toEqual(['Untitled set'])
