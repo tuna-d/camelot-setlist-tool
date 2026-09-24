@@ -28,6 +28,7 @@
   --beatport: #23e58c;
   --youtube: #ff3d46;
   --favorite: #ff5c93;
+  --seen: #7fd4c1;
 
   --radius: 20px;
   --radius-sm: 14px;
@@ -489,8 +490,27 @@ input[type='range']:focus-visible {
   color: var(--tone-energy);
 }
 
+/* Faint on purpose: a guess must never pass for a rating. */
+.star-estimated {
+  color: var(--tone-energy);
+  opacity: 0.35;
+}
+
 .star:hover {
   color: var(--accent);
+  opacity: 1;
+}
+
+.entry-missing {
+  border-style: dashed;
+}
+
+.entry-missing-note {
+  margin: 4px 0 0;
+}
+
+.chip-missing {
+  color: var(--danger);
 }
 
 .entry-extras {
@@ -568,6 +588,19 @@ dialog::backdrop {
   fill: none;
   stroke: color-mix(in srgb, var(--accent) 55%, var(--line-strong));
   stroke-width: 1.5;
+}
+
+/* Estimated bars stay faint so the part of the shape the DJ vouched for stands out. */
+.energy-bar {
+  fill: var(--tone-energy);
+}
+
+.energy-bar.rated {
+  opacity: 0.5;
+}
+
+.energy-bar.estimated {
+  opacity: 0.2;
 }
 
 /* ——— setlist rows ——— */
@@ -789,6 +822,29 @@ a.btn-youtube {
   background: color-mix(in srgb, var(--danger) 12%, transparent);
   border-color: var(--danger);
   color: var(--danger);
+}
+
+/* ——— seen before ——— */
+
+/* Sits inside the title so it adds no column: the row grids stay aligned, and the
+   title, not the badge, is what gets cut short on a long name. */
+.seen-badge {
+  align-items: center;
+  background: color-mix(in srgb, var(--seen) 14%, transparent);
+  border-radius: var(--radius-pill);
+  color: var(--seen);
+  cursor: help;
+  display: inline-flex;
+  justify-content: center;
+  margin-right: 6px;
+  padding: 2px;
+  vertical-align: -3px;
+}
+
+.seen-icon {
+  display: block;
+  height: 14px;
+  width: 14px;
 }
 
 /* ——— favorites ——— */

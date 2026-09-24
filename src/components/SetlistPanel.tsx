@@ -1,15 +1,33 @@
 import { useMemo, useState } from 'react'
 import { relationInfo } from '../lib/camelot'
+import { entryEnergy } from '../lib/energy'
 import { advanceQueue, EMPTY_QUEUE, queueView } from '../lib/queue'
 import { transition } from '../lib/setstats'
+import type { TransitionEnergy } from '../lib/setstats'
 import { formatDelta } from '../lib/suggest'
 import { formatDuration, formatTotal, toneColor } from '../lib/ui'
-import { selectActive, selectEntries, useStore } from '../store/store'
-import { Bpm, EnergyStars, FavoriteButton, KeyChip, TrackLinks, youtubeSearchUrl } from './common'
+import { selectActive, selectEnergyScale, selectEntryRows, useStore } from '../store/store'
+import type { EntryRow } from '../store/store'
+import {
+  Bpm,
+  EnergyStars,
+  FavoriteButton,
+  KeyChip,
+  SeenBadge,
+  TrackLinks,
+  youtubeSearchUrl,
+} from './common'
 import type { Track } from '../lib/types'
 
-function TransitionBridge({ from, to, tolerance }: { from: Track; to: Track; tolerance: number }) {
-  const step = transition(from, to, tolerance)
+interface TransitionBridgeProps {
+  from: Track
+  to: Track
+  tolerance: number
+  energy: TransitionEnergy
+}
+
+function TransitionBridge({ from, to, tolerance, energy }: TransitionBridgeProps) {
+  const step = transition(from, to, tolerance, energy)
   const info = step.relation ? relationInfo(step.relation) : null
 
   const color = step.ok && info ? toneColor(info.tone) : 'var(--danger)'
@@ -28,6 +46,14 @@ function TransitionBridge({ from, to, tolerance }: { from: Track; to: Track; tol
       <span className="mono faint">{tempoText}</span>
       {step.delta?.halved ? <span className="faint">half/double tempo</span> : null}
       {!step.ok ? <span style={{ color: 'var(--danger)' }}>⚠ {warning}</span> : null}
+      {/* Worded from the level alone: an estimate is shown in place of a rating, so the
+          warning does not tell the two apart. */}
+      {step.energyDrop ? (
+        <span className="bridge-drop" style={{ color: 'var(--danger)' }}>
+          ⚠ Energy falls from {energy.from} to {energy.to} — put a track between them or step it
+          down one level at a time.
+        </span>
+      ) : null}
     </div>
   )
 }
@@ -52,11 +78,18 @@ function SetlistPanelBody({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProps) 
   const [queue, setQueue] = useState(EMPTY_QUEUE)
 
   const active = selectActive(state)
-  const tracks = useMemo(() => selectEntries(state), [state])
+  // Rows keep entries whose track is gone, so every row edits the entry it shows.
+  const rows = useMemo(() => selectEntryRows(state), [state])
+  const resolved = rows.filter((row): row is EntryRow & { track: Track } => row.track !== null)
+  const tracks = resolved.map((row) => row.track)
+  const missingCount = rows.length - resolved.length
+  const energyScale = selectEnergyScale(state)
   const totalSeconds = tracks.reduce((total, track) => total + (track.duration ?? 360), 0)
   const trackIds = tracks.map((track) => track.id)
   const pass = queueView(trackIds, queue)
   const nextTrack = pass.nextIndex >= 0 ? tracks[pass.nextIndex] : null
+  // The queue counts resolved tracks only; this is the entry position it points at.
+  const queuedIndex = pass.nextIndex >= 0 ? resolved[pass.nextIndex].index : -1
 
   // The browser opens the tab itself from the link, never a script: nothing for a popup
   // blocker to catch, and ctrl/cmd+click or middle-click keep this page in front.
@@ -76,6 +109,14 @@ function SetlistPanelBody({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProps) 
         <span className="chip chip-static">
           {tracks.length} tracks · {formatTotal(totalSeconds)}
         </span>
+        {missingCount > 0 ? (
+          <span
+            className="chip chip-static chip-missing"
+            title="Tracks this set points at that are no longer in your library or the discovery catalog"
+          >
+            {missingCount} missing
+          </span>
+        ) : null}
         <span className="spacer" />
         {onOpenSearch ? (
           <button type="button" className="btn" onClick={onOpenSearch}>
@@ -134,21 +175,58 @@ function SetlistPanelBody({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProps) 
         </div>
       ) : null}
 
-      {tracks.length === 0 ? (
+      {rows.length === 0 ? (
         <p className="muted">
           Empty set. Add a starting track with "find a track", then keep going from the suggestions below.
         </p>
       ) : (
         <ol className="entries entries-scroll">
-          {tracks.map((track, index) => {
-            const isQueued = index === pass.nextIndex
+          {rows.map(({ entry, index, track }) => {
+            const before = index > 0 ? rows[index - 1] : null
+            const previous = before?.track ?? null
+            if (!track) {
+              return (
+                <li key={`missing-${entry.trackId}-${index}`}>
+                  <div
+                    className="entry entry-missing"
+                    draggable
+                    onDragStart={() => setDragIndex(index)}
+                    onDragOver={(event) => event.preventDefault()}
+                    onDrop={() => handleDrop(index)}
+                  >
+                    <span className="mono entry-index">{index + 1}</span>
+                    <span className="entry-title muted">
+                      This track is no longer available: it left your library or the discovery
+                      catalog. Remove it, then find it again with "find a track" if you still want it.
+                    </span>
+                    <span className="entry-meta">
+                      <button
+                        type="button"
+                        className="btn btn-ghost btn-icon btn-danger"
+                        onClick={() => state.removeEntry(index)}
+                        aria-label="Remove the missing track from the set"
+                      >
+                        ✕
+                      </button>
+                    </span>
+                  </div>
+                  {entry.note ? <p className="faint entry-missing-note">note: {entry.note}</p> : null}
+                </li>
+              )
+            }
+
+            const isQueued = index === queuedIndex
             return (
               <li key={`${track.id}-${index}`}>
-                {index > 0 ? (
+                {previous ? (
                   <TransitionBridge
-                    from={tracks[index - 1]}
+                    from={previous}
                     to={track}
                     tolerance={state.tolerance}
+                    energy={{
+                      from: entryEnergy(energyScale, before?.entry, previous)?.level ?? null,
+                      to: entryEnergy(energyScale, entry, track)?.level ?? null,
+                    }}
                   />
                 ) : null}
 
@@ -165,6 +243,7 @@ function SetlistPanelBody({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProps) 
                 >
                   <span className="mono entry-index">{index + 1}</span>
                   <span className="entry-title">
+                    <SeenBadge track={track} />
                     <strong>{track.title}</strong>
                     <span className="muted"> — {track.artist}</span>
                   </span>
@@ -192,7 +271,7 @@ function SetlistPanelBody({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProps) 
                   <span className="entry-energy">
                     <span className="faint">energy</span>
                     <EnergyStars
-                      value={active.entries[index]?.energy}
+                      energy={entryEnergy(energyScale, entry, track)}
                       onChange={(value) => state.setEntryEnergy(index, value)}
                       label={`Energy rating for ${track.title}`}
                     />
@@ -200,7 +279,7 @@ function SetlistPanelBody({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProps) 
                   <input
                     className="input entry-note"
                     placeholder="track note"
-                    value={active.entries[index]?.note ?? ''}
+                    value={entry.note ?? ''}
                     onChange={(event) => state.setEntryNote(index, event.target.value)}
                   />
                 </div>

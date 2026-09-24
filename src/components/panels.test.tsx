@@ -135,10 +135,221 @@ describe('SetlistPanel', () => {
     await view.unmount()
   })
 
+  it('başka bir sette de geçen parçaya rozet koyar, yalnızca bu sette olana koymaz', async () => {
+    useStore.getState().renameSetlist(useStore.getState().setlists[0].id, 'Cuma')
+    useStore.getState().addTrack(track({ id: '1', title: 'Gece' }))
+    useStore.getState().newSetlist('Bu gece')
+    useStore.getState().addTrack(track({ id: '1', title: 'Gece' }))
+    useStore.getState().addTrack(track({ id: '2', title: 'Sabah' }))
+    const view = await mount(<SetlistPanel />)
+
+    const badges = view.container.querySelectorAll('.seen-badge')
+    expect(badges).toHaveLength(1)
+    expect(badges[0].getAttribute('title')).toBe('Already in another set: Cuma')
+    expect(badges[0].closest('.entry')?.textContent).toContain('Gece')
+    await view.unmount()
+  })
+
   it('parça ekleme düğmelerini gösterir', async () => {
     const html = await render(<SetlistPanel onOpenSearch={() => {}} onOpenAutoBuild={() => {}} />)
     expect(html).toContain('find a track')
     expect(html).toContain('build it for me')
+  })
+})
+
+describe('SetlistPanel enerji', () => {
+  function starsOf(view: Mounted, index: number): HTMLElement {
+    return view.container.querySelectorAll<HTMLElement>('.entry-extras .stars')[index]
+  }
+
+  it('puanlanmamış girişte tahmini, puanlananda puanı gösterir', async () => {
+    useStore.setState({ catalog })
+    useStore.getState().addTrack(track({ id: '1', bpm: 126, key: '8A' }))
+    useStore.getState().addTrack(track({ id: '2', bpm: 120, key: '8A' }))
+    useStore.getState().setEntryEnergy(1, 3)
+    const view = await mount(<SetlistPanel />)
+
+    expect(starsOf(view, 0).dataset.energy).toBe('estimated')
+    expect(starsOf(view, 0).querySelectorAll('.star-estimated')).toHaveLength(5)
+    expect(starsOf(view, 1).dataset.energy).toBe('rated')
+    expect(starsOf(view, 1).querySelectorAll('[aria-pressed="true"]')).toHaveLength(3)
+    await view.unmount()
+  })
+
+  it('yıldıza basmak tahmini puana çevirir, aynı yıldız tahmine geri döndürür', async () => {
+    useStore.setState({ catalog })
+    useStore.getState().addTrack(track({ id: '1', bpm: 126, key: '8A' }))
+    const view = await mount(<SetlistPanel />)
+
+    const star = () => starsOf(view, 0).querySelectorAll<HTMLElement>('.star')[1]
+    await act(async () => {
+      star().dispatchEvent(new MouseEvent('click', { bubbles: true }))
+    })
+    expect(useStore.getState().setlists[0].entries[0].energy).toBe(2)
+    expect(starsOf(view, 0).dataset.energy).toBe('rated')
+
+    await act(async () => {
+      star().dispatchEvent(new MouseEvent('click', { bubbles: true }))
+    })
+    expect(useStore.getState().setlists[0].entries[0].energy).toBeUndefined()
+    expect(starsOf(view, 0).dataset.energy).toBe('estimated')
+    await view.unmount()
+  })
+
+  it('tempo bilinmeyen parçada tahmin yok, yıldızlar boş', async () => {
+    useStore.setState({ catalog })
+    useStore.getState().addTrack(track({ id: '1', bpm: null }))
+    const view = await mount(<SetlistPanel />)
+    expect(starsOf(view, 0).dataset.energy).toBe('none')
+    expect(starsOf(view, 0).textContent).toBe('☆☆☆☆☆')
+    await view.unmount()
+  })
+})
+
+describe('SetlistPanel enerji düşüşü', () => {
+  function drops(view: Mounted): string[] {
+    return [...view.container.querySelectorAll('.bridge-drop')].map((node) => node.textContent ?? '')
+  }
+
+  async function mountRated(levels: number[]): Promise<Mounted> {
+    levels.forEach((_, index) => useStore.getState().addTrack(track({ id: String(index + 1) })))
+    levels.forEach((level, index) => useStore.getState().setEntryEnergy(index, level))
+    return mount(<SetlistPanel />)
+  }
+
+  it('iki seviyelik düşüşü köprüde uyarır, ne olduğunu ve ne yapılacağını söyler', async () => {
+    const view = await mountRated([5, 3])
+    expect(drops(view)).toHaveLength(1)
+    expect(drops(view)[0]).toContain('Energy falls from 5 to 3')
+    expect(drops(view)[0]).toContain('put a track between them')
+    await view.unmount()
+  })
+
+  it('bir seviyelik düşüşü ve yükselişi uyarmaz', async () => {
+    const view = await mountRated([4, 3, 5])
+    expect(drops(view)).toEqual([])
+    await view.unmount()
+  })
+
+  it('enerjisi olmayan tarafta hüküm yok', async () => {
+    // No pool, so the unrated track has no estimate.
+    useStore.getState().addTrack(track({ id: '1' }))
+    useStore.getState().addTrack(track({ id: '2' }))
+    useStore.getState().setEntryEnergy(0, 5)
+    const view = await mount(<SetlistPanel />)
+    expect(drops(view)).toEqual([])
+    await view.unmount()
+  })
+
+  it('tahmini seviye de uyarır, uyarı puanlanmışla aynı okunur', async () => {
+    useStore.setState({ catalog })
+    // Against the catalog's tempos 126 BPM estimates 5, 120 BPM estimates 1.
+    useStore.getState().addTrack(track({ id: '1', bpm: 126 }))
+    useStore.getState().addTrack(track({ id: '2', bpm: 120 }))
+    const estimated = await mount(<SetlistPanel />)
+    const estimatedText = drops(estimated)
+    await estimated.unmount()
+
+    useStore.getState().setEntryEnergy(0, 5)
+    useStore.getState().setEntryEnergy(1, 1)
+    const rated = await mount(<SetlistPanel />)
+    expect(estimatedText).toHaveLength(1)
+    expect(drops(rated)).toEqual(estimatedText)
+    await rated.unmount()
+  })
+})
+
+describe('SetlistPanel bulunamayan giriş', () => {
+  // A catalog refresh can drop a track that a set still points at.
+  function withMissingMiddle() {
+    useStore.getState().addTrack(track({ id: '1', title: 'Gece', bpm: 120 }))
+    useStore.getState().addTrack(track({ id: '2', title: 'Sabah', bpm: 122 }))
+    const active = useStore.getState().setlists[0]
+    useStore.setState({
+      setlists: [
+        {
+          ...active,
+          entries: [
+            { trackId: '1', note: 'bir' },
+            { trackId: 'kayıp', note: 'kayıp' },
+            { trackId: '2', note: 'iki', energy: 4 },
+          ],
+        },
+      ],
+      cursor: 2,
+    })
+  }
+
+  function rows(view: Mounted): HTMLElement[] {
+    return [...view.container.querySelectorAll<HTMLElement>('ol.entries > li')]
+  }
+
+  it('bulunamayan girişi ne olduğunu ve ne yapılacağını söyleyen satırla gösterir', async () => {
+    withMissingMiddle()
+    const view = await mount(<SetlistPanel />)
+    const items = rows(view)
+    expect(items).toHaveLength(3)
+    expect(items[1].querySelector('.entry-missing')?.textContent).toContain('no longer available')
+    expect(items[1].textContent).toContain('Remove it')
+    expect(view.html()).toContain('1 missing')
+    await view.unmount()
+  })
+
+  it('bulunamayan girişten sonraki satır kendi notunu, puanını ve sıra numarasını gösterir', async () => {
+    withMissingMiddle()
+    const view = await mount(<SetlistPanel />)
+    const last = rows(view)[2]
+    expect(last.textContent).toContain('Sabah')
+    expect(last.querySelector('.entry-index')?.textContent).toBe('3')
+    expect(last.querySelector<HTMLInputElement>('.entry-note')?.value).toBe('iki')
+    expect(last.querySelector<HTMLElement>('.stars')?.dataset.energy).toBe('rated')
+    expect(last.querySelectorAll('.star[aria-pressed="true"]')).toHaveLength(4)
+    expect(last.querySelector('.entry')?.getAttribute('aria-current')).toBe('true')
+    await view.unmount()
+  })
+
+  it('sonraki satırdaki düzenleme doğru girişe yazılır', async () => {
+    withMissingMiddle()
+    const view = await mount(<SetlistPanel />)
+    await act(async () => {
+      rows(view)[2].querySelectorAll<HTMLElement>('.star')[1].dispatchEvent(
+        new MouseEvent('click', { bubbles: true }),
+      )
+    })
+    const entries = useStore.getState().setlists[0].entries
+    expect(entries.map((entry) => entry.energy)).toEqual([undefined, undefined, 2])
+    await view.unmount()
+  })
+
+  it('bulunamayan giriş silinince sonrakiler yerinde kalır', async () => {
+    withMissingMiddle()
+    const view = await mount(<SetlistPanel />)
+    await act(async () => {
+      rows(view)[1].querySelector<HTMLElement>('.btn-danger')?.dispatchEvent(
+        new MouseEvent('click', { bubbles: true }),
+      )
+    })
+    expect(useStore.getState().setlists[0].entries.map((entry) => entry.trackId)).toEqual(['1', '2'])
+    expect(rows(view)).toHaveLength(2)
+    expect(rows(view)[1].querySelector<HTMLInputElement>('.entry-note')?.value).toBe('iki')
+    await view.unmount()
+  })
+
+  it('YouTube kuyruğu sıradaki parçanın kendi satırını işaretler', async () => {
+    withMissingMiddle()
+    const view = await mount(<SetlistPanel />)
+    await view.click('.queue-open')
+    const queued = view.container.querySelector('[data-queue="next"]')
+    expect(queued?.textContent).toContain('Sabah')
+    expect(queued?.querySelector('.entry-index')?.textContent).toBe('3')
+    await view.unmount()
+  })
+
+  it('bulunamayan girişin iki yanına geçiş köprüsü çizmez', async () => {
+    withMissingMiddle()
+    const view = await mount(<SetlistPanel />)
+    expect(view.container.querySelectorAll('.bridge')).toHaveLength(0)
+    await view.unmount()
   })
 })
 
@@ -316,6 +527,48 @@ describe('SetSummaryPanel', () => {
     expect(await render(<SetSummaryPanel />)).toContain('<polyline')
   })
 
+  it('bulunamayan girdi varken enerji çubuğu kendi parçasının noktasına düşer', async () => {
+    useStore.getState().addTrack(track({ id: '1', bpm: 120 }))
+    useStore.getState().addTrack(track({ id: '2', bpm: 124 }))
+    const active = useStore.getState().setlists[0]
+    useStore.setState({
+      setlists: [
+        {
+          ...active,
+          entries: [{ trackId: '1' }, { trackId: 'kayıp', energy: 1 }, { trackId: '2', energy: 4 }],
+        },
+      ],
+    })
+    const view = await mount(<SetSummaryPanel />)
+    const bars = view.container.querySelectorAll('.energy-bar')
+    const circles = view.container.querySelectorAll('.tempo-curve circle')
+    // With no pool to measure against, the unrated track has no estimate: a gap.
+    expect(bars).toHaveLength(1)
+    expect(bars[0].getAttribute('class')).toBe('energy-bar rated')
+    expect(Number(bars[0].getAttribute('x'))).toBeGreaterThan(
+      Number(circles[0].getAttribute('cx')),
+    )
+    expect(circles[1].textContent).toContain('energy 4')
+    await view.unmount()
+  })
+
+  it('yalnızca bulunamayan parçalardan oluşan set de temizlenebilir', async () => {
+    const active = useStore.getState().setlists[0]
+    useStore.setState({ setlists: [{ ...active, entries: [{ trackId: 'kayıp' }] }] })
+    vi.stubGlobal('confirm', () => true)
+    const view = await mount(<SetSummaryPanel />)
+    const clear = [...view.container.querySelectorAll<HTMLButtonElement>('button')].find(
+      (button) => button.textContent === 'clear',
+    )
+    expect(clear?.disabled).toBe(false)
+    await act(async () => {
+      clear?.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+    })
+    expect(useStore.getState().setlists[0].entries).toEqual([])
+    vi.unstubAllGlobals()
+    await view.unmount()
+  })
+
   it('dışa aktarım düğmelerini ve set notunu gösterir', async () => {
     const html = await render(<SetSummaryPanel />)
     expect(html).toContain('.m3u8')
@@ -331,6 +584,20 @@ describe('SetSummaryPanel', () => {
     expect(html).toContain('15 min')
     expect(html).toContain('120–124')
     expect(html).toContain('rough transitions')
+  })
+
+  it('enerji düşüşlerini zorlayan geçişlerin yanında sayar', async () => {
+    useStore.getState().addTrack(track({ id: '1' }))
+    useStore.getState().addTrack(track({ id: '2' }))
+    useStore.getState().addTrack(track({ id: '3' }))
+    useStore.getState().setEntryEnergy(0, 5)
+    useStore.getState().setEntryEnergy(1, 2)
+    useStore.getState().setEntryEnergy(2, 1)
+    const view = await mount(<SetSummaryPanel />)
+    const stat = view.container.querySelector('.stat-drops .stat-value')
+    expect(stat?.textContent).toBe('1')
+    expect(view.container.querySelector('.stat-drops')?.textContent).toContain('energy drops')
+    await view.unmount()
   })
 })
 
@@ -357,6 +624,27 @@ describe('SuggestPanel', () => {
     expect(state.favorites).toHaveLength(1)
     expect(state.favorites[0].source).toBe('catalog')
     expect(state.setlists[0].entries).toHaveLength(1)
+    await view.unmount()
+  })
+
+  it('başka sette geçen öneriye rozet koyar, sırasını ve görünüşünü değiştirmez', async () => {
+    useStore.getState().setCatalog(catalog)
+    useStore.getState().addTrack(track({ id: '1', bpm: 124, key: '8A' }))
+    const before = await render(<SuggestPanel />)
+
+    useStore.getState().renameSetlist(useStore.getState().setlists[0].id, 'Cuma')
+    useStore.getState().addTrack(catalog.tracks[1])
+    useStore.getState().removeEntry(0)
+    useStore.getState().newSetlist('Bu gece')
+    useStore.getState().addTrack(track({ id: '1', bpm: 124, key: '8A' }))
+    const view = await mount(<SuggestPanel />)
+
+    const badges = view.container.querySelectorAll('.seen-badge')
+    expect(badges).toHaveLength(1)
+    expect(badges[0].getAttribute('title')).toBe('Already in another set: Cuma')
+    expect(badges[0].closest('.entry')?.textContent).toContain('Parça c2')
+    const withoutBadge = view.html().replace(/<span class="seen-badge".*?<\/span>/g, '')
+    expect(withoutBadge).toBe(before)
     await view.unmount()
   })
 

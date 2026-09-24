@@ -2,6 +2,10 @@ import { create } from 'zustand'
 import { DEFAULT_RELATIONS } from '../lib/camelot'
 import { DEFAULT_TOLERANCE } from '../lib/suggest'
 import { readFavorites, toggleFavorite } from '../lib/favorites'
+import { buildEnergyScale, buildRatingIndex } from '../lib/energy'
+import type { EnergyScale, RatingIndex } from '../lib/energy'
+import { buildSeenIndex } from '../lib/seen'
+import type { SeenIndex } from '../lib/seen'
 import { trackKey } from '../lib/suggest'
 import type { RekordboxLibrary } from '../lib/rekordbox'
 import type {
@@ -327,21 +331,79 @@ export function selectTrack(state: StoreState, id: string): Track | null {
   )
 }
 
-export function selectEntries(state: StoreState): Track[] {
-  const active = selectActive(state)
-  const out: Track[] = []
-  for (const entry of active.entries) {
-    const track = selectTrack(state, entry.trackId)
-    if (track) out.push(track)
+let seenCache: { key: readonly unknown[]; index: SeenIndex } | null = null
+
+/**
+ * Every row with a badge reads this, so it is rebuilt only when a set or a track
+ * source changes and zustand sees the same object otherwise.
+ */
+export function selectSeenIndex(state: StoreState): SeenIndex {
+  const key = [state.setlists, state.activeId, state.library, state.catalog, state.extras]
+  if (seenCache && seenCache.key.every((part, i) => part === key[i])) return seenCache.index
+
+  const index = buildSeenIndex(state.setlists, state.activeId, trackResolver(state))
+  seenCache = { key, index }
+  return index
+}
+
+/** `selectTrack` for a whole pass over the sets: one map instead of a scan per entry. */
+function trackResolver(state: StoreState): (id: string) => Track | null {
+  const byId = new Map<string, Track>()
+  // Reversed so the first source wins, matching selectTrack.
+  for (const list of [state.extras, state.catalog?.tracks ?? [], state.library]) {
+    for (const track of list) byId.set(track.id, track)
   }
+  return (id) => byId.get(id) ?? null
+}
+
+let ratingCache: { key: readonly unknown[]; ratings: RatingIndex } | null = null
+
+/** Every rating across the DJ's sets, active one included; rebuilt only when they change. */
+export function selectRatingIndex(state: StoreState): RatingIndex {
+  const key = [state.setlists, state.library, state.catalog, state.extras]
+  if (ratingCache && ratingCache.key.every((part, i) => part === key[i])) return ratingCache.ratings
+
+  const ratings = buildRatingIndex(state.setlists, trackResolver(state))
+  ratingCache = { key, ratings }
+  return ratings
+}
+
+export interface EntryRow {
+  entry: SetlistEntry
+  /** Position in the set's entries: what every entry action takes. */
+  index: number
+  /** Null when no source holds the track any more, e.g. a catalog refresh dropped it. */
+  track: Track | null
+}
+
+/**
+ * Every entry of the active set, resolved or not. Rows that edit an entry read
+ * this rather than `selectEntries`, whose positions shift past a missing track.
+ */
+export function selectEntryRows(state: StoreState): EntryRow[] {
+  return selectActive(state).entries.map((entry, index) => ({
+    entry,
+    index,
+    track: selectTrack(state, entry.trackId),
+  }))
+}
+
+/** The tracks of the active set in order, skipping entries that no longer resolve. */
+export function selectEntries(state: StoreState): Track[] {
+  const out: Track[] = []
+  for (const row of selectEntryRows(state)) if (row.track) out.push(row.track)
   return out
 }
 
 export function selectReference(state: StoreState): Track | null {
-  const entries = selectEntries(state)
-  if (entries.length === 0) return null
-  const index = Math.min(state.cursor, entries.length - 1)
-  return entries[index]
+  const rows = selectEntryRows(state)
+  if (rows.length === 0) return null
+  // The cursor is an entry position. On a missing entry the reference falls back to
+  // the track before it, the one the DJ was mixing out of, and only then to one after.
+  const at = Math.min(state.cursor, rows.length - 1)
+  for (let i = at; i >= 0; i--) if (rows[i].track) return rows[i].track
+  for (let i = at + 1; i < rows.length; i++) if (rows[i].track) return rows[i].track
+  return null
 }
 
 export function selectLibrary(state: StoreState): Track[] {
@@ -354,6 +416,18 @@ export function selectLibrary(state: StoreState): Track[] {
 
 export function selectPool(state: StoreState): Track[] {
   return state.poolSource === 'library' ? selectLibrary(state) : (state.catalog?.tracks ?? [])
+}
+
+let energyCache: { key: readonly unknown[]; scale: EnergyScale } | null = null
+
+/** Sorting the pool per render would be wasted work: rebuilt only when the pool changes. */
+export function selectEnergyScale(state: StoreState): EnergyScale {
+  const key = [state.poolSource, state.library, state.playlists, state.playlistId, state.catalog]
+  if (energyCache && energyCache.key.every((part, i) => part === key[i])) return energyCache.scale
+
+  const scale = buildEnergyScale(selectPool(state))
+  energyCache = { key, scale }
+  return scale
 }
 
 export function selectExclude(state: StoreState): Set<string> {

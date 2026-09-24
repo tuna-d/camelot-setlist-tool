@@ -16,7 +16,7 @@ import {
   useStore,
 } from '../store/store'
 import { CamelotWheel } from './CamelotWheel'
-import { Bpm, FavoriteButton, KeyChip, TrackLinks } from './common'
+import { Bpm, FavoriteButton, KeyChip, SeenBadge, TrackLinks } from './common'
 
 const SUGGESTION_LIMIT = 60
 
@@ -209,6 +209,7 @@ export function SuggestPanel() {
                         {Math.round(item.score)}
                       </span>
                       <span className="entry-title">
+                        <SeenBadge track={item.track} />
                         <strong>{item.track.title}</strong>
                         <span className="muted"> — {item.track.artist}</span>
                       </span>

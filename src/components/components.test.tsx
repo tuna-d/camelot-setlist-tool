@@ -54,7 +54,7 @@ describe('TrackLinks', () => {
 
 describe('EnergyStars', () => {
   it('verilen puana kadar dolu yıldız çizer', () => {
-    const html = renderToStaticMarkup(<EnergyStars value={3} onChange={() => {}} label="enerji" />)
+    const html = renderToStaticMarkup(<EnergyStars energy={{ level: 3, rated: true }} onChange={() => {}} label="enerji" />)
     expect(html.match(/★/g)).toHaveLength(3)
     expect(html.match(/☆/g)).toHaveLength(2)
     expect(html.match(/aria-pressed="true"/g)).toHaveLength(3)
@@ -62,10 +62,40 @@ describe('EnergyStars', () => {
 
   it('puan yokken hepsi boş', () => {
     const html = renderToStaticMarkup(
-      <EnergyStars value={undefined} onChange={() => {}} label="enerji" />,
+      <EnergyStars energy={null} onChange={() => {}} label="enerji" />,
     )
     expect(html.match(/☆/g)).toHaveLength(5)
     expect(html).not.toContain('aria-pressed="true"')
+  })
+})
+
+describe('EnergyStars tahmini', () => {
+  it('puan yokken tahmini soluk yıldızlarla gösterir, hiçbirini basılı saymaz', () => {
+    const html = renderToStaticMarkup(
+      <EnergyStars energy={{ level: 4, rated: false }} onChange={() => {}} label="enerji" />,
+    )
+    expect(html.match(/star star-estimated/g)).toHaveLength(4)
+    expect(html.match(/★/g)).toHaveLength(4)
+    expect(html).not.toContain('aria-pressed="true"')
+    expect(html).toContain('data-energy="estimated"')
+    expect(html).toContain('Estimated energy 4/5')
+  })
+
+  it('verilen puan dolu ve basılı, soluk değil', () => {
+    const html = renderToStaticMarkup(
+      <EnergyStars energy={{ level: 2, rated: true }} onChange={() => {}} label="enerji" />,
+    )
+    expect(html).not.toContain('star-estimated')
+    expect(html.match(/★/g)).toHaveLength(2)
+    expect(html).toContain('data-energy="rated"')
+  })
+
+  it('tahmin de puan da yoksa yıldızlar boş kalır', () => {
+    const html = renderToStaticMarkup(
+      <EnergyStars energy={null} onChange={() => {}} label="enerji" />,
+    )
+    expect(html.match(/☆/g)).toHaveLength(5)
+    expect(html).toContain('data-energy="none"')
   })
 })
 
@@ -130,5 +160,104 @@ describe('TempoCurve', () => {
       />,
     )
     expect(html).toContain('<polyline')
+  })
+
+  const three = [
+    { bpm: 120, key: '8A' },
+    { bpm: 124, key: '9A' },
+    { bpm: 128, key: '10A' },
+  ]
+
+  function barHeights(html: string): number[] {
+    return [...html.matchAll(/class="energy-bar[^"]*"[^>]*height="([\d.]+)"/g)].map((match) =>
+      Number(match[1]),
+    )
+  }
+
+  it('enerji serisi yokken çubuk çizmez', () => {
+    const html = renderToStaticMarkup(<TempoCurve points={three} />)
+    expect(html).not.toContain('energy-bar')
+  })
+
+  it('boş seride çubuk çizmez ama çizgiyi korur', () => {
+    const html = renderToStaticMarkup(<TempoCurve points={three} energy={[]} />)
+    expect(html).not.toContain('energy-bar')
+    expect(html).toContain('<polyline')
+  })
+
+  it('enerjisi olmayan girdide sıfır boylu çubuk yerine boşluk bırakır', () => {
+    const html = renderToStaticMarkup(
+      <TempoCurve
+        points={three}
+        energy={[{ level: 2, rated: true }, null, { level: 4, rated: true }]}
+      />,
+    )
+    const heights = barHeights(html)
+    expect(heights).toHaveLength(2)
+    expect(heights.every((value) => value > 0)).toBe(true)
+  })
+
+  it('çubukları kendi 1-5 ölçeğinde boylar, tempodan bağımsız', () => {
+    const html = renderToStaticMarkup(
+      <TempoCurve
+        points={three}
+        energy={[
+          { level: 5, rated: true },
+          { level: 1, rated: true },
+          { level: 5, rated: true },
+        ]}
+      />,
+    )
+    const [high, low, again] = barHeights(html)
+    expect(high).toBe(again)
+    expect(high).toBeCloseTo(low * 5)
+  })
+
+  it('tahmini ve puanlanmış çubukları ayrı sınıfla ayırır', () => {
+    const html = renderToStaticMarkup(
+      <TempoCurve
+        points={three}
+        energy={[{ level: 3, rated: true }, { level: 3, rated: false }, null]}
+      />,
+    )
+    expect(html.match(/class="energy-bar rated"/g)).toHaveLength(1)
+    expect(html.match(/class="energy-bar estimated"/g)).toHaveLength(1)
+  })
+
+  it('çubukları çizginin arkasına çizer', () => {
+    const html = renderToStaticMarkup(
+      <TempoCurve points={three} energy={[{ level: 3, rated: true }, null, null]} />,
+    )
+    expect(html.indexOf('energy-bar')).toBeLessThan(html.indexOf('<polyline'))
+  })
+
+  it('enerji serisi BPM çizgisini değiştirmez', () => {
+    const plain = renderToStaticMarkup(<TempoCurve points={three} />)
+    const withEnergy = renderToStaticMarkup(
+      <TempoCurve points={three} energy={three.map(() => ({ level: 4, rated: false }))} />,
+    )
+    const line = (html: string) => html.match(/<polyline[^>]*points="([^"]*)"/)?.[1]
+    expect(line(withEnergy)).toBe(line(plain))
+  })
+
+  it('bozuk ya da ölçek dışı seviyeyi çizmez', () => {
+    const html = renderToStaticMarkup(
+      <TempoCurve
+        points={three}
+        energy={[
+          { level: Number.NaN, rated: true },
+          { level: 0, rated: false },
+          { level: 9, rated: true },
+        ]}
+      />,
+    )
+    expect(html).not.toContain('energy-bar')
+  })
+
+  it('aynı girdiden aynı çizimi üretir', () => {
+    const energy = [{ level: 2, rated: false }, null, { level: 5, rated: true }]
+    const first = renderToStaticMarkup(<TempoCurve points={three} energy={energy} />)
+    const second = renderToStaticMarkup(<TempoCurve points={three} energy={energy} />)
+    expect(first).toBe(second)
   })
 })

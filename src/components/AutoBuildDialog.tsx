@@ -4,8 +4,15 @@ import type { EnergyShape } from '../lib/setbuilder'
 import { formatDelta } from '../lib/suggest'
 import { formatTotal, toneColor } from '../lib/ui'
 import { relationInfo } from '../lib/camelot'
-import { selectExclude, selectPool, selectReference, useStore } from '../store/store'
-import { Bpm, KeyChip } from './common'
+import {
+  selectEnergyScale,
+  selectExclude,
+  selectPool,
+  selectRatingIndex,
+  selectReference,
+  useStore,
+} from '../store/store'
+import { Bpm, KeyChip, SeenBadge } from './common'
 import { Dialog } from './common'
 
 export interface AutoBuildDialogProps {
@@ -23,6 +30,8 @@ export function AutoBuildDialog({ open, onClose }: AutoBuildDialogProps) {
   const reference = useMemo(() => selectReference(state), [state])
   const pool = useMemo(() => selectPool(state), [state])
   const exclude = useMemo(() => selectExclude(state), [state])
+  const scale = selectEnergyScale(state)
+  const ratings = selectRatingIndex(state)
 
   const result = useMemo(() => {
     if (!reference) return null
@@ -35,8 +44,21 @@ export function AutoBuildDialog({ open, onClose }: AutoBuildDialogProps) {
       shape,
       bpmSpan,
       exclude: replace ? new Set<string>() : exclude,
+      energy: { scale, ratings },
     })
-  }, [reference, pool, minutes, state.tolerance, state.relations, shape, bpmSpan, replace, exclude])
+  }, [
+    reference,
+    pool,
+    minutes,
+    state.tolerance,
+    state.relations,
+    shape,
+    bpmSpan,
+    replace,
+    exclude,
+    scale,
+    ratings,
+  ])
 
   function apply() {
     if (!result) return
@@ -128,6 +150,7 @@ export function AutoBuildDialog({ open, onClose }: AutoBuildDialogProps) {
                   <div className="entry" key={`${step.track.id}-${index}`}>
                     <span className="mono faint entry-index">{index + 1}</span>
                     <span className="entry-title">
+                      <SeenBadge track={step.track} />
                       <strong>{step.track.title}</strong>
                       <span className="muted"> — {step.track.artist}</span>
                     </span>
@@ -138,6 +161,16 @@ export function AutoBuildDialog({ open, onClose }: AutoBuildDialogProps) {
                     )}
                     <KeyChip code={step.track.key} />
                     <Bpm value={step.track.bpm} />
+                    <span
+                      className="mono faint"
+                      title={
+                        step.energy
+                          ? `${step.energy.rated ? 'Rated' : 'Estimated'} energy ${step.energy.level}/5, aiming for ${step.targetEnergy?.toFixed(1)}`
+                          : 'No energy: the track has no tempo and no rating'
+                      }
+                    >
+                      {step.energy ? `E${step.energy.level}${step.energy.rated ? '' : '?'}` : 'E–'}
+                    </span>
                     <span className="mono faint">{step.delta ? formatDelta(step.delta) : '—'}</span>
                   </div>
                 )

@@ -3,15 +3,20 @@ import {
   initialAppState,
   selectActive,
   selectEntries,
+  selectEntryRows,
   selectExclude,
   selectGenres,
   selectLibrary,
   selectPool,
   selectReference,
+  selectEnergyScale,
+  selectSeenIndex,
   selectTrack,
   useStore,
 } from './store'
 import type { RekordboxLibrary } from '../lib/rekordbox'
+import { entryEnergy } from '../lib/energy'
+import { seenIn } from '../lib/seen'
 import type { Catalog, Track } from '../lib/types'
 
 function track(partial: Partial<Track> & { id: string }): Track {
@@ -96,6 +101,34 @@ describe('setlist düzenleme', () => {
 
     useStore.getState().setEntryEnergy(0, 4)
     expect(selectActive(useStore.getState()).entries[0].energy).toBeUndefined()
+  })
+
+  it('verilen puan havuz değişince de yerinde kalır, tahmin kayda yazılmaz', () => {
+    const rated = track({ id: '1', bpm: 128 })
+    useStore.getState().addTrack(rated)
+    useStore.getState().addTrack(track({ id: '2', bpm: 122 }))
+    useStore.getState().setEntryEnergy(0, 2)
+
+    useStore.getState().importLibrary(imported)
+    useStore.getState().setPoolSource('library')
+    const state = useStore.getState()
+    const entries = selectActive(state).entries
+    expect(entryEnergy(selectEnergyScale(state), entries[0], rated)).toEqual({ level: 2, rated: true })
+
+    const exported = state.exportState().setlists[0].entries
+    expect(exported[0]).toEqual({ trackId: '1', energy: 2 })
+    expect(exported[1]).toEqual({ trackId: '2' })
+  })
+
+  it('enerji ölçeği havuzdan kurulur ve havuz değişmedikçe aynı kalır', () => {
+    const state = useStore.getState()
+    expect(selectEnergyScale(state)).toBe(selectEnergyScale(state))
+    useStore.getState().setTolerance(8)
+    expect(selectEnergyScale(useStore.getState())).toBe(selectEnergyScale(state))
+
+    useStore.getState().importLibrary(imported)
+    useStore.getState().setPoolSource('library')
+    expect(selectEnergyScale(useStore.getState()).all).toHaveLength(3)
   })
 
   it('aralık dışındaki enerji puanını yok sayar', () => {
@@ -242,6 +275,38 @@ describe('havuz ve seçiciler', () => {
     expect(exclude.has('sanatçı|parça 1')).toBe(true)
   })
 
+  it('başka setteki parçayı, kataloğa başka kimlikle gelse de daha önce görülmüş sayar', () => {
+    const store = useStore.getState()
+    store.importLibrary(imported)
+    store.addTrack(library[0])
+    useStore.getState().renameSetlist(useStore.getState().setlists[0].id, 'Cuma')
+    useStore.getState().newSetlist('Cumartesi')
+
+    const index = selectSeenIndex(useStore.getState())
+    expect(seenIn(index, track({ id: 'vl:1', title: 'Parça 1', source: 'catalog' }))).toEqual(['Cuma'])
+    expect(seenIn(index, library[1])).toEqual([])
+  })
+
+  it('setten çıkan parçanın işareti kalkar', () => {
+    const store = useStore.getState()
+    store.importLibrary(imported)
+    store.addTrack(library[0])
+    const secondId = useStore.getState().newSetlist('İkinci')
+    expect(seenIn(selectSeenIndex(useStore.getState()), library[0])).toEqual(['Set 1'])
+
+    useStore.getState().selectSetlist(useStore.getState().setlists[0].id)
+    useStore.getState().removeEntry(0)
+    useStore.getState().selectSetlist(secondId)
+    expect(seenIn(selectSeenIndex(useStore.getState()), library[0])).toEqual([])
+  })
+
+  it('durum değişmedikçe aynı indeksi döner', () => {
+    const state = useStore.getState()
+    expect(selectSeenIndex(state)).toBe(selectSeenIndex(state))
+    useStore.getState().setTolerance(8)
+    expect(selectSeenIndex(useStore.getState())).toBe(selectSeenIndex(state))
+  })
+
   it('havuzdaki türleri alfabetik verir', () => {
     const store = useStore.getState()
     store.importLibrary(imported)
@@ -319,6 +384,75 @@ describe('imleç', () => {
     useStore.getState().hydrate(exported)
     useStore.getState().focusSetEnd()
     expect(useStore.getState().cursor).toBe(1)
+  })
+})
+
+describe('bulunamayan giriş', () => {
+  // The middle entry points at a track no source holds any more, as after a
+  // catalog refresh drops it.
+  function withMissingMiddle() {
+    const store = useStore.getState()
+    store.importLibrary(imported)
+    store.addTrack(library[0])
+    useStore.getState().addTrack(library[1])
+    const active = selectActive(useStore.getState())
+    useStore.setState({
+      setlists: [
+        {
+          ...active,
+          entries: [
+            { trackId: '1', note: 'bir' },
+            { trackId: 'kayıp', note: 'kayıp' },
+            { trackId: '2', note: 'iki', energy: 4 },
+          ],
+        },
+      ],
+    })
+  }
+
+  it('satırlar gerçek giriş indeksini ve notunu taşır, bulunamayanı atlamaz', () => {
+    withMissingMiddle()
+    const rows = selectEntryRows(useStore.getState())
+    expect(rows.map((row) => [row.index, row.track?.id ?? null, row.entry.note])).toEqual([
+      [0, '1', 'bir'],
+      [1, null, 'kayıp'],
+      [2, '2', 'iki'],
+    ])
+  })
+
+  it('imleç bulunamayan girişin ardındaysa referans doğru parçadır', () => {
+    withMissingMiddle()
+    useStore.getState().setCursor(2)
+    expect(selectReference(useStore.getState())?.id).toBe('2')
+  })
+
+  it('imleç bulunamayan girişteyse referans ondan önceki parçadır', () => {
+    withMissingMiddle()
+    useStore.getState().setCursor(1)
+    expect(selectReference(useStore.getState())?.id).toBe('1')
+  })
+
+  it('önünde parça yoksa referans ardındaki ilk parçadır', () => {
+    withMissingMiddle()
+    useStore.getState().removeEntry(0)
+    useStore.getState().setCursor(0)
+    expect(selectReference(useStore.getState())?.id).toBe('2')
+  })
+
+  it('hiçbir giriş bulunamıyorsa referans yok', () => {
+    withMissingMiddle()
+    useStore.getState().removeEntry(0)
+    useStore.getState().removeEntry(1)
+    expect(selectReference(useStore.getState())).toBeNull()
+  })
+
+  it('bulunamayan girişi silmek sonrakilerin notunu ve puanını korur', () => {
+    withMissingMiddle()
+    useStore.getState().removeEntry(1)
+    expect(selectActive(useStore.getState()).entries).toEqual([
+      { trackId: '1', note: 'bir' },
+      { trackId: '2', note: 'iki', energy: 4 },
+    ])
   })
 })
 

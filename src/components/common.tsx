@@ -2,8 +2,10 @@ import { useEffect, useRef } from 'react'
 import type { ReactNode } from 'react'
 import { NOTE_NAME, keyColor } from '../lib/camelot'
 import { isFavorite } from '../lib/favorites'
-import { useStore } from '../store/store'
+import { seenIn } from '../lib/seen'
+import { selectSeenIndex, useStore } from '../store/store'
 import { formatBpm } from '../lib/ui'
+import type { EntryEnergy } from '../lib/energy'
 import type { Track } from '../lib/types'
 
 export function KeyChip({ code }: { code: string | null }) {
@@ -24,28 +26,49 @@ export function Bpm({ value }: { value: number | null | undefined }) {
 const STARS = [1, 2, 3, 4, 5]
 
 export interface EnergyStarsProps {
-  value: number | undefined
+  /** The rating, or the estimate until there is one; null when neither exists. */
+  energy: EntryEnergy | null
   onChange: (value: number) => void
   label: string
 }
 
-export function EnergyStars({ value, onChange, label }: EnergyStarsProps) {
+const ENERGY_SUMMARY = {
+  rated: (level: number) => `Rated energy ${level}/5`,
+  estimated: (level: number) =>
+    `Estimated energy ${level}/5 from the tempo within its genre — touch a star to rate it`,
+  none: () => 'No tempo, so no estimate — touch a star to rate it',
+}
+
+export function EnergyStars({ energy, onChange, label }: EnergyStarsProps) {
+  const kind = energy === null ? 'none' : energy.rated ? 'rated' : 'estimated'
+  const shown = energy?.level ?? 0
+
   return (
-    <span className="stars" role="group" aria-label={label}>
+    <span
+      className="stars"
+      role="group"
+      aria-label={label}
+      data-energy={kind}
+      title={ENERGY_SUMMARY[kind](shown)}
+    >
       {STARS.map((star) => (
         <button
           key={star}
           type="button"
-          className="star"
-          aria-pressed={value !== undefined && star <= value}
+          className={kind === 'estimated' && star <= shown ? 'star star-estimated' : 'star'}
+          aria-pressed={kind === 'rated' && star <= shown}
           aria-label={`${star} stars`}
-          title={`Energy ${star}/5 — press the same star again to clear it`}
+          title={
+            kind === 'rated'
+              ? `Energy ${star}/5 — press the same star again to clear it`
+              : `Rate energy ${star}/5`
+          }
           onClick={(event) => {
             event.stopPropagation()
             onChange(star)
           }}
         >
-          {value !== undefined && star <= value ? '★' : '☆'}
+          {star <= shown ? '★' : '☆'}
         </button>
       ))}
     </span>
@@ -87,6 +110,36 @@ export function FavoriteButton({ track }: { track: Track }) {
     >
       <HeartIcon filled={active} />
     </button>
+  )
+}
+
+function SeenIcon() {
+  return (
+    <svg className="seen-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path
+        d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19.5h14"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
+/** Marks a track already in another set; renders nothing otherwise. The arrow
+    hints at why it matters (it may already be downloaded), the text names the sets. */
+export function SeenBadge({ track }: { track: Track }) {
+  const index = useStore(selectSeenIndex)
+  const sets = seenIn(index, track)
+  if (sets.length === 0) return null
+
+  const label = `Already in another set: ${sets.join(', ')}`
+  return (
+    <span className="seen-badge" role="img" aria-label={label} title={label}>
+      <SeenIcon />
+    </span>
   )
 }
 
