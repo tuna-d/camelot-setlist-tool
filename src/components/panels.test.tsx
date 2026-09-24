@@ -135,6 +135,21 @@ describe('SetlistPanel', () => {
     await view.unmount()
   })
 
+  it('başka bir sette de geçen parçaya rozet koyar, yalnızca bu sette olana koymaz', async () => {
+    useStore.getState().renameSetlist(useStore.getState().setlists[0].id, 'Cuma')
+    useStore.getState().addTrack(track({ id: '1', title: 'Gece' }))
+    useStore.getState().newSetlist('Bu gece')
+    useStore.getState().addTrack(track({ id: '1', title: 'Gece' }))
+    useStore.getState().addTrack(track({ id: '2', title: 'Sabah' }))
+    const view = await mount(<SetlistPanel />)
+
+    const badges = view.container.querySelectorAll('.seen-badge')
+    expect(badges).toHaveLength(1)
+    expect(badges[0].getAttribute('title')).toBe('Already in another set: Cuma')
+    expect(badges[0].closest('.entry')?.textContent).toContain('Gece')
+    await view.unmount()
+  })
+
   it('parça ekleme düğmelerini gösterir', async () => {
     const html = await render(<SetlistPanel onOpenSearch={() => {}} onOpenAutoBuild={() => {}} />)
     expect(html).toContain('find a track')
