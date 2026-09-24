@@ -1,10 +1,11 @@
 import { useMemo, useState } from 'react'
 import { relationInfo } from '../lib/camelot'
+import { advanceQueue, EMPTY_QUEUE, queueView } from '../lib/queue'
 import { transition } from '../lib/setstats'
 import { formatDelta } from '../lib/suggest'
 import { formatDuration, formatTotal, toneColor } from '../lib/ui'
 import { selectActive, selectEntries, useStore } from '../store/store'
-import { Bpm, EnergyStars, FavoriteButton, KeyChip, TrackLinks } from './common'
+import { Bpm, EnergyStars, FavoriteButton, KeyChip, TrackLinks, youtubeSearchUrl } from './common'
 import type { Track } from '../lib/types'
 
 function TransitionBridge({ from, to, tolerance }: { from: Track; to: Track; tolerance: number }) {
@@ -36,14 +37,32 @@ export interface SetlistPanelProps {
   onOpenAutoBuild?: () => void
 }
 
-export function SetlistPanel({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProps) {
+export function SetlistPanel(props: SetlistPanelProps) {
+  // Keyed by the set so the YouTube queue starts over whenever another set is opened,
+  // without resetting state from an effect.
+  const activeId = useStore((state) => selectActive(state).id)
+  return <SetlistPanelBody key={activeId} {...props} />
+}
+
+function SetlistPanelBody({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProps) {
   // Whole-state subscription on purpose: derived lists would break per-selector caching.
   const state = useStore()
   const [dragIndex, setDragIndex] = useState<number | null>(null)
+  // Session only: nothing about the pass is written to the record.
+  const [queue, setQueue] = useState(EMPTY_QUEUE)
 
   const active = selectActive(state)
   const tracks = useMemo(() => selectEntries(state), [state])
   const totalSeconds = tracks.reduce((total, track) => total + (track.duration ?? 360), 0)
+  const trackIds = tracks.map((track) => track.id)
+  const pass = queueView(trackIds, queue)
+  const nextTrack = pass.nextIndex >= 0 ? tracks[pass.nextIndex] : null
+
+  // The browser opens the tab itself from the link, never a script: nothing for a popup
+  // blocker to catch, and ctrl/cmd+click or middle-click keep this page in front.
+  function advancePastNext() {
+    setQueue(advanceQueue(trackIds, queue))
+  }
 
   function handleDrop(target: number) {
     if (dragIndex !== null && dragIndex !== target) state.moveEntry(dragIndex, target)
@@ -70,70 +89,124 @@ export function SetlistPanel({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProp
         ) : null}
       </div>
 
+      {tracks.length > 0 ? (
+        <div className="row-wrap queue-bar">
+          {nextTrack ? (
+            <a
+              className="btn btn-sm btn-youtube queue-open"
+              href={youtubeSearchUrl(nextTrack)}
+              target="_blank"
+              rel="noreferrer"
+              onClick={advancePastNext}
+              onAuxClick={(event) => {
+                // Middle button only: a right click opens the context menu, not a tab.
+                if (event.button === 1) advancePastNext()
+              }}
+              title={`Search YouTube for ${nextTrack.title}`}
+            >
+              ▶ next on YouTube
+            </a>
+          ) : (
+            <button type="button" className="btn btn-sm btn-youtube queue-open" disabled>
+              ▶ next on YouTube
+            </button>
+          )}
+          <span className="mono queue-count" title="Tracks opened on YouTube">
+            {pass.openedCount} / {pass.total}
+          </span>
+          {nextTrack ? (
+            <span className="faint queue-hint">ctrl/⌘+click or middle-click to stay here</span>
+          ) : null}
+          {pass.finished ? (
+            <span className="muted queue-done">
+              Every track has been opened. Reset to go through the set again.
+            </span>
+          ) : null}
+          {queue.opened.length > 0 ? (
+            <button
+              type="button"
+              className="btn btn-ghost btn-sm queue-reset"
+              onClick={() => setQueue(EMPTY_QUEUE)}
+            >
+              reset
+            </button>
+          ) : null}
+        </div>
+      ) : null}
+
       {tracks.length === 0 ? (
         <p className="muted">
           Empty set. Add a starting track with "find a track", then keep going from the suggestions below.
         </p>
       ) : (
         <ol className="entries entries-scroll">
-          {tracks.map((track, index) => (
-            <li key={`${track.id}-${index}`}>
-              {index > 0 ? (
-                <TransitionBridge from={tracks[index - 1]} to={track} tolerance={state.tolerance} />
-              ) : null}
-
-              <div
-                className="entry"
-                draggable
-                aria-current={index === state.cursor}
-                onDragStart={() => setDragIndex(index)}
-                onDragOver={(event) => event.preventDefault()}
-                onDrop={() => handleDrop(index)}
-                onClick={() => state.setCursor(index)}
-              >
-                <span className="mono entry-index">{index + 1}</span>
-                <span className="entry-title">
-                  <strong>{track.title}</strong>
-                  <span className="muted"> — {track.artist}</span>
-                </span>
-                <span className="entry-meta">
-                  <KeyChip code={track.key} />
-                  <Bpm value={track.bpm} />
-                  <span className="mono faint">{formatDuration(track.duration)}</span>
-                  <FavoriteButton track={track} />
-                  <TrackLinks track={track} />
-                  <button
-                    type="button"
-                    className="btn btn-ghost btn-icon btn-danger"
-                    onClick={(event) => {
-                      event.stopPropagation()
-                      state.removeEntry(index)
-                    }}
-                    aria-label={`Remove ${track.title} from the set`}
-                  >
-                    ✕
-                  </button>
-                </span>
-              </div>
-
-              <div className="entry-extras">
-                <span className="entry-energy">
-                  <span className="faint">energy</span>
-                  <EnergyStars
-                    value={active.entries[index]?.energy}
-                    onChange={(value) => state.setEntryEnergy(index, value)}
-                    label={`Energy rating for ${track.title}`}
+          {tracks.map((track, index) => {
+            const isQueued = index === pass.nextIndex
+            return (
+              <li key={`${track.id}-${index}`}>
+                {index > 0 ? (
+                  <TransitionBridge
+                    from={tracks[index - 1]}
+                    to={track}
+                    tolerance={state.tolerance}
                   />
-                </span>
-                <input
-                  className="input entry-note"
-                  placeholder="track note"
-                  value={active.entries[index]?.note ?? ''}
-                  onChange={(event) => state.setEntryNote(index, event.target.value)}
-                />
-              </div>
-            </li>
-          ))}
+                ) : null}
+
+                <div
+                  className={isQueued ? 'entry entry-queued' : 'entry'}
+                  data-queue={isQueued ? 'next' : undefined}
+                  title={isQueued ? 'Next on YouTube' : undefined}
+                  draggable
+                  aria-current={index === state.cursor}
+                  onDragStart={() => setDragIndex(index)}
+                  onDragOver={(event) => event.preventDefault()}
+                  onDrop={() => handleDrop(index)}
+                  onClick={() => state.setCursor(index)}
+                >
+                  <span className="mono entry-index">{index + 1}</span>
+                  <span className="entry-title">
+                    <strong>{track.title}</strong>
+                    <span className="muted"> — {track.artist}</span>
+                  </span>
+                  <span className="entry-meta">
+                    <KeyChip code={track.key} />
+                    <Bpm value={track.bpm} />
+                    <span className="mono faint">{formatDuration(track.duration)}</span>
+                    <FavoriteButton track={track} />
+                    <TrackLinks track={track} />
+                    <button
+                      type="button"
+                      className="btn btn-ghost btn-icon btn-danger"
+                      onClick={(event) => {
+                        event.stopPropagation()
+                        state.removeEntry(index)
+                      }}
+                      aria-label={`Remove ${track.title} from the set`}
+                    >
+                      ✕
+                    </button>
+                  </span>
+                </div>
+
+                <div className="entry-extras">
+                  <span className="entry-energy">
+                    <span className="faint">energy</span>
+                    <EnergyStars
+                      value={active.entries[index]?.energy}
+                      onChange={(value) => state.setEntryEnergy(index, value)}
+                      label={`Energy rating for ${track.title}`}
+                    />
+                  </span>
+                  <input
+                    className="input entry-note"
+                    placeholder="track note"
+                    value={active.entries[index]?.note ?? ''}
+                    onChange={(event) => state.setEntryNote(index, event.target.value)}
+                  />
+                </div>
+              </li>
+            )
+          })}
         </ol>
       )}
     </section>

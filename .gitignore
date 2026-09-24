@@ -19,6 +19,10 @@ npm-debug.log*
 CLAUDE.md
 AGENTS.md
 BUILD-PLAN.md
+CONTEXT.md
+CONTEXT-MAP.md
+docs/agents/
+docs/adr/
 .claude/
 *.tmp.html
 *.tmp.mjs

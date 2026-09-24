@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { act } from 'react'
 import type { ReactElement } from 'react'
 import { createRoot } from 'react-dom/client'
@@ -139,6 +139,142 @@ describe('SetlistPanel', () => {
     const html = await render(<SetlistPanel onOpenSearch={() => {}} onOpenAutoBuild={() => {}} />)
     expect(html).toContain('find a track')
     expect(html).toContain('build it for me')
+  })
+})
+
+describe('SetlistPanel YouTube kuyruğu', () => {
+  function addThree() {
+    useStore.getState().addTrack(track({ id: '1', title: 'Gece', artist: 'Kaya' }))
+    useStore.getState().addTrack(track({ id: '2', title: 'Sabah', artist: 'Deniz' }))
+    useStore.getState().addTrack(track({ id: '3', title: 'Öğle', artist: 'Bulut' }))
+  }
+
+  function queuedTitle(container: HTMLElement): string | null {
+    return container.querySelector('[data-queue="next"] .entry-title strong')?.textContent ?? null
+  }
+
+  function queueCount(container: HTMLElement): string | null {
+    return container.querySelector('.queue-count')?.textContent ?? null
+  }
+
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
+  it('boş sette kuyruk düğmesi yok', async () => {
+    expect(await render(<SetlistPanel />)).not.toContain('queue-open')
+  })
+
+  function queueLink(container: HTMLElement): HTMLAnchorElement | null {
+    return container.querySelector<HTMLAnchorElement>('a.queue-open')
+  }
+
+  it('sıradaki parçanın aramasına giden tek bir bağlantı sunar ve basınca ilerler', async () => {
+    addThree()
+    // happy-dom follows target=_blank links through window.open; keep it from doing so.
+    vi.spyOn(window, 'open').mockReturnValue(null)
+    const view = await mount(<SetlistPanel />)
+    expect(queueCount(view.container)).toBe('0 / 3')
+    expect(queuedTitle(view.container)).toBe('Gece')
+
+    // A real link, so ctrl/cmd+click and middle-click open the tab in the background.
+    const link = queueLink(view.container)
+    expect(link?.getAttribute('href')).toBe(
+      'https://www.youtube.com/results?search_query=Kaya%20Gece',
+    )
+    expect(link?.getAttribute('target')).toBe('_blank')
+
+    await view.click('.queue-open')
+    expect(queueCount(view.container)).toBe('1 / 3')
+    expect(queuedTitle(view.container)).toBe('Sabah')
+    expect(queueLink(view.container)?.getAttribute('href')).toBe(
+      'https://www.youtube.com/results?search_query=Deniz%20Sabah',
+    )
+    await view.unmount()
+  })
+
+  it('orta tuşla açınca da ilerler, sağ tık ilerletmez', async () => {
+    addThree()
+    const view = await mount(<SetlistPanel />)
+    const aux = async (button: number) => {
+      await act(async () => {
+        const event = new MouseEvent('auxclick', { bubbles: true, button })
+        queueLink(view.container)!.dispatchEvent(event)
+      })
+    }
+    await aux(2)
+    expect(queueCount(view.container)).toBe('0 / 3')
+    await aux(1)
+    expect(queueCount(view.container)).toBe('1 / 3')
+    expect(queuedTitle(view.container)).toBe('Sabah')
+    await view.unmount()
+  })
+
+  it('işaret referans parçanın vurgusundan ayrı', async () => {
+    addThree()
+    const view = await mount(<SetlistPanel />)
+    const marked = view.container.querySelector('[data-queue="next"]')
+    // The reference sits on the last added track, the queue on the first.
+    expect(marked?.getAttribute('aria-current')).toBe('false')
+    expect(marked?.classList.contains('entry-queued')).toBe(true)
+    expect(view.container.querySelector('[aria-current="true"]')?.hasAttribute('data-queue')).toBe(
+      false,
+    )
+    await view.unmount()
+  })
+
+  it('bütün parçalar açılınca geçişin bittiğini söyler, sıfırlama başa döner', async () => {
+    addThree()
+    vi.spyOn(window, 'open').mockReturnValue(null)
+    const view = await mount(<SetlistPanel />)
+    for (let i = 0; i < 3; i++) await view.click('.queue-open')
+
+    expect(view.html()).toContain('Every track has been opened')
+    expect(queueCount(view.container)).toBe('3 / 3')
+    expect(queueLink(view.container)).toBeNull()
+    const spent = view.container.querySelector<HTMLButtonElement>('button.queue-open')
+    expect(spent?.disabled).toBe(true)
+    expect(queuedTitle(view.container)).toBeNull()
+
+    await view.click('.queue-reset')
+    expect(queueCount(view.container)).toBe('0 / 3')
+    expect(queuedTitle(view.container)).toBe('Gece')
+    await view.unmount()
+  })
+
+  it('açılan parça silinince ardından gelene geçer, sıra değişince aynı parçada kalır', async () => {
+    addThree()
+    vi.spyOn(window, 'open').mockReturnValue(null)
+    const view = await mount(<SetlistPanel />)
+    await view.click('.queue-open')
+    expect(queuedTitle(view.container)).toBe('Sabah')
+
+    // Gece was opened; removing it leaves the queue on the track that followed it.
+    await act(async () => useStore.getState().removeEntry(0))
+    expect(queuedTitle(view.container)).toBe('Sabah')
+    expect(queueCount(view.container)).toBe('0 / 2')
+
+    await act(async () => useStore.getState().moveEntry(0, 1))
+    expect(queuedTitle(view.container)).toBe('Sabah')
+    await view.click('.queue-open')
+    expect(queuedTitle(view.container)).toBe('Öğle')
+    await view.unmount()
+  })
+
+  it('başka sete geçince kuyruk sıfırlanır ve kayda hiçbir şey yazılmaz', async () => {
+    addThree()
+    vi.spyOn(window, 'open').mockReturnValue(null)
+    const first = useStore.getState().activeId!
+    const view = await mount(<SetlistPanel />)
+    const record = () => JSON.stringify({ ...useStore.getState().exportState(), savedAt: 0 })
+    const before = record()
+    await view.click('.queue-open')
+    expect(record()).toBe(before)
+
+    await act(async () => useStore.getState().newSetlist('İkinci'))
+    await act(async () => useStore.getState().selectSetlist(first))
+    expect(queueCount(view.container)).toBe('0 / 3')
+    await view.unmount()
   })
 })
 
