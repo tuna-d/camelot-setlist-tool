@@ -459,6 +459,31 @@ describe('SetSummaryPanel', () => {
     expect(await render(<SetSummaryPanel />)).toContain('<polyline')
   })
 
+  it('bulunamayan girdi varken enerji çubuğu kendi parçasının noktasına düşer', async () => {
+    useStore.getState().addTrack(track({ id: '1', bpm: 120 }))
+    useStore.getState().addTrack(track({ id: '2', bpm: 124 }))
+    const active = useStore.getState().setlists[0]
+    useStore.setState({
+      setlists: [
+        {
+          ...active,
+          entries: [{ trackId: '1' }, { trackId: 'kayıp', energy: 1 }, { trackId: '2', energy: 4 }],
+        },
+      ],
+    })
+    const view = await mount(<SetSummaryPanel />)
+    const bars = view.container.querySelectorAll('.energy-bar')
+    const circles = view.container.querySelectorAll('.tempo-curve circle')
+    // With no pool to measure against, the unrated track has no estimate: a gap.
+    expect(bars).toHaveLength(1)
+    expect(bars[0].getAttribute('class')).toBe('energy-bar rated')
+    expect(Number(bars[0].getAttribute('x'))).toBeGreaterThan(
+      Number(circles[0].getAttribute('cx')),
+    )
+    expect(circles[1].textContent).toContain('energy 4')
+    await view.unmount()
+  })
+
   it('yalnızca bulunamayan parçalardan oluşan set de temizlenebilir', async () => {
     const active = useStore.getState().setlists[0]
     useStore.setState({ setlists: [{ ...active, entries: [{ trackId: 'kayıp' }] }] })
