@@ -501,6 +501,18 @@ input[type='range']:focus-visible {
   opacity: 1;
 }
 
+.entry-missing {
+  border-style: dashed;
+}
+
+.entry-missing-note {
+  margin: 4px 0 0;
+}
+
+.chip-missing {
+  color: var(--danger);
+}
+
 .entry-extras {
   align-items: center;
   display: flex;
