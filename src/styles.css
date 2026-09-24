@@ -490,8 +490,15 @@ input[type='range']:focus-visible {
   color: var(--tone-energy);
 }
 
+/* Faint on purpose: a guess must never pass for a rating. */
+.star-estimated {
+  color: var(--tone-energy);
+  opacity: 0.35;
+}
+
 .star:hover {
   color: var(--accent);
+  opacity: 1;
 }
 
 .entry-extras {

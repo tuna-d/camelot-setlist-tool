@@ -142,6 +142,55 @@ describe('SetlistPanel', () => {
   })
 })
 
+describe('SetlistPanel enerji', () => {
+  function starsOf(view: Mounted, index: number): HTMLElement {
+    return view.container.querySelectorAll<HTMLElement>('.entry-extras .stars')[index]
+  }
+
+  it('puanlanmamış girişte tahmini, puanlananda puanı gösterir', async () => {
+    useStore.setState({ catalog })
+    useStore.getState().addTrack(track({ id: '1', bpm: 126, key: '8A' }))
+    useStore.getState().addTrack(track({ id: '2', bpm: 120, key: '8A' }))
+    useStore.getState().setEntryEnergy(1, 3)
+    const view = await mount(<SetlistPanel />)
+
+    expect(starsOf(view, 0).dataset.energy).toBe('estimated')
+    expect(starsOf(view, 0).querySelectorAll('.star-estimated')).toHaveLength(5)
+    expect(starsOf(view, 1).dataset.energy).toBe('rated')
+    expect(starsOf(view, 1).querySelectorAll('[aria-pressed="true"]')).toHaveLength(3)
+    await view.unmount()
+  })
+
+  it('yıldıza basmak tahmini puana çevirir, aynı yıldız tahmine geri döndürür', async () => {
+    useStore.setState({ catalog })
+    useStore.getState().addTrack(track({ id: '1', bpm: 126, key: '8A' }))
+    const view = await mount(<SetlistPanel />)
+
+    const star = () => starsOf(view, 0).querySelectorAll<HTMLElement>('.star')[1]
+    await act(async () => {
+      star().dispatchEvent(new MouseEvent('click', { bubbles: true }))
+    })
+    expect(useStore.getState().setlists[0].entries[0].energy).toBe(2)
+    expect(starsOf(view, 0).dataset.energy).toBe('rated')
+
+    await act(async () => {
+      star().dispatchEvent(new MouseEvent('click', { bubbles: true }))
+    })
+    expect(useStore.getState().setlists[0].entries[0].energy).toBeUndefined()
+    expect(starsOf(view, 0).dataset.energy).toBe('estimated')
+    await view.unmount()
+  })
+
+  it('tempo bilinmeyen parçada tahmin yok, yıldızlar boş', async () => {
+    useStore.setState({ catalog })
+    useStore.getState().addTrack(track({ id: '1', bpm: null }))
+    const view = await mount(<SetlistPanel />)
+    expect(starsOf(view, 0).dataset.energy).toBe('none')
+    expect(starsOf(view, 0).textContent).toBe('☆☆☆☆☆')
+    await view.unmount()
+  })
+})
+
 describe('SetlistPanel YouTube kuyruğu', () => {
   function addThree() {
     useStore.getState().addTrack(track({ id: '1', title: 'Gece', artist: 'Kaya' }))

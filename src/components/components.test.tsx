@@ -69,6 +69,36 @@ describe('EnergyStars', () => {
   })
 })
 
+describe('EnergyStars tahmini', () => {
+  it('puan yokken tahmini soluk yıldızlarla gösterir, hiçbirini basılı saymaz', () => {
+    const html = renderToStaticMarkup(
+      <EnergyStars value={undefined} estimate={4} onChange={() => {}} label="enerji" />,
+    )
+    expect(html.match(/star star-estimated/g)).toHaveLength(4)
+    expect(html.match(/★/g)).toHaveLength(4)
+    expect(html).not.toContain('aria-pressed="true"')
+    expect(html).toContain('data-energy="estimated"')
+    expect(html).toContain('Estimated energy 4/5')
+  })
+
+  it('verilen puan tahminin önüne geçer', () => {
+    const html = renderToStaticMarkup(
+      <EnergyStars value={2} estimate={4} onChange={() => {}} label="enerji" />,
+    )
+    expect(html).not.toContain('star-estimated')
+    expect(html.match(/★/g)).toHaveLength(2)
+    expect(html).toContain('data-energy="rated"')
+  })
+
+  it('tahmin de puan da yoksa yıldızlar boş kalır', () => {
+    const html = renderToStaticMarkup(
+      <EnergyStars value={undefined} estimate={null} onChange={() => {}} label="enerji" />,
+    )
+    expect(html.match(/☆/g)).toHaveLength(5)
+    expect(html).toContain('data-energy="none"')
+  })
+})
+
 describe('CamelotWheel', () => {
   const html = renderToStaticMarkup(<CamelotWheel active="8A" allowed={DEFAULT_RELATIONS} />)
 

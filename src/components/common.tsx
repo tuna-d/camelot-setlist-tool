@@ -25,28 +25,44 @@ export function Bpm({ value }: { value: number | null | undefined }) {
 const STARS = [1, 2, 3, 4, 5]
 
 export interface EnergyStarsProps {
+  /** Rated energy; wins over the estimate whenever present. */
   value: number | undefined
+  /** Shown faintly until the DJ rates; null when the track has no tempo. */
+  estimate?: number | null
   onChange: (value: number) => void
   label: string
 }
 
-export function EnergyStars({ value, onChange, label }: EnergyStarsProps) {
+export function EnergyStars({ value, estimate = null, onChange, label }: EnergyStarsProps) {
+  const rated = value !== undefined
+  const shown = rated ? value : (estimate ?? 0)
+  const kind = rated ? 'rated' : estimate !== null ? 'estimated' : 'none'
+  const summary = rated
+    ? `Rated energy ${value}/5`
+    : estimate !== null
+      ? `Estimated energy ${estimate}/5 from the tempo within its genre — touch a star to rate it`
+      : 'No tempo, so no estimate — touch a star to rate it'
+
   return (
-    <span className="stars" role="group" aria-label={label}>
+    <span className="stars" role="group" aria-label={label} data-energy={kind} title={summary}>
       {STARS.map((star) => (
         <button
           key={star}
           type="button"
-          className="star"
-          aria-pressed={value !== undefined && star <= value}
+          className={!rated && star <= shown ? 'star star-estimated' : 'star'}
+          aria-pressed={rated && star <= shown}
           aria-label={`${star} stars`}
-          title={`Energy ${star}/5 — press the same star again to clear it`}
+          title={
+            rated
+              ? `Energy ${star}/5 — press the same star again to clear it`
+              : `Rate energy ${star}/5`
+          }
           onClick={(event) => {
             event.stopPropagation()
             onChange(star)
           }}
         >
-          {value !== undefined && star <= value ? '★' : '☆'}
+          {star <= shown ? '★' : '☆'}
         </button>
       ))}
     </span>

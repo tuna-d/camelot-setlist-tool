@@ -1,10 +1,11 @@
 import { useMemo, useState } from 'react'
 import { relationInfo } from '../lib/camelot'
+import { entryEnergy } from '../lib/energy'
 import { advanceQueue, EMPTY_QUEUE, queueView } from '../lib/queue'
 import { transition } from '../lib/setstats'
 import { formatDelta } from '../lib/suggest'
 import { formatDuration, formatTotal, toneColor } from '../lib/ui'
-import { selectActive, selectEntries, useStore } from '../store/store'
+import { selectActive, selectEnergyScale, selectEntries, useStore } from '../store/store'
 import { Bpm, EnergyStars, FavoriteButton, KeyChip, TrackLinks, youtubeSearchUrl } from './common'
 import type { Track } from '../lib/types'
 
@@ -53,6 +54,7 @@ function SetlistPanelBody({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProps) 
 
   const active = selectActive(state)
   const tracks = useMemo(() => selectEntries(state), [state])
+  const energyScale = selectEnergyScale(state)
   const totalSeconds = tracks.reduce((total, track) => total + (track.duration ?? 360), 0)
   const trackIds = tracks.map((track) => track.id)
   const pass = queueView(trackIds, queue)
@@ -142,6 +144,7 @@ function SetlistPanelBody({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProps) 
         <ol className="entries entries-scroll">
           {tracks.map((track, index) => {
             const isQueued = index === pass.nextIndex
+            const energy = entryEnergy(energyScale, active.entries[index], track)
             return (
               <li key={`${track.id}-${index}`}>
                 {index > 0 ? (
@@ -192,7 +195,8 @@ function SetlistPanelBody({ onOpenSearch, onOpenAutoBuild }: SetlistPanelProps) 
                   <span className="entry-energy">
                     <span className="faint">energy</span>
                     <EnergyStars
-                      value={active.entries[index]?.energy}
+                      value={energy?.rated ? energy.level : undefined}
+                      estimate={energy && !energy.rated ? energy.level : null}
                       onChange={(value) => state.setEntryEnergy(index, value)}
                       label={`Energy rating for ${track.title}`}
                     />
