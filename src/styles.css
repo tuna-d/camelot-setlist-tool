@@ -28,6 +28,7 @@
   --beatport: #23e58c;
   --youtube: #ff3d46;
   --favorite: #ff5c93;
+  --seen: #7fd4c1;
 
   --radius: 20px;
   --radius-sm: 14px;
@@ -789,6 +790,29 @@ a.btn-youtube {
   background: color-mix(in srgb, var(--danger) 12%, transparent);
   border-color: var(--danger);
   color: var(--danger);
+}
+
+/* ——— seen before ——— */
+
+/* Sits inside the title so it adds no column: the row grids stay aligned, and the
+   title, not the badge, is what gets cut short on a long name. */
+.seen-badge {
+  align-items: center;
+  background: color-mix(in srgb, var(--seen) 14%, transparent);
+  border-radius: var(--radius-pill);
+  color: var(--seen);
+  cursor: help;
+  display: inline-flex;
+  justify-content: center;
+  margin-right: 6px;
+  padding: 2px;
+  vertical-align: -3px;
+}
+
+.seen-icon {
+  display: block;
+  height: 14px;
+  width: 14px;
 }
 
 /* ——— favorites ——— */

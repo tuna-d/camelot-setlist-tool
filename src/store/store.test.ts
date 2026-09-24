@@ -8,10 +8,12 @@ import {
   selectLibrary,
   selectPool,
   selectReference,
+  selectSeenIndex,
   selectTrack,
   useStore,
 } from './store'
 import type { RekordboxLibrary } from '../lib/rekordbox'
+import { seenIn } from '../lib/seen'
 import type { Catalog, Track } from '../lib/types'
 
 function track(partial: Partial<Track> & { id: string }): Track {
@@ -240,6 +242,38 @@ describe('havuz ve seçiciler', () => {
     const exclude = selectExclude(useStore.getState())
     expect(exclude.has('1')).toBe(true)
     expect(exclude.has('sanatçı|parça 1')).toBe(true)
+  })
+
+  it('başka setteki parçayı, kataloğa başka kimlikle gelse de daha önce görülmüş sayar', () => {
+    const store = useStore.getState()
+    store.importLibrary(imported)
+    store.addTrack(library[0])
+    useStore.getState().renameSetlist(useStore.getState().setlists[0].id, 'Cuma')
+    useStore.getState().newSetlist('Cumartesi')
+
+    const index = selectSeenIndex(useStore.getState())
+    expect(seenIn(index, track({ id: 'vl:1', title: 'Parça 1', source: 'catalog' }))).toEqual(['Cuma'])
+    expect(seenIn(index, library[1])).toEqual([])
+  })
+
+  it('setten çıkan parçanın işareti kalkar', () => {
+    const store = useStore.getState()
+    store.importLibrary(imported)
+    store.addTrack(library[0])
+    const secondId = useStore.getState().newSetlist('İkinci')
+    expect(seenIn(selectSeenIndex(useStore.getState()), library[0])).toEqual(['Set 1'])
+
+    useStore.getState().selectSetlist(useStore.getState().setlists[0].id)
+    useStore.getState().removeEntry(0)
+    useStore.getState().selectSetlist(secondId)
+    expect(seenIn(selectSeenIndex(useStore.getState()), library[0])).toEqual([])
+  })
+
+  it('durum değişmedikçe aynı indeksi döner', () => {
+    const state = useStore.getState()
+    expect(selectSeenIndex(state)).toBe(selectSeenIndex(state))
+    useStore.getState().setTolerance(8)
+    expect(selectSeenIndex(useStore.getState())).toBe(selectSeenIndex(state))
   })
 
   it('havuzdaki türleri alfabetik verir', () => {

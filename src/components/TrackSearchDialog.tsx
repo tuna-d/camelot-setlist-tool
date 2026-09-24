@@ -5,7 +5,7 @@ import { dedupeBySignature, localSearch } from '../lib/search'
 import { getAccessToken } from '../store/supabase'
 import { useStore } from '../store/store'
 import { selectLibrary } from '../store/store'
-import { Bpm, FavoriteButton, KeyChip } from './common'
+import { Bpm, FavoriteButton, KeyChip, SeenBadge } from './common'
 import { Dialog } from './common'
 import type { Track } from '../lib/types'
 
@@ -157,6 +157,7 @@ export function TrackSearchDialog({ open, onClose }: TrackSearchDialogProps) {
         <div className="entry" key={`${track.id}-${index}`}>
           <span className="chip">{SOURCE_LABEL[track.source]}</span>
           <span className="entry-title">
+            <SeenBadge track={track} />
             <strong>{track.title}</strong>
             <span className="muted"> — {track.artist}</span>
           </span>

@@ -2,6 +2,8 @@ import { create } from 'zustand'
 import { DEFAULT_RELATIONS } from '../lib/camelot'
 import { DEFAULT_TOLERANCE } from '../lib/suggest'
 import { readFavorites, toggleFavorite } from '../lib/favorites'
+import { buildSeenIndex } from '../lib/seen'
+import type { SeenIndex } from '../lib/seen'
 import { trackKey } from '../lib/suggest'
 import type { RekordboxLibrary } from '../lib/rekordbox'
 import type {
@@ -325,6 +327,26 @@ export function selectTrack(state: StoreState, id: string): Track | null {
     state.extras.find((track) => track.id === id) ??
     null
   )
+}
+
+let seenCache: { key: readonly unknown[]; index: SeenIndex } | null = null
+
+/**
+ * Every row with a badge reads this, so it is rebuilt only when a set or a track
+ * source changes and zustand sees the same object otherwise.
+ */
+export function selectSeenIndex(state: StoreState): SeenIndex {
+  const key = [state.setlists, state.activeId, state.library, state.catalog, state.extras]
+  if (seenCache && seenCache.key.every((part, i) => part === key[i])) return seenCache.index
+
+  const byId = new Map<string, Track>()
+  // Reversed so the first source wins, matching selectTrack.
+  for (const list of [state.extras, state.catalog?.tracks ?? [], state.library]) {
+    for (const track of list) byId.set(track.id, track)
+  }
+  const index = buildSeenIndex(state.setlists, state.activeId, (id) => byId.get(id) ?? null)
+  seenCache = { key, index }
+  return index
 }
 
 export function selectEntries(state: StoreState): Track[] {
